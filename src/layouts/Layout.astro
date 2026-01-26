@@ -2,36 +2,101 @@
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
 }
 
 const {
-  title = "Dome - Tu conocimiento, siempre contigo",
-  description = "Aplicación de escritorio 100% offline para gestión de conocimiento e investigación académica. Open source con IA integrada.",
+  title = "Dome - Knowledge Management & Academic Research | 100% Offline",
+  description = "Dome is a desktop application for knowledge management and academic research. Organize notes, PDFs, videos, and more with integrated AI. 100% offline, open source. Notion-style editor, PDF annotations, academic bibliography, and more.",
+  ogImage = "/dashboard.png",
+  canonicalUrl = Astro.url.href,
 } = Astro.props;
+
+const siteUrl = Astro.site?.href || "https://dome.app";
+const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- SEO -->
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="dome, knowledge management, research, academic, offline, open source, AI"
+      content="knowledge management, academic research, offline notes, PDF annotations, local AI, Ollama, Notion editor, academic bibliography, desktop knowledge management app, offline academic research software, Notion-style note editor desktop, Dome, PDF viewer, AI assistant, semantic search, citation manager"
     />
+    <meta name="author" content="Alder Velasquez" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Dome" />
 
-    <!-- Fonts -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Dome",
+      "applicationCategory": "DesktopApplication",
+      "operatingSystem": ["macOS", "Windows", "Linux"],
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": description,
+      "url": siteUrl,
+      "author": {
+        "@type": "Person",
+        "name": "Alder Velasquez",
+        "email": "alder.velasquezobando@gmail.com"
+      },
+      "license": "https://github.com/maxprain12/dome/blob/main/LICENSE",
+      "softwareVersion": "1.0.0",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "1"
+      },
+      "featureList": [
+        "Offline knowledge management",
+        "Notion-style editor",
+        "PDF annotations",
+        "Integrated AI (OpenAI, Anthropic, Ollama)",
+        "Semantic search",
+        "Academic library with citations",
+        "WhatsApp integration",
+        "Web scraper",
+        "YouTube integration"
+      ]
+    })} />
+
+    <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -146,7 +211,7 @@ const {
   @keyframes fade-in-up {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
@@ -154,20 +219,29 @@ const {
     }
   }
 
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   .animate-fade-in {
-    animation: fade-in-up 0.8s ease-out forwards;
+    animation: fade-in-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .animate-delay-1 {
-    animation-delay: 0.1s;
+    animation-delay: 0.15s;
   }
   .animate-delay-2 {
-    animation-delay: 0.2s;
-  }
-  .animate-delay-3 {
     animation-delay: 0.3s;
   }
+  .animate-delay-3 {
+    animation-delay: 0.45s;
+  }
   .animate-delay-4 {
-    animation-delay: 0.4s;
+    animation-delay: 0.6s;
   }
 </style>
