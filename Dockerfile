@@ -35,11 +35,8 @@ RUN adduser --system --uid 1001 astro
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de configuración de dependencias
-COPY package.json ./
-
-# Instalar solo dependencias de producción
-RUN npm install --omit=dev && npm cache clean --force
+# Instalar serve globalmente para servir archivos estáticos
+RUN npm install -g serve@14
 
 # Copiar build desde la etapa anterior
 COPY --from=builder --chown=astro:nodejs /app/dist ./dist
@@ -52,8 +49,7 @@ EXPOSE 3000
 
 # Variables de entorno
 ENV NODE_ENV=production
-ENV HOST=0.0.0.0
 ENV PORT=3000
 
-# Comando de inicio
-CMD ["node", "./dist/server/entry.mjs"]
+# Comando de inicio - servir archivos estáticos
+CMD ["serve", "-s", "dist", "-l", "3000"]
