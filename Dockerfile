@@ -1,7 +1,7 @@
-# Optimizado para Astro con servidor Node.js
+# Optimizado para Astro con Bun
 
 # Etapa 1: Build
-FROM node:20-alpine AS builder
+FROM oven/bun:1-alpine AS builder
 
 # Instalar dependencias del sistema necesarias
 RUN apk add --no-cache libc6-compat
@@ -9,20 +9,20 @@ RUN apk add --no-cache libc6-compat
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de configuración de dependencias
-COPY package*.json ./
+# Copiar archivos de configuración de dependencias y lockfile
+COPY package.json bun.lock* ./
 
 # Instalar dependencias (incluidas dev para el build)
-RUN npm ci
+RUN bun install --frozen-lockfile
 
 # Copiar código fuente
 COPY . .
 
 # Construir la aplicación
-RUN npm run build
+RUN bun run build
 
 # Etapa 2: Producción
-FROM node:20-alpine AS runner
+FROM oven/bun:1-alpine AS runner
 
 # Instalar dependencias del sistema necesarias
 RUN apk add --no-cache libc6-compat
@@ -34,11 +34,12 @@ RUN adduser --system --uid 1001 astro
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar archivos de configuración de dependencias
-COPY package*.json ./
+# Copiar archivos de configuración de dependencias y lockfile
+COPY package.json bun.lock* ./
 
 # Instalar solo dependencias de producción
-RUN npm ci --omit=dev && npm cache clean --force
+RUN bun install --frozen-lockfile --production && \
+    bun pm cache rm
 
 # Copiar build desde la etapa anterior
 COPY --from=builder --chown=astro:nodejs /app/dist ./dist
