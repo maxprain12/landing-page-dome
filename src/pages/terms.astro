@@ -1,0 +1,179 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+const lastUpdated = "18 de enero de 2026";
+---
+
+<Layout
+  title="Términos de Uso - Dome"
+  description="Términos y condiciones de uso de Dome"
+>
+  <main class="legal-page">
+    <div class="container">
+      <a href="/" class="back-link">← Volver al inicio</a>
+
+      <h1>Términos de Uso</h1>
+      <p class="last-updated">Última actualización: {lastUpdated}</p>
+
+      <section>
+        <h2>1. Aceptación de los Términos</h2>
+        <p>
+          Al descargar, instalar o utilizar Dome ("la Aplicación"), aceptas
+          estos términos de uso. Si no estás de acuerdo con estos términos, no
+          utilices la Aplicación.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Descripción del Servicio</h2>
+        <p>
+          Dome es una aplicación de escritorio de código abierto para gestión de
+          conocimiento e investigación académica. La Aplicación funciona
+          completamente offline y almacena todos los datos localmente en tu
+          dispositivo.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Licencia de Uso</h2>
+        <p>
+          Dome se distribuye bajo la <strong>Licencia MIT</strong>. Esto
+          significa que puedes:
+        </p>
+        <ul>
+          <li>Usar la Aplicación para cualquier propósito</li>
+          <li>Modificar el código fuente</li>
+          <li>Distribuir copias del software</li>
+          <li>Incluir el software en proyectos comerciales</li>
+        </ul>
+        <p>
+          <strong>Requisito de Atribución:</strong> Debes incluir el aviso de copyright
+          original y esta licencia en todas las copias o partes sustanciales del software.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Uso de Servicios de Terceros</h2>
+        <p>
+          La Aplicación puede conectarse opcionalmente a servicios de terceros
+          para funciones de IA:
+        </p>
+        <ul>
+          <li><strong>OpenAI:</strong> Para embeddings y chat (GPT)</li>
+          <li><strong>Anthropic:</strong> Para chat (Claude)</li>
+        </ul>
+        <p>
+          El uso de estos servicios está sujeto a sus propios términos y
+          políticas de privacidad. Las API keys que proporciones se almacenan
+          localmente en tu dispositivo.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Propiedad Intelectual</h2>
+        <p>
+          El contenido que crees usando Dome (notas, anotaciones, etc.) es de tu
+          propiedad. El código fuente de Dome está disponible bajo licencia MIT
+          con los créditos correspondientes al autor original.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Limitación de Responsabilidad</h2>
+        <p>
+          LA APLICACIÓN SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO.
+          EN NINGÚN CASO LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN
+          RESPONSABLES DE NINGUNA RECLAMACIÓN, DAÑOS U OTRA RESPONSABILIDAD.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Contribuciones</h2>
+        <p>
+          Si contribuyes al proyecto, aceptas que tus contribuciones se
+          licencien bajo los mismos términos MIT y que el autor original
+          mantenga los derechos de atribución sobre el proyecto.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Cambios en los Términos</h2>
+        <p>
+          Nos reservamos el derecho de modificar estos términos en cualquier
+          momento. Los cambios se publicarán en esta página con una nueva fecha
+          de actualización.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Contacto</h2>
+        <p>
+          Para preguntas sobre estos términos, puedes abrir un issue en el <a
+            href="https://github.com/maxprain/dome"
+            target="_blank">repositorio de GitHub</a
+          >.
+        </p>
+      </section>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .legal-page {
+    padding: 6rem 0 4rem;
+    min-height: calc(100vh - 300px);
+  }
+  .container {
+    max-width: 800px;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent-primary);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    transition: opacity var(--transition-fast);
+  }
+  .back-link:hover {
+    opacity: 0.8;
+  }
+  h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0.5rem;
+  }
+  .last-updated {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 3rem;
+  }
+  section {
+    margin-bottom: 2.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  ul {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  li {
+    margin-bottom: 0.5rem;
+  }
+  strong {
+    color: var(--text-primary);
+  }
+  a {
+    color: var(--accent-primary);
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,233 @@
+---
+const platforms = [
+  { name: "macOS", versions: ["Apple Silicon", "Intel"], badge: "Recomendado" },
+  { name: "Windows", versions: ["64-bit"], badge: null },
+  { name: "Linux", versions: ["AppImage", "Deb"], badge: null },
+];
+---
+
+<section id="download" class="download">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Descarga</span>
+      <h2>
+        Empieza a organizar tu<br /><span class="highlight-text"
+          >conocimiento hoy</span
+        >
+      </h2>
+      <p class="section-subtitle">
+        Disponible para macOS, Windows y Linux. Gratis y sin límites.
+      </p>
+    </div>
+
+    <div class="platforms">
+      {
+        platforms.map((p) => (
+          <a href="#" class="platform-card">
+            {p.badge && <span class="platform-badge">{p.badge}</span>}
+            <div class="platform-icon">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </>
+              </svg>
+            </div>
+            <h3>{p.name}</h3>
+            <div class="platform-versions">
+              {p.versions.map((v) => (
+                <span class="version-tag">{v}</span>
+              ))}
+            </div>
+            <span class="download-btn">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </>
+              </svg>
+              Descargar
+            </span>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="requirements">
+      <h4>Requisitos del Sistema</h4>
+      <ul>
+        <li>✓ macOS 10.15+, Windows 10+, o Linux</li>
+        <li>✓ 4GB RAM mínimo</li>
+        <li>✓ 500MB de espacio</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .download {
+    padding: var(--section-padding) 0;
+    position: relative;
+  }
+  .download::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: transparent; /* Removed gradient */
+    pointer-events: none;
+  }
+
+  .highlight-text {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+  .section-header {
+    text-align: center;
+    max-width: 600px;
+    margin-inline: auto;
+    margin-bottom: 4rem;
+  }
+  .section-badge {
+    display: inline-block;
+    background: var(--bg-tertiary); /* Neutral */
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .section-header h2 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 1rem;
+  }
+  .section-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+  .platforms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin-inline: auto;
+    margin-bottom: 4rem;
+  }
+  .platform-card {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .platform-card:hover {
+    background: var(--glass-hover);
+    border-color: var(--accent-primary);
+    transform: translateY(-4px);
+  }
+  .platform-badge {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background: var(--accent-primary); /* Black */
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 100px;
+  }
+  .platform-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .platform-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .platform-versions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .version-tag {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all var(--transition-base);
+  }
+  .platform-card:hover .download-btn {
+    background: var(--accent-primary); /* Black */
+    color: white;
+  }
+  .requirements {
+    max-width: 600px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .requirements h4 {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .requirements ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  .requirements li {
+    display: inline-flex;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+</style>
