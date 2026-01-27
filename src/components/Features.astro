@@ -70,10 +70,7 @@ const features = [
     <div class="features-grid">
       {
         features.map((feature, index) => (
-          <div 
-            class="feature-card" 
-            style={`--delay: ${index * 0.1}s`}
-          >
+          <div class="feature-card" style={`--delay: ${index * 0.1}s`}>
             <div class="feature-icon" set:html={feature.icon} />
             <h3>{feature.title}</h3>
             <p>{feature.description}</p>
@@ -221,7 +218,8 @@ const features = [
   @media (max-width: 768px) {
     .features-grid {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
+      padding: 0 1rem;
     }
 
     .feature-card {

@@ -8,11 +8,38 @@
       <a href="/" class="logo">
         <span class="logo-text">DOME</span>
       </a>
+
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#use-cases">Use Cases</a>
         <a href="#open-source">Open Source</a>
         <a href="#download" class="nav-cta">Download</a>
+      </div>
+
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="mobile-menu">
+        <div class="mobile-menu-content">
+          <a href="#features" class="mobile-link">Features</a>
+          <a href="#use-cases" class="mobile-link">Use Cases</a>
+          <a href="#open-source" class="mobile-link">Open Source</a>
+          <a href="#download" class="nav-cta mobile-cta">Download</a>
+        </div>
       </div>
     </nav>
 
@@ -74,7 +101,11 @@
             stroke-width="2.5"
             stroke-linecap="round"
             stroke-linejoin="round"
-            ><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg
+            ><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line
+              x1="8"
+              y1="21"
+              x2="16"
+              y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg
           >
           Cross-Platform
         </span>
@@ -86,9 +117,10 @@
       </h1>
 
       <p class="hero-subtitle animate-fade-in animate-delay-2">
-        Dome is a desktop application for knowledge management and academic research. 
-        Organize notes, PDFs, videos, audios, and images with integrated AI. Notion-style editor, 
-        PDF annotations, academic bibliography, and semantic search. Everything works 100% offline.
+        Dome is a desktop application for knowledge management and academic
+        research. Organize notes, PDFs, videos, audios, and images with
+        integrated AI. Notion-style editor, PDF annotations, academic
+        bibliography, and semantic search. Everything works 100% offline.
       </p>
 
       <div class="hero-actions animate-fade-in animate-delay-3">
@@ -130,6 +162,24 @@
     </div>
   </div>
 </section>
+
+<script>
+  const mobileBtn = document.querySelector(".mobile-menu-btn");
+  const mobileMenu = document.querySelector(".mobile-menu");
+  const mobileLinks = document.querySelectorAll(".mobile-link, .mobile-cta");
+
+  mobileBtn?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("active");
+    document.body.classList.toggle("no-scroll");
+  });
+
+  mobileLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.remove("active");
+      document.body.classList.remove("no-scroll");
+    });
+  });
+</script>
 
 <style>
   .hero {
@@ -333,13 +383,86 @@
     display: block;
   }
 
+  .mobile-menu-btn,
+  .mobile-menu {
+    display: none;
+  }
+
   @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+
+    .mobile-menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .mobile-menu {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: var(--bg-primary);
+      z-index: 1000;
+      padding: 6rem 2rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .mobile-menu.active {
+      transform: translateX(0);
+    }
+
+    .mobile-menu-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      align-items: center;
+      text-align: center;
+    }
+
+    .mobile-link {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .mobile-cta {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      padding: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+    }
+
     .hero-bento {
       margin-top: 3rem;
     }
 
     .hero-title {
       font-size: 2.5rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0 1rem;
+    }
+
+    .btn {
+      justify-content: center;
     }
   }
 </style>

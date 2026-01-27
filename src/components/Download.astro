@@ -1,25 +1,25 @@
 ---
 const platforms = [
-  { 
-    name: "macOS", 
-    versions: ["Apple Silicon", "Intel"], 
+  {
+    name: "macOS",
+    versions: ["Apple Silicon", "Intel"],
     badge: "Recommended",
     available: true,
-    downloadUrl: "#"
+    downloadUrl: "https://github.com/maxprain12/dome/releases",
   },
-  { 
-    name: "Windows", 
-    versions: ["64-bit"], 
+  {
+    name: "Windows",
+    versions: ["64-bit"],
     badge: null,
     available: true,
-    downloadUrl: "#"
+    downloadUrl: "https://github.com/maxprain12/dome/releases",
   },
-  { 
-    name: "Linux", 
-    versions: ["Coming Soon"], 
+  {
+    name: "Linux",
+    versions: ["Coming Soon"],
     badge: "Coming Soon",
     available: false,
-    downloadUrl: null
+    downloadUrl: null,
   },
 ];
 ---
@@ -41,12 +41,16 @@ const platforms = [
     <div class="platforms">
       {
         platforms.map((p) => (
-          <div 
-            class={`platform-card ${!p.available ? 'platform-disabled' : ''}`}
-            {...(p.available ? { onclick: `window.location.href='${p.downloadUrl}'` } : {})}
+          <div
+            class={`platform-card ${!p.available ? "platform-disabled" : ""}`}
+            {...(p.available
+              ? { onclick: `window.location.href='${p.downloadUrl}'` }
+              : {})}
           >
             {p.badge && (
-              <span class={`platform-badge ${!p.available ? 'badge-coming-soon' : ''}`}>
+              <span
+                class={`platform-badge ${!p.available ? "badge-coming-soon" : ""}`}
+              >
                 {p.badge}
               </span>
             )}
@@ -71,7 +75,9 @@ const platforms = [
             <h3>{p.name}</h3>
             <div class="platform-versions">
               {p.versions.map((v) => (
-                <span class={`version-tag ${!p.available ? 'version-coming-soon' : ''}`}>
+                <span
+                  class={`version-tag ${!p.available ? "version-coming-soon" : ""}`}
+                >
                   {v}
                 </span>
               ))}
@@ -108,9 +114,9 @@ const platforms = [
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 >
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <line x1="12" y1="8" x2="12" y2="12"></line>
-                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
                 Coming Soon
               </span>
@@ -266,7 +272,8 @@ const platforms = [
     font-weight: 500;
     transition: all var(--transition-base);
   }
-  .platform-card:hover:not(.platform-disabled) .download-btn:not(.download-btn-disabled) {
+  .platform-card:hover:not(.platform-disabled)
+    .download-btn:not(.download-btn-disabled) {
     background: var(--accent-primary); /* Black */
     color: white;
   }
@@ -305,5 +312,20 @@ const platforms = [
     border-radius: 100px;
     font-size: 0.85rem;
     color: var(--text-secondary);
+  }
+  @media (max-width: 768px) {
+    .platforms {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .platform-card {
+      padding: 1.5rem;
+    }
+
+    .section-header h2 {
+      font-size: 2.25rem;
+    }
   }
 </style>
