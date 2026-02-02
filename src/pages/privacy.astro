@@ -1,33 +1,34 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
-const lastUpdated = "18 de enero de 2026";
+const lastUpdated = "January 18, 2026";
 ---
 
 <Layout
-  title="Política de Privacidad - Dome"
-  description="Política de privacidad de Dome"
+  title="Privacy Policy - Dome"
+  description="Privacy policy for Dome"
 >
   <main class="legal-page">
     <div class="container">
-      <a href="/" class="back-link">← Volver al inicio</a>
+      <a href="/" class="back-link">← Back to home</a>
 
-      <h1>Política de Privacidad</h1>
-      <p class="last-updated">Última actualización: {lastUpdated}</p>
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Last updated: {lastUpdated}</p>
 
       <div class="highlight-box">
-        <strong>🔒 Resumen:</strong> Dome es 100% offline. Tus datos nunca salen de
-        tu dispositivo a menos que tú lo decidas.
+        <strong>🔒 Summary:</strong> Dome is 100% offline. Your data never
+        leaves your device unless you choose to send it.
       </div>
 
       <section>
-        <h2>1. Información que Recopilamos</h2>
+        <h2>1. Information We Collect</h2>
         <p>
-          <strong>No recopilamos ninguna información.</strong> Dome es una aplicación
-          completamente offline que almacena todos los datos localmente en tu dispositivo.
+          <strong>We do not collect any information.</strong> Dome is a
+          fully offline application that stores all data locally on your
+          device.
         </p>
         <p>
-          Los datos que creas (notas, recursos, configuración) se guardan en:
+          Data you create (notes, resources, settings) is stored in:
         </p>
         <ul>
           <li>
@@ -39,97 +40,95 @@ const lastUpdated = "18 de enero de 2026";
       </section>
 
       <section>
-        <h2>2. Servicios de Terceros (Opcional)</h2>
+        <h2>2. Third-Party Services (Optional)</h2>
         <p>
-          Si eliges usar las funciones de IA, la Aplicación puede conectarse a:
+          If you choose to use AI features, the Application may connect to:
         </p>
 
         <h3>OpenAI</h3>
         <p>
-          Para embeddings (búsqueda semántica) y chat. Los datos enviados
-          incluyen:
+          For embeddings (semantic search) and chat. Data sent may include:
         </p>
         <ul>
-          <li>Texto de tus recursos (para generar embeddings)</li>
-          <li>Consultas de búsqueda</li>
-          <li>Mensajes de chat</li>
+          <li>Text from your resources (to generate embeddings)</li>
+          <li>Search queries</li>
+          <li>Chat messages</li>
         </ul>
         <p>
-          Consulta la <a href="https://openai.com/privacy" target="_blank"
-            >política de privacidad de OpenAI</a
+          See <a href="https://openai.com/privacy" target="_blank"
+            >OpenAI’s privacy policy</a
           >.
         </p>
 
         <h3>Anthropic</h3>
         <p>
-          Para funciones de chat. Consulta la <a
+          For chat features. See the <a
             href="https://www.anthropic.com/privacy"
-            target="_blank">política de privacidad de Anthropic</a
+            target="_blank">Anthropic privacy policy</a
           >.
         </p>
 
         <p>
-          <strong>Nota:</strong> Las API keys se almacenan localmente en tu dispositivo
-          y nunca se comparten con nosotros.
+          <strong>Note:</strong> API keys are stored locally on your device and
+          are never shared with us.
         </p>
       </section>
 
       <section>
-        <h2>3. Almacenamiento de Datos</h2>
-        <p>Todos tus datos se almacenan localmente:</p>
+        <h2>3. Data Storage</h2>
+        <p>All your data is stored locally:</p>
         <ul>
           <li>
-            <strong>Base de datos SQLite:</strong> Proyectos, recursos, metadatos
+            <strong>SQLite database:</strong> Projects, resources, metadata
           </li>
           <li>
-            <strong>Base de datos vectorial (LanceDB):</strong> Embeddings para búsqueda
+            <strong>Vector database (LanceDB):</strong> Embeddings for search
           </li>
           <li>
-            <strong>Sistema de archivos:</strong> PDFs, imágenes, videos, audios
+            <strong>File system:</strong> PDFs, images, videos, audio
           </li>
         </ul>
         <p>
-          Tú tienes control total sobre estos datos. Puedes exportarlos,
-          respaldarlos o eliminarlos en cualquier momento.
+          You have full control over this data. You can export, back up, or
+          delete it at any time.
         </p>
       </section>
 
       <section>
-        <h2>4. Seguridad</h2>
+        <h2>4. Security</h2>
         <p>
-          Como tus datos permanecen en tu dispositivo, la seguridad depende de
-          las medidas que apliques a tu sistema operativo (contraseña, cifrado
-          de disco, etc.).
+          Because your data stays on your device, security depends on the
+          measures you apply to your operating system (password, disk
+          encryption, etc.).
         </p>
       </section>
 
       <section>
-        <h2>5. Derechos del Usuario</h2>
-        <p>Tienes derecho a:</p>
+        <h2>5. Your Rights</h2>
+        <p>You have the right to:</p>
         <ul>
-          <li>Acceder a todos tus datos (están en tu dispositivo)</li>
-          <li>Exportar tus datos en cualquier momento</li>
+          <li>Access all your data (it is on your device)</li>
+          <li>Export your data at any time</li>
           <li>
-            Eliminar completamente tus datos borrando la carpeta de la
-            aplicación
+            Delete your data completely by removing the application folder
           </li>
         </ul>
       </section>
 
       <section>
-        <h2>6. Cambios en esta Política</h2>
+        <h2>6. Changes to This Policy</h2>
         <p>
-          Cualquier cambio se publicará en esta página. Te recomendamos
-          revisarla periódicamente.
+          Any changes will be posted on this page. We recommend reviewing it
+          periodically.
         </p>
       </section>
 
       <section>
-        <h2>7. Contacto</h2>
+        <h2>7. Contact</h2>
         <p>
-          Para preguntas sobre privacidad, abre un issue en el <a
+          For privacy-related questions, open an issue on the <a
             href="https://github.com/maxprain12/dome"
-            target="_blank">repositorio de GitHub</a
+            target="_blank">GitHub repository</a
           >.
         </p>
       </section>
