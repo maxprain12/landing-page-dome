@@ -1,0 +1,112 @@
+---
+// Meet Many introduction section
+---
+
+<section class="meet-many-intro">
+  <div class="meet-many-container">
+    <div class="meet-many-header">
+      <div class="many-avatar">
+        <img src="/Many.svg" alt="Many" width="50" height="50" />
+      </div>
+      <div class="meet-many-title-block">
+        <h3>This is Many</h3>
+        <p class="meet-many-subtitle">Your AI companion throughout your entire journey</p>
+      </div>
+    </div>
+    <p class="meet-many-description">
+      From your first login, Many is there to guide you. They help you organize,
+      discover connections, and unlock insights from your knowledge. Think of
+      Many as your research partner who never sleeps, never forgets, and always
+      knows exactly where everything is.
+    </p>
+  </div>
+</section>
+
+<style>
+  .meet-many-intro {
+    padding: 80px 40px;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-light) 0%,
+      var(--color-bg) 100%
+    );
+    text-align: center;
+  }
+
+  .meet-many-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .meet-many-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .many-avatar {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(89, 96, 55, 0.2);
+  }
+
+  .many-avatar img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .meet-many-title-block {
+    text-align: left;
+  }
+
+  .meet-many-title-block h3 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--color-text);
+  }
+
+  .meet-many-subtitle {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .meet-many-description {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .meet-many-intro {
+      padding: 60px 20px;
+    }
+
+    .meet-many-header {
+      flex-direction: column;
+    }
+
+    .meet-many-title-block {
+      text-align: center;
+    }
+
+    .meet-many-title-block h3 {
+      font-size: 24px;
+    }
+
+    .meet-many-description {
+      font-size: 16px;
+    }
+  }
+</style>

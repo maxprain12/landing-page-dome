@@ -1,230 +1,336 @@
 ---
-// Features section component
+import {
+  Sparkles,
+  Search,
+  FileText,
+  PenLine,
+  BookOpen,
+  Youtube,
+  Lock,
+  Link as LinkIcon,
+} from "@lucide/astro";
+
 const features = [
   {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line></svg>`,
-    title: "Knowledge Hub",
-    description:
-      "Centralized management of all your resources: Notion-style notes, annotated PDFs, YouTube videos, transcribed audios, images, URLs with automatic scraping, and folders for hierarchical organization.",
+    id: "fn-1",
+    icon: Sparkles,
+    title: "Many, Your AI Assistant",
+    description: "Ask questions across all your content",
   },
   {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 2a10 10 0 0 1 10 10"></path><path d="M12 12 2.1 10.5"></path></svg>`,
-    title: "AI Integration",
-    description:
-      "Martin AI assistant, semantic search, automatic transcription, and document summarization. Support for OpenAI, Anthropic, Google Gemini, Ollama (local), Venice, and custom providers.",
+    id: "fn-2",
+    icon: Search,
+    title: "Semantic Search",
+    description: "Find by meaning, not just keywords",
   },
   {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`,
-    title: "PDF Viewer with Annotations",
-    description:
-      "Highlight, underline, strikethrough text, and add comments. Quick page navigation and zoom controls. All your annotations are saved locally.",
+    id: "fn-3",
+    icon: FileText,
+    title: "PDF Annotations",
+    description: "Highlight and comment directly",
   },
   {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`,
-    title: "Notion-Style Editor",
-    description:
-      "Advanced editor with modular blocks: headings, lists, tables, code, callouts, and more. Insert PDFs, files, and mentions with @. Quick commands with /.",
+    id: "fn-4",
+    icon: PenLine,
+    title: "Rich Editor",
+    description: "Notion-style blocks & formatting",
   },
   {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M17 10l-5-3-5 3v4l5 3 5-3v-4z"></path></svg>`,
-    title: "YouTube Integration",
-    description:
-      "Extract thumbnails in multiple qualities, get metadata (title, channel, duration) and manage YouTube videos directly from Dome.",
+    id: "fn-5",
+    icon: BookOpen,
+    title: "Bibliography",
+    description: "Auto-generate citations (APA, MLA...)",
   },
   {
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"/><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/></svg>`,
-    title: "WhatsApp Integration",
-    description:
-      "Connect your WhatsApp to capture ideas, images, and audios from your mobile. Full mobile access to your knowledge hub with real-time synchronization.",
+    id: "fn-6",
+    icon: Youtube,
+    title: "Video Library",
+    description: "Save YouTube with metadata",
   },
   {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`,
+    id: "fn-7",
+    icon: Lock,
+    title: "100% Offline",
+    description: "Your data never leaves your device",
+  },
+  {
+    id: "fn-8",
+    icon: LinkIcon,
     title: "Web Scraper",
-    description:
-      "Automatically extract web article content, capture screenshots, get Open Graph tags, and download images. Everything is saved offline for later access.",
-  },
-  {
-    icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`,
-    title: "Academic Library",
-    description:
-      "Manage academic sources (articles, books, websites, videos, podcasts). Generate citations in multiple styles (APA, MLA, Chicago, Harvard, Vancouver, IEEE) and automatic bibliographies.",
+    description: "Capture articles automatically",
   },
 ];
 ---
 
-<section id="features" class="features">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-badge">Features</span>
-      <h2>
-        Everything you need to<br /><span class="highlight-text"
-          >manage your knowledge</span
-        >
-      </h2>
-      <p class="section-subtitle">
-        Designed for researchers, academics, and professionals who need to
-        organize information from multiple sources efficiently.
-      </p>
+<section id="features" class="mental-map-section">
+  <div class="section-header-center">
+    <div class="section-label success">How It Works</div>
+    <h2>Your knowledge, connected like neurons</h2>
+    <p class="section-description">
+      Dome doesn't just store files—it understands relationships. Every note,
+      paper, and idea connects organically, with Many as your guide, creating
+      your personal knowledge graph.
+    </p>
+  </div>
+
+  <div class="mental-map-container">
+    <!-- Many: solo el SVG en grande en el centro -->
+    <div class="brain-center" aria-label="Many, your AI companion">
+      <img
+        src="/Many.svg"
+        alt="Many"
+        class="brain-many-img"
+      />
     </div>
 
-    <div class="features-grid">
-      {
-        features.map((feature, index) => (
-          <div class="feature-card" style={`--delay: ${index * 0.1}s`}>
-            <div class="feature-icon" set:html={feature.icon} />
-            <h3>{feature.title}</h3>
-            <p>{feature.description}</p>
+    {
+      features.map((f) => {
+        const Icon = f.icon;
+        return (
+          <div class={`feature-node ${f.id}`}>
+            <div class="feature-node-icon">
+              <Icon size={24} color="var(--color-accent)" />
+            </div>
+            <h3>{f.title}</h3>
+            <p>{f.description}</p>
           </div>
-        ))
-      }
-    </div>
+        );
+      })
+    }
+  </div>
+
+  <div class="mental-map-grid-fallback">
+    {
+      features.map((f) => {
+        const Icon = f.icon;
+        return (
+          <div class="feature-card-fallback">
+            <div class="feature-node-icon">
+              <Icon size={24} color="var(--color-accent)" />
+            </div>
+            <h3>{f.title}</h3>
+            <p>{f.description}</p>
+          </div>
+        );
+      })
+    }
   </div>
 </section>
 
 <style>
-  .features {
-    padding: var(--section-padding) 0;
+  .mental-map-section {
+    padding: 120px 40px;
+    background: var(--color-bg);
     position: relative;
   }
 
-  .section-header {
+  .section-header-center {
     text-align: center;
-    max-width: 600px;
-    margin-inline: auto;
-    margin-bottom: 4rem;
+    max-width: 700px;
+    margin: 0 auto 80px;
   }
 
-  .section-badge {
-    display: inline-block;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    letter-spacing: 0.05em;
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
     text-transform: uppercase;
-    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
   }
 
-  .highlight-text {
-    color: var(--text-secondary);
-    font-style: italic;
-    font-family: var(--font-sans);
-    font-weight: 500;
+  .section-label.success {
+    color: var(--color-accent);
   }
 
-  .section-header h2 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 1rem;
+  .section-header-center h2 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
   }
 
-  .section-subtitle {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
+  .section-description {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
   }
 
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    max-width: 1200px;
-    margin-inline: auto;
-  }
-
-  .feature-card {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 2rem;
-    transition: all var(--transition-base);
+  .mental-map-container {
+    max-width: 1000px;
+    margin: 0 auto;
     position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    opacity: 0;
-    animation: fade-in-up 0.8s ease-out forwards;
-    animation-delay: var(--delay, 0s);
-    min-height: 280px;
-    height: 100%;
+    height: 640px;
+    /* Centro del mapa: 50% 50% para Many */
   }
 
-  .feature-card::before {
-    content: "";
+  .brain-center {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    transition: opacity var(--transition-base);
-    display: none; /* Removed gradient line */
-  }
-
-  .feature-card:hover {
-    background: var(--bg-secondary);
-    border-color: var(--border-hover);
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
-  }
-
-  .feature-card:hover::before {
-    opacity: 0;
-  }
-
-  .feature-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1.25rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-primary);
-    flex-shrink: 0;
+    z-index: 10;
+    pointer-events: none;
   }
 
-  .feature-icon svg {
-    width: 100%;
-    height: 100%;
+  .brain-many-img {
+    width: 280px;
+    height: 280px;
+    display: block;
+    animation: pulse-brain 4s ease-in-out infinite;
   }
 
-  .feature-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    font-family: var(--font-display);
-    line-height: 1.3;
+  @keyframes pulse-brain {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
   }
 
-  .feature-card p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    flex-grow: 1;
+  .feature-node {
+    position: absolute;
+    width: 180px;
+    padding: 20px;
+    background: white;
+    border: 2px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    z-index: 5;
+    /* Centrado del nodo en su punto orbital */
+    transform: translate(-50%, -50%);
+  }
+
+  .feature-node:hover {
+    transform: translate(-50%, -50%) translateY(-8px);
+    border-color: var(--color-accent);
+    box-shadow: 0 16px 40px rgba(89, 96, 55, 0.2);
+  }
+
+  .feature-node-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--color-accent-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .feature-node h3 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .feature-node p {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.45;
+  }
+
+  /* Órbitas: 8 nodos en círculo alrededor de Many (50%, 50%) */
+  .fn-1 {
+    left: 50%;
+    top: 12%;
+  }
+  .fn-2 {
+    left: 74%;
+    top: 22%;
+  }
+  .fn-3 {
+    left: 88%;
+    top: 50%;
+  }
+  .fn-4 {
+    left: 74%;
+    top: 78%;
+  }
+  .fn-5 {
+    left: 50%;
+    top: 88%;
+  }
+  .fn-6 {
+    left: 26%;
+    top: 78%;
+  }
+  .fn-7 {
+    left: 12%;
+    top: 50%;
+  }
+  .fn-8 {
+    left: 26%;
+    top: 22%;
+  }
+
+  .mental-map-grid-fallback {
+    display: none;
   }
 
   @media (max-width: 1024px) {
-    .features-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
+    .mental-map-container {
+      display: none;
     }
 
-    .feature-card {
-      min-height: 260px;
-      padding: 1.75rem;
+    .mental-map-grid-fallback {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card-fallback {
+      background: white;
+      border: 2px solid var(--color-border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s;
+    }
+
+    .feature-card-fallback:hover {
+      border-color: var(--color-accent);
+      box-shadow: 0 8px 30px rgba(89, 96, 55, 0.15);
+    }
+
+    .feature-card-fallback .feature-node-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-accent-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .feature-card-fallback h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card-fallback p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
     }
   }
 
   @media (max-width: 768px) {
-    .features-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      padding: 0 1rem;
+    .mental-map-section {
+      padding: 80px 20px;
     }
 
-    .feature-card {
-      min-height: auto;
-      padding: 1.5rem;
+    .section-header-center h2 {
+      font-size: 36px;
     }
   }
 </style>

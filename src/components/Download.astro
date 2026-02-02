@@ -1,331 +1,89 @@
 ---
-const platforms = [
-  {
-    name: "macOS",
-    versions: ["Apple Silicon", "Intel"],
-    badge: "Recommended",
-    available: true,
-    downloadUrl: "https://github.com/maxprain12/dome/releases",
-  },
-  {
-    name: "Windows",
-    versions: ["64-bit"],
-    badge: null,
-    available: true,
-    downloadUrl: "https://github.com/maxprain12/dome/releases",
-  },
-  {
-    name: "Linux",
-    versions: ["Coming Soon"],
-    badge: "Coming Soon",
-    available: false,
-    downloadUrl: null,
-  },
-];
+import { Download as DownloadIcon } from "@lucide/astro";
 ---
 
-<section id="download" class="download">
-  <div class="container">
-    <div class="section-header">
-      <span class="section-badge">Download</span>
-      <h2>
-        Start organizing your<br /><span class="highlight-text"
-          >knowledge today</span
-        >
-      </h2>
-      <p class="section-subtitle">
-        Available for macOS and Windows. Linux coming soon. Free and unlimited.
-      </p>
-    </div>
-
-    <div class="platforms">
-      {
-        platforms.map((p) => (
-          <div
-            class={`platform-card ${!p.available ? "platform-disabled" : ""}`}
-            {...(p.available
-              ? { onclick: `window.location.href='${p.downloadUrl}'` }
-              : {})}
-          >
-            {p.badge && (
-              <span
-                class={`platform-badge ${!p.available ? "badge-coming-soon" : ""}`}
-              >
-                {p.badge}
-              </span>
-            )}
-            <div class="platform-icon">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <>
-                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                  <line x1="8" y1="21" x2="16" y2="21" />
-                  <line x1="12" y1="17" x2="12" y2="21" />
-                </>
-              </svg>
-            </div>
-            <h3>{p.name}</h3>
-            <div class="platform-versions">
-              {p.versions.map((v) => (
-                <span
-                  class={`version-tag ${!p.available ? "version-coming-soon" : ""}`}
-                >
-                  {v}
-                </span>
-              ))}
-            </div>
-            {p.available ? (
-              <span class="download-btn">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <>
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                  </>
-                </svg>
-                Download
-              </span>
-            ) : (
-              <span class="download-btn download-btn-disabled">
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="8" x2="12" y2="12" />
-                  <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
-                Coming Soon
-              </span>
-            )}
-          </div>
-        ))
-      }
-    </div>
-
-    <div class="requirements">
-      <h4>System Requirements</h4>
-      <ul>
-        <li>✓ macOS 10.15+ or Windows 10+</li>
-        <li>✓ 16GB RAM minimum (required for Ollama)</li>
-        <li>✓ 500MB disk space</li>
-        <li>✓ Linux: Coming soon</li>
-      </ul>
-    </div>
+<section id="download" class="final-cta">
+  <div class="cta-content">
+    <h2>Start building your knowledge universe with Many</h2>
+    <p>
+      Free, open source, and completely offline. Available for macOS and
+      Windows. Your AI companion awaits.
+    </p>
+    <a
+      href="https://github.com/maxprain12/dome/releases"
+      target="_blank"
+      rel="noopener"
+      class="btn-white"
+    >
+      <DownloadIcon size={24} />
+      Download Dome
+    </a>
   </div>
 </section>
 
 <style>
-  .download {
-    padding: var(--section-padding) 0;
-    position: relative;
-  }
-  .download::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: transparent; /* Removed gradient */
-    pointer-events: none;
+  .final-cta {
+    padding: 120px 40px;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent) 0%,
+      #4a502e 100%
+    );
+    color: white;
+    text-align: center;
   }
 
-  .highlight-text {
-    color: var(--text-secondary);
-    font-style: italic;
-    font-family: var(--font-sans);
-    font-weight: 500;
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
   }
-  .section-header {
-    text-align: center;
-    max-width: 600px;
-    margin-inline: auto;
-    margin-bottom: 4rem;
-  }
-  .section-badge {
-    display: inline-block;
-    background: var(--bg-tertiary); /* Neutral */
-    border: 1px solid var(--border);
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .section-header h2 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 1rem;
-  }
-  .section-subtitle {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-  }
-  .platforms {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-    max-width: 1000px;
-    margin-inline: auto;
-    margin-bottom: 4rem;
-  }
-  .platform-card {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 2rem;
-    text-align: center;
-    position: relative;
-    transition: all var(--transition-base);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-  }
-  .platform-card:hover:not(.platform-disabled) {
-    background: var(--glass-hover);
-    border-color: var(--accent-primary);
-    transform: translateY(-6px);
-    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12);
-  }
-  .platform-disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  .platform-disabled:hover {
-    transform: none;
-  }
-  .platform-badge {
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    background: var(--accent-primary); /* Black */
+
+  .final-cta h2 {
     color: white;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.35rem 0.75rem;
-    border-radius: 100px;
+    margin-bottom: 24px;
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
-  .badge-coming-soon {
-    background: var(--text-secondary);
-    color: white;
+
+  .final-cta p {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 40px;
   }
-  .platform-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  .platform-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-  .platform-versions {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .version-tag {
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-  }
-  .version-coming-soon {
-    background: var(--bg-secondary);
-    border-color: var(--text-muted);
-    color: var(--text-muted);
-    font-style: italic;
-  }
-  .download-btn {
+
+  .btn-white {
+    background: white;
+    color: var(--color-accent);
+    padding: 18px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-    padding: 0.75rem 1.5rem;
-    border-radius: 10px;
-    font-weight: 500;
-    transition: all var(--transition-base);
+    gap: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
   }
-  .platform-card:hover:not(.platform-disabled)
-    .download-btn:not(.download-btn-disabled) {
-    background: var(--accent-primary); /* Black */
-    color: white;
+
+  .btn-white:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
   }
-  .download-btn-disabled {
-    background: var(--bg-tertiary);
-    color: var(--text-muted);
-    cursor: not-allowed;
-  }
-  .platform-card:hover .download-btn-disabled {
-    background: var(--bg-tertiary);
-    color: var(--text-muted);
-  }
-  .requirements {
-    max-width: 600px;
-    margin-inline: auto;
-    text-align: center;
-  }
-  .requirements h4 {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-  .requirements ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-  .requirements li {
-    display: inline-flex;
-    background: var(--glass);
-    border: 1px solid var(--border);
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
+
   @media (max-width: 768px) {
-    .platforms {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-      padding: 0 1rem;
+    .final-cta {
+      padding: 80px 20px;
     }
 
-    .platform-card {
-      padding: 1.5rem;
+    .final-cta h2 {
+      font-size: 32px;
     }
 
-    .section-header h2 {
-      font-size: 2.25rem;
+    .final-cta p {
+      font-size: 18px;
     }
   }
 </style>

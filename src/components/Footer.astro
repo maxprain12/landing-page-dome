@@ -3,162 +3,86 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <a href="/" class="logo">
-          <span class="logo-text">DOME</span>
-        </a>
-        <p>
-          Your knowledge, always with you.<br />100% offline and open source.
-        </p>
-      </div>
-
-      <div class="footer-links">
-        <div class="footer-section">
-          <h4>Product</h4>
-          <a href="#features">Features</a>
-          <a href="#use-cases">Use Cases</a>
-          <a href="#download">Download</a>
-          <a href="https://github.com/maxprain12/dome" target="_blank"
-            >Documentation</a
-          >
-        </div>
-
-        <div class="footer-section">
-          <h4>Open Source</h4>
-          <a href="https://github.com/maxprain12/dome" target="_blank">GitHub</a
-          >
-          <a href="https://github.com/maxprain12/dome/issues" target="_blank"
-            >Report Bug</a
-          >
-          <a href="https://github.com/maxprain12/dome/pulls" target="_blank"
-            >Contribute</a
-          >
-        </div>
-
-        <div class="footer-section">
-          <h4>Legal</h4>
-          <a href="/terms">Terms of Use</a>
-          <a href="/privacy">Privacy Policy</a>
-          <a
-            href="https://github.com/maxprain12/dome/blob/main/LICENSE"
-            target="_blank">MIT License</a
-          >
-        </div>
-      </div>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="/Many.svg" alt="Dome" width="32" height="32" />
+      <span>Dome</span>
     </div>
-
-    <div class="footer-bottom">
-      <p>
-        &copy; {currentYear} Dome. Created by <strong>Alder Velasquez</strong>.
-        MIT License with attribution required.
-      </p>
-      <a
-        href="https://github.com/maxprain12/dome"
-        target="_blank"
-        class="github-link"
+    <p class="footer-text">Your knowledge, always with you. Guided by Many.</p>
+    <p class="footer-text">
+      © {currentYear} Dome. Created by <strong>Alder Velasquez</strong>. MIT
+      License.
+    </p>
+    <div class="footer-links-minimal">
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener"
+        >GitHub</a
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path
-            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
-          ></path>
-        </svg>
-      </a>
     </div>
   </div>
 </footer>
 
 <style>
   .footer {
-    padding: 4rem 0 2rem;
-    border-top: 1px solid var(--border);
-    background: var(--bg-secondary);
+    padding: 60px 40px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
   }
-  .footer-main {
-    display: grid;
-    grid-template-columns: 1.5fr 2fr;
-    gap: 4rem;
-    margin-bottom: 3rem;
+
+  .footer-inner {
+    max-width: 600px;
+    margin: 0 auto;
   }
-  .logo {
-    display: flex;
+
+  .footer-logo {
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text);
   }
-  .logo-icon {
-    color: var(--accent-primary);
+
+  .footer-logo img {
+    width: 32px;
+    height: 32px;
   }
-  .footer-brand p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.7;
+
+  .footer-text {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 8px;
   }
-  .footer-links {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+
+  .footer-text strong {
+    color: var(--color-text);
   }
-  .footer-section h4 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .footer-section a {
-    display: block;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    padding: 0.35rem 0;
-    transition: color var(--transition-fast);
-  }
-  .footer-section a:hover {
-    color: var(--accent-primary);
-  }
-  .footer-bottom {
+
+  .footer-links-minimal {
+    margin-top: 24px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
   }
-  .footer-bottom p {
-    color: var(--text-muted);
-    font-size: 0.85rem;
+
+  .footer-links-minimal a {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
   }
-  .footer-bottom strong {
-    color: var(--text-secondary);
+
+  .footer-links-minimal a:hover {
+    color: var(--color-accent);
   }
-  .github-link {
-    color: var(--text-secondary);
-    transition: color var(--transition-fast);
-  }
-  .github-link:hover {
-    color: var(--text-primary);
-  }
-  @media (max-width: 900px) {
-    .footer-main {
-      grid-template-columns: 1fr;
-      gap: 3rem;
-    }
-    .footer-links {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  @media (max-width: 600px) {
-    .footer-links {
-      grid-template-columns: 1fr;
-    }
-    .footer-bottom {
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
+
+  @media (max-width: 768px) {
+    .footer {
+      padding: 40px 20px;
     }
   }
 </style>

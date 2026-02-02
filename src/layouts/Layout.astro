@@ -10,10 +10,11 @@ const {
   title = "Dome - Knowledge Management & Academic Research | 100% Offline",
   description = "Dome is a desktop application for knowledge management and academic research. Organize notes, PDFs, videos, and more with integrated AI. 100% offline, open source. Notion-style editor, PDF annotations, academic bibliography, and more.",
   ogImage = "/dashboard.png",
-  canonicalUrl = Astro.url.href,
+  canonicalUrl: canonicalUrlProp,
 } = Astro.props;
 
-const siteUrl = Astro.site?.href || "https://dome.app";
+const siteUrl = Astro.site?.href || "https://dome.dowi.es";
+const canonicalUrl = canonicalUrlProp ?? `${siteUrl}${Astro.url.pathname}`;
 const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
@@ -100,7 +101,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -111,35 +112,40 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
 
 <style is:global>
   :root {
-    /* Vento Mode Colors - Porcelain & Clean */
-    --bg-primary: #ffffff;
-    --bg-secondary: #fafafa; /* Soft porcelain white */
-    --bg-tertiary: #f4f4f6; /* Very light gray for subtle contrast */
+    /* Dome + Many reference palette */
+    --color-bg: #fafafa;
+    --color-surface: #ffffff;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #6b6b6b;
+    --color-accent: #596037;
+    --color-accent-light: #e0eab4;
+    --color-border: #e5e5e5;
+    --color-problem: #e57b7b;
 
-    --accent-primary: #18181b; /* Jet Black for high contrast actions */
-    --accent-secondary: #52525b; /* Zinc 600 */
-    --accent-gradient: none; /* No gradients in Vento mode */
-
-    --text-primary: #18181b; /* Zinc 900 */
-    --text-secondary: #52525b; /* Zinc 600 */
-    --text-muted: #a1a1aa; /* Zinc 400 */
-
-    --glass: rgba(255, 255, 255, 0.8);
+    /* Aliases for compatibility */
+    --bg-primary: var(--color-surface);
+    --bg-secondary: var(--color-bg);
+    --bg-tertiary: #f4f4f6;
+    --accent-primary: var(--color-accent);
+    --accent-secondary: var(--color-text-secondary);
+    --text-primary: var(--color-text);
+    --text-secondary: var(--color-text-secondary);
+    --text-muted: #a1a1aa;
+    --glass: rgba(255, 255, 255, 0.9);
     --glass-hover: rgba(255, 255, 255, 0.95);
-
-    --border: #e4e4e7; /* Zinc 200 */
-    --border-hover: #d4d4d8; /* Zinc 300 */
+    --border: var(--color-border);
+    --border-hover: var(--color-accent);
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md:
       0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
 
     /* Typography */
     --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-display: "Outfit", var(--font-sans);
+    --font-display: var(--font-sans);
 
     /* Spacing */
     --section-padding: clamp(4rem, 10vw, 8rem);
-    --container-width: min(1200px, 90vw);
+    --container-width: min(1400px, 90vw);
 
     /* Transitions */
     --transition-fast: 150ms ease;
@@ -161,8 +167,8 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
 
   body {
     font-family: var(--font-sans);
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: var(--color-bg);
+    color: var(--color-text);
     line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -181,7 +187,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: var(--text-primary);
+    color: var(--color-text);
   }
 
   a {
@@ -201,10 +207,14 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
   }
 
   .gradient-text {
-    color: var(--text-primary); /* Fallback/Override */
-    background: none;
-    -webkit-background-clip: border-box;
-    -webkit-text-fill-color: currentcolor;
+    background: linear-gradient(
+      135deg,
+      var(--color-text) 0%,
+      var(--color-accent) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   /* Animation utilities */

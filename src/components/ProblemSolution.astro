@@ -1,0 +1,285 @@
+---
+import {
+  FileText,
+  StickyNote,
+  Play,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  Music,
+} from "@lucide/astro";
+---
+
+<section class="problem-solution">
+  <div class="section-container">
+    <div class="problem-side">
+      <div class="section-label">The Problem</div>
+      <h2>Information scattered everywhere</h2>
+      <p class="section-description">
+        PDFs in Downloads, notes in random apps, videos bookmarked but never
+        watched. Your knowledge is fragmented, disconnected, and impossible to
+        navigate.
+      </p>
+
+      <div class="chaos-illustration">
+        <div class="scattered-files">
+          <div class="file-icon file-1">
+            <FileText size={32} color="var(--color-text-secondary)" />
+          </div>
+          <div class="file-icon file-2">
+            <StickyNote size={32} color="var(--color-text-secondary)" />
+          </div>
+          <div class="file-icon file-3">
+            <Play size={32} color="var(--color-text-secondary)" />
+          </div>
+          <div class="file-icon file-4">
+            <ImageIcon size={32} color="var(--color-text-secondary)" />
+          </div>
+          <div class="file-icon file-5">
+            <LinkIcon size={32} color="var(--color-text-secondary)" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-side">
+      <div class="section-label success">The Solution</div>
+      <h2>Everything connected, intelligently</h2>
+      <p class="section-description">
+        Dome brings order to chaos. One hub for all your knowledge, automatically
+        organized, semantically searchable, and AI-enhanced. Many, your AI
+        companion, becomes your personal research assistant that works offline.
+      </p>
+
+      <div class="organized-illustration">
+        <div class="organized-grid">
+          <div class="organized-file">
+            <FileText size={28} color="var(--color-accent)" />
+            <span>Papers</span>
+          </div>
+          <div class="organized-file">
+            <StickyNote size={28} color="var(--color-accent)" />
+            <span>Notes</span>
+          </div>
+          <div class="organized-file">
+            <Play size={28} color="var(--color-accent)" />
+            <span>Videos</span>
+          </div>
+          <div class="organized-file">
+            <Music size={28} color="var(--color-accent)" />
+            <span>Audio</span>
+          </div>
+          <div class="organized-file">
+            <ImageIcon size={28} color="var(--color-accent)" />
+            <span>Images</span>
+          </div>
+          <div class="organized-file">
+            <LinkIcon size={28} color="var(--color-accent)" />
+            <span>Links</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem-solution {
+    padding: 120px 40px;
+    background: var(--color-surface);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .problem-side {
+    position: relative;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--color-problem);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .section-label.success {
+    color: var(--color-accent);
+  }
+
+  .problem-side h2 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .section-description {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+  }
+
+  .chaos-illustration {
+    position: relative;
+    height: 400px;
+    background: var(--color-bg);
+    border-radius: 24px;
+    padding: 40px;
+    overflow: hidden;
+  }
+
+  .scattered-files {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .file-icon {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    background: white;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .file-1 {
+    top: 10%;
+    left: 10%;
+    transform: rotate(-15deg);
+  }
+  .file-2 {
+    top: 20%;
+    right: 15%;
+    transform: rotate(20deg);
+  }
+  .file-3 {
+    bottom: 25%;
+    left: 20%;
+    transform: rotate(-25deg);
+  }
+  .file-4 {
+    bottom: 15%;
+    right: 10%;
+    transform: rotate(15deg);
+  }
+  .file-5 {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-10deg);
+  }
+
+  .organized-illustration {
+    position: relative;
+    height: 400px;
+    background: linear-gradient(
+      135deg,
+      var(--color-accent-light) 0%,
+      var(--color-bg) 100%
+    );
+    border-radius: 24px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .organized-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .organized-file {
+    width: 80px;
+    height: 90px;
+    background: white;
+    border: 2px solid var(--color-accent);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(89, 96, 55, 0.15);
+    animation: fadeInUp 0.6s ease-out backwards;
+  }
+
+  .organized-file:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+  .organized-file:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .organized-file:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .organized-file:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+  .organized-file:nth-child(5) {
+    animation-delay: 0.5s;
+  }
+  .organized-file:nth-child(6) {
+    animation-delay: 0.6s;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .organized-file span {
+    font-size: 9px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 1024px) {
+    .section-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .problem-side h2 {
+      font-size: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .problem-solution {
+      padding: 80px 20px;
+    }
+
+    .problem-side h2 {
+      font-size: 32px;
+    }
+
+    .chaos-illustration,
+    .organized-illustration {
+      height: 300px;
+    }
+  }
+</style>
