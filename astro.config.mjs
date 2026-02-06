@@ -17,5 +17,7 @@ export default defineConfig({
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',
+    // Archivos .html en raíz: /terms.html y /privacy.html funcionan en cualquier servidor estático
+    format: 'file',
   },
 });

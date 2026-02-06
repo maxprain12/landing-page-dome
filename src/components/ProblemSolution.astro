@@ -218,17 +218,23 @@ import {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
   }
 
   .organized-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    justify-items: center;
   }
 
   .organized-file {
     width: 80px;
     height: 90px;
+    min-width: 0;
     background: white;
     border: 2px solid var(--color-accent);
     border-radius: 12px;
@@ -304,6 +310,90 @@ import {
     .chaos-illustration,
     .organized-illustration {
       height: 300px;
+      padding: 20px;
     }
+
+    /* 3×2 en tablet/móvil: 3 columnas, 2 filas */
+    .organized-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .organized-file {
+      width: 72px;
+      height: 76px;
+    }
+  }
+
+  /* Móvil estrecho: 3×2, píldoras más pequeñas para que quepan */
+  @media (max-width: 480px) {
+    .problem-solution {
+      padding: 48px 16px;
+    }
+
+    .section-container {
+      gap: 1.5rem;
+    }
+
+    .paper-cut-card {
+      padding: 1.5rem;
+    }
+
+    .problem-side h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .section-description {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .chaos-illustration,
+    .organized-illustration {
+      height: 220px;
+      padding: 16px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 3 columnas × 2 filas para que no se salga */
+    .organized-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      justify-items: center;
+    }
+
+    .organized-file {
+      width: 64px;
+      height: 64px;
+      margin: 0;
+      gap: 4px;
+    }
+
+    .organized-file span {
+      font-size: 7px;
+    }
+
+    .organized-file svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .file-icon {
+      width: 48px;
+      height: 56px;
+    }
+
+    .file-1 { top: 5%; left: 5%; }
+    .file-2 { top: 15%; right: 10%; }
+    .file-3 { bottom: 20%; left: 15%; }
+    .file-4 { bottom: 10%; right: 5%; }
+    .file-5 { top: 45%; left: 50%; }
   }
 </style>

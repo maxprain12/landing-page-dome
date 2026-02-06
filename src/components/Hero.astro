@@ -122,6 +122,7 @@ import TorusEnergyFlow from "./react/TorusEnergyFlow";
     border-bottom: 1px solid var(--color-border);
     z-index: 1000;
     padding: 20px 0;
+    padding-top: max(20px, env(safe-area-inset-top));
   }
 
   .nav-container {
@@ -318,6 +319,60 @@ import TorusEnergyFlow from "./react/TorusEnergyFlow";
     }
 
     .btn-hero {
+      justify-content: center;
+    }
+  }
+
+  /* Pantallas muy pequeñas (móvil estrecho) */
+  @media (max-width: 480px) {
+    .hero-illustrated {
+      padding: 100px 16px 48px;
+      min-height: auto;
+    }
+
+    .nav {
+      padding: 12px 0;
+    }
+
+    .nav-container {
+      padding: 0 16px;
+    }
+
+    .logo {
+      font-size: 18px;
+      gap: 8px;
+    }
+
+    .logo img {
+      width: 28px;
+      height: 28px;
+    }
+
+    .nav-cta a {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+
+    .hero-content h1 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .hero-badge {
+      font-size: 12px;
+      padding: 5px 12px;
+      margin-bottom: 20px;
+    }
+
+    .btn-hero {
+      padding: 14px 24px;
+      font-size: 15px;
+      width: 100%;
       justify-content: center;
     }
   }

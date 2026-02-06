@@ -368,8 +368,56 @@ const features = [
       padding: 80px 20px;
     }
 
+    .section-header-center {
+      margin-bottom: 48px;
+    }
+
     .section-header-center h2 {
       font-size: 36px;
+    }
+
+    .mental-map-grid-fallback {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .feature-card-fallback {
+      padding: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .mental-map-section {
+      padding: 48px 16px;
+    }
+
+    .section-header-center {
+      margin-bottom: 32px;
+    }
+
+    .section-header-center h2 {
+      font-size: 26px;
+    }
+
+    .section-description {
+      font-size: 16px;
+    }
+
+    .feature-card-fallback {
+      padding: 16px;
+    }
+
+    .feature-card-fallback .feature-node-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .feature-card-fallback h3 {
+      font-size: 15px;
+    }
+
+    .feature-card-fallback p {
+      font-size: 12px;
     }
   }
 </style>
