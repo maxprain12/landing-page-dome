@@ -11,9 +11,9 @@ import {
 
 <section class="problem-solution">
   <div class="section-container">
-    <div class="problem-side">
+    <div class="paper-cut-card problem-side">
       <div class="section-label">The Problem</div>
-      <h2>Information scattered everywhere</h2>
+      <h2 class="cartel-title">Information scattered everywhere</h2>
       <p class="section-description">
         PDFs in Downloads, notes in random apps, videos bookmarked but never
         watched. Your knowledge is fragmented, disconnected, and impossible to
@@ -41,9 +41,9 @@ import {
       </div>
     </div>
 
-    <div class="problem-side">
+    <div class="paper-cut-card problem-side">
       <div class="section-label success">The Solution</div>
-      <h2>Everything connected, intelligently</h2>
+      <h2 class="cartel-title">Everything connected, intelligently</h2>
       <p class="section-description">
         Dome brings order to chaos. One hub for all your knowledge, automatically
         organized, semantically searchable, and AI-enhanced. Many, your AI
@@ -85,18 +85,38 @@ import {
 <style>
   .problem-solution {
     padding: 120px 40px;
-    background: var(--color-surface);
+    background: var(--color-bg);
     position: relative;
     overflow: hidden;
+    border-top: 1px solid var(--color-border);
   }
 
   .section-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
+    gap: 2.5rem;
+    align-items: stretch;
+  }
+
+  .paper-cut-card {
+    background: var(--color-surface);
+    padding: 2.5rem;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08), 0 0 0 1px var(--color-border);
+    border-radius: 4px;
+  }
+
+  .paper-cut-card:first-child {
+    transform: rotate(-0.4deg);
+  }
+
+  .paper-cut-card:last-child {
+    transform: rotate(0.35deg);
+  }
+
+  .cartel-title {
+    font-family: var(--font-cartel);
   }
 
   .problem-side {
@@ -271,6 +291,10 @@ import {
   @media (max-width: 768px) {
     .problem-solution {
       padding: 80px 20px;
+    }
+
+    .paper-cut-card {
+      transform: none;
     }
 
     .problem-side h2 {

@@ -3,8 +3,13 @@ import { Download as DownloadIcon } from "@lucide/astro";
 ---
 
 <section id="download" class="final-cta">
+  <div class="final-cta-bg" aria-hidden="true">
+    <img src="https://picsum.photos/seed/dome-download-cta/1920/800" alt="" />
+    <div class="final-cta-overlay"></div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+  </div>
   <div class="cta-content">
-    <h2>Start building your knowledge universe with Many</h2>
+    <h2 class="cartel-title">Start building your knowledge universe with Many</h2>
     <p>
       Free, open source, and completely offline. Available for macOS and
       Windows. Your AI companion awaits.
@@ -18,24 +23,68 @@ import { Download as DownloadIcon } from "@lucide/astro";
       <DownloadIcon size={24} />
       Download Dome
     </a>
+    <p class="cta-ascii" aria-hidden="true">  · · offline · ·  </p>
   </div>
 </section>
 
 <style>
   .final-cta {
     padding: 120px 40px;
-    background: linear-gradient(
-      135deg,
-      var(--color-accent) 0%,
-      #4a502e 100%
-    );
     color: white;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .final-cta-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .final-cta-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.25) contrast(1.05);
+  }
+
+  .final-cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(89, 96, 55, 0.85) 0%,
+      rgba(74, 80, 46, 0.9) 100%
+    );
+  }
+
+  .final-cta .grain-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    pointer-events: none;
   }
 
   .cta-content {
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cartel-title {
+    font-family: var(--font-cartel);
+  }
+
+  .cta-ascii {
+    font-family: "SF Mono", Consolas, Monaco, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 1.5rem;
+    margin-bottom: 0;
   }
 
   .final-cta h2 {
@@ -54,17 +103,17 @@ import { Download as DownloadIcon } from "@lucide/astro";
   }
 
   .btn-white {
-    background: white;
+    background: rgba(255, 252, 240, 0.98);
     color: var(--color-accent);
     padding: 18px 40px;
     font-size: 18px;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: 4px;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 14px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1);
     transition: all 0.3s;
   }
 

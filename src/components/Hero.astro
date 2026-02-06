@@ -3,17 +3,16 @@ import {
   Sparkles,
   Download,
   Github,
-  FileText,
-  StickyNote,
-  Play,
-  Link as LinkIcon,
-  Search,
-  Music,
-  Image as ImageIcon,
 } from "@lucide/astro";
+import TorusEnergyFlow from "./react/TorusEnergyFlow";
 ---
 
 <section class="hero-illustrated">
+  <div class="hero-bg">
+    <img class="hero-bg-img" src="https://images.unsplash.com/photo-1758559616527-35f149122a12?w=1920&q=80&fit=crop" alt="" />
+    <div class="hero-bg-overlay"></div>
+    <div class="hero-grain" aria-hidden="true"></div>
+  </div>
   <nav class="nav">
     <div class="nav-container">
       <a href="/" class="logo">
@@ -33,10 +32,8 @@ import {
         <span>Meet Many, Your AI Companion</span>
       </div>
 
-      <h1>
-        Build your<br />
-        <span class="gradient-text">personal</span><br />
-        knowledge dome
+      <h1 class="hero-cartel">
+        Build your personal knowledge dome
       </h1>
 
       <p class="hero-description">
@@ -64,81 +61,7 @@ import {
 
     <div class="hero-illustration">
       <div class="illustration-inner">
-        <div class="knowledge-dome">
-          <img src="/Many.svg" alt="Many" width="120" height="120" />
-        </div>
-
-        <div class="orbit orbit-1">
-          <div class="orbit-node node-pdf">
-            <div class="orbit-node-inner">
-              <div class="content-node">
-                <FileText size={32} color="var(--color-accent)" />
-                <span>PDF</span>
-              </div>
-            </div>
-          </div>
-          <div class="orbit-node node-note">
-            <div class="orbit-node-inner">
-              <div class="content-node">
-                <StickyNote size={32} color="var(--color-accent)" />
-                <span>Note</span>
-              </div>
-            </div>
-          </div>
-          <div class="orbit-node node-video">
-            <div class="orbit-node-inner">
-              <div class="content-node">
-                <Play size={32} color="var(--color-accent)" />
-                <span>Video</span>
-              </div>
-            </div>
-          </div>
-          <div class="orbit-node node-link">
-            <div class="orbit-node-inner">
-              <div class="content-node">
-                <LinkIcon size={32} color="var(--color-accent)" />
-                <span>Link</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="orbit orbit-2">
-          <div class="orbit-node node-ai">
-            <div class="orbit-node-inner orbit-2-inner">
-              <div class="content-node">
-                <Sparkles size={32} color="var(--color-accent)" />
-                <span>AI</span>
-              </div>
-            </div>
-          </div>
-          <div class="orbit-node node-search">
-            <div class="orbit-node-inner orbit-2-inner">
-              <div class="content-node">
-                <Search size={32} color="var(--color-accent)" />
-                <span>Search</span>
-              </div>
-            </div>
-          </div>
-          <div class="orbit-node node-audio">
-            <div class="orbit-node-inner orbit-2-inner">
-              <div class="content-node">
-                <Music size={32} color="var(--color-accent)" />
-                <span>Audio</span>
-              </div>
-            </div>
-          </div>
-          <div class="orbit-node node-image">
-            <div class="orbit-node-inner orbit-2-inner">
-              <div class="content-node">
-                <ImageIcon size={32} color="var(--color-accent)" />
-                <span>Image</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="orbit orbit-3"></div>
+        <TorusEnergyFlow client:load transparent className="hero-torus" width={520} height={520} />
       </div>
     </div>
   </div>
@@ -147,12 +70,46 @@ import {
 <style>
   .hero-illustrated {
     padding: 140px 40px 80px;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     position: relative;
     min-height: 90vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.25) contrast(1.05) saturate(0.85) blur(3px);
+  }
+
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(89, 96, 55, 0.35) 0%,
+      rgba(0, 0, 0, 0.5) 50%,
+      rgba(0, 0, 0, 0.75) 100%
+    );
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   .nav {
@@ -217,6 +174,8 @@ import {
     max-width: 1320px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-content {
@@ -244,11 +203,17 @@ import {
     margin-bottom: 24px;
   }
 
+  .hero-cartel {
+    font-family: var(--font-cartel);
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  }
+
   .hero-description {
     font-size: 20px;
     line-height: 1.6;
-    color: var(--color-text-secondary);
     margin-bottom: 40px;
+    color: rgba(255,255,255,0.9);
   }
 
   .hero-cta {
@@ -308,177 +273,9 @@ import {
     flex-shrink: 0;
   }
 
-  .knowledge-dome {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    background: var(--color-surface);
-    border-radius: 50%;
-    border: 3px solid var(--color-accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 20px 60px rgba(89, 96, 55, 0.2);
-    animation: float 6s ease-in-out infinite;
-    z-index: 5;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translate(-50%, -50%) translateY(0);
-    }
-    50% {
-      transform: translate(-50%, -50%) translateY(-20px);
-    }
-  }
-
-  .knowledge-dome img {
-    width: 120px;
-    height: 120px;
-  }
-
-  .orbit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border: 2px solid var(--color-border);
-    border-radius: 50%;
-    opacity: 0.5;
-    will-change: transform;
-  }
-
-  .orbit-1 {
-    width: 320px;
-    height: 320px;
-    margin-left: -160px;
-    margin-top: -160px;
-    animation: orbit-rotate 30s linear infinite;
-  }
-
-  .orbit-2 {
-    width: 450px;
-    height: 450px;
-    margin-left: -225px;
-    margin-top: -225px;
-    animation: orbit-rotate 45s linear infinite reverse;
-  }
-
-  .orbit-3 {
-    width: 580px;
-    height: 580px;
-    margin-left: -290px;
-    margin-top: -290px;
-    animation: orbit-rotate 60s linear infinite;
-  }
-
-  @keyframes orbit-rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  /* Nodos: posición en la órbita (giran con ella) */
-  .orbit-node {
-    position: absolute;
-    z-index: 4;
-  }
-
-  /* Contrarrotación para que las tarjetas queden siempre rectas */
-  .orbit-node-inner {
-    animation: counter-rotate-30 30s linear infinite;
-  }
-
-  .orbit-2 .orbit-node-inner {
-    animation: counter-rotate-45-rev 45s linear infinite;
-  }
-
-  @keyframes counter-rotate-30 {
-    from {
-      transform: rotate(-360deg);
-    }
-    to {
-      transform: rotate(0deg);
-    }
-  }
-
-  @keyframes counter-rotate-45-rev {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .orbit-node.node-pdf {
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .orbit-node.node-note {
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-  }
-  .orbit-node.node-video {
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .orbit-node.node-link {
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-  }
-  .orbit-node.node-ai {
-    top: 15%;
-    right: 15%;
-  }
-  .orbit-node.node-search {
-    bottom: 15%;
-    right: 15%;
-  }
-  .orbit-node.node-audio {
-    bottom: 15%;
-    left: 15%;
-  }
-  .orbit-node.node-image {
-    top: 15%;
-    left: 15%;
-  }
-
-  .content-node {
-    width: 80px;
-    height: 80px;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-  }
-
-  .content-node:hover {
-    transform: scale(1.1);
-    border-color: var(--color-accent);
-    box-shadow: 0 8px 30px rgba(89, 96, 55, 0.2);
-  }
-
-  .content-node span {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--color-text-secondary);
+  .hero-torus {
+    width: 520px;
+    height: 520px;
   }
 
   @media (max-width: 1024px) {

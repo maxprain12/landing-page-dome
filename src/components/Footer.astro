@@ -13,6 +13,7 @@ const currentYear = new Date().getFullYear();
       © {currentYear} Dome. Created by <strong>Alder Velasquez</strong>. MIT
       License.
     </p>
+    <pre class="footer-ascii" aria-hidden="true">  . · ·  knowledge dome  · · .</pre>
     <div class="footer-links-minimal">
       <a href="/terms">Terms</a>
       <a href="/privacy">Privacy</a>
@@ -59,6 +60,18 @@ const currentYear = new Date().getFullYear();
 
   .footer-text strong {
     color: var(--color-text);
+  }
+
+  .footer-ascii {
+    font-family: "SF Mono", Consolas, Monaco, monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--color-text-secondary);
+    opacity: 0.5;
+    margin: 16px 0 0;
+    background: none;
+    border: none;
+    padding: 0;
   }
 
   .footer-links-minimal {

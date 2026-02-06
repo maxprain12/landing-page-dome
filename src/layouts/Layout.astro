@@ -101,19 +101,23 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Libre+Baskerville:ital,wght@0,700;1,400&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <slot />
+    <div class="dureza-overlay" aria-hidden="true"></div>
+    <div class="page-content">
+      <slot />
+    </div>
+    <div class="grain-overlay" aria-hidden="true"></div>
   </body>
 </html>
 
 <style is:global>
   :root {
-    /* Dome + Many reference palette */
-    --color-bg: #fafafa;
+    /* Dome + Many reference palette (dureza: fondo ligeramente cálido) */
+    --color-bg: #f8f7f5;
     --color-surface: #ffffff;
     --color-text: #1a1a1a;
     --color-text-secondary: #6b6b6b;
@@ -142,6 +146,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     /* Typography */
     --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
     --font-display: var(--font-sans);
+    --font-cartel: "Libre Baskerville", "Times New Roman", Georgia, serif;
 
     /* Spacing */
     --section-padding: clamp(4rem, 10vw, 8rem);
@@ -173,9 +178,32 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    position: relative;
   }
 
-  /* Subtle grain or texture could be added here if requested, but staying clean for now */
+  /* Dureza: overlay sepia muy sutil (no afecta contraste de texto) */
+  .dureza-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background: rgba(255, 250, 240, 0.03);
+  }
+
+  .page-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Granulado fotográfico global */
+  .grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
   h1,
   h2,

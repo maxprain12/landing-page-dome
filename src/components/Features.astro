@@ -9,7 +9,7 @@ import {
   Lock,
   Link as LinkIcon,
 } from "@lucide/astro";
-
+import ZoomedParticleAnimation from "./react/ZoomedParticleAnimation";
 const features = [
   {
     id: "fn-1",
@@ -65,7 +65,7 @@ const features = [
 <section id="features" class="mental-map-section">
   <div class="section-header-center">
     <div class="section-label success">How It Works</div>
-    <h2>Your knowledge, connected like neurons</h2>
+    <h2 class="cartel-title">Your knowledge, connected like neurons</h2>
     <p class="section-description">
       Dome doesn't just store files—it understands relationships. Every note,
       paper, and idea connects organically, with Many as your guide, creating
@@ -73,7 +73,11 @@ const features = [
     </p>
   </div>
 
-  <div class="mental-map-container">
+  <div class="mental-map-wrapper">
+    <div class="mental-map-bg">
+      <ZoomedParticleAnimation client:visible transparent fill />
+    </div>
+    <div class="mental-map-container">
     <!-- Many: solo el SVG en grande en el centro -->
     <div class="brain-center" aria-label="Many, your AI companion">
       <img
@@ -97,6 +101,7 @@ const features = [
         );
       })
     }
+    </div>
   </div>
 
   <div class="mental-map-grid-fallback">
@@ -115,13 +120,19 @@ const features = [
       })
     }
   </div>
+  <p class="section-ascii" aria-hidden="true">··· nodes ···</p>
 </section>
 
 <style>
   .mental-map-section {
     padding: 120px 40px;
+    border-top: 1px solid var(--color-border);
     background: var(--color-bg);
     position: relative;
+  }
+
+  .cartel-title {
+    font-family: var(--font-cartel);
   }
 
   .section-header-center {
@@ -156,12 +167,40 @@ const features = [
     color: var(--color-text-secondary);
   }
 
-  .mental-map-container {
-    max-width: 1000px;
+  .section-ascii {
+    font-family: "SF Mono", Consolas, Monaco, monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--color-text-secondary);
+    opacity: 0.4;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+
+  .mental-map-wrapper {
+    width: 100%;
     margin: 0 auto;
     position: relative;
-    height: 640px;
-    /* Centro del mapa: 50% 50% para Many */
+    height: 72vh;
+    min-height: 520px;
+    max-height: 720px;
+  }
+
+  .mental-map-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .mental-map-container {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
   .brain-center {
@@ -197,13 +236,12 @@ const features = [
     position: absolute;
     width: 180px;
     padding: 20px;
-    background: white;
-    border: 2px solid var(--color-border);
-    border-radius: 16px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    background: rgba(255, 252, 240, 0.98);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
     transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     z-index: 5;
-    /* Centrado del nodo en su punto orbital */
     transform: translate(-50%, -50%);
   }
 
@@ -275,7 +313,7 @@ const features = [
   }
 
   @media (max-width: 1024px) {
-    .mental-map-container {
+    .mental-map-wrapper {
       display: none;
     }
 
@@ -288,16 +326,17 @@ const features = [
     }
 
     .feature-card-fallback {
-      background: white;
-      border: 2px solid var(--color-border);
-      border-radius: 16px;
+      background: rgba(255, 252, 240, 0.98);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
       padding: 24px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
       transition: all 0.3s;
     }
 
     .feature-card-fallback:hover {
       border-color: var(--color-accent);
-      box-shadow: 0 8px 30px rgba(89, 96, 55, 0.15);
+      box-shadow: 0 8px 28px rgba(89, 96, 55, 0.15);
     }
 
     .feature-card-fallback .feature-node-icon {
