@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
- * Renders docs/linkedin/*.html to PNG for LinkedIn.
+ * Renders docs/linkedin/*.html to PNG (LinkedIn/descarga) y WebP (web).
+ * Escribe en docs/linkedin y en public/linkedin-posts para reducir bundle y mejorar TTFB.
  *
  * Usage:
  *   node scripts/render-linkedin-post.mjs
@@ -12,11 +13,13 @@
  */
 import puppeteer from 'puppeteer';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const linkedinDir = path.join(root, 'docs', 'linkedin');
+const publicLinkedinDir = path.join(root, 'public', 'linkedin-posts');
 
 const COLLAGE_POSTS = [
   'post-collage-academic-researchers',
@@ -35,8 +38,9 @@ function isCollagePost(name) {
 
 async function renderOne(page, baseName) {
   const htmlPath = path.join(linkedinDir, `${baseName}.html`);
-  const outPath = path.join(linkedinDir, `${baseName}.png`);
   const viewport = isCollagePost(baseName) ? COLLAGE_VIEWPORT : DEFAULT_VIEWPORT;
+
+  fs.mkdirSync(publicLinkedinDir, { recursive: true });
 
   const fileUrl = 'file://' + htmlPath.replace(/\\/g, '/');
   await page.setViewport({ ...viewport, deviceScaleFactor: 2 });
@@ -50,8 +54,17 @@ async function renderOne(page, baseName) {
     ));
     await new Promise(r => setTimeout(r, 800));
   }
-  await page.screenshot({ path: outPath, type: 'png' });
-  return outPath;
+
+  const pngDocsPath = path.join(linkedinDir, `${baseName}.png`);
+  const pngPublicPath = path.join(publicLinkedinDir, `${baseName}.png`);
+  const webpPublicPath = path.join(publicLinkedinDir, `${baseName}.webp`);
+
+  await page.screenshot({ path: pngDocsPath, type: 'png' });
+  fs.copyFileSync(pngDocsPath, pngPublicPath);
+
+  await page.screenshot({ path: webpPublicPath, type: 'webp', quality: 85 });
+
+  return { png: pngPublicPath, webp: webpPublicPath };
 }
 
 const arg = process.argv[2];
@@ -71,8 +84,9 @@ const page = await browser.newPage();
 
 for (const { baseName } of toRender) {
   try {
-    const outPath = await renderOne(page, baseName);
-    console.log('Saved:', outPath);
+    const { png, webp } = await renderOne(page, baseName);
+    console.log('Saved PNG (LinkedIn):', png);
+    console.log('Saved WebP (web):', webp);
   } catch (err) {
     console.error('Failed to render', baseName, err.message);
   }
