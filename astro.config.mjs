@@ -15,9 +15,10 @@ export default defineConfig({
     }),
   ],
   compressHTML: true,
+  trailingSlash: 'always',
   build: {
     inlineStylesheets: 'auto',
-    // Archivos .html en raíz: /terms.html y /privacy.html funcionan en cualquier servidor estático
-    format: 'file',
+    // directorio/privacy/index.html → /privacy/ resuelve bien con try_files $uri/; /privacy.html ya no existe
+    format: 'directory',
   },
 });

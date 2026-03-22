@@ -1,0 +1,5 @@
+# Netlify / Cloudflare Pages: rutas limpias y enlaces antiguos .html
+/privacy.html  /privacy/  301
+/terms.html    /terms/    301
+/privacy       /privacy/  301
+/terms         /terms/    301
