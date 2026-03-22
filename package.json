@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "start": "serve dist --listen tcp://0.0.0.0:${PORT:-3000}",
     "astro": "astro",
     "render:linkedin": "node scripts/render-linkedin-post.mjs"
   },
@@ -17,6 +18,7 @@
     "puppeteer": "^24.36.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "serve": "^14.2.6",
     "three": "^0.182.0"
   }
 }

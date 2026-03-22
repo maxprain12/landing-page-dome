@@ -1,0 +1,15 @@
+# Coolify / Nixpacks: evita comandos vacíos (bash -c sin argumento).
+# Deja en Coolify los campos "Custom build/start" vacíos o bórralos para que use esto.
+
+[variables]
+NODE_ENV = "production"
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+# Sin flag -s: sitio multipágina (/privacy/, /terms/); -s reescribe todo a index.html
+[start]
+cmd = "npm run start"
