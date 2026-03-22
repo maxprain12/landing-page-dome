@@ -1,0 +1,90 @@
+---
+const siteBase = Astro.site?.href?.replace(/\/$/, "") ?? "https://dome.dowi.es";
+const privacyPolicyUrl = `${siteBase}/privacy.html`;
+---
+
+<section class="app-purpose" id="about-dome" aria-labelledby="app-purpose-heading">
+  <div class="app-purpose-inner">
+    <h2 id="app-purpose-heading" class="app-purpose-title">What is Dome?</h2>
+    <div class="app-purpose-body">
+      <p>
+        <strong>Dome</strong> is a desktop application (built with Electron) for
+        <strong>knowledge management</strong> and <strong>academic research</strong>.
+        It is designed for researchers, academics, and knowledge workers who need one
+        place to organize notes, PDFs, presentations, videos, audio, images, and web
+        articles in projects—and to work with them using AI.
+      </p>
+      <p>
+        Dome includes an AI assistant (<strong>Many</strong>), reasoning-based
+        document indexing for search, a Notion-style editor, PDF annotations, study
+        tools (Studio, flashcards), calendar and optional cloud integrations. Your
+        library stays on your device unless you choose to use online features or
+        providers; see our <a href={privacyPolicyUrl}>Privacy Policy</a> for details.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .app-purpose {
+    padding: clamp(3rem, 8vw, 5rem) 40px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .app-purpose-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .app-purpose-title {
+    font-family: var(--font-cartel);
+    font-size: clamp(1.75rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--color-text);
+  }
+
+  .app-purpose-body p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+    margin-bottom: 1rem;
+  }
+
+  .app-purpose-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .app-purpose-body strong {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+
+  .app-purpose-body a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .app-purpose-body a:hover {
+    color: #4a502e;
+  }
+
+  @media (max-width: 768px) {
+    .app-purpose {
+      padding: 48px 20px;
+    }
+
+    .app-purpose-body p {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .app-purpose {
+      padding: 40px 16px;
+    }
+  }
+</style>

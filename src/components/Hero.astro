@@ -5,6 +5,10 @@ import {
   Github,
 } from "@lucide/astro";
 import TorusEnergyFlow from "./react/TorusEnergyFlow";
+
+const siteBase = Astro.site?.href?.replace(/\/$/, "") ?? "https://dome.dowi.es";
+const privacyPolicyUrl = `${siteBase}/privacy.html`;
+const termsUrl = `${siteBase}/terms.html`;
 ---
 
 <section class="hero-illustrated">
@@ -19,8 +23,14 @@ import TorusEnergyFlow from "./react/TorusEnergyFlow";
         <img src="/Many.svg" alt="Dome" width="36" height="36" />
         <span>Dome</span>
       </a>
-      <div class="nav-cta">
-        <a href="https://github.com/maxprain12/dome/releases" target="_blank" rel="noopener">Download Free</a>
+      <div class="nav-right">
+        <div class="nav-legal">
+          <a href={privacyPolicyUrl}>Privacy Policy</a>
+          <a href={termsUrl}>Terms</a>
+        </div>
+        <div class="nav-cta">
+          <a href="https://github.com/maxprain12/dome/releases" target="_blank" rel="noopener">Download Free</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -132,6 +142,32 @@ import TorusEnergyFlow from "./react/TorusEnergyFlow";
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 3vw, 28px);
+    flex-shrink: 0;
+  }
+
+  .nav-legal {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 20px);
+  }
+
+  .nav-legal a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-legal a:hover {
+    color: var(--color-accent);
   }
 
   .logo {
@@ -336,6 +372,17 @@ import TorusEnergyFlow from "./react/TorusEnergyFlow";
 
     .nav-container {
       padding: 0 16px;
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+
+    .nav-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .nav-legal a {
+      font-size: 13px;
     }
 
     .logo {
