@@ -21,6 +21,27 @@ const privacyPolicyUrl = `${siteBase}/privacy/`;
         library stays on your device unless you choose to use online features or
         providers; see our <a href={privacyPolicyUrl}>Privacy Policy</a> for details.
       </p>
+
+      <h3 class="app-purpose-subheading" id="google-data">
+        Google account (optional)
+      </h3>
+      <p>
+        If you choose to connect <strong>Google</strong>, Dome uses
+        <strong>OAuth 2.0</strong> on your device for optional features only—for
+        example, importing files from <strong>Google Drive</strong> and syncing
+        events with <strong>Google Calendar</strong>. Access is granted only after
+        you sign in with Google inside the app. OAuth tokens are stored
+        <strong>locally</strong> on your machine (for example in Dome’s local
+        database); they are <strong>not</strong> sent through Dome’s servers. You can
+        disconnect these integrations at any time in the app settings. How Google
+        processes data on its side is described in
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener noreferrer">Google’s Privacy Policy</a
+        >. For a full breakdown, see our
+        <a href={privacyPolicyUrl}>Privacy Policy</a>.
+      </p>
     </div>
   </div>
 </section>
@@ -43,6 +64,14 @@ const privacyPolicyUrl = `${siteBase}/privacy/`;
     font-size: clamp(1.75rem, 4vw, 2rem);
     font-weight: 700;
     margin-bottom: 1.25rem;
+    color: var(--color-text);
+  }
+
+  .app-purpose-subheading {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 700;
+    margin: 1.75rem 0 0.75rem;
     color: var(--color-text);
   }
 

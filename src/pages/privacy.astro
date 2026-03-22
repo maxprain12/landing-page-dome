@@ -1,12 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
-const lastUpdated = "January 18, 2026";
+const lastUpdated = "March 22, 2026";
 ---
 
 <Layout
   title="Privacy Policy - Dome"
-  description="Privacy policy for Dome"
+  description="Privacy policy for Dome — local-first desktop app, optional Google OAuth, and third-party AI providers."
 >
   <main class="legal-page">
     <div class="container">
@@ -16,119 +16,178 @@ const lastUpdated = "January 18, 2026";
       <p class="last-updated">Last updated: {lastUpdated}</p>
 
       <div class="highlight-box">
-        <strong>🔒 Summary:</strong> Dome is 100% offline. Your data never
-        leaves your device unless you choose to send it.
+        <strong>Summary:</strong> Dome is a <strong>local-first</strong> desktop
+        application. Your projects, files, and settings are stored on your device by
+        default. Dome does not operate a cloud service that receives your library
+        when you use the app offline. If you turn on <strong>optional</strong>
+        features—such as cloud AI providers, <strong>Google Drive</strong> or
+        <strong>Google Calendar</strong> via OAuth, or
+        <strong>opt-in analytics</strong>—data may be processed as described in the
+        sections below.
       </div>
 
       <section>
-        <h2>1. Information We Collect</h2>
+        <h2>1. Data stored on your device</h2>
         <p>
-          <strong>We do not collect any information.</strong> Dome is a
-          fully offline application that stores all data locally on your
-          device.
+          By default, content you create or import (notes, resources, attachments,
+          settings, indexing data) is stored locally. The Dome project does
+          <strong>not</strong> collect that content on its own servers.
         </p>
+        <p>Typical local locations include:</p>
+        <ul>
+          <li>
+            <strong>macOS:</strong> ~/Library/Application Support/dome/
+          </li>
+          <li><strong>Windows:</strong> %APPDATA%/dome/</li>
+          <li><strong>Linux:</strong> ~/.config/dome/</li>
+        </ul>
         <p>
-          Data you create (notes, resources, settings) is stored in:
+          Exact folder names may vary slightly by install or platform updates; check
+          in-app documentation if needed.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Google services (OAuth)</h2>
+        <p>
+          If you <strong>choose</strong> to connect Google, Dome uses
+          <strong>OAuth 2.0</strong> on your computer for specific optional
+          features. You are always in control: you sign in with Google in the app,
+          and you can disconnect in Settings.
+        </p>
+
+        <h3>Google Drive</h3>
+        <p>
+          Used so you can <strong>browse and import</strong> files you select from
+          your Google Drive into your local Dome library. Dome uses industry-standard
+          OAuth (including PKCE where applicable). Tokens and credentials for Google
+          are stored <strong>locally</strong> on your device (for example in Dome’s
+          local database). They are <strong>not</strong> routed through servers
+          operated by the Dome project for authentication.
+        </p>
+
+        <h3>Google Calendar</h3>
+        <p>
+          Used if you enable calendar sync so Dome can read and manage calendar
+          events you choose to sync, consistent with the permissions you grant.
+          Tokens remain on your device unless you use other optional services that
+          send data elsewhere as you configure them.
+        </p>
+
+        <p>
+          Google’s use of data connected to your Google Account is governed by
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener noreferrer">Google’s Privacy Policy</a
+          >. This policy does not replace Google’s terms or policies.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Other optional third-party services</h2>
+        <p>
+          If you configure <strong>AI or cloud features</strong>, the application may
+          send content (for example text from resources, chat messages, or indexing
+          requests) to providers <strong>you</strong> enable, such as:
         </p>
         <ul>
           <li>
-            <strong>macOS:</strong> ~/Library/Application Support/Dome Pro/
+            <strong>OpenAI</strong> —
+            <a href="https://openai.com/privacy" target="_blank" rel="noopener noreferrer"
+              >OpenAI privacy policy</a
+            >
           </li>
-          <li><strong>Windows:</strong> %APPDATA%/Dome Pro/</li>
-          <li><strong>Linux:</strong> ~/.config/Dome Pro/</li>
+          <li>
+            <strong>Anthropic</strong> —
+            <a
+              href="https://www.anthropic.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer">Anthropic privacy policy</a
+            >
+          </li>
+          <li>
+            <strong>Google (Gemini and related APIs)</strong> when you add a Google
+            API key or use Google as an AI provider —
+            <a
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              rel="noopener noreferrer">Google’s Privacy Policy</a
+            >
+          </li>
+        </ul>
+        <p>
+          Other providers (for example Ollama locally, or additional integrations you
+          add) follow the choices you make in Settings. <strong>API keys</strong> you
+          enter are stored on your device and are not sent to the Dome project’s
+          servers by the app for storage on our behalf.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Indexing and search (PageIndex)</h2>
+        <p>
+          Dome uses a <strong>reasoning-based indexing</strong> pipeline (PageIndex)
+          so resources can be searched and used with AI tools. Indexing data is
+          stored locally (for example in SQLite alongside your library). Depending on
+          your settings, the indexing step may call an AI provider you configure to
+          process document text; that processing is subject to the provider’s policy
+          and only occurs when you have set up that integration.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Optional product analytics</h2>
+        <p>
+          Dome may offer <strong>opt-in</strong> product analytics (for example via
+          PostHog) for feature usage or error reporting. If present, it is controlled
+          in the app (for example under Settings → Privacy) and is off unless you
+          enable it.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Security</h2>
+        <p>
+          Because your primary data stays on your device, protecting your machine
+          (password, disk encryption, OS updates) is important. When you use OAuth or
+          cloud APIs, use strong account security on those providers as well.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Your rights</h2>
+        <p>You can:</p>
+        <ul>
+          <li>Access and export data stored locally through the application</li>
+          <li>Revoke Google or other integrations in Settings</li>
+          <li>
+            Remove local data by uninstalling the app and deleting its application
+            data folder when appropriate
+          </li>
         </ul>
       </section>
 
       <section>
-        <h2>2. Third-Party Services (Optional)</h2>
+        <h2>8. Changes to this policy</h2>
         <p>
-          If you choose to use AI features, the Application may connect to:
-        </p>
-
-        <h3>OpenAI</h3>
-        <p>
-          For embeddings (semantic search) and chat. Data sent may include:
-        </p>
-        <ul>
-          <li>Text from your resources (to generate embeddings)</li>
-          <li>Search queries</li>
-          <li>Chat messages</li>
-        </ul>
-        <p>
-          See <a href="https://openai.com/privacy" target="_blank"
-            >OpenAI’s privacy policy</a
-          >.
-        </p>
-
-        <h3>Anthropic</h3>
-        <p>
-          For chat features. See the <a
-            href="https://www.anthropic.com/privacy"
-            target="_blank">Anthropic privacy policy</a
-          >.
-        </p>
-
-        <p>
-          <strong>Note:</strong> API keys are stored locally on your device and
-          are never shared with us.
+          We may update this page from time to time. The “Last updated” date at the
+          top will change when we do. Continued use of the site or app after changes
+          means you accept the updated policy where applicable.
         </p>
       </section>
 
       <section>
-        <h2>3. Data Storage</h2>
-        <p>All your data is stored locally:</p>
-        <ul>
-          <li>
-            <strong>SQLite database:</strong> Projects, resources, metadata
-          </li>
-          <li>
-            <strong>Vector database (LanceDB):</strong> Embeddings for search
-          </li>
-          <li>
-            <strong>File system:</strong> PDFs, images, videos, audio
-          </li>
-        </ul>
+        <h2>9. Contact</h2>
         <p>
-          You have full control over this data. You can export, back up, or
-          delete it at any time.
-        </p>
-      </section>
-
-      <section>
-        <h2>4. Security</h2>
-        <p>
-          Because your data stays on your device, security depends on the
-          measures you apply to your operating system (password, disk
-          encryption, etc.).
-        </p>
-      </section>
-
-      <section>
-        <h2>5. Your Rights</h2>
-        <p>You have the right to:</p>
-        <ul>
-          <li>Access all your data (it is on your device)</li>
-          <li>Export your data at any time</li>
-          <li>
-            Delete your data completely by removing the application folder
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>6. Changes to This Policy</h2>
-        <p>
-          Any changes will be posted on this page. We recommend reviewing it
-          periodically.
-        </p>
-      </section>
-
-      <section>
-        <h2>7. Contact</h2>
-        <p>
-          For privacy-related questions, open an issue on the <a
+          For privacy-related questions: <a href="mailto:alder.velasquezobando@gmail.com"
+            >alder.velasquezobando@gmail.com</a
+          >
+          or open an issue on the
+          <a
             href="https://github.com/maxprain12/dome"
-            target="_blank">GitHub repository</a
+            target="_blank"
+            rel="noopener noreferrer">GitHub repository</a
           >.
         </p>
       </section>
