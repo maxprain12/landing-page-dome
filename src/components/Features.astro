@@ -1,423 +1,270 @@
 ---
-import {
-  Sparkles,
-  Search,
-  FileText,
-  PenLine,
-  BookOpen,
-  Youtube,
-  Lock,
-  Link as LinkIcon,
-} from "@lucide/astro";
-import ZoomedParticleAnimation from "./react/ZoomedParticleAnimation";
+import ManyMascot from "./ManyMascot.astro";
+
 const features = [
   {
-    id: "fn-1",
-    icon: Sparkles,
-    title: "Many, Your AI Assistant",
-    description: "Ask questions across all your content",
+    k: "01",
+    t: "Many AI assistant",
+    p: "LangGraph-powered chat with web search, resource search, memory, and MCP tools. Your library and tools, one session.",
   },
   {
-    id: "fn-2",
-    icon: Search,
-    title: "Semantic Search",
-    description: "Find by meaning, not just keywords",
+    k: "02",
+    t: "Semantic & hybrid search",
+    p: "Nomic embeddings in SQLite, plus hybrid search (vectors + FTS + graph). PDF and image text via your cloud LLM when you use vision models.",
   },
   {
-    id: "fn-3",
-    icon: FileText,
-    title: "PDF Annotations",
-    description: "Highlight and comment directly",
+    k: "03",
+    t: "Studio",
+    p: "Generate mindmaps, quizzes, flashcards, guides, FAQs, and timelines from your content — SM-2 decks included.",
   },
   {
-    id: "fn-4",
-    icon: PenLine,
-    title: "Rich Editor",
-    description: "Notion-style blocks & formatting",
+    k: "04",
+    t: "Many agents, Canvas, teams",
+    p: "Custom agents with their own tools and MCP servers. Agent Canvas (D3 + SVG) for flows; agent teams in a shared chat.",
   },
   {
-    id: "fn-5",
-    icon: BookOpen,
-    title: "Bibliography",
-    description: "Auto-generate citations (APA, MLA...)",
+    k: "05",
+    t: "Notion-style editor",
+    p: "Tiptap: slash commands, tables, columns, toggles, callouts. Plus PDF viewer (annotate), PowerPoint viewer, academic library citations (APA, MLA, Chicago, and more).",
   },
   {
-    id: "fn-6",
-    icon: Youtube,
-    title: "Video Library",
-    description: "Save YouTube with metadata",
+    k: "06",
+    t: "Your AI provider",
+    p: "Settings → AI: OpenAI, Anthropic, Google, or Ollama. Choose models that fit you; use local or cloud on your terms.",
   },
-  {
-    id: "fn-7",
-    icon: Lock,
-    title: "100% Offline",
-    description: "Your data never leaves your device",
-  },
-  {
-    id: "fn-8",
-    icon: LinkIcon,
-    title: "Web Scraper",
-    description: "Capture articles automatically",
-  },
-];
+] as const;
+
+const ink = "var(--color-text)";
+const rule = "var(--color-border)";
+const sage = "var(--color-accent-light)";
+const rust = "var(--color-rust)";
+
+function glyphHtml(i: number): string {
+  if (i === 0) {
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 42 C12 22 22 12 35 12 C48 12 58 22 58 42 L58 48 L12 48 Z" fill="none" stroke="${ink}" stroke-width="1.8"/>
+      <circle cx="28" cy="32" r="2.5" fill="${ink}"/><circle cx="42" cy="32" r="2.5" fill="${ink}"/>
+      <path d="M27 42 Q35 46 43 42" fill="none" stroke="${ink}" stroke-width="1.5"/>
+    </svg>`;
+  }
+  if (i === 1) {
+    const lines = [0, 1, 2, 3]
+      .map(
+        (y) => `<line x1="8" x2="62" y1="${12 + y * 9}" y2="${12 + y * 9}" stroke="${ink}" stroke-width="1"/>`,
+      )
+      .join("");
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      ${lines}
+      <rect x="26" y="16" width="18" height="24" fill="none" stroke="${rust}" stroke-width="2"/>
+      <text x="35" y="33" font-family="Instrument Serif,serif" font-size="12" text-anchor="middle" font-style="italic" fill="${rust}">+FTS</text>
+    </svg>`;
+  }
+  if (i === 2) {
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="10" width="18" height="14" fill="${sage}" stroke="${ink}"/>
+      <rect x="28" y="18" width="18" height="14" fill="none" stroke="${ink}"/>
+      <rect x="50" y="28" width="14" height="14" fill="${rust}" stroke="${ink}"/>
+      <text x="15" y="22" font-family="Instrument Serif,serif" font-size="10" text-anchor="middle" fill="${ink}">map</text>
+      <text x="37" y="30" font-family="Instrument Serif,serif" font-size="10" text-anchor="middle" fill="${ink}">quiz</text>
+      <text x="57" y="40" font-family="Instrument Serif,serif" font-size="10" text-anchor="middle" fill="#fff">deck</text>
+    </svg>`;
+  }
+  if (i === 3) {
+    const pos = [
+      [10, 14],
+      [35, 8],
+      [58, 14],
+      [22, 40],
+      [48, 40],
+    ];
+    const rects = pos
+      .map(
+        ([x, y], j) =>
+          `<rect x="${x - 6}" y="${y - 4}" width="12" height="8" fill="${j === 1 ? sage : "none"}" stroke="${ink}"/>`,
+      )
+      .join("");
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      ${rects}
+      <g stroke="${ink}" stroke-width="1" fill="none">
+        <line x1="16" y1="14" x2="29" y2="8"/><line x1="41" y1="8" x2="52" y2="14"/>
+        <line x1="16" y1="14" x2="22" y2="36"/><line x1="52" y1="14" x2="48" y2="36"/>
+        <line x1="22" y1="40" x2="48" y2="40"/>
+      </g>
+    </svg>`;
+  }
+  if (i === 4) {
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="6" width="58" height="42" fill="#fff" stroke="${ink}"/>
+      <text x="12" y="20" font-family="Instrument Serif,serif" font-size="11" fill="${ink}">Chapter 04</text>
+      <line x1="12" y1="26" x2="58" y2="26" stroke="${rule}"/><line x1="12" y1="32" x2="50" y2="32" stroke="${rule}"/>
+      <line x1="12" y1="38" x2="44" y2="38" stroke="${rule}"/>
+      <rect x="12" y="41" width="16" height="4" fill="${sage}"/>
+    </svg>`;
+  }
+  return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    ${["GPT", "CLA", "GEM", "OLL", "MNX"]
+      .map(
+        (m, j) => `<g>
+        <rect x="${4 + j * 13}" y="14" width="11" height="26" fill="${j === 3 ? sage : "none"}" stroke="${ink}"/>
+        <text x="${9.5 + j * 13}" y="50" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="${ink}" letter-spacing="0.5">${m}</text>
+      </g>`,
+      )
+      .join("")}
+  </svg>`;
+}
 ---
 
-<section id="features" class="mental-map-section">
-  <div class="section-header-center">
-    <div class="section-label success">How It Works</div>
-    <h2 class="cartel-title">Your knowledge, connected like neurons</h2>
-    <p class="section-description">
-      Dome doesn't just store files—it understands relationships. Every note,
-      paper, and idea connects organically, with Many as your guide, creating
-      your personal knowledge graph.
-    </p>
-  </div>
-
-  <div class="mental-map-wrapper">
-    <div class="mental-map-bg">
-      <ZoomedParticleAnimation client:visible transparent fill />
-    </div>
-    <div class="mental-map-container">
-    <!-- Many: solo el SVG en grande en el centro -->
-    <div class="brain-center" aria-label="Many, your AI companion">
-      <img
-        src="/Many.svg"
-        alt="Many"
-        class="brain-many-img"
-      />
+<section class="fe" id="features" aria-labelledby="fe-h2">
+  <div class="fe-in">
+    <div class="fe-head">
+      <div>
+        <p class="fe-ey">— What&apos;s inside</p>
+        <h2 id="fe-h2" class="fe-h2">Notes, PDFs, videos, and URLs — indexed, searchable, in conversation with Many.</h2>
+      </div>
+      <div class="fe-mascot" aria-hidden="true">
+        <ManyMascot variant="think" size={72} />
+      </div>
     </div>
 
-    {
-      features.map((f) => {
-        const Icon = f.icon;
-        return (
-          <div class={`feature-node ${f.id}`}>
-            <div class="feature-node-icon">
-              <Icon size={24} color="var(--color-accent)" />
-            </div>
-            <h3>{f.title}</h3>
-            <p>{f.description}</p>
-          </div>
-        );
-      })
-    }
+    <div class="fe-grid" role="list">
+      {features.map((f, i) => (
+        <article
+          class:list={["fe-card", { "is-first": i === 0 }]}
+          data-i={i}
+          role="listitem"
+        >
+          <p class="fe-fig">FIG. {f.k}</p>
+          <h3 class="fe-t">{f.t}</h3>
+          <p class="fe-p">{f.p}</p>
+          <div class="fe-glyph" set:html={glyphHtml(i)} />
+        </article>
+      ))}
     </div>
   </div>
-
-  <div class="mental-map-grid-fallback">
-    {
-      features.map((f) => {
-        const Icon = f.icon;
-        return (
-          <div class="feature-card-fallback">
-            <div class="feature-node-icon">
-              <Icon size={24} color="var(--color-accent)" />
-            </div>
-            <h3>{f.title}</h3>
-            <p>{f.description}</p>
-          </div>
-        );
-      })
-    }
-  </div>
-  <p class="section-ascii" aria-hidden="true">··· nodes ···</p>
 </section>
 
 <style>
-  .mental-map-section {
-    padding: 120px 40px;
+  .fe {
+    background: var(--color-paper-deep);
     border-top: 1px solid var(--color-border);
-    background: var(--color-bg);
-    position: relative;
+    border-bottom: 1px solid var(--color-border);
+    padding: 5.5rem 0;
   }
 
-  .cartel-title {
-    font-family: var(--font-cartel);
+  .fe-in {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px;
   }
 
-  .section-header-center {
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto 80px;
+  .fe-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
   }
 
-  .section-label {
-    font-size: 12px;
-    font-weight: 700;
+  .fe-ey {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 16px;
+    color: var(--color-ink-3);
+    margin: 0 0 0.6rem;
   }
 
-  .section-label.success {
-    color: var(--color-accent);
+  .fe-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.1vw, 2.3rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    margin: 0;
+    max-width: 32rem;
   }
 
-  .section-header-center h2 {
-    font-size: 52px;
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    margin-bottom: 24px;
+  .fe-mascot {
+    flex-shrink: 0;
   }
 
-  .section-description {
-    font-size: 18px;
-    line-height: 1.7;
-    color: var(--color-text-secondary);
-  }
-
-  .section-ascii {
-    font-family: "SF Mono", Consolas, Monaco, monospace;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    color: var(--color-text-secondary);
-    opacity: 0.4;
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 0;
-  }
-
-  .mental-map-wrapper {
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    height: 72vh;
-    min-height: 520px;
-    max-height: 720px;
-  }
-
-  .mental-map-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .mental-map-container {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  .brain-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  .brain-many-img {
-    width: 280px;
-    height: 280px;
-    display: block;
-    animation: pulse-brain 4s ease-in-out infinite;
-  }
-
-  @keyframes pulse-brain {
-    0%,
-    100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-  }
-
-  .feature-node {
-    position: absolute;
-    width: 180px;
-    padding: 20px;
-    background: rgba(255, 252, 240, 0.98);
+  .fe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
     border: 1px solid var(--color-border);
-    border-radius: 4px;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-    z-index: 5;
-    transform: translate(-50%, -50%);
+    background: var(--color-surface);
   }
 
-  .feature-node:hover {
-    transform: translate(-50%, -50%) translateY(-8px);
-    border-color: var(--color-accent);
-    box-shadow: 0 16px 40px rgba(89, 96, 55, 0.2);
+  .fe-card {
+    padding: 1.6rem 1.5rem 1.4rem;
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    min-height: 15.5rem;
   }
 
-  .feature-node-icon {
-    width: 44px;
-    height: 44px;
+  .fe-card:nth-child(3n) {
+    border-right: none;
+  }
+
+  .fe-card:nth-child(n + 4) {
+    border-bottom: none;
+  }
+
+  .fe-card.is-first {
     background: var(--color-accent-light);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
   }
 
-  .feature-node h3 {
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-
-  .feature-node p {
+  .fe-fig {
+    font-family: var(--font-mono);
     font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--color-ink-3);
+    margin: 0 0 0.2rem;
+  }
+
+  .fe-card.is-first .fe-fig {
+    color: var(--color-sage-dark);
+  }
+
+  .fe-t {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+    line-height: 1.08;
+    font-weight: 400;
+    color: var(--color-text);
+    margin: 0.4rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .fe-p {
+    font-size: 0.86rem;
+    line-height: 1.5;
     color: var(--color-text-secondary);
-    line-height: 1.45;
+    margin: 0 0 0.4rem;
   }
 
-  /* Órbitas: 8 nodos en círculo alrededor de Many (50%, 50%) */
-  .fn-1 {
-    left: 50%;
-    top: 12%;
-  }
-  .fn-2 {
-    left: 74%;
-    top: 22%;
-  }
-  .fn-3 {
-    left: 88%;
-    top: 50%;
-  }
-  .fn-4 {
-    left: 74%;
-    top: 78%;
-  }
-  .fn-5 {
-    left: 50%;
-    top: 88%;
-  }
-  .fn-6 {
-    left: 26%;
-    top: 78%;
-  }
-  .fn-7 {
-    left: 12%;
-    top: 50%;
-  }
-  .fn-8 {
-    left: 26%;
-    top: 22%;
+  :global(.fe-glyph .gli) {
+    display: block;
+    margin-top: 0.9rem;
   }
 
-  .mental-map-grid-fallback {
-    display: none;
-  }
-
-  @media (max-width: 1024px) {
-    .mental-map-wrapper {
-      display: none;
-    }
-
-    .mental-map-grid-fallback {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .feature-card-fallback {
-      background: rgba(255, 252, 240, 0.98);
-      border: 1px solid var(--color-border);
-      border-radius: 4px;
-      padding: 24px;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
-      transition: all 0.3s;
-    }
-
-    .feature-card-fallback:hover {
-      border-color: var(--color-accent);
-      box-shadow: 0 8px 28px rgba(89, 96, 55, 0.15);
-    }
-
-    .feature-card-fallback .feature-node-icon {
-      width: 48px;
-      height: 48px;
-      background: var(--color-accent-light);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-    }
-
-    .feature-card-fallback h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .feature-card-fallback p {
-      font-size: 13px;
-      color: var(--color-text-secondary);
-      line-height: 1.5;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .mental-map-section {
-      padding: 80px 20px;
-    }
-
-    .section-header-center {
-      margin-bottom: 48px;
-    }
-
-    .section-header-center h2 {
-      font-size: 36px;
-    }
-
-    .mental-map-grid-fallback {
+  @media (max-width: 960px) {
+    .fe-grid {
       grid-template-columns: 1fr;
-      gap: 1rem;
     }
 
-    .feature-card-fallback {
-      padding: 20px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .mental-map-section {
-      padding: 48px 16px;
+    .fe-card {
+      border-right: none;
     }
 
-    .section-header-center {
-      margin-bottom: 32px;
+    .fe-card:nth-child(n) {
+      border-bottom: 1px solid var(--color-border);
     }
 
-    .section-header-center h2 {
-      font-size: 26px;
-    }
-
-    .section-description {
-      font-size: 16px;
-    }
-
-    .feature-card-fallback {
-      padding: 16px;
-    }
-
-    .feature-card-fallback .feature-node-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    .feature-card-fallback h3 {
-      font-size: 15px;
-    }
-
-    .feature-card-fallback p {
-      font-size: 12px;
+    .fe-card:last-child {
+      border-bottom: none;
     }
   }
 </style>

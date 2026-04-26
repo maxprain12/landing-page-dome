@@ -1,0 +1,176 @@
+---
+const items = [
+  { t: "Mindmap", g: 0 },
+  { t: "Quiz", g: 1 },
+  { t: "Timeline", g: 2 },
+  { t: "Flashcards · SM-2", g: 3 },
+  { t: "Study guide", g: 4 },
+  { t: "FAQ", g: 5 },
+];
+---
+
+<section class="sb" id="studio" aria-labelledby="sb-heading">
+  <div class="sb-inner">
+    <p class="sb-label">— Studio</p>
+    <h2 id="sb-heading" class="sb-h2">Mindmaps, quizzes, flashcards, guides, FAQs, and timelines from your content.</h2>
+    <div class="sb-grid" role="list">
+      {items.map((item) => (
+        <div class="sb-cell" role="listitem">
+          <h3 class="sb-t">{item.t}</h3>
+          <div class="sb-glyph" aria-hidden="true">
+            {item.g === 0 && (
+              <svg width="60" height="40" viewBox="0 0 60 40">
+                {[
+                  [15, 12],
+                  [30, 6],
+                  [45, 12],
+                  [22, 30],
+                  [38, 30],
+                ].map(([x, y], j) => <circle cx={x} cy={y} r="3" fill="var(--color-accent-light)" />)}
+                <g stroke="var(--color-paper-light)" stroke-width="1" fill="none" opacity="0.7">
+                  <line x1="15" y1="12" x2="30" y2="6" />
+                  <line x1="30" y1="6" x2="45" y2="12" />
+                  <line x1="15" y1="12" x2="22" y2="30" />
+                  <line x1="45" y1="12" x2="38" y2="30" />
+                  <line x1="22" y1="30" x2="38" y2="30" />
+                </g>
+              </svg>
+            )}
+            {item.g === 1 && (
+              <span class="sb-q">?</span>
+            )}
+            {item.g === 2 && (
+              <svg width="90" height="24" viewBox="0 0 90 24">
+                <line x1="0" y1="12" x2="90" y2="12" stroke="var(--color-paper-light)" stroke-width="1" />
+                {[12, 36, 60, 84].map((x) => (
+                  <circle cx={x} cy="12" r="3" fill="var(--color-accent-light)" />
+                ))}
+              </svg>
+            )}
+            {item.g === 3 && (
+              <svg width="56" height="40" viewBox="0 0 56 40">
+                <rect
+                  x="4"
+                  y="6"
+                  width="34"
+                  height="24"
+                  fill="none"
+                  stroke="var(--color-paper-light)"
+                  stroke-width="1"
+                  transform="rotate(-5 21 18)"
+                />
+                <rect x="14" y="8" width="34" height="24" fill="var(--color-accent-light)" stroke="var(--color-paper-light)" stroke-width="1" />
+              </svg>
+            )}
+            {item.g === 4 && (
+              <svg width="60" height="40" viewBox="0 0 60 40">
+                {[0, 1, 2, 3].map((j) => (
+                  <g>
+                    <circle cx="4" cy={6 + j * 10} r="2" fill="var(--color-accent-light)" />
+                    <line
+                      x1="10"
+                      y1={6 + j * 10}
+                      x2={[50, 40, 48, 32][j] ?? 32}
+                      y2={6 + j * 10}
+                      stroke="var(--color-paper-light)"
+                      stroke-width="1"
+                    />
+                  </g>
+                ))}
+              </svg>
+            )}
+            {item.g === 5 && (
+              <span class="sb-faq">FAQ</span>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sb {
+    background: var(--color-sage-dark);
+    color: var(--color-paper-light);
+    padding: 96px 48px;
+  }
+
+  .sb-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+
+  .sb-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin: 0 0 10px;
+  }
+
+  .sb-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 40px;
+    font-weight: 400;
+    max-width: 640px;
+  }
+
+  .sb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .sb-cell {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 24px;
+    min-height: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sb-t {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .sb-glyph {
+    flex-shrink: 0;
+  }
+
+  .sb-q {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-style: italic;
+    color: var(--color-accent-light);
+    line-height: 1;
+  }
+
+  .sb-faq {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-style: italic;
+    color: var(--color-accent-light);
+  }
+
+  @media (max-width: 900px) {
+    .sb {
+      padding: 72px 20px;
+    }
+
+    .sb-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

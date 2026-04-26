@@ -1,119 +1,193 @@
 ---
 const currentYear = new Date().getFullYear();
+const siteOrigin = Astro.site?.href ?? "https://dome.dowi.es/";
+const privacyUrl = new URL("/privacy/", siteOrigin).href;
+const termsUrl = new URL("/terms/", siteOrigin).href;
+const email = "alder.velasquezobando@gmail.com";
 ---
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <img src="/Many.svg" alt="Dome" width="32" height="32" />
-      <span>Dome</span>
+<footer class="ft">
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <a href="/" class="ft-mark">
+          <img src="/Many.svg" alt="" width="24" height="24" />
+          <span>Dome</span>
+        </a>
+        <p class="ft-tag">
+          Free for personal and educational use. Commercial use requires written permission — see
+          License in the repository.
+        </p>
+      </div>
+      <div>
+        <h3 class="ft-colh">Product</h3>
+        <ul class="ft-list" role="list">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#download">Download</a></li>
+          <li><a href="#marketplace">Marketplace</a></li>
+          <li>
+            <a href="https://github.com/maxprain12/dome/releases" target="_blank" rel="noopener">Changelog</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="ft-colh">Learn</h3>
+        <ul class="ft-list" role="list">
+          <li>
+            <a href="https://github.com/maxprain12/dome#readme" target="_blank" rel="noopener">Docs</a>
+          </li>
+          <li>
+            <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener">Guides</a>
+          </li>
+          <li>
+            <a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">Ollama setup</a>
+          </li>
+          <li>
+            <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP servers</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="ft-colh">Project</h3>
+        <ul class="ft-list" role="list">
+          <li>
+            <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener">GitHub</a>
+          </li>
+          <li>
+            <a href="https://github.com/maxprain12/dome/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+          </li>
+          <li>
+            <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener">Contribute</a>
+          </li>
+          <li>
+            <a href={`mailto:${email}`}>Contact</a>
+          </li>
+        </ul>
+      </div>
     </div>
-    <p class="footer-text">Your knowledge, always with you. Guided by Many.</p>
-    <p class="footer-text">
-      © {currentYear} Dome. Created by <strong>Alder Velasquez</strong>. MIT
-      License.
-    </p>
-    <pre class="footer-ascii" aria-hidden="true">  . · ·  knowledge dome  · · .</pre>
-    <div class="footer-links-minimal">
-      <a href="/terms/">Terms</a>
-      <a href="/privacy/">Privacy Policy</a>
-      <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener"
-        >GitHub</a
-      >
+    <div class="ft-rule" role="separator"></div>
+    <div class="ft-bottom">
+      <span>© {currentYear} · Dome</span>
+      <a href={privacyUrl}>Privacy</a>
+      <a href={termsUrl}>Terms</a>
+      <a href={`mailto:${email}`}>{email}</a>
     </div>
   </div>
 </footer>
 
 <style>
-  .footer {
-    padding: 60px 40px;
-    background: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    text-align: center;
+  .ft {
+    background: var(--color-text);
+    color: #f1ead6;
+    padding: 4rem 48px 1.4rem;
+    border-top: none;
   }
 
-  .footer-inner {
-    max-width: 600px;
+  .ft-inner {
+    max-width: 1240px;
     margin: 0 auto;
   }
 
-  .footer-logo {
+  .ft-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 32px 40px;
+    margin-bottom: 28px;
+  }
+
+  .ft-mark {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--color-text);
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: #f1ead6;
+    text-decoration: none;
+    margin-bottom: 12px;
   }
 
-  .footer-logo img {
-    width: 32px;
-    height: 32px;
+  .ft-tag {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: rgba(241, 234, 214, 0.75);
+    max-width: 20rem;
+    margin: 0;
   }
 
-  .footer-text {
-    font-size: 14px;
-    color: var(--color-text-secondary);
-    margin-bottom: 8px;
-  }
-
-  .footer-text strong {
-    color: var(--color-text);
-  }
-
-  .footer-ascii {
-    font-family: "SF Mono", Consolas, Monaco, monospace;
+  .ft-colh {
+    font-family: var(--font-mono);
     font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--color-text-secondary);
-    opacity: 0.5;
-    margin: 16px 0 0;
-    background: none;
-    border: none;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent-light);
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+
+  .ft-list {
+    list-style: none;
+    margin: 0;
     padding: 0;
   }
 
-  .footer-links-minimal {
-    margin-top: 24px;
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
+  .ft-list li {
+    margin-bottom: 6px;
   }
 
-  .footer-links-minimal a {
-    font-size: 14px;
-    color: var(--color-text-secondary);
+  .ft-list a {
+    font-size: 0.88rem;
+    color: rgba(241, 234, 214, 0.88);
     text-decoration: none;
-    transition: color 0.2s;
   }
 
-  .footer-links-minimal a:hover {
-    color: var(--color-accent);
+  .ft-list a:hover {
+    color: #f1ead6;
+    text-decoration: underline;
   }
 
-  @media (max-width: 768px) {
-    .footer {
-      padding: 40px 20px;
+  .ft-rule {
+    height: 1px;
+    background: rgba(241, 234, 214, 0.15);
+    margin: 0 0 1rem;
+  }
+
+  .ft-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px 24px;
+    font-size: 0.7rem;
+    color: rgba(241, 234, 214, 0.45);
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+  }
+
+  .ft-bottom a {
+    color: rgba(241, 234, 214, 0.45);
+    text-decoration: none;
+  }
+
+  .ft-bottom a:hover {
+    color: rgba(241, 234, 214, 0.85);
+  }
+
+  @media (max-width: 900px) {
+    .ft {
+      padding: 40px 20px 28px;
+    }
+
+    .ft-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .ft-brand {
+      grid-column: 1 / -1;
     }
   }
 
-  @media (max-width: 480px) {
-    .footer {
-      padding: 32px 16px;
-    }
-
-    .footer-logo {
-      font-size: 16px;
-    }
-
-    .footer-text {
-      font-size: 13px;
-    }
-
-    .footer-links-minimal {
-      gap: 16px;
+  @media (max-width: 500px) {
+    .ft-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

@@ -1,0 +1,160 @@
+---
+/**
+ * macOS window chrome + screenshot. Shows a labeled placeholder if the image fails to load.
+ */
+interface Props {
+  src: string;
+  title?: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+  placeholderW?: number;
+  placeholderH?: number;
+}
+
+const {
+  src,
+  title = "Dome",
+  caption,
+  width = 1280,
+  height = 800,
+  placeholderW = 1280,
+  placeholderH = 800,
+} = Astro.props;
+
+const fileName = src.split("/").pop() ?? "image.png";
+const placeholderLabel = `${fileName} · ${placeholderW}×${placeholderH}`;
+---
+
+<figure class="screen-root">
+  <div
+    class="screen-chrome"
+    data-screen-chrome
+  >
+    <div class="screen-titlebar">
+      <span class="screen-dot" style="background: #e5756a"></span>
+      <span class="screen-dot" style="background: #ebb447"></span>
+      <span class="screen-dot" style="background: #6ac47f"></span>
+      <div class="screen-title">{title}</div>
+    </div>
+    <div class="screen-body">
+      <img
+        class="screen-img"
+        src={src}
+        alt=""
+        width={width}
+        height={height}
+        loading="lazy"
+        decoding="async"
+        onerror="(function(t){ t.closest('[data-screen-chrome]') && t.closest('[data-screen-chrome]').classList.add('is-missing') })(this)"
+      />
+      <div
+        class="screen-placeholder"
+        aria-hidden="true"
+      >
+        <span class="screen-placeholder-label">{placeholderLabel}</span>
+      </div>
+    </div>
+  </div>
+  {caption && <figcaption class="screen-caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .screen-root {
+    margin: 0;
+    width: 100%;
+  }
+
+  .screen-chrome {
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow:
+      0 2px 0 rgba(0, 0, 0, 0.04),
+      0 24px 64px rgba(48, 38, 20, 0.18),
+      0 80px 140px rgba(48, 38, 20, 0.12);
+  }
+
+  .screen-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .screen-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+
+  .screen-title {
+    margin-left: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--color-ink-3);
+  }
+
+  .screen-body {
+    position: relative;
+    background: #111;
+  }
+
+  .screen-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    vertical-align: top;
+  }
+
+  .screen-chrome.is-missing .screen-img {
+    display: none;
+  }
+
+  .screen-placeholder {
+    display: none;
+    min-height: min(50vh, 420px);
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    background:
+      linear-gradient(135deg, var(--color-paper-deep) 0%, var(--color-surface) 50%, var(--color-paper-deep) 100%),
+      repeating-linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.03) 0px,
+        rgba(0, 0, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 8px
+      );
+    background-blend-mode: normal;
+  }
+
+  .screen-chrome.is-missing .screen-placeholder {
+    display: flex;
+  }
+
+  .screen-placeholder-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: var(--color-ink-3);
+    text-align: center;
+    max-width: 28ch;
+    line-height: 1.4;
+  }
+
+  .screen-caption {
+    margin-top: 18px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--color-ink-3);
+  }
+</style>

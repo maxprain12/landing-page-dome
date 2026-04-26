@@ -1,0 +1,100 @@
+---
+const stack = [
+  "Electron 41 · Vite 7 · React 18",
+  "LangGraph + LangChain",
+  "better-sqlite3 · Nomic embeddings",
+  "Hybrid search · vectors + FTS + graph",
+  "MCP · stdio + http (settings)",
+  "Tiptap editor · D3.js Canvas",
+  "Playwright web scraper · PDF.js",
+  "i18n · EN / ES / FR / PT",
+];
+---
+
+<section class="sk" id="stack" aria-labelledby="sk-h2">
+  <div class="sk-in">
+    <div>
+      <p class="sk-ey">— Under the hood</p>
+      <h2 id="sk-h2" class="sk-h2">The stack in the repo: same tools that ship in the app.</h2>
+    </div>
+    <ul class="sk-list" role="list">
+      {stack.map((x) => (
+        <li class="sk-item" role="listitem">
+          <span class="sk-b" aria-hidden="true">◆</span> {x}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .sk {
+    background: var(--color-paper-deep);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 4.2rem 48px 4.5rem;
+  }
+
+  .sk-in {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 2rem 2.2rem;
+    align-items: center;
+  }
+
+  .sk-ey {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 0.4rem;
+  }
+
+  .sk-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+    margin: 0;
+    max-width: 18ch;
+  }
+
+  .sk-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.2rem 1.6rem;
+  }
+
+  .sk-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    padding: 0.45rem 0 0.55rem;
+    border-bottom: 1px dashed var(--color-border);
+  }
+
+  .sk-b {
+    color: var(--color-rust);
+    font-size: 0.6rem;
+  }
+
+  @media (max-width: 800px) {
+    .sk {
+      padding: 3rem 20px 3.2rem;
+    }
+
+    .sk-in {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

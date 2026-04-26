@@ -1,0 +1,242 @@
+---
+import ManyMascot from "./ManyMascot.astro";
+
+const agents = [
+  { n: "Research Pro", d: "Deep research with web search and academic synthesis." },
+  { n: "Writing Coach", d: "Edits, rewrites, and sharpens your drafts." },
+  { n: "Study Buddy", d: "Flashcards, quizzes and summaries from your sources." },
+  { n: "PDF Deep Reader", d: "Structural analysis, key ideas, arguments, notes." },
+  { n: "Code Helper", d: "Analyse, debug and generate code in multiple languages." },
+  { n: "Graph Architect", d: "Build knowledge graphs that connect your library." },
+];
+
+const moods: Array<"glasses" | "think" | "wave"> = ["glasses", "think", "wave"];
+---
+
+<section class="mp" id="marketplace" aria-labelledby="mp-h2">
+  <div class="mp-shelf">
+    <div class="mp-head">
+      <p class="mp-ey">— Marketplace</p>
+      <h2 id="mp-h2" class="mp-h2">Install agents like you install apps.</h2>
+      <p class="mp-lead">
+        Community agents, plugins, skills, and workflows — discover them in the marketplace
+        or build your own.
+      </p>
+    </div>
+    <div class="mp-grid" role="list">
+      {agents.map((a, i) => (
+        <div class="mp-card" role="listitem">
+          <div class="mp-av">
+            <ManyMascot variant={moods[i % 3]} size={32} />
+          </div>
+          <div class="mp-mid">
+            <div class="mp-name">
+              {a.n} <span class="mp-st">★</span>
+            </div>
+            <p class="mp-desc">{a.d}</p>
+          </div>
+          <button type="button" class="mp-inbtn" disabled>+ Install</button>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .mp {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 5rem 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mp-shelf {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 4vw, 3rem);
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 2.2rem 2.5rem;
+    align-items: start;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .mp-head {
+    max-width: 24rem;
+  }
+
+  .mp-ey {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 0.4rem;
+  }
+
+  .mp-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.3vw, 1.9rem);
+    line-height: 1.05;
+    font-weight: 400;
+    margin: 0 0 0.6rem;
+  }
+
+  .mp-lead {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .mp-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  .mp-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.7rem 0.7rem 0.65rem 0.6rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    min-width: 0;
+  }
+
+  .mp-av {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 7px;
+    background: var(--color-many-body);
+    border: 1px solid var(--color-accent);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .mp-mid {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mp-name {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.1;
+  }
+
+  .mp-st {
+    font-size: 0.5rem;
+    color: var(--color-rust);
+    vertical-align: super;
+  }
+
+  .mp-desc {
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--color-ink-3);
+    margin: 0.2rem 0 0;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .mp-inbtn {
+    flex-shrink: 0;
+    align-self: flex-start;
+    background: var(--color-text);
+    color: var(--color-surface);
+    border: none;
+    border-radius: 4px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.65rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 900px) {
+    .mp {
+      padding: 3.25rem 0;
+    }
+
+    .mp-shelf {
+      grid-template-columns: 1fr;
+      padding: 0 clamp(1rem, 4vw, 1.5rem);
+    }
+  }
+
+  /* En pantallas estrechas: una sola columna de tarjetas a ancho completo */
+  @media (max-width: 700px) {
+    .mp-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .mp-card {
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .mp-mid {
+      flex: 1 1 min(0, 12rem);
+    }
+
+    .mp-inbtn {
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .mp-h2 {
+      font-size: 1.35rem;
+    }
+
+    .mp-lead {
+      font-size: 0.9rem;
+    }
+
+    .mp-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        "av mid"
+        "btn btn";
+      align-items: start;
+      gap: 0.5rem 0.6rem;
+      flex-wrap: unset;
+    }
+
+    .mp-av {
+      grid-area: av;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    .mp-mid {
+      grid-area: mid;
+      flex: unset;
+      min-width: 0;
+    }
+
+    .mp-inbtn {
+      grid-area: btn;
+      width: 100%;
+      margin: 0;
+      justify-self: stretch;
+      text-align: center;
+      padding: 0.45rem 0.6rem;
+      font-size: 0.7rem;
+    }
+  }
+</style>

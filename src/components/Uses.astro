@@ -1,0 +1,135 @@
+---
+const uses = [
+  {
+    t: "Researchers & academics",
+    p: "Organize the literature, annotate PDFs, and keep citations (APA, MLA, Chicago, etc.) close to the writing.",
+  },
+  {
+    t: "Students",
+    p: "From slides and notes to flashcards, quizzes, and study guides — Studio turns sources into material you can review.",
+  },
+  {
+    t: "Independent scholars",
+    p: "A desktop library you control: local data paths, optional cloud models, and open-source code you can inspect.",
+  },
+  {
+    t: "Knowledge workers",
+    p: "MCP servers, shared agent sessions, and Canvas workflows — your corpus, your automations.",
+  },
+];
+---
+
+<section class="us" id="uses" aria-labelledby="us-h2">
+  <div class="us-in">
+    <p class="us-ey">— Made for</p>
+    <h2 id="us-h2" class="us-h2">For researchers, academics, and everyone who lives in sources.</h2>
+    <div class="us-grid" role="list">
+      {uses.map((u, i) => (
+        <div class="us-cell" role="listitem">
+          <p class="us-n">N°0{i + 1}</p>
+          <h3 class="us-t">{u.t}</h3>
+          <p class="us-p">{u.p}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .us {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 5rem 48px 5.2rem;
+    background: var(--color-surface);
+  }
+
+  .us-ey {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 0.5rem;
+  }
+
+  .us-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.1vw, 2.3rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+    margin: 0 0 2.2rem;
+    max-width: 28rem;
+  }
+
+  .us-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .us-cell {
+    padding: 1.6rem 0.6rem 1.1rem 0;
+  }
+
+  .us-cell:not(:last-child) {
+    border-right: 1px solid var(--color-border);
+    padding-right: 0.6rem;
+  }
+
+  .us-cell + .us-cell,
+  .us-cell + .us-cell {
+    padding-left: 0.6rem;
+  }
+
+  .us-n {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 0.2rem;
+  }
+
+  .us-t {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0 0 0.3rem;
+  }
+
+  .us-p {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  @media (max-width: 960px) {
+    .us {
+      padding: 3.5rem 20px 3.2rem;
+    }
+
+    .us-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .us-cell:nth-child(2) {
+      border-right: none;
+    }
+
+    .us-cell {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .us-cell:nth-child(n) {
+      padding-left: 0;
+    }
+
+    .us-cell:nth-child(2n) {
+      padding-left: 0.6rem;
+    }
+  }
+</style>

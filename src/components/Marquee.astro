@@ -1,0 +1,76 @@
+---
+const items = [
+  "Projects",
+  "PDFs",
+  "Notes",
+  "Videos & URLs",
+  "Google Drive",
+  "Semantic search",
+  "Many AI",
+  "Agents & Canvas",
+  "Studio",
+  "Flashcards",
+  "Citations & library",
+  "MCP servers",
+  "Calendar",
+];
+const doubled = [...items, ...items];
+---
+
+<section class="mq" aria-hidden="true">
+  <div class="mq-track">
+    {doubled.map((x, i) => (
+      <span class="mq-item">
+        {x} <span class="mq-spark">✦</span>
+      </span>
+    ))}
+  </div>
+</section>
+
+<style>
+  .mq {
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    overflow: hidden;
+    padding: 22px 0;
+    background: var(--color-paper-deep);
+  }
+
+  .mq-track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    width: max-content;
+    animation: mqScroll 50s linear infinite;
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  @keyframes mqScroll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .mq-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .mq-spark {
+    color: var(--color-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mq-track {
+      animation: none;
+      width: 100%;
+      white-space: normal;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+</style>
