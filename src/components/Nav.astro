@@ -1,0 +1,97 @@
+---
+const releases = "https://github.com/maxprain12/dome/releases";
+const github = "https://github.com/maxprain12/dome";
+const docs = "https://github.com/maxprain12/dome#readme";
+---
+
+<nav class="na" aria-label="Main">
+  <div class="na-inner">
+    <a href="/" class="na-mark" aria-label="Dome home">
+      <img class="na-mark-ico" src="/Many.svg" alt="" width="28" height="28" />
+      <span class="na-mark-txt">Dome</span>
+    </a>
+    <div class="na-links">
+      <a href="#features">Features</a>
+      <a href="#flow">How it works</a>
+      <a href="#marketplace">Agents</a>
+      <a href={docs} target="_blank" rel="noopener">Docs</a>
+      <a href={github} target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <a class="na-dl" href={releases} target="_blank" rel="noopener">↓ Download</a>
+  </div>
+</nav>
+
+<style>
+  .na {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 28px 48px 12px;
+    background: transparent;
+  }
+
+  .na-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .na-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .na-mark-txt {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .na-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 32px;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  .na-links a:hover {
+    color: var(--color-text);
+  }
+
+  .na-dl {
+    background: var(--color-text);
+    color: var(--color-surface);
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: var(--font-sans);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .na-dl:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 800px) {
+    .na {
+      padding: 20px 20px 8px;
+    }
+
+    .na-links {
+      order: 3;
+      width: 100%;
+      gap: 20px;
+    }
+  }
+</style>

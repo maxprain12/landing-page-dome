@@ -15,7 +15,8 @@ export default defineConfig({
     }),
   ],
   compressHTML: true,
-  trailingSlash: 'always',
+  /** Acepta /terms y /terms/ (y privacy) en dev y evita 404; production sigue con _redirects en public */
+  trailingSlash: 'ignore',
   build: {
     inlineStylesheets: 'auto',
     // directorio/privacy/index.html → /privacy/ resuelve bien con try_files $uri/; /privacy.html ya no existe

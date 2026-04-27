@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Dome — Landing redesign</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: #f0eee9; font-family: Inter, -apple-system, sans-serif; }
+  * { box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="landing-a.jsx"></script>
+<script type="text/babel" src="landing-b.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
+  "lang": "en",
+  "mascot": false
+}/*EDITMODE-END*/;
+
+function loadTweaks() {
+  try {
+    const saved = localStorage.getItem('dome-tweaks');
+    return saved ? { ...TWEAK_DEFAULS, ...JSON.parse(saved) } : { ...TWEAK_DEFAULS };
+  } catch { return { ...TWEAK_DEFAULS }; }
+}
+
+function App() {
+  const [tweaks, setTweaks] = React.useState(loadTweaks);
+  const [editOn, setEditOn] = React.useState(false);
+
+  const update = (patch) => {
+    const next = { ...tweaks, ...patch };
+    setTweaks(next);
+    try { localStorage.setItem('dome-tweaks', JSON.stringify(next)); } catch {}
+    try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*'); } catch {}
+  };
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      if (!e.data || typeof e.data !== 'object') return;
+      if (e.data.type === '__activate_edit_mode') setEditOn(true);
+      if (e.data.type === '__deactivate_edit_mode') setEditOn(false);
+    };
+    window.addEventListener('message', onMsg);
+    try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch {}
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const { lang, mascot } = tweaks;
+
+  return (
+    <>
+      <DesignCanvas>
+        <DCSection
+          title="Dome — Landing redesign"
+          subtitle="Two directions on the warm paper aesthetic. Switch language and toggle the mascot via Tweaks.">
+          <DCArtboard label={`A — Study nook · mascot ${mascot ? 'ON' : 'OFF'} · ${lang.toUpperCase()}`} width={1280} height={7200} style={{ borderRadius: 8 }}>
+            <LandingA lang={lang} mascot={mascot}/>
+          </DCArtboard>
+          <DCArtboard label={`B — Reading room · mascot ${mascot ? 'ON' : 'OFF'} · ${lang.toUpperCase()}`} width={1400} height={7400} style={{ borderRadius: 8 }}>
+            <LandingB lang={lang} mascot={mascot}/>
+          </DCArtboard>
+        </DCSection>
+      </DesignCanvas>
+
+      {editOn && (
+        <div style={{
+          position: 'fixed', right: 20, bottom: 20, zIndex: 9999,
+          background: '#1E1A12', color: '#F3ECDB', padding: 20, width: 280,
+          fontFamily: 'Inter, sans-serif', fontSize: 13,
+          borderRadius: 10, boxShadow: '0 20px 60px rgba(0,0,0,0.35)',
+        }}>
+          <div style={{ fontFamily: '"Instrument Serif", serif', fontSize: 22, marginBottom: 14, letterSpacing: -0.3 }}>Tweaks</div>
+
+          <div style={{ marginBottom: 16 }}>
+            <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', opacity: 0.6, marginBottom: 8, fontFamily: '"JetBrains Mono", monospace' }}>Language</div>
+            <div style={{ display: 'flex', gap: 6 }}>
+              {['en', 'es'].map(l => (
+                <button key={l} onClick={() => update({ lang: l })} style={{
+                  flex: 1, padding: '10px', border: 'none', cursor: 'pointer',
+                  background: lang === l ? '#B8C16A' : 'rgba(255,255,255,0.08)',
+                  color: lang === l ? '#1E1A12' : '#F3ECDB',
+                  fontFamily: '"JetBrains Mono", monospace', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase',
+                  borderRadius: 4,
+                }}>{l}</button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', opacity: 0.6, marginBottom: 8, fontFamily: '"JetBrains Mono", monospace' }}>Mascot (Many)</div>
+            <div style={{ display: 'flex', gap: 6 }}>
+              {[['On', true], ['Off', false]].map(([lbl, v]) => (
+                <button key={lbl} onClick={() => update({ mascot: v })} style={{
+                  flex: 1, padding: '10px', border: 'none', cursor: 'pointer',
+                  background: mascot === v ? '#B8C16A' : 'rgba(255,255,255,0.08)',
+                  color: mascot === v ? '#1E1A12' : '#F3ECDB',
+                  fontFamily: '"JetBrains Mono", monospace', fontSize: 11, letterSpacing: 2, textTransform: 'uppercase',
+                  borderRadius: 4,
+                }}>{lbl}</button>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ marginTop: 16, fontSize: 11, opacity: 0.55, lineHeight: 1.4 }}>
+            Both directions respond live. Pan with two fingers, zoom with pinch.
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

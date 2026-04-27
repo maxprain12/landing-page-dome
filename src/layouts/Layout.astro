@@ -7,8 +7,8 @@ interface Props {
 }
 
 const {
-  title = "Dome - Knowledge Management & Academic Research | 100% Offline",
-  description = "Dome is a desktop application for knowledge management and academic research. Organize notes, PDFs, videos, and more with integrated AI. 100% offline, open source. Notion-style editor, PDF annotations, academic bibliography, and more.",
+  title = "Dome — Intelligent desktop for knowledge management and academic research",
+  description = "Dome is an open-source desktop app for researchers, academics, and knowledge workers. Organize notes, PDFs, videos, and URLs in projects, then let AI index, search, and synthesize everything — locally or in the cloud, your choice.",
   ogImage = "/dashboard.png",
   canonicalUrl: canonicalUrlProp,
 } = Astro.props;
@@ -23,7 +23,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#596037" />
+    <meta name="theme-color" content="#1E1A12" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -103,7 +103,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Libre+Baskerville:ital,wght@0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -118,37 +118,46 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
 
 <style is:global>
   :root {
-    /* Dome + Many reference palette (dureza: fondo ligeramente cálido) */
-    --color-bg: #f8f7f5;
-    --color-surface: #ffffff;
-    --color-text: #1a1a1a;
-    --color-text-secondary: #6b6b6b;
-    --color-accent: #596037;
-    --color-accent-light: #e0eab4;
-    --color-border: #e5e5e5;
-    --color-problem: #e57b7b;
+    /* Warm paper (hybrid landing redesign) */
+    --color-bg: #f1ead6;
+    --color-surface: #faf5e6;
+    --color-text: #1e1a12;
+    --color-text-secondary: #3a3326;
+    --color-accent: #5e6a34;
+    --color-accent-light: #c7d38a;
+    --color-border: #cfc2a3;
+    --color-problem: #b6572a;
+    --color-rust: #b6572a;
+    --color-ink-3: #6b5f45;
+    --color-sage-dark: #373f1e;
+    --color-paper-deep: #e6dbb8;
+    --color-many-body: #e1e7c1;
+    --color-ink-900: #1e1a12;
+    --color-paper-light: #f3ecdb;
 
-    /* Aliases for compatibility */
+    /* Aliases for compatibility (privacy, terms) */
     --bg-primary: var(--color-surface);
     --bg-secondary: var(--color-bg);
-    --bg-tertiary: #f4f4f6;
+    --bg-tertiary: var(--color-paper-deep);
     --accent-primary: var(--color-accent);
     --accent-secondary: var(--color-text-secondary);
     --text-primary: var(--color-text);
     --text-secondary: var(--color-text-secondary);
-    --text-muted: #a1a1aa;
-    --glass: rgba(255, 255, 255, 0.9);
-    --glass-hover: rgba(255, 255, 255, 0.95);
+    --text-muted: var(--color-ink-3);
+    --glass: rgba(250, 245, 230, 0.92);
+    --glass-hover: rgba(255, 255, 255, 0.98);
     --border: var(--color-border);
     --border-hover: var(--color-accent);
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
     --shadow-md:
-      0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      0 4px 6px -1px rgba(48, 38, 20, 0.08), 0 2px 4px -1px rgba(48, 38, 20, 0.05);
 
     /* Typography */
     --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-display: var(--font-sans);
-    --font-cartel: "Libre Baskerville", "Times New Roman", Georgia, serif;
+    --font-display: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --font-hand: "Caveat", cursive;
+    --font-cartel: var(--font-display);
 
     /* Spacing */
     --section-padding: clamp(4rem, 10vw, 8rem);
@@ -195,7 +204,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    background: rgba(255, 250, 240, 0.03);
+    background: rgba(255, 250, 240, 0.04);
   }
 
   .page-content {
@@ -209,18 +218,25 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.05;
+    opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   h1,
   h2,
-  h3,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
   h4,
   h5,
   h6 {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-sans);
+    font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.02em;
     color: var(--color-text);

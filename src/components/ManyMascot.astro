@@ -1,0 +1,44 @@
+---
+/** Many PNG with fallback to /Many.svg on error */
+interface Props {
+  variant?: "wave" | "think" | "glasses";
+  size?: number;
+  class?: string;
+  alt?: string;
+}
+
+const { variant = "wave", size = 120, class: className, alt = "Many" } = Astro.props;
+
+const srcByVariant: Record<typeof variant, string> = {
+  wave: "/assets/many-wave.png",
+  think: "/assets/many-think.png",
+  glasses: "/assets/many-glasses.png",
+};
+
+const src = srcByVariant[variant];
+const fallback = "/Many.svg";
+---
+
+<div class:list={["many-wrap", className]}>
+  <img
+    class="many-img"
+    src={src}
+    width={size}
+    height={size}
+    alt={alt}
+    loading="lazy"
+    decoding="async"
+    onerror="if (this.getAttribute('data-tried')!=='1'){ this.setAttribute('data-tried','1'); this.src='/Many.svg' }"
+  />
+</div>
+
+<style>
+  .many-wrap {
+    line-height: 0;
+  }
+
+  .many-img {
+    display: block;
+    object-fit: contain;
+  }
+</style>
