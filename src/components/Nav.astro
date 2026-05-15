@@ -2,6 +2,8 @@
 const releases = "https://github.com/maxprain12/dome/releases";
 const github = "https://github.com/maxprain12/dome";
 const docs = "https://github.com/maxprain12/dome#readme";
+const domeAccountUrl = (import.meta.env.PUBLIC_DOME_ACCOUNT_URL ?? "").trim();
+const domeUserDashboardUrl = (import.meta.env.PUBLIC_DOME_USER_DASHBOARD_URL ?? "").trim();
 ---
 
 <nav class="na" aria-label="Main">
@@ -15,6 +17,12 @@ const docs = "https://github.com/maxprain12/dome#readme";
       <a href="#flow">How it works</a>
       <a href="#marketplace">Agents</a>
       <a href={docs} target="_blank" rel="noopener">Docs</a>
+      {domeAccountUrl ? (
+        <a href={domeAccountUrl} target="_blank" rel="noopener">Cloud account</a>
+      ) : null}
+      {domeUserDashboardUrl ? (
+        <a href={domeUserDashboardUrl} target="_blank" rel="noopener">Usage & billing</a>
+      ) : null}
       <a href={github} target="_blank" rel="noopener">GitHub</a>
     </div>
     <a class="na-dl" href={releases} target="_blank" rel="noopener">↓ Download</a>

@@ -4,6 +4,8 @@ const siteOrigin = Astro.site?.href ?? "https://dome.dowi.es/";
 const privacyUrl = new URL("/privacy/", siteOrigin).href;
 const termsUrl = new URL("/terms/", siteOrigin).href;
 const email = "alder.velasquezobando@gmail.com";
+const domeAccountUrl = (import.meta.env.PUBLIC_DOME_ACCOUNT_URL ?? "").trim();
+const domeUserDashboardUrl = (import.meta.env.PUBLIC_DOME_USER_DASHBOARD_URL ?? "").trim();
 ---
 
 <footer class="ft">
@@ -28,6 +30,16 @@ const email = "alder.velasquezobando@gmail.com";
           <li>
             <a href="https://github.com/maxprain12/dome/releases" target="_blank" rel="noopener">Changelog</a>
           </li>
+          {domeAccountUrl ? (
+            <li>
+              <a href={domeAccountUrl} target="_blank" rel="noopener">Cloud account</a>
+            </li>
+          ) : null}
+          {domeUserDashboardUrl ? (
+            <li>
+              <a href={domeUserDashboardUrl} target="_blank" rel="noopener">Usage & billing</a>
+            </li>
+          ) : null}
         </ul>
       </div>
       <div>

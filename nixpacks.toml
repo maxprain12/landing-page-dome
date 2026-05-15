@@ -5,11 +5,11 @@
 NODE_ENV = "production"
 
 [phases.install]
-cmds = ["npm ci"]
+cmds = ["pnpm install --frozen-lockfile"]
 
 [phases.build]
-cmds = ["npm run build"]
+cmds = ["pnpm run build"]
 
 # Sin flag -s: sitio multipágina (/privacy/, /terms/); -s reescribe todo a index.html
 [start]
-cmd = "npm run start"
+cmd = "pnpm run start"

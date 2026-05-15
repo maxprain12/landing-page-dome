@@ -204,7 +204,7 @@ cd dome-local
 2. **Install dependencies**
 
 ```bash
-bun install
+pnpm install
 ```
 
 3. **Set up environment variables** (optional)
@@ -224,7 +224,7 @@ ANTHROPIC_API_KEY=sk-ant-...
 4. **Start in development mode**
 
 ```bash
-bun run electron:dev
+pnpm run electron:dev
 ```
 
 This will start:
@@ -235,17 +235,17 @@ This will start:
 
 ```bash
 # Development
-bun run dev              # Start Next.js only
-bun run electron         # Start Electron only
-bun run electron:dev     # Full development (Next.js + Electron)
+pnpm run dev              # Start Next.js only
+pnpm run electron         # Start Electron only
+pnpm run electron:dev     # Full development (Next.js + Electron)
 
 # Production
-bun run build            # Build Next.js
-bun run electron:build   # Build desktop application
+pnpm run build            # Build Next.js
+pnpm run electron:build   # Build desktop application
 
 # Utilities
-bun run test:db          # Test database connection
-bun run clean            # Clean build artifacts
+pnpm run test:db          # Test database connection
+pnpm run clean            # Clean build artifacts
 ```
 
 ---
