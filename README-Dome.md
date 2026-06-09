@@ -2,12 +2,21 @@
 
 > Intelligent Desktop Application for Knowledge Management and Academic Research
 
-[![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=flat&logo=bun&logoColor=white)](https://bun.sh/)
+[![pnpm](https://img.shields.io/badge/pnpm-F69220?style=flat&logo=pnpm&logoColor=white)](https://pnpm.io/)
 [![Electron](https://img.shields.io/badge/Electron-47848F?style=flat&logo=electron&logoColor=white)](https://www.electronjs.org/)
-[![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Agent Runtime](https://img.shields.io/badge/Agent%20Runtime-Dome%20native-6366f1?style=flat)](https://github.com/maxprain12/dome)
 [![License](https://img.shields.io/badge/License-Custom%20Open%20Source-blue.svg)](LICENSE)
+
+> **Snapshot of `dome` v2.3.5 (2026-06-08).** This page is the public landing for the
+> Dome desktop app — the source of truth is the
+> [dome repo](https://github.com/maxprain12/dome). Key features shipped as of v2.3.5:
+> Dome-native agent runtime (`@dome/agent-core`), JSONL sessions, FSRS flashcards,
+> configurable LangChain embeddings in LanceDB, multimodal attachments, feeders
+> (sandboxed data pipelines with HITL approval), OpenRouter + 9 other providers,
+> Agent Canvas (D3 + SVG), workflow DAG executor, and skills installable from GitHub.
 
 Dome is a comprehensive desktop application designed for researchers, academics, and knowledge workers who need to manage, organize, and synthesize information from multiple sources efficiently.
 
