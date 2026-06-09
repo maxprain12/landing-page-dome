@@ -8,6 +8,7 @@ const releases = "https://github.com/maxprain12/dome/releases";
   <div class="fa-many">
     <ManyMascot variant="wave" size={108} />
   </div>
+  <p class="fa-stamp" aria-hidden="true">v2.3.5 · FSRS · Feeders · OpenRouter · Dome-native runtime</p>
   <h2 id="fa-h2" class="fa-h2">Put it all under the dome.</h2>
   <p class="fa-sub">
     Clone, install with pnpm, or grab a release — macOS, Windows, and Linux. Node 22.13+, then
@@ -37,6 +38,19 @@ const releases = "https://github.com/maxprain12/dome/releases";
     display: flex;
     justify-content: center;
     margin: 0 auto 0.3rem;
+  }
+
+  .fa-stamp {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-rust);
+    border: 1.5px dashed var(--color-rust);
+    padding: 4px 10px;
+    transform: rotate(-3deg);
+    margin: 0 0 0.6rem;
   }
 
   .fa-h2 {

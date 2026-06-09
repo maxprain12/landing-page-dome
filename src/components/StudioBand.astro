@@ -3,7 +3,7 @@ const items = [
   { t: "Mindmap", g: 0 },
   { t: "Quiz", g: 1 },
   { t: "Timeline", g: 2 },
-  { t: "Flashcards · SM-2", g: 3 },
+  { t: "Flashcards · FSRS", g: 3 },
   { t: "Study guide", g: 4 },
   { t: "FAQ", g: 5 },
 ];
@@ -11,8 +11,42 @@ const items = [
 
 <section class="sb" id="studio" aria-labelledby="sb-heading">
   <div class="sb-inner">
-    <p class="sb-label">— Studio</p>
-    <h2 id="sb-heading" class="sb-h2">Mindmaps, quizzes, flashcards, guides, FAQs, and timelines from your content.</h2>
+    <div class="sb-head">
+      <div>
+        <p class="sb-label">— Studio</p>
+        <h2 id="sb-heading" class="sb-h2">
+          Mindmaps, quizzes, flashcards, guides, FAQs, and timelines — every output cited, every card graded by FSRS.
+        </h2>
+      </div>
+
+      {/* Mockup of <FlashPlayerSession /> — a 3D-flipping flashcard with FSRS interval buttons. */}
+      <figure class="sb-flash" aria-label="Flashcard study mockup with FSRS interval buttons">
+        <div class="sb-flash-card" aria-hidden="true">
+          <div class="sb-flash-front">
+            <p class="sb-flash-ey">Front · Card 7 of 24</p>
+            <p class="sb-flash-q">What is FSRS?</p>
+            <p class="sb-flash-hint">Free Spaced Repetition Scheduler — open algorithm, no vendor lock-in.</p>
+          </div>
+          <div class="sb-flash-back">
+            <p class="sb-flash-ey">Back</p>
+            <p class="sb-flash-a">
+              FSRS (ts-fsrs in Dome) replaces legacy SM-2. Cards are scheduled per-card based on
+              your rating history, with an open algorithm and DB migration that backfills existing decks.
+            </p>
+          </div>
+        </div>
+        <div class="sb-flash-actions" aria-hidden="true">
+          <button type="button" class="sb-flash-btn">Again<span>1m</span></button>
+          <button type="button" class="sb-flash-btn">Hard<span>6m</span></button>
+          <button type="button" class="sb-flash-btn sb-flash-btn-ok">Good<span>3d</span></button>
+          <button type="button" class="sb-flash-btn">Easy<span>12d</span></button>
+        </div>
+        <figcaption>
+          <code>FlashPlayerSession</code> · 3D flip · FSRS interval previews on every button.
+        </figcaption>
+      </figure>
+    </div>
+
     <div class="sb-grid" role="list">
       {items.map((item) => (
         <div class="sb-cell" role="listitem">
@@ -36,9 +70,7 @@ const items = [
                 </g>
               </svg>
             )}
-            {item.g === 1 && (
-              <span class="sb-q">?</span>
-            )}
+            {item.g === 1 && <span class="sb-q">?</span>}
             {item.g === 2 && (
               <svg width="90" height="24" viewBox="0 0 90 24">
                 <line x1="0" y1="12" x2="90" y2="12" stroke="var(--color-paper-light)" stroke-width="1" />
@@ -79,9 +111,7 @@ const items = [
                 ))}
               </svg>
             )}
-            {item.g === 5 && (
-              <span class="sb-faq">FAQ</span>
-            )}
+            {item.g === 5 && <span class="sb-faq">FAQ</span>}
           </div>
         </div>
       ))}
@@ -101,6 +131,14 @@ const items = [
     margin: 0 auto;
   }
 
+  .sb-head {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 48px;
+    align-items: center;
+    margin-bottom: 48px;
+  }
+
   .sb-label {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -115,11 +153,104 @@ const items = [
     font-size: clamp(1.6rem, 2.8vw, 2.1rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
-    margin: 0 0 40px;
+    margin: 0;
     font-weight: 400;
     max-width: 640px;
   }
 
+  /* --- FlashPlayerSession mockup (FSRS) --- */
+  .sb-flash {
+    margin: 0;
+    padding: 18px 18px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    perspective: 800px;
+  }
+  .sb-flash-card {
+    position: relative;
+    min-height: 168px;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+  /* Show the back side statically — represents the "graded/answered" state */
+  .sb-flash-card { transform: rotateY(180deg); }
+  .sb-flash-front,
+  .sb-flash-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    background: var(--color-paper-light);
+    color: var(--color-text);
+    border-radius: 6px;
+    padding: 14px 16px;
+    box-sizing: border-box;
+  }
+  .sb-flash-front { transform: rotateY(0deg); }
+  .sb-flash-back  { transform: rotateY(180deg); }
+  .sb-flash-ey {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 8px;
+  }
+  .sb-flash-q {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.1;
+    margin: 0 0 6px;
+  }
+  .sb-flash-hint {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .sb-flash-a {
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--color-text);
+    margin: 0;
+  }
+  .sb-flash-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    margin-top: 12px;
+  }
+  .sb-flash-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-paper-light);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 4px;
+    padding: 6px 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+    line-height: 1.1;
+  }
+  .sb-flash-btn span { opacity: 0.7; font-size: 9px; }
+  .sb-flash-btn-ok { background: var(--color-accent-light); color: var(--color-sage-dark); border-color: var(--color-accent-light); }
+  .sb-flash figcaption {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    opacity: 0.6;
+  }
+  .sb-flash code {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* --- Studio grid (cells) --- */
   .sb-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -145,9 +276,7 @@ const items = [
     line-height: 1.1;
   }
 
-  .sb-glyph {
-    flex-shrink: 0;
-  }
+  .sb-glyph { flex-shrink: 0; }
 
   .sb-q {
     font-family: var(--font-display);
@@ -164,11 +293,16 @@ const items = [
     color: var(--color-accent-light);
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 960px) {
+    .sb-head {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 700px) {
     .sb {
       padding: 72px 20px;
     }
-
     .sb-grid {
       grid-template-columns: 1fr;
     }

@@ -1,20 +1,54 @@
 ---
 import Screen from "./Screen.astro";
 import ManyMascot from "./ManyMascot.astro";
+
+// Mockup of the real <ContextUsageIndicator /> in app/components/many/ContextUsageIndicator.tsx
+// (donut + segmented budget breakdown). Renders as an inline SVG so it works
+// without a screenshot asset and stays crisp on retina.
 ---
 
 <section class="mm" id="meet-many" aria-labelledby="mm-heading">
   <div class="mm-grid">
     <div>
-      <p class="mm-eyebrow">— Many AI assistant</p>
+      <p class="mm-eyebrow">— Many · Dome-native agent</p>
       <h2 id="mm-heading" class="mm-h2">
-        LangGraph-powered chat: web search, your resources, memory, and MCP tools.
+        A reasoning agent, not a chat window — with memory, tools, and your library on hand.
       </h2>
       <p class="mm-body">
-        Many sits on top of a semantic index (Nomic embeddings in SQLite) with hybrid
-        search (vectors, full-text, graph). Use OpenAI, Anthropic, Google, or Ollama — run
-        local or in the cloud. Ask in plain language; Many cites where it can.
+        Many runs on the <strong>Dome-native agent runtime</strong> (the
+        <code>@dome/agent-core</code> harness): persistent JSONL sessions, a
+        <strong>context budget</strong> with live token estimates, multimodal
+        attachments, web search, MCP tools, and human-in-the-loop resume.
+        Use OpenAI, Anthropic, Google, Ollama, or OpenRouter — run local or in the
+        cloud, Many cites where it can.
       </p>
+
+      {/* Inline mockup of ContextUsageIndicator (donut + segments) */}
+      <figure class="mm-mock" aria-label="Context budget mockup from the Many composer">
+        <div class="mm-mock-head">
+          <span class="mm-mock-dot"></span>
+          <span class="mm-mock-title">Many · context</span>
+          <span class="mm-mock-cap">128K of 200K · 64%</span>
+        </div>
+        <div class="mm-mock-row">
+          <svg class="mm-donut" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="18" fill="none" stroke="var(--color-paper-deep, #E6DBB8)" stroke-width="4" />
+            <circle cx="22" cy="22" r="18" fill="none" stroke="var(--color-sage-dark, #5E6A34)" stroke-width="4" stroke-linecap="round"
+              stroke-dasharray="72.4 113.1" transform="rotate(-90 22 22)" />
+          </svg>
+          <ul class="mm-segs" role="list">
+            <li><span class="mm-seg-sw mm-sw-sys"></span>System <b>18K</b></li>
+            <li><span class="mm-seg-sw mm-sw-hist"></span>History <b>54K</b></li>
+            <li><span class="mm-seg-sw mm-sw-tool"></span>Tools <b>22K</b></li>
+            <li><span class="mm-seg-sw mm-sw-retr"></span>Retrieved <b>28K</b></li>
+            <li><span class="mm-seg-sw mm-sw-attach"></span>Attachments <b>6K</b></li>
+          </ul>
+        </div>
+        <figcaption>
+          <code>ContextUsageIndicator</code> — donut + segmented budget. Push notifications on every token stream.
+        </figcaption>
+      </figure>
+
       <div class="mm-quote">
         <ManyMascot variant="think" size={80} />
         <p class="mm-quote-txt">&quot;Your library is indexed. What should we find first?&quot;</p>
@@ -71,6 +105,66 @@ import ManyMascot from "./ManyMascot.astro";
     margin: 0;
   }
 
+  .mm-body code,
+  .mm-mock code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--color-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-border);
+  }
+
+  /* --- Context usage mockup --- */
+  .mm-mock {
+    margin: 24px 0 0;
+    padding: 16px 18px 14px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    max-width: 520px;
+  }
+  .mm-mock-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--color-ink-3);
+  }
+  .mm-mock-dot {
+    width: 8px; height: 8px; border-radius: 999px; background: var(--color-sage-dark, #5E6A34);
+  }
+  .mm-mock-title { color: var(--color-text); font-weight: 500; }
+  .mm-mock-cap { margin-left: auto; }
+  .mm-mock-row {
+    display: flex; align-items: center; gap: 18px; padding: 12px 0 8px;
+  }
+  .mm-donut { flex-shrink: 0; }
+  .mm-segs {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px 14px;
+    font-size: 12px; color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+    flex: 1;
+  }
+  .mm-segs li { display: flex; align-items: center; gap: 6px; }
+  .mm-segs b { color: var(--color-text); font-weight: 500; margin-left: auto; }
+  .mm-seg-sw { width: 9px; height: 9px; border-radius: 2px; }
+  .mm-sw-sys    { background: #5E6A34; }
+  .mm-sw-hist   { background: #B8C16A; }
+  .mm-sw-tool   { background: #B6572A; }
+  .mm-sw-retr   { background: #C7D38A; }
+  .mm-sw-attach { background: #6B5F45; }
+  .mm-mock figcaption {
+    font-size: 11px; color: var(--color-ink-3);
+    font-family: var(--font-mono); letter-spacing: 0.04em;
+    padding-top: 8px; border-top: 1px dashed var(--color-border);
+  }
+
   .mm-quote {
     margin-top: 28px;
     display: flex;
@@ -92,9 +186,9 @@ import ManyMascot from "./ManyMascot.astro";
     .mm {
       padding: 64px 20px;
     }
-
     .mm-grid {
       grid-template-columns: 1fr;
     }
+    .mm-segs { grid-template-columns: 1fr; }
   }
 </style>

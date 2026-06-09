@@ -1,0 +1,318 @@
+---
+// Mockup of <FeedersPanel /> from app/components/feeders/FeedersPanel.tsx.
+// The panel is a list of feeders with status, last run, and a CTA. Each
+// feeder runs a sandboxed script that pulls external JSON and writes a
+// persisted artifact. The mockup below shows the lifecycle: schedule →
+// secrets → script → HITL approval → persisted artifact.
+---
+
+<section class="fd" id="feeders" aria-labelledby="fd-h2">
+  <div class="fd-inner">
+    <div class="fd-head">
+      <p class="fd-ey">— Feeders</p>
+      <h2 id="fd-h2" class="fd-h2">
+        Scheduled sandbox scripts that feed persisted mini-apps with real-world data.
+      </h2>
+      <p class="fd-sub">
+        Feeder scripts run on a schedule in a sandboxed Node, Python, Bash, or curl
+        runtime. They read encrypted secrets from your local vault, pull external
+        JSON (Redfish sensors, REST APIs, your own backend), and write the result
+        into a persisted artifact that any agent, workflow, or panel can consume.
+        Approvals are human-in-the-loop and the full run history is browsable.
+      </p>
+    </div>
+
+    <div class="fd-grid">
+      {/* Pipeline diagram */}
+      <ol class="fd-pipe" aria-label="Feeder lifecycle">
+        <li class="fd-step">
+          <span class="fd-step-n">01</span>
+          <div>
+            <h3>Schedule</h3>
+            <p>Cron or interval. Pauses on app close if you want.</p>
+          </div>
+        </li>
+        <li class="fd-step">
+          <span class="fd-step-n">02</span>
+          <div>
+            <h3>Encrypted secrets</h3>
+            <p>safeStorage vault, scoped to this feeder. Never on the wire.</p>
+          </div>
+        </li>
+        <li class="fd-step">
+          <span class="fd-step-n">03</span>
+          <div>
+            <h3>Sandboxed script</h3>
+            <p>Python, Node, Bash, or curl. Returns JSON; errors don't crash the app.</p>
+          </div>
+        </li>
+        <li class="fd-step">
+          <span class="fd-step-n fd-step-hitl">04</span>
+          <div>
+            <h3>HITL approval</h3>
+            <p>Modal shows preview + diff. You sign it off before persist.</p>
+          </div>
+        </li>
+        <li class="fd-step fd-step-end">
+          <span class="fd-step-n">05</span>
+          <div>
+            <h3>Persisted artifact</h3>
+            <p>Available to agents via <code>feeder_*</code> tools and to views in the hub.</p>
+          </div>
+        </li>
+      </ol>
+
+      {/* Panel mockup */}
+      <figure class="fd-panel" aria-label="Feeders panel mockup">
+        <header class="fd-panel-head">
+          <span class="fd-panel-dot"></span>
+          <span class="fd-panel-title">Feeders</span>
+          <span class="fd-panel-count">3 active · 1 paused</span>
+          <button type="button" class="fd-panel-new">+ New feeder</button>
+        </header>
+        <ul class="fd-list" role="list">
+          <li class="fd-item">
+            <div class="fd-item-main">
+              <div class="fd-item-name">redfish · chassis-sensor-readings</div>
+              <div class="fd-item-meta">every 5m · Python · last run 2m ago · <b>ok</b></div>
+            </div>
+            <span class="fd-pill fd-pill-ok">running</span>
+          </li>
+          <li class="fd-item">
+            <div class="fd-item-main">
+              <div class="fd-item-name">arxiv · daily-ai-feed</div>
+              <div class="fd-item-meta">daily 09:00 · Node · last run 1h ago · <b>42 papers</b></div>
+            </div>
+            <span class="fd-pill fd-pill-ok">running</span>
+          </li>
+          <li class="fd-item">
+            <div class="fd-item-main">
+              <div class="fd-item-name">prom-exporter · weekly-snapshot</div>
+              <div class="fd-item-meta">weekly Mon 08:00 · curl · <b>awaiting approval</b></div>
+            </div>
+            <span class="fd-pill fd-pill-warn">HITL</span>
+          </li>
+          <li class="fd-item">
+            <div class="fd-item-main">
+              <div class="fd-item-name">github · org-issue-digest</div>
+              <div class="fd-item-meta">every 30m · Node · paused</div>
+            </div>
+            <span class="fd-pill fd-pill-pause">paused</span>
+          </li>
+        </ul>
+        <figcaption>
+          <code>FeedersPanel</code> · <code>FeederApprovalModal</code> · <code>SecretsManager</code>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fd {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 96px 48px;
+  }
+
+  .fd-inner { max-width: 1240px; margin: 0 auto; }
+
+  .fd-head { max-width: 720px; margin-bottom: 40px; }
+
+  .fd-ey {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 10px;
+  }
+
+  .fd-h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 14px;
+    font-weight: 400;
+  }
+
+  .fd-sub {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .fd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* --- Pipeline --- */
+  .fd-pipe {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: step;
+  }
+  .fd-step {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--color-border);
+    position: relative;
+  }
+  .fd-step:last-child { border-bottom: none; }
+  .fd-step-n {
+    width: 36px; height: 36px;
+    border-radius: 999px;
+    background: var(--color-accent-light);
+    color: var(--color-sage-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    font-weight: 500;
+  }
+  .fd-step-hitl { background: var(--color-rust); color: var(--color-surface); }
+  .fd-step h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin: 0 0 4px;
+  }
+  .fd-step p {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .fd-step code {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    background: var(--color-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-border);
+  }
+
+  /* --- Panel mockup --- */
+  .fd-panel {
+    margin: 0;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(48, 38, 20, 0.08);
+  }
+  .fd-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .fd-panel-dot {
+    width: 9px; height: 9px; border-radius: 999px; background: var(--color-sage);
+  }
+  .fd-panel-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-text);
+  }
+  .fd-panel-count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-ink-3);
+  }
+  .fd-panel-new {
+    background: var(--color-text);
+    color: var(--color-surface);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .fd-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .fd-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .fd-item:last-child { border-bottom: none; }
+  .fd-item-main { flex: 1; min-width: 0; }
+  .fd-item-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text);
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .fd-item-meta {
+    font-size: 11px;
+    color: var(--color-ink-3);
+  }
+  .fd-item-meta b {
+    color: var(--color-text);
+    font-weight: 500;
+  }
+  .fd-pill {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 3px;
+    border: 1px solid currentColor;
+    flex-shrink: 0;
+  }
+  .fd-pill-ok    { color: var(--color-sage-dark); background: var(--color-accent-light); border-color: var(--color-sage); }
+  .fd-pill-warn  { color: var(--color-rust); background: rgba(182, 87, 42, 0.08); }
+  .fd-pill-pause { color: var(--color-ink-3); background: var(--color-bg); }
+
+  .fd-panel figcaption {
+    padding: 10px 16px;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--color-ink-3);
+  }
+  .fd-panel code {
+    background: var(--color-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 980px) {
+    .fd-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .fd { padding: 72px 20px; }
+  }
+</style>

@@ -1,36 +1,48 @@
 ---
 import ManyMascot from "./ManyMascot.astro";
 
+// v2.3.5 — order matches the strength narrative: agent → index → studio →
+// agents+canvas → editor → providers → feeders → integrations.
 const features = [
   {
     k: "01",
-    t: "Many AI assistant",
-    p: "LangGraph-powered chat with web search, resource search, memory, MCP tools, and voice interaction. Your library and tools, one session.",
+    t: "Many — Dome-native agent",
+    p: "A reasoning agent on the @dome/agent-core harness: persistent JSONL sessions, context budget with live token estimates, multimodal attachments, web search, MCP tools, and human-in-the-loop resume. LangGraph is gone — this is Dome's own runtime.",
   },
   {
     k: "02",
-    t: "Semantic & hybrid search",
-    p: "Nomic embeddings in SQLite, plus hybrid search (vectors + FTS + graph). PDF and image text via your cloud LLM when you use vision models.",
+    t: "Configurable semantic index",
+    p: "LangChain embeddings (OpenAI, Google Gemini, Ollama) in LanceDB, with hybrid search (vectors + FTS + graph) and PDF/image text via your cloud LLM (vision). Switch the embedding model in Settings; Dome reindexes for you.",
   },
   {
     k: "03",
-    t: "Studio",
-    p: "Generate mindmaps, quizzes, flashcards, guides, FAQs, and timelines from your content — SM-2 decks included.",
+    t: "Studio · Learn with FSRS",
+    p: "Generate mindmaps, quizzes, study guides, FAQs, and timelines from your sources. Flashcards now use FSRS (ts-fsrs) with backfill from legacy SM-2 decks, 3D flip study UI, and interval previews on the action buttons.",
   },
   {
     k: "04",
-    t: "Many agents, Canvas, teams",
-    p: "Custom agents with their own tools and MCP servers. Install skills from GitHub repositories via the marketplace. Agent Canvas (D3 + SVG) for flows; agent teams in a shared chat.",
+    t: "Agents, Canvas, Teams, Workflows",
+    p: "Custom agents with their own instructions, MCP servers, and JSONL sessions. Agent Canvas (D3 + SVG) for visual flows, agent teams in shared chat, and a DAG workflow executor with per-node retry and text-only propagation.",
   },
   {
     k: "05",
-    t: "Notion-style editor",
-    p: "Tiptap: slash commands, tables, columns, toggles, callouts. Plus PDF viewer (annotate), PowerPoint viewer, academic library citations (APA, MLA, Chicago, Harvard, Vancouver, IEEE).",
+    t: "Notion-style editor + viewers",
+    p: "Tiptap with slash commands, tables, columns, toggles, callouts. PDF viewer (highlight, underline, comment), PowerPoint viewer (no LibreOffice), and academic library citations (APA, MLA, Chicago, Harvard, Vancouver, IEEE).",
   },
   {
     k: "06",
     t: "Your AI provider",
-    p: "Settings → AI: OpenAI, Anthropic, Google, or Ollama. Choose models that fit you; use local or cloud on your terms.",
+    p: "OpenAI, Anthropic, Google, Ollama, OpenRouter, DeepSeek, Moonshot, Qwen, GitHub Copilot, MiniMax. Provider-specific tool normalization, multimodal support, and a unified model catalog discoverable from the chat composer.",
+  },
+  {
+    k: "07",
+    t: "Feeders — data pipelines",
+    p: "Scheduled sandbox scripts (Python, Node, Bash, curl) that feed persisted artifacts with external JSON (Redfish, APIs, custom). Encrypted secrets vault (safeStorage), HITL approval modal, run history, and agent tools (feeder_*).",
+  },
+  {
+    k: "08",
+    t: "Marketplace + skills from GitHub",
+    p: "Install community agents, plugins, workflows, and skills. Paste a GitHub URL in Settings → Skills → Install from GitHub to add a skill with one click; the marketplace can browse multi-skill repos for you.",
   },
 ] as const;
 
@@ -101,8 +113,9 @@ function glyphHtml(i: number): string {
       <rect x="12" y="41" width="16" height="4" fill="${sage}"/>
     </svg>`;
   }
-  return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-    ${["GPT", "CLA", "GEM", "OLL", "MNX"]
+  if (i === 5) {
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      ${["GPT", "CLA", "GEM", "OLL", "OPR"]
       .map(
         (m, j) => `<g>
         <rect x="${4 + j * 13}" y="14" width="11" height="26" fill="${j === 3 ? sage : "none"}" stroke="${ink}"/>
@@ -110,6 +123,35 @@ function glyphHtml(i: number): string {
       </g>`,
       )
       .join("")}
+    </svg>`;
+  }
+  if (i === 6) {
+    // Feeders pipeline: script → secrets → approval → artifact
+    return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="20" width="14" height="14" fill="none" stroke="${ink}"/>
+      <text x="9" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="${ink}">{}</text>
+      <line x1="16" y1="27" x2="22" y2="27" stroke="${ink}" stroke-width="1" stroke-dasharray="2 2"/>
+      <rect x="22" y="20" width="14" height="14" fill="${sage}" stroke="${ink}"/>
+      <text x="29" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="${ink}">k</text>
+      <line x1="36" y1="27" x2="42" y2="27" stroke="${ink}" stroke-width="1" stroke-dasharray="2 2"/>
+      <rect x="42" y="20" width="14" height="14" fill="none" stroke="${rust}" stroke-width="1.4"/>
+      <text x="49" y="30" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="${rust}">HITL</text>
+      <line x1="56" y1="27" x2="62" y2="27" stroke="${ink}" stroke-width="1" stroke-dasharray="2 2"/>
+      <rect x="62" y="22" width="6" height="10" fill="${ink}"/>
+    </svg>`;
+  }
+  // i === 7 — Marketplace: 3 stacked "install" cards
+  return `<svg class="gli" width="70" height="54" viewBox="0 0 70 54" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <rect x="6" y="14" width="44" height="10" fill="none" stroke="${ink}"/>
+    <circle cx="11" cy="19" r="2" fill="${sage}"/>
+    <line x1="16" y1="19" x2="36" y2="19" stroke="${ink}" stroke-width="0.7"/>
+    <rect x="6" y="26" width="44" height="10" fill="${sage}" stroke="${ink}"/>
+    <circle cx="11" cy="31" r="2" fill="${ink}"/>
+    <line x1="16" y1="31" x2="36" y2="31" stroke="${ink}" stroke-width="0.7"/>
+    <text x="46" y="34" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="6" fill="${ink}">+</text>
+    <rect x="6" y="38" width="44" height="10" fill="none" stroke="${ink}"/>
+    <circle cx="11" cy="43" r="2" fill="${rust}"/>
+    <line x1="16" y1="43" x2="36" y2="43" stroke="${ink}" stroke-width="0.7"/>
   </svg>`;
 }
 ---
@@ -118,8 +160,8 @@ function glyphHtml(i: number): string {
   <div class="fe-in">
     <div class="fe-head">
       <div>
-        <p class="fe-ey">— What&apos;s inside</p>
-        <h2 id="fe-h2" class="fe-h2">Notes, PDFs, videos, and URLs — indexed, searchable, in conversation with Many.</h2>
+        <p class="fe-ey">— What's inside · v2.3.5</p>
+        <h2 id="fe-h2" class="fe-h2">Eight things Dome does well, in one quiet workspace.</h2>
       </div>
       <div class="fe-mascot" aria-hidden="true">
         <ManyMascot variant="think" size={72} />
@@ -191,7 +233,7 @@ function glyphHtml(i: number): string {
 
   .fe-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 0;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
@@ -201,14 +243,15 @@ function glyphHtml(i: number): string {
     padding: 1.6rem 1.5rem 1.4rem;
     border-right: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
-    min-height: 15.5rem;
+    min-height: 16.5rem;
   }
 
-  .fe-card:nth-child(3n) {
+  .fe-card:nth-child(4n) {
     border-right: none;
   }
 
-  .fe-card:nth-child(n + 4) {
+  /* Last row: drop the bottom border on the last 4 cards */
+  .fe-card:nth-child(n + 5) {
     border-bottom: none;
   }
 
@@ -248,6 +291,21 @@ function glyphHtml(i: number): string {
   :global(.fe-glyph .gli) {
     display: block;
     margin-top: 0.9rem;
+  }
+
+  @media (max-width: 1180px) {
+    .fe-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .fe-card:nth-child(2n) {
+      border-right: none;
+    }
+    .fe-card:nth-child(n + 7) {
+      border-bottom: none;
+    }
+    .fe-card.is-first {
+      grid-column: 1 / -1;
+    }
   }
 
   @media (max-width: 960px) {
