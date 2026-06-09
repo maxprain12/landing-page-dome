@@ -1,10 +1,11 @@
 ---
-import Screen from "./Screen.astro";
+import MockMany from "./MockMany.astro";
 import ManyMascot from "./ManyMascot.astro";
 
 // Mockup of the real <ContextUsageIndicator /> in app/components/many/ContextUsageIndicator.tsx
 // (donut + segmented budget breakdown). Renders as an inline SVG so it works
-// without a screenshot asset and stays crisp on retina.
+// without a screenshot asset and stays crisp on retina. Clicking the donut
+// cycles through different realistic budgets.
 ---
 
 <section class="mm" id="meet-many" aria-labelledby="mm-heading">
@@ -23,18 +24,18 @@ import ManyMascot from "./ManyMascot.astro";
         cloud, Many cites where it can.
       </p>
 
-      {/* Inline mockup of ContextUsageIndicator (donut + segments) */}
+      {/* Inline mockup of ContextUsageIndicator (donut + segments) — clickable */}
       <figure class="mm-mock" aria-label="Context budget mockup from the Many composer">
         <div class="mm-mock-head">
           <span class="mm-mock-dot"></span>
           <span class="mm-mock-title">Many · context</span>
-          <span class="mm-mock-cap">128K of 200K · 64%</span>
+          <span class="mm-mock-cap" data-mm-budget-txt>128K of 200K · 64%</span>
         </div>
-        <div class="mm-mock-row">
+        <div class="mm-mock-row" data-mm-budget title="Click the donut to cycle budgets">
           <svg class="mm-donut" width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
             <circle cx="22" cy="22" r="18" fill="none" stroke="var(--color-paper-deep, #E6DBB8)" stroke-width="4" />
             <circle cx="22" cy="22" r="18" fill="none" stroke="var(--color-sage-dark, #5E6A34)" stroke-width="4" stroke-linecap="round"
-              stroke-dasharray="72.4 113.1" transform="rotate(-90 22 22)" />
+              stroke-dasharray="72.4 113.1" transform="rotate(-90 22 22)" data-mm-donut />
           </svg>
           <ul class="mm-segs" role="list">
             <li><span class="mm-seg-sw mm-sw-sys"></span>System <b>18K</b></li>
@@ -45,7 +46,7 @@ import ManyMascot from "./ManyMascot.astro";
           </ul>
         </div>
         <figcaption>
-          <code>ContextUsageIndicator</code> — donut + segmented budget. Push notifications on every token stream.
+          <code>ContextUsageIndicator</code> — donut + segmented budget. Push notifications on every token stream. <b>Click the donut to cycle.</b>
         </figcaption>
       </figure>
 
@@ -55,14 +56,39 @@ import ManyMascot from "./ManyMascot.astro";
       </div>
     </div>
     <div>
-      <Screen
-        src="/assets/screen-many.png"
-        title="Dome · Many"
-        caption="Many in your workspace"
-      />
+      <MockMany />
     </div>
   </div>
 </section>
+
+<script>
+  // Interactive: clicking the donut cycles through realistic context budgets.
+  document.querySelectorAll<HTMLElement>("[data-mm-budget]").forEach((root) => {
+    const donut = root.querySelector("[data-mm-donut]") as SVGCircleElement | null;
+    const txt = document.querySelector("[data-mm-budget-txt]") as HTMLElement | null;
+    if (!donut || !txt) return;
+    const circumference = 2 * Math.PI * 18;
+    const budgets = [
+      { tokens: 128_000, label: "128K of 200K · 64%" },
+      { tokens: 47_000,  label: "47K of 200K · 24%"  },
+      { tokens: 192_000, label: "192K of 200K · 96%" },
+      { tokens: 88_000,  label: "88K of 200K · 44%"  },
+      { tokens: 12_000,  label: "12K of 200K · 6%"   },
+    ];
+    let idx = 0;
+    const render = () => {
+      const b = budgets[idx];
+      const pct = Math.round((b.tokens / 200_000) * 100);
+      donut.setAttribute("stroke-dasharray", `${(pct / 100) * circumference} ${circumference}`);
+      txt.textContent = b.label;
+    };
+    root.addEventListener("click", () => {
+      idx = (idx + 1) % budgets.length;
+      render();
+    });
+    render();
+  });
+</script>
 
 <style>
   .mm {
@@ -76,7 +102,7 @@ import ManyMascot from "./ManyMascot.astro";
     display: grid;
     grid-template-columns: 1fr 1.1fr;
     gap: 64px;
-    align-items: center;
+    align-items: start;
   }
 
   .mm-eyebrow {
@@ -115,7 +141,7 @@ import ManyMascot from "./ManyMascot.astro";
     border: 1px solid var(--color-border);
   }
 
-  /* --- Context usage mockup --- */
+  /* --- Context usage mockup (interactive) --- */
   .mm-mock {
     margin: 24px 0 0;
     padding: 16px 18px 14px;
@@ -142,7 +168,11 @@ import ManyMascot from "./ManyMascot.astro";
   .mm-mock-cap { margin-left: auto; }
   .mm-mock-row {
     display: flex; align-items: center; gap: 18px; padding: 12px 0 8px;
+    cursor: pointer;
+    transition: background 0.18s ease;
+    border-radius: 4px;
   }
+  .mm-mock-row:hover { background: var(--color-paper-deep); }
   .mm-donut { flex-shrink: 0; }
   .mm-segs {
     list-style: none; padding: 0; margin: 0;
@@ -164,6 +194,7 @@ import ManyMascot from "./ManyMascot.astro";
     font-family: var(--font-mono); letter-spacing: 0.04em;
     padding-top: 8px; border-top: 1px dashed var(--color-border);
   }
+  .mm-mock figcaption b { color: var(--color-text); }
 
   .mm-quote {
     margin-top: 28px;

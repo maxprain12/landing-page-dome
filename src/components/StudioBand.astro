@@ -19,30 +19,30 @@ const items = [
         </h2>
       </div>
 
-      {/* Mockup of <FlashPlayerSession /> — a 3D-flipping flashcard with FSRS interval buttons. */}
-      <figure class="sb-flash" aria-label="Flashcard study mockup with FSRS interval buttons">
-        <div class="sb-flash-card" aria-hidden="true">
+      {/* Interactive mockup of <FlashPlayerSession /> with a real 3D flip. */}
+      <figure class="sb-flash" data-flash aria-label="Flashcard study mockup with FSRS interval buttons">
+        <div class="sb-flash-card" data-flash-card>
           <div class="sb-flash-front">
-            <p class="sb-flash-ey">Front · Card 7 of 24</p>
+            <p class="sb-flash-ey">Front · Card 7 of 24 · due now</p>
             <p class="sb-flash-q">What is FSRS?</p>
-            <p class="sb-flash-hint">Free Spaced Repetition Scheduler — open algorithm, no vendor lock-in.</p>
+            <p class="sb-flash-hint">Free Spaced Repetition Scheduler — open algorithm, no vendor lock-in. Click to reveal.</p>
           </div>
           <div class="sb-flash-back">
-            <p class="sb-flash-ey">Back</p>
+            <p class="sb-flash-ey">Back · click to flip back</p>
             <p class="sb-flash-a">
               FSRS (ts-fsrs in Dome) replaces legacy SM-2. Cards are scheduled per-card based on
-              your rating history, with an open algorithm and DB migration that backfills existing decks.
+              your rating history. Dome backfills your existing decks on first launch.
             </p>
           </div>
         </div>
-        <div class="sb-flash-actions" aria-hidden="true">
+        <div class="sb-flash-actions">
           <button type="button" class="sb-flash-btn">Again<span>1m</span></button>
           <button type="button" class="sb-flash-btn">Hard<span>6m</span></button>
           <button type="button" class="sb-flash-btn sb-flash-btn-ok">Good<span>3d</span></button>
           <button type="button" class="sb-flash-btn">Easy<span>12d</span></button>
         </div>
         <figcaption>
-          <code>FlashPlayerSession</code> · 3D flip · FSRS interval previews on every button.
+          <code>FlashPlayerSession</code> · 3D flip · FSRS interval previews. Click the card to flip.
         </figcaption>
       </figure>
     </div>
@@ -119,6 +119,19 @@ const items = [
   </div>
 </section>
 
+<script>
+  // Interactive flashcard flip on click. CSS handles the 3D rotation; the
+  // script just toggles the [data-flipped] attribute.
+  document.querySelectorAll<HTMLElement>("[data-flash]").forEach((root) => {
+    const card = root.querySelector<HTMLElement>("[data-flash-card]");
+    if (!card) return;
+    card.addEventListener("click", () => {
+      card.toggleAttribute("data-flipped");
+    });
+    card.style.cursor = "pointer";
+  });
+</script>
+
 <style>
   .sb {
     background: var(--color-sage-dark);
@@ -158,27 +171,27 @@ const items = [
     max-width: 640px;
   }
 
-  /* --- FlashPlayerSession mockup (FSRS) --- */
+  /* --- FlashPlayerSession mockup (interactive 3D flip) --- */
   .sb-flash {
     margin: 0;
     padding: 18px 18px 14px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 8px;
-    perspective: 800px;
+    perspective: 1200px;
   }
   .sb-flash-card {
     position: relative;
     min-height: 168px;
     transform-style: preserve-3d;
-    transition: transform 0.6s;
+    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
   }
-  /* Show the back side statically — represents the "graded/answered" state */
-  .sb-flash-card { transform: rotateY(180deg); }
+  .sb-flash-card[data-flipped] { transform: rotateY(180deg); }
   .sb-flash-front,
   .sb-flash-back {
     position: absolute; inset: 0;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     background: var(--color-paper-light);
     color: var(--color-text);
     border-radius: 6px;
@@ -234,9 +247,13 @@ const items = [
     gap: 2px;
     align-items: center;
     line-height: 1.1;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease;
   }
+  .sb-flash-btn:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
   .sb-flash-btn span { opacity: 0.7; font-size: 9px; }
   .sb-flash-btn-ok { background: var(--color-accent-light); color: var(--color-sage-dark); border-color: var(--color-accent-light); }
+  .sb-flash-btn-ok:hover { background: var(--color-accent-light); }
   .sb-flash figcaption {
     margin-top: 10px;
     font-family: var(--font-mono);
@@ -254,18 +271,23 @@ const items = [
   .sb-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 20px;
   }
 
   .sb-cell {
     background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 24px;
-    min-height: 120px;
+    padding: 28px 24px;
+    min-height: 132px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    transition: background 0.18s ease, transform 0.18s ease;
+  }
+  .sb-cell:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
   }
 
   .sb-t {
@@ -305,6 +327,7 @@ const items = [
     }
     .sb-grid {
       grid-template-columns: 1fr;
+      gap: 12px;
     }
   }
 </style>

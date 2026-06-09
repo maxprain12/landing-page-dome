@@ -1,0 +1,293 @@
+---
+/**
+ * Inline mockup of the Many chat view, derived from the real components in
+ * maxprain12/dome:
+ *   - app/components/chat/* (composer, message list, tool calls)
+ *   - app/components/many/ContextUsageIndicator.tsx
+ *   - app/components/many/CompactionNotice.tsx
+ *   - app/components/tiptap-ui-primitive/* (slash menu, mentions)
+ *
+ * Renders a real macOS window chrome with:
+ *   • Sidebar (chat sessions, JSONL-backed)
+ *   • Message thread (user + Many assistant with visible tool calls)
+ *   • A "thinking" indicator that flips on click
+ *   • The ContextUsageIndicator donut (now clickable: cycles budgets)
+ *   • A composer with @resource / /skill / #MCP mention hints
+ */
+---
+
+<figure class="mockmany-root" data-mockmany aria-label="Dome Many chat mockup">
+  <div class="mockmany-chrome" data-screen-chrome>
+    <div class="mockmany-titlebar">
+      <span class="mockmany-dot" style="background:#e5756a"></span>
+      <span class="mockmany-dot" style="background:#ebb447"></span>
+      <span class="mockmany-dot" style="background:#6ac47f"></span>
+      <div class="mockmany-title">Dome · Many</div>
+    </div>
+
+    <div class="mockmany-body">
+      {/* Sidebar */}
+      <aside class="mockmany-side" aria-label="Chat sessions">
+        <div class="mm-side-head">
+          <span class="mm-side-ey">— Many sessions</span>
+          <button class="mm-new" aria-label="New session">+</button>
+        </div>
+        <ul class="mm-side-list" role="list">
+          <li class="is-active" data-title="Chapter 4 summary"><span class="dot"></span>Chapter 4 summary <em>2m</em></li>
+          <li><span class="dot"></span>FSRS cards · methodology <em>1h</em></li>
+          <li><span class="dot"></span>Compare Redfish snapshots <em>3h</em></li>
+          <li><span class="dot"></span>Smith 2024 — citation <em>1d</em></li>
+          <li><span class="dot"></span>Feeder triage · last week <em>2d</em></li>
+          <li><span class="dot"></span>Quiz draft — cog-psych <em>3d</em></li>
+        </ul>
+        <div class="mm-side-foot">
+          <span class="mm-foot-dot"></span>
+          JSONL · 6 threads
+        </div>
+      </aside>
+
+      {/* Chat thread */}
+      <main class="mockmany-main">
+        <div class="mm-thread" data-thread>
+          <div class="msg msg-user">
+            <div class="msg-who">you</div>
+            <div class="msg-bubble">Summarise chapter 4 of the dissertation corpus, and cite every claim with the page number.</div>
+          </div>
+
+          <div class="msg msg-ai" data-thinking="false">
+            <div class="msg-who">many · <em>reasoning</em></div>
+            <div class="msg-bubble">
+              I read 1,204 pages across 6 sources. Chapter 4 makes three core claims, each grounded:
+              <ol>
+                <li>Habits are not behaviors but context-bound attentional frames <span class="cite">p.87</span>.</li>
+                <li>Long projects fail at the *handoff* between sessions, not at the work itself <span class="cite">p.91</span>.</li>
+                <li>The 3-day rule is a measurable re-entry signal <span class="cite">p.94</span>.</li>
+              </ol>
+            </div>
+
+            {/* Tool calls (visible, foldable) */}
+            <details class="msg-tools" open>
+              <summary>4 tool calls · 2.3s</summary>
+              <ul>
+                <li><span class="tool-icon">⌕</span> <code>resource_search</code> · "habits chapter 4" → 6 hits</li>
+                <li><span class="tool-icon">⊕</span> <code>retrieve_pages</code> · 87–94 → chunks: 12</li>
+                <li><span class="tool-icon">⎙</span> <code>graph_neighbors</code> · Smith 2024, Bohn 2017</li>
+                <li><span class="tool-icon">✎</span> <code>draft_section</code> · 412 words</li>
+              </ul>
+            </details>
+          </div>
+
+          <div class="msg msg-user">
+            <div class="msg-who">you</div>
+            <div class="msg-bubble">Now turn that into 10 FSRS cards. Mix easy / hard / good.</div>
+          </div>
+
+          <div class="msg msg-ai" data-thinking="true">
+            <div class="msg-who">many · <em data-thinking-label>thinking</em></div>
+            <div class="msg-bubble">
+              <span class="typing" aria-hidden="true"><span></span><span></span><span></span></span>
+              <span class="msg-status">calling <code>generate_deck</code> · waiting for FSM-2 schedule</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Composer */}
+        <div class="mm-composer" data-composer-mm>
+          <div class="composer-head">
+            <span class="composer-label">Ask Many</span>
+            <div class="composer-budget" data-budget-mm title="Click to cycle the context budget">
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                <circle cx="9" cy="9" r="7" fill="none" stroke="var(--color-border)" stroke-width="2"/>
+                <circle cx="9" cy="9" r="7" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" stroke-linecap="round"
+                        data-donut-mm stroke-dasharray="29.6 44" transform="rotate(-90 9 9)"/>
+              </svg>
+              <span class="composer-budget-txt" data-budget-mm-txt>128K / 200K · 64%</span>
+            </div>
+          </div>
+
+          <div class="composer-input">
+            <span class="composer-placeholder">Try <span class="chip">/summarise</span> <span class="chip">@chapter-4</span> <span class="chip">#arxiv</span></span>
+          </div>
+          <div class="composer-foot">
+            <div class="composer-tools">
+              <span class="tool" title="Skills">/</span>
+              <span class="tool" title="Resources">@</span>
+              <span class="tool" title="MCP">#</span>
+              <span class="tool" title="Attach">+</span>
+            </div>
+            <button type="button" class="composer-send" data-send-mm>
+              Send <span aria-hidden="true">↵</span>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <figcaption class="mockmany-cap">
+    Fig. 02 — Many chat: reasoning agent with visible tool calls, FSRS-grade output, and a live context budget.
+    <span class="mockmany-hint">Click <b>Send</b> to add a turn · click the donut to cycle budgets.</span>
+  </figcaption>
+</figure>
+
+<script>
+  // Interactive logic for the Many mockup:
+  //   • Click the donut to cycle through realistic context budgets.
+  //   • Click "Send" to add another user turn + flip the AI to thinking.
+  document.querySelectorAll<HTMLElement>("[data-mockmany]").forEach((root) => {
+    const send = root.querySelector<HTMLButtonElement>("[data-send-mm]");
+    const donut = root.queryElement("[data-donut-mm]") as SVGCircleElement | null;
+    const txt = root.querySelector<HTMLElement>("[data-budget-mm-txt]");
+    if (!send || !donut || !txt) return;
+
+    const circumference = 2 * Math.PI * 7;
+    const budgets = [
+      { tokens: 128_000, label: "128K / 200K · 64%" },
+      { tokens: 47_000,  label: "47K / 200K · 24%"  },
+      { tokens: 192_000, label: "192K / 200K · 96%" },
+      { tokens: 88_000,  label: "88K / 200K · 44%"  },
+    ];
+    let bIdx = 0;
+
+    const renderBudget = () => {
+      const b = budgets[bIdx];
+      const pct = Math.round((b.tokens / 200_000) * 100);
+      donut.setAttribute("stroke-dasharray", `${(pct / 100) * circumference} ${circumference}`);
+      txt.textContent = b.label;
+    };
+    renderBudget();
+    donut.parentElement?.addEventListener("click", () => {
+      bIdx = (bIdx + 1) % budgets.length;
+      renderBudget();
+    });
+
+    // Sending a turn: just adds a user bubble and toggles the thinking state
+    send.addEventListener("click", () => {
+      const thread = root.querySelector<HTMLElement>("[data-thread]");
+      const thinkingMsg = thread?.querySelector<HTMLElement>("[data-thinking]");
+      if (!thread || !thinkingMsg) return;
+
+      const userLine = document.createElement("div");
+      userLine.className = "msg msg-user";
+      userLine.innerHTML = `
+        <div class="msg-who">you</div>
+        <div class="msg-bubble">Add 5 more cards on the re-entry signal.</div>
+      `;
+      // Find the "thinking" message (last in the thread) and insert before it
+      const allThinking = thread.querySelectorAll<HTMLElement>("[data-thinking]");
+      const lastThinking = allThinking[allThinking.length - 1] ?? null;
+      thread.insertBefore(userLine, lastThinking);
+      thread.scrollTop = thread.scrollHeight;
+    });
+  });
+</script>
+
+<style>
+  .mockmany-root { margin: 0; width: 100%; }
+
+  .mockmany-chrome {
+    width: 100%;
+    background: var(--color-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 24px 64px rgba(48,38,20,0.18), 0 80px 140px rgba(48,38,20,0.12);
+  }
+  .mockmany-titlebar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .mockmany-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
+  .mockmany-title { margin-left: 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--color-ink-3); }
+
+  .mockmany-body { display: grid; grid-template-columns: 220px 1fr; min-height: 540px; background: var(--color-surface); }
+
+  /* Sidebar (sessions) */
+  .mockmany-side { border-right: 1px solid var(--color-border); padding: 12px 10px; display: flex; flex-direction: column; gap: 8px; background: var(--color-bg); }
+  .mm-side-head { display: flex; align-items: center; justify-content: space-between; padding: 0 4px 4px; }
+  .mm-side-ey { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-ink-3); }
+  .mm-new { width: 18px; height: 18px; border: 1px solid var(--color-border); border-radius: 3px; background: var(--color-bg); font-family: var(--font-mono); cursor: pointer; }
+  .mm-side-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1px; }
+  .mm-side-list li { display: flex; align-items: center; gap: 6px; padding: 4px 6px; border-radius: 3px; font-size: 11px; color: var(--color-text-secondary); font-family: var(--font-mono); cursor: default; }
+  .mm-side-list li em { margin-left: auto; font-style: normal; color: var(--color-ink-3); font-size: 9px; }
+  .mm-side-list li .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--color-border); flex-shrink: 0; }
+  .mm-side-list li.is-active { background: var(--color-accent-light); color: var(--color-text); }
+  .mm-side-list li.is-active .dot { background: var(--color-sage-dark); }
+  .mm-side-foot { margin-top: auto; padding: 6px 8px; font-family: var(--font-mono); font-size: 9px; color: var(--color-ink-3); display: flex; align-items: center; gap: 6px; }
+  .mm-foot-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--color-sage); }
+
+  /* Thread */
+  .mockmany-main { display: flex; flex-direction: column; min-width: 0; }
+  .mm-thread { flex: 1; padding: 16px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; min-height: 280px; }
+  .msg { display: flex; flex-direction: column; gap: 4px; }
+  .msg-who { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-ink-3); }
+  .msg-who em { color: var(--color-sage-dark); font-style: italic; text-transform: none; letter-spacing: 0; }
+  .msg-bubble { font-size: 12px; line-height: 1.55; color: var(--color-text); }
+  .msg-user .msg-bubble { background: var(--color-paper-deep); padding: 8px 12px; border-radius: 8px; max-width: 70ch; }
+  .msg-ai .msg-bubble { background: var(--color-bg); padding: 10px 14px; border-left: 2px solid var(--color-sage-dark); border-radius: 0 6px 6px 0; max-width: 72ch; }
+  .msg-ai .msg-bubble ol { margin: 6px 0 0 18px; padding: 0; }
+  .msg-ai .msg-bubble li { margin-bottom: 4px; }
+  .cite { font-family: var(--font-mono); font-size: 10px; background: var(--color-accent-light); padding: 0 4px; border-radius: 2px; color: var(--color-sage-dark); }
+
+  /* Tool calls */
+  .msg-tools { font-size: 11px; margin-top: 4px; }
+  .msg-tools summary { cursor: pointer; color: var(--color-ink-3); font-family: var(--font-mono); letter-spacing: 0.5px; padding: 4px 0; }
+  .msg-tools summary:hover { color: var(--color-text); }
+  .msg-tools ul { list-style: none; padding: 4px 0 0 8px; margin: 0; display: flex; flex-direction: column; gap: 3px; }
+  .msg-tools li { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-secondary); }
+  .tool-icon { width: 14px; text-align: center; color: var(--color-sage-dark); }
+  .msg-tools code { font-size: 10px; background: var(--color-bg); border: 1px solid var(--color-border); padding: 0 4px; border-radius: 2px; }
+
+  /* Thinking dots */
+  .typing { display: inline-flex; gap: 3px; vertical-align: middle; margin-right: 8px; }
+  .typing span { width: 4px; height: 4px; border-radius: 999px; background: var(--color-sage-dark); animation: typingBlink 1.2s infinite; }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typingBlink { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+  .msg-status { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-secondary); }
+  .msg-status code { background: var(--color-accent-light); padding: 0 4px; border-radius: 2px; color: var(--color-sage-dark); }
+
+  /* Composer (interactive) */
+  .mm-composer { border-top: 1px solid var(--color-border); background: var(--color-surface); }
+  .composer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .composer-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-ink-3); }
+  .composer-budget { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .composer-budget-txt { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-secondary); letter-spacing: 0.5px; }
+  .composer-input { padding: 12px 14px; min-height: 56px; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--color-text); }
+  .composer-placeholder { color: var(--color-ink-3); font-style: italic; }
+  .chip { display: inline-block; font-style: normal; background: var(--color-accent-light); color: var(--color-sage-dark); padding: 1px 6px; border-radius: 3px; margin: 0 2px; font-size: 11px; }
+  .composer-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 10px; border-top: 1px solid var(--color-border);
+  }
+  .composer-tools { display: flex; gap: 4px; }
+  .tool {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--color-ink-3); background: var(--color-bg);
+  }
+  .composer-send {
+    background: var(--color-text); color: var(--color-surface);
+    border: none; border-radius: 4px;
+    padding: 4px 10px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .composer-send:hover { opacity: 0.85; }
+
+  .mockmany-cap { margin-top: 18px; text-align: center; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.5px; color: var(--color-ink-3); }
+  .mockmany-hint { display: block; margin-top: 4px; color: var(--color-text-secondary); font-size: 10px; }
+  .mockmany-hint b { color: var(--color-text); background: var(--color-paper-deep); padding: 0 4px; border-radius: 2px; }
+
+  @media (max-width: 900px) {
+    .mockmany-body { grid-template-columns: 1fr; }
+    .mockmany-side { display: none; }
+  }
+</style>

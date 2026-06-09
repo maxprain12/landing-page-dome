@@ -1,0 +1,385 @@
+---
+/**
+ * Inline mockup of Dome's HubWorkspace home view, derived from the real
+ * components in maxprain12/dome:
+ *   - app/components/hub/HubTabHero.tsx
+ *   - app/components/hub/HubWorkspaceContext.tsx
+ *   - app/components/hub/HubFilterBar.tsx
+ *   - app/components/many/ContextUsageIndicator.tsx
+ *
+ * Renders a real macOS window chrome with:
+ *   • Sidebar (workspace tabs)
+ *   • Tab strip (Home / Projects / Library / Agents / Workflows / Runs)
+ *   • KPI strip ("metas diarias" — small dashboard)
+ *   • Projects grid with one card highlighted
+ *   • A compact Many composer with context donut (clickable, increments)
+ *   • An interactive "Ask Many" send button that prepends a user turn on click
+ */
+---
+
+<figure class="mockhome-root" data-mockhome aria-label="Dome home workspace mockup">
+  <div class="mockhome-chrome" data-screen-chrome>
+    <div class="mockhome-titlebar">
+      <span class="mockhome-dot" style="background:#e5756a"></span>
+      <span class="mockhome-dot" style="background:#ebb447"></span>
+      <span class="mockhome-dot" style="background:#6ac47f"></span>
+      <div class="mockhome-title">Dome · Home</div>
+    </div>
+
+    <div class="mockhome-body">
+      {/* Sidebar */}
+      <aside class="mockhome-side" aria-label="Workspace tabs">
+        <div class="mockhome-logo" aria-hidden="true">
+          <span class="mockhome-logo-dot"></span>
+          <span class="mockhome-logo-txt">dome</span>
+        </div>
+        <ul class="mockhome-side-list" role="list">
+          <li class="is-active"><span class="ic">⌂</span> Home</li>
+          <li><span class="ic">▣</span> Projects</li>
+          <li><span class="ic">⎙</span> Library</li>
+          <li><span class="ic">✦</span> Agents</li>
+          <li><span class="ic">⇄</span> Workflows</li>
+          <li><span class="ic">▶</span> Runs</li>
+          <li><span class="ic">◷</span> Automations</li>
+          <li><span class="ic">★</span> Learn</li>
+        </ul>
+        <div class="mockhome-side-foot">
+          <div class="mockhome-foot-label">workspace</div>
+          <div class="mockhome-foot-name">dissertation</div>
+        </div>
+      </aside>
+
+      {/* Main pane */}
+      <main class="mockhome-main">
+        {/* Tab strip */}
+        <div class="mockhome-tabs" role="tablist">
+          <button class="is-active" role="tab" aria-selected="true">Home</button>
+          <button role="tab">Projects · 4</button>
+          <button role="tab">Library</button>
+          <button role="tab">Marketplace</button>
+        </div>
+
+        {/* Hero / brief */}
+        <div class="mockhome-hero">
+          <div>
+            <div class="mockhome-ey">— Editorial brief · Today</div>
+            <h3 class="mockhome-h3">Continue: Chapter 4 of <em>Habits &amp; Long Projects</em></h3>
+            <p class="mockhome-p">Many read 1,204 pages for you this week. Pick up where you left off, or ask it to draft the next section.</p>
+          </div>
+          <div class="mockhome-cta" aria-hidden="true">
+            <span>↗</span> open chapter
+          </div>
+        </div>
+
+        {/* KPI strip */}
+        <div class="mockhome-kpis" aria-label="Daily metrics">
+          <div class="kpi"><b>14</b><span>due cards</span></div>
+          <div class="kpi"><b>3</b><span>open runs</span></div>
+          <div class="kpi"><b>9d</b><span>streak</span></div>
+          <div class="kpi kpi-warm"><b>2</b><span>awaiting HITL</span></div>
+        </div>
+
+        {/* Project grid */}
+        <div class="mockhome-grid" role="list">
+          <article class="card is-hl" role="listitem">
+            <div class="card-ey">Project · 312 pages indexed</div>
+            <h4>Habits &amp; Long Projects</h4>
+            <div class="card-bar"><span style="width:74%"></span></div>
+            <div class="card-foot">FSRS · 14 due · 8 sources · 3 agents</div>
+          </article>
+          <article class="card" role="listitem">
+            <div class="card-ey">Project · 89 pages</div>
+            <h4>Reading · ArXiv weekly</h4>
+            <div class="card-bar"><span style="width:42%"></span></div>
+            <div class="card-foot">feeder · arxiv-ai</div>
+          </article>
+          <article class="card" role="listitem">
+            <div class="card-ey">Project · 17 sources</div>
+            <h4>Course · Cognitive Psych</h4>
+            <div class="card-bar"><span style="width:88%"></span></div>
+            <div class="card-foot">studio · 2 quizzes ready</div>
+          </article>
+          <article class="card" role="listitem">
+            <div class="card-ey">Project · 5 docs</div>
+            <h4>Lab · Mongoose telemetry</h4>
+            <div class="card-bar"><span style="width:20%"></span></div>
+            <div class="card-foot">feeder · redfish · paused</div>
+          </article>
+        </div>
+
+        {/* Many composer (interactive) */}
+        <div class="mockhome-composer" data-composer>
+          <div class="composer-head">
+            <span class="composer-label">Ask Many</span>
+            <div class="composer-budget" data-budget title="Click to add a turn and watch the budget grow">
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                <circle cx="9" cy="9" r="7" fill="none" stroke="var(--color-border)" stroke-width="2"/>
+                <circle cx="9" cy="9" r="7" fill="none" stroke="var(--color-sage-dark)" stroke-width="2" stroke-linecap="round"
+                        data-donut stroke-dasharray="0 44" transform="rotate(-90 9 9)"/>
+              </svg>
+              <span class="composer-budget-txt" data-budget-txt>0 / 200K · 0%</span>
+            </div>
+          </div>
+          <div class="composer-input" data-composer-log>
+            <span class="composer-placeholder">Ask anything about your library…</span>
+          </div>
+          <div class="composer-foot">
+            <div class="composer-tools" aria-hidden="true">
+              <span class="tool" title="Skills">/</span>
+              <span class="tool" title="Resources">@</span>
+              <span class="tool" title="MCP">#</span>
+              <span class="tool" title="Attach">+</span>
+            </div>
+            <button type="button" class="composer-send" data-send>
+              Send <span aria-hidden="true">↵</span>
+            </button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <figcaption class="mockhome-cap">
+    Fig. 01 — Dome home: projects, KPIs, and Many waiting for your question.
+    <span class="mockhome-hint">Click <b>Send</b> to add a turn.</span>
+  </figcaption>
+</figure>
+
+<script>
+  // Tiny inline script: makes the Many composer in the ProductShot
+  // mockup interactive. Each "send" click adds a short user/assistant
+  // turn, increments the context donut, and updates the percent label.
+  document.querySelectorAll<HTMLElement>("[data-mockhome]").forEach((root) => {
+    const log = root.querySelector<HTMLElement>("[data-composer-log]");
+    const send = root.querySelector<HTMLButtonElement>("[data-send]");
+    const donut = root.queryElement("[data-donut]") as SVGCircleElement | null;
+    const txt = root.querySelector<HTMLElement>("[data-budget-txt]");
+    if (!log || !send || !donut || !txt) return;
+
+    const circumference = 2 * Math.PI * 7; // r=7
+    let tokens = 0;
+    const cap = 200_000;
+
+    const prompts = [
+      "Summarize chapter 4 of the dissertation corpus",
+      "Find every quote about habit formation",
+      "Generate 10 FSRS cards on the methodology section",
+      "Compare the two Redfish feeder snapshots from this week",
+      "Cite the source for the Smith 2024 argument",
+    ];
+    const answers = [
+      "Looking at pages 87–92. Three core claims stand out: …",
+      "Found 14 quotes across 6 papers. Earliest is Bohn 2017. …",
+      "Drafted 10 cards (rating: easy, hard, good mix). Want to study now?",
+      "Snapshot A: idle 12h. Snapshot B: 38 alerts. Diff in /api/v1/…",
+      "Smith, J. (2024). *Long-form habits*, ch. 2, p. 47. The argument is …",
+    ];
+    let turn = 0;
+
+    const render = () => {
+      const pct = Math.min(100, Math.round((tokens / cap) * 100));
+      donut.setAttribute("stroke-dasharray", `${(pct / 100) * circumference} ${circumference}`);
+      txt.textContent = `${formatK(tokens)} / 200K · ${pct}%`;
+    };
+
+    const formatK = (n: number) =>
+      n >= 1000 ? `${(n / 1000).toFixed(1)}K` : String(n);
+
+    send.addEventListener("click", () => {
+      const userLine = document.createElement("div");
+      userLine.className = "turn turn-user";
+      userLine.textContent = prompts[turn % prompts.length];
+      log.appendChild(userLine);
+
+      const aLine = document.createElement("div");
+      aLine.className = "turn turn-ai";
+      aLine.textContent = answers[turn % answers.length];
+      log.appendChild(aLine);
+      log.scrollTop = log.scrollHeight;
+
+      tokens += 9_400 + Math.floor(Math.random() * 4_800);
+      turn += 1;
+      render();
+    });
+
+    render();
+  });
+</script>
+
+<style>
+  .mockhome-root { margin: 0; width: 100%; }
+
+  .mockhome-chrome {
+    width: 100%;
+    background: var(--color-surface);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 24px 64px rgba(48,38,20,0.18), 0 80px 140px rgba(48,38,20,0.12);
+  }
+  .mockhome-titlebar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .mockhome-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
+  .mockhome-title { margin-left: 14px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; color: var(--color-ink-3); }
+
+  .mockhome-body {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 540px;
+    background: var(--color-surface);
+  }
+
+  /* Sidebar */
+  .mockhome-side {
+    border-right: 1px solid var(--color-border);
+    padding: 14px 10px;
+    display: flex; flex-direction: column; gap: 8px;
+    background: var(--color-bg);
+  }
+  .mockhome-logo {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 8px 12px;
+    font-family: var(--font-display);
+    font-size: 18px;
+  }
+  .mockhome-logo-dot {
+    width: 14px; height: 14px; border-radius: 999px;
+    background: var(--color-sage);
+    box-shadow: inset 0 0 0 2px var(--color-sage-dark);
+  }
+  .mockhome-logo-txt { letter-spacing: -0.5px; }
+  .mockhome-side-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: 12px; }
+  .mockhome-side-list li {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 8px;
+    border-radius: 5px;
+    color: var(--color-text-secondary);
+    font-family: var(--font-mono);
+  }
+  .mockhome-side-list .ic { width: 14px; opacity: 0.8; font-size: 11px; }
+  .mockhome-side-list li.is-active { background: var(--color-accent-light); color: var(--color-text); font-weight: 500; }
+  .mockhome-side-foot { margin-top: auto; padding: 8px; border-top: 1px dashed var(--color-border); }
+  .mockhome-foot-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-ink-3); }
+  .mockhome-foot-name { font-family: var(--font-display); font-size: 13px; color: var(--color-text); }
+
+  /* Main */
+  .mockhome-main { padding: 16px 20px 20px; min-width: 0; }
+  .mockhome-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--color-border); padding-bottom: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+  .mockhome-tabs button {
+    background: transparent; border: none;
+    padding: 4px 10px;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.5px; color: var(--color-ink-3);
+    border-radius: 4px; cursor: pointer;
+  }
+  .mockhome-tabs button.is-active { background: var(--color-text); color: var(--color-surface); }
+  .mockhome-tabs button:not(.is-active):hover { background: var(--color-accent-light); }
+
+  .mockhome-hero {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+    padding: 4px 0 14px;
+    border-bottom: 1px dashed var(--color-border);
+    margin-bottom: 14px;
+  }
+  .mockhome-ey { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-ink-3); }
+  .mockhome-h3 { font-family: var(--font-display); font-size: 22px; line-height: 1.15; margin: 4px 0 4px; font-weight: 400; letter-spacing: -0.5px; }
+  .mockhome-h3 em { color: var(--color-sage-dark); font-style: italic; }
+  .mockhome-p { font-size: 12px; line-height: 1.5; color: var(--color-text-secondary); margin: 0; max-width: 56ch; }
+  .mockhome-cta {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 10px;
+    border: 1px solid var(--color-text); border-radius: 999px;
+    display: inline-flex; gap: 4px; align-items: center; flex-shrink: 0;
+  }
+
+  .mockhome-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+  .kpi { padding: 10px 12px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 5px; display: flex; flex-direction: column; gap: 2px; }
+  .kpi b { font-family: var(--font-display); font-size: 18px; font-weight: 400; letter-spacing: -0.5px; }
+  .kpi span { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-ink-3); }
+  .kpi-warm { background: rgba(182, 87, 42, 0.06); border-color: var(--color-rust); }
+  .kpi-warm b { color: var(--color-rust); }
+
+  .mockhome-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .card { padding: 10px 12px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: 5px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .card.is-hl { background: var(--color-accent-light); border-color: var(--color-sage-deep); }
+  .card-ey { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--color-ink-3); }
+  .card h4 { font-family: var(--font-display); font-size: 14px; line-height: 1.15; margin: 0; font-weight: 400; letter-spacing: -0.3px; }
+  .card-bar { height: 3px; background: var(--color-border); border-radius: 2px; overflow: hidden; margin: 4px 0; }
+  .card-bar span { display: block; height: 100%; background: var(--color-sage-dark); }
+  .card-foot { font-family: var(--font-mono); font-size: 9px; color: var(--color-ink-3); letter-spacing: 0.5px; }
+
+  /* Composer (interactive) */
+  .mockhome-composer {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+  .composer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .composer-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-ink-3); }
+  .composer-budget { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .composer-budget-txt { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-secondary); letter-spacing: 0.5px; }
+  .composer-input {
+    padding: 12px;
+    min-height: 96px;
+    max-height: 140px;
+    overflow-y: auto;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+  .composer-placeholder { color: var(--color-ink-3); font-style: italic; }
+  .turn { padding: 4px 0; }
+  .turn-user { color: var(--color-text); }
+  .turn-user::before { content: "› "; color: var(--color-sage-dark); font-weight: 600; }
+  .turn-ai { color: var(--color-text-secondary); padding-left: 12px; border-left: 2px solid var(--color-accent); margin: 4px 0; }
+  .turn-ai::before { content: "many › "; color: var(--color-sage-dark); font-weight: 600; font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+  .composer-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 10px;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  .composer-tools { display: flex; gap: 4px; }
+  .tool {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border: 1px solid var(--color-border); border-radius: 4px;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--color-ink-3); background: var(--color-bg);
+  }
+  .composer-send {
+    background: var(--color-text); color: var(--color-surface);
+    border: none; border-radius: 4px;
+    padding: 4px 10px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .composer-send:hover { opacity: 0.85; }
+
+  .mockhome-cap {
+    margin-top: 18px; text-align: center;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 1.5px; color: var(--color-ink-3);
+  }
+  .mockhome-hint { display: block; margin-top: 4px; color: var(--color-text-secondary); font-size: 10px; }
+  .mockhome-hint b { color: var(--color-text); background: var(--color-paper-deep); padding: 0 4px; border-radius: 2px; }
+
+  @media (max-width: 900px) {
+    .mockhome-body { grid-template-columns: 1fr; }
+    .mockhome-side { display: none; }
+    .mockhome-grid { grid-template-columns: repeat(2, 1fr); }
+    .mockhome-kpis { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 520px) {
+    .mockhome-grid { grid-template-columns: 1fr; }
+  }
+</style>
