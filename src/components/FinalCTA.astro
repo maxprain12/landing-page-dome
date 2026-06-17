@@ -1,125 +1,74 @@
 ---
-import ManyMascot from "./ManyMascot.astro";
-
-const releases = "https://github.com/maxprain12/dome/releases";
+import { finalCta } from "../data/landing";
 ---
 
-<section class="fa" id="download" aria-labelledby="fa-h2">
-  <div class="fa-many">
-    <ManyMascot variant="wave" size={108} />
-  </div>
-  <p class="fa-stamp" aria-hidden="true">v2.3.5 · FSRS · Feeders · OpenRouter · Dome-native runtime</p>
-  <h2 id="fa-h2" class="fa-h2">Put it all under the dome.</h2>
-  <p class="fa-sub">
-    Clone, install with pnpm, or grab a release — macOS, Windows, and Linux. Node 22.13+, then
-    <code class="fa-code">pnpm run electron:dev</code> from the repo.
-  </p>
-  <div class="fa-row">
-    <a class="fa-pill" href={releases} target="_blank" rel="noopener">
-      <svg width="14" height="16" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true"
-        ><path
-          d="M10.3 8.5c0-1.8 1.5-2.7 1.6-2.7-.9-1.3-2.2-1.5-2.7-1.5-1.2-.1-2.2.7-2.8.7-.6 0-1.5-.7-2.4-.6C2.7 4.4 1.6 5.1 1 6.2c-1.3 2.2-.3 5.5.9 7.3.6.9 1.3 1.9 2.3 1.8.9 0 1.3-.6 2.4-.6s1.4.6 2.4.6c1 0 1.6-.9 2.2-1.8.7-1 1-2 1-2.1 0 0-1.9-.7-1.9-2.9zM8.5 3c.5-.6.9-1.5.7-2.4-.8 0-1.7.5-2.3 1.1-.5.5-.9 1.4-.7 2.3.9.1 1.8-.5 2.3-1z"
-        ></path></svg>
-      macOS · Apple Silicon
-    </a>
-    <a class="fa-ghost" href={releases} target="_blank" rel="noopener">Windows</a>
+<section class="fc" id="download">
+  <div class="wrap fc-in" data-reveal>
+    <img class="fc-mascot" src={finalCta.mascot} alt="" width="96" height="96" />
+    <h2 class="h-display fc-h2">{finalCta.title}</h2>
+    <p class="fc-sub">{finalCta.subtitle}</p>
+    <div class="fc-row">
+      <a class="btn fc-primary" href={finalCta.primary.href} target="_blank" rel="noopener">
+        {finalCta.primary.label}
+      </a>
+      <a class="btn fc-ghost" href={finalCta.secondary.href} target="_blank" rel="noopener">
+        {finalCta.secondary.label}
+      </a>
+    </div>
   </div>
 </section>
 
 <style>
-  .fa {
+  .fc {
+    background:
+      radial-gradient(60% 90% at 50% 0%, #6b7444 0%, transparent 60%),
+      var(--color-accent);
+    color: #fff;
     text-align: center;
-    padding: 4.2rem 48px 4.5rem;
-    position: relative;
-    background: var(--color-bg);
   }
-
-  :global(.fa-many) {
+  .fc-in {
+    padding: clamp(3.5rem, 7vw, 5.5rem) 0;
     display: flex;
-    justify-content: center;
-    margin: 0 auto 0.3rem;
+    flex-direction: column;
+    align-items: center;
   }
-
-  .fa-stamp {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--color-rust);
-    border: 1.5px dashed var(--color-rust);
-    padding: 4px 10px;
-    transform: rotate(-3deg);
+  .fc-mascot {
+    width: 96px;
+    height: 96px;
+    margin-bottom: 0.6rem;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+  }
+  .fc-h2 {
+    color: #fff;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
     margin: 0 0 0.6rem;
   }
-
-  .fa-h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4.2vw, 3.1rem);
-    line-height: 0.98;
-    letter-spacing: -0.04em;
-    font-weight: 400;
-    margin: 0.3rem auto 0.4rem;
-    max-width: 20ch;
+  .fc-sub {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 34rem;
+    margin: 0 0 1.8rem;
   }
-
-  .fa-sub {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: var(--color-text-secondary);
-    max-width: 32rem;
-    margin: 0 auto 1.4rem;
-  }
-
-  .fa-code {
-    font-family: var(--font-mono);
-    font-size: 0.85em;
-    background: var(--color-paper-deep);
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    padding: 0.1em 0.35em;
-  }
-
-  .fa-row {
+  .fc-row {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.8rem;
     justify-content: center;
-    align-items: center;
-    gap: 0.5rem 0.6rem;
   }
-
-  .fa-pill,
-  .fa-ghost {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    text-decoration: none;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 0.7rem 1.25rem;
-    border-radius: 999px;
-    border: 1.5px solid transparent;
+  .fc-primary {
+    background: #fff;
+    color: var(--color-accent);
   }
-
-  .fa-pill {
-    background: var(--color-text);
-    color: var(--color-surface);
+  .fc-primary:hover {
+    transform: translateY(-2px);
   }
-
-  .fa-pill:hover {
-    opacity: 0.88;
-  }
-
-  .fa-ghost {
+  .fc-ghost {
     background: transparent;
-    color: var(--color-text);
-    border-color: var(--color-text);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.6);
   }
-
-  .fa-ghost:hover {
-    background: var(--color-text);
-    color: var(--color-surface);
+  .fc-ghost:hover {
+    background: rgba(255, 255, 255, 0.12);
   }
 </style>

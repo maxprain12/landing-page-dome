@@ -1,0 +1,90 @@
+---
+import { socialProof } from "../data/landing";
+---
+
+<section class="sp">
+  <div class="wrap sp-in" data-reveal-group>
+    {socialProof.map((item) => (
+      <div class="sp-item">
+        <span class="sp-value">{item.value}</span>
+        <span class="sp-label">{item.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  // Contadores que cuentan hacia arriba al entrar en viewport.
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const countUp = (el: HTMLElement) => {
+    const m = el.textContent?.match(/^(\d+)(.*)$/s);
+    if (!m) return;
+    if (reduce) return;
+    const target = parseInt(m[1], 10);
+    const suffix = m[2] ?? "";
+    const dur = 1000;
+    let start = 0;
+    const tick = (t: number) => {
+      if (!start) start = t;
+      const p = Math.min(1, (t - start) / dur);
+      const eased = p * (2 - p);
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          countUp(e.target as HTMLElement);
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.5 },
+  );
+  document.querySelectorAll<HTMLElement>(".sp-value").forEach((el) => io.observe(el));
+</script>
+
+<style>
+  .sp {
+    border-top: 2px dotted var(--color-border);
+    border-bottom: 2px dotted var(--color-border);
+    background: var(--color-surface);
+  }
+  .sp-in {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1.6rem 0;
+    text-align: center;
+  }
+  .sp-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .sp-item:not(:last-child) {
+    border-right: 2px dotted var(--color-border);
+  }
+  .sp-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    color: var(--color-accent);
+    line-height: 1;
+  }
+  .sp-label {
+    font-size: 0.78rem;
+    color: var(--color-ink-3);
+  }
+  @media (max-width: 640px) {
+    .sp-in {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem 1rem;
+    }
+    .sp-item:nth-child(2n) {
+      border-right: none;
+    }
+  }
+</style>

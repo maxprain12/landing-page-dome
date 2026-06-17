@@ -1,0 +1,210 @@
+---
+import { faq } from "../data/landing";
+const mascot = "/assets/wave.svg";
+const greeting = "Hi! I'm Many. Tap a question and I'll answer it.";
+---
+
+<section class="fq section" id="faq">
+  <div class="wrap fq-in">
+    <div class="fq-head" data-reveal>
+      <p class="eyebrow">— FAQ</p>
+      <h2 class="h-display fq-h2">Ask Dome anything.</h2>
+      <p class="fq-sub">Tap a question — Many answers in real time, just like in the app.</p>
+    </div>
+
+    <div class="fq-chat appwin" data-reveal data-faq-chat>
+      <div class="appwin-bar">
+        <span class="appwin-dot" style="background:#e5756a"></span>
+        <span class="appwin-dot" style="background:#ebb447"></span>
+        <span class="appwin-dot" style="background:#6ac47f"></span>
+        <span class="appwin-title">Dome · Many</span>
+      </div>
+
+      <div class="fq-thread" data-thread>
+        <div class="hc-msg hc-ai">
+          <img class="hc-avatar" src={mascot} alt="Many" width="28" height="28" />
+          <div class="hc-bubble">{greeting}</div>
+        </div>
+      </div>
+
+      <div class="fq-prompts">
+        <span class="fq-prompts-l">Frequently asked —</span>
+        <div class="fq-prompts-row">
+          {faq.map((item) => (
+            <button type="button" class="fq-chip" data-q={item.q} data-a={item.a}>
+              {item.q}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* SEO / no-JS fallback: full Q&A in the DOM */}
+    <dl class="fq-seo">
+      {faq.map((item) => (
+        <>
+          <dt>{item.q}</dt>
+          <dd>{item.a}</dd>
+        </>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<script>
+  // Realtime FAQ chat: tap a question -> your message + Many typing -> typed answer.
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll<HTMLElement>("[data-faq-chat]").forEach((root) => {
+    const thread = root.querySelector<HTMLElement>("[data-thread]");
+    const chips = Array.from(root.querySelectorAll<HTMLButtonElement>(".fq-chip"));
+    const mascot = root.querySelector<HTMLImageElement>(".hc-avatar")?.src || "";
+    if (!thread) return;
+    let busy = false;
+    const scroll = () => (thread.scrollTop = thread.scrollHeight);
+
+    const addUser = (text: string) => {
+      const el = document.createElement("div");
+      el.className = "hc-msg hc-user";
+      el.innerHTML = `<div class="hc-bubble"></div>`;
+      el.querySelector(".hc-bubble")!.textContent = text;
+      thread.appendChild(el);
+      scroll();
+    };
+    const addAI = (text: string) => {
+      const el = document.createElement("div");
+      el.className = "hc-msg hc-ai";
+      el.innerHTML =
+        `<img class="hc-avatar" src="${mascot}" alt="Many" width="28" height="28" />` +
+        `<div class="hc-bubble"><span class="hc-typing"><i></i><i></i><i></i></span></div>`;
+      thread.appendChild(el);
+      scroll();
+      const bubble = el.querySelector<HTMLElement>(".hc-bubble")!;
+      const reveal = () => {
+        if (reduce) {
+          bubble.textContent = text;
+          scroll();
+          busy = false;
+          return;
+        }
+        let i = 0;
+        let last = 0;
+        const step = (t: number) => {
+          if (t - last > 14) {
+            i += 1;
+            bubble.textContent = text.slice(0, i);
+            last = t;
+            scroll();
+          }
+          if (i < text.length) requestAnimationFrame(step);
+          else busy = false;
+        };
+        requestAnimationFrame(step);
+      };
+      window.setTimeout(reveal, reduce ? 0 : 600);
+    };
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        if (busy) return;
+        busy = true;
+        chip.setAttribute("data-asked", "1");
+        addUser(chip.dataset.q || "");
+        addAI(chip.dataset.a || "");
+      });
+    });
+  });
+</script>
+
+<style>
+  .fq {
+    background: var(--color-surface);
+  }
+  .fq-in {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  .fq-h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    margin: 0.5rem 0 0.6rem;
+  }
+  .fq-sub {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    margin: 0;
+    max-width: 22rem;
+  }
+
+  .fq-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.2rem;
+    height: 19rem;
+    overflow-y: auto;
+    background: var(--color-bg);
+  }
+  .fq-prompts {
+    border-top: 1px dashed var(--color-border);
+    padding: 0.8rem 1.1rem 1.1rem;
+    background: var(--color-surface);
+  }
+  .fq-prompts-l {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+  }
+  .fq-prompts-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.6rem;
+  }
+  .fq-chip {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+  .fq-chip:hover {
+    background: var(--c-mint);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+  .fq-chip[data-asked] {
+    border-style: dashed;
+    color: var(--color-ink-3);
+  }
+
+  /* SEO/no-JS only */
+  .fq-seo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .fq-in {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+    }
+  }
+</style>

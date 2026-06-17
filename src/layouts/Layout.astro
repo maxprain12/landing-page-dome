@@ -2,20 +2,17 @@
 interface Props {
   title?: string;
   description?: string;
-  ogImage?: string;
   canonicalUrl?: string;
 }
 
 const {
   title = "Dome — Intelligent desktop for knowledge management and academic research",
   description = "Dome is an open-source desktop app for researchers, academics, and knowledge workers. Organize notes, PDFs, videos, and URLs in projects, then let AI index, search, and synthesize everything — locally or in the cloud, your choice.",
-  ogImage = "/dashboard.png",
   canonicalUrl: canonicalUrlProp,
 } = Astro.props;
 
-const siteUrl = Astro.site?.href || "https://dome.dowi.es";
+const siteUrl = (Astro.site?.href || "https://dome.dowi.es").replace(/\/$/, "");
 const canonicalUrl = canonicalUrlProp ?? `${siteUrl}${Astro.url.pathname}`;
-const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}`;
 ---
 
 <!doctype html>
@@ -25,7 +22,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#1E1A12" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/assets/wave.svg" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Canonical URL -->
@@ -47,18 +44,14 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={fullOgImage} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="Dome" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={fullOgImage} />
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -80,7 +73,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
         "email": "alder.velasquezobando@gmail.com"
       },
       "license": "https://github.com/maxprain12/dome/blob/main/LICENSE",
-      "softwareVersion": "2.1.8",
+      "softwareVersion": "2.3.5",
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5",
@@ -116,12 +109,15 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
       <slot />
     </div>
     <div class="grain-overlay" aria-hidden="true"></div>
+    <script>
+      import "../scripts/landing-gsap.ts";
+    </script>
   </body>
 </html>
 
 <style is:global>
   :root {
-    /* Warm paper (hybrid landing redesign) */
+    /* Warm paper base (previous aesthetic) */
     --color-bg: #f1ead6;
     --color-surface: #faf5e6;
     --color-text: #1e1a12;
@@ -137,6 +133,14 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     --color-many-body: #e1e7c1;
     --color-ink-900: #1e1a12;
     --color-paper-light: #f3ecdb;
+
+    /* Pastel accents (used as accents only) */
+    --c-cyan: #c5f8ff;
+    --c-lime: #dcdc89;
+    --c-mint: #d6ffd3;
+    --c-lavender: #cbcbe7;
+    --c-olive: #e0eab4;
+    --c-sage: #596037;
 
     /* Aliases for compatibility (privacy, terms) */
     --bg-primary: var(--color-surface);
@@ -221,7 +225,7 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
     inset: 0;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.04;
+    opacity: 0.045;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -259,6 +263,98 @@ const fullOgImage = ogImage.startsWith("http") ? ogImage : `${siteUrl}${ogImage}
   .container {
     width: var(--container-width);
     margin-inline: auto;
+  }
+
+  /* Shared landing utilities */
+  .wrap {
+    width: min(1120px, 92vw);
+    margin-inline: auto;
+  }
+  .section {
+    padding: clamp(3.5rem, 7vw, 6rem) 0;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0;
+  }
+  .h-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    color: var(--color-text);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      color 0.2s ease,
+      opacity 0.2s ease;
+  }
+  .btn-primary {
+    background: var(--color-accent);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    opacity: 0.94;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  .btn-ghost:hover {
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  /* Reusable app-window chrome (for in-page app simulations) */
+  .appwin {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+      0 18px 50px rgba(48, 38, 20, 0.16),
+      0 4px 12px rgba(48, 38, 20, 0.08);
+  }
+  .appwin-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 12px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .appwin-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    flex: none;
+  }
+  .appwin-title {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--color-ink-3);
   }
 
   .gradient-text {

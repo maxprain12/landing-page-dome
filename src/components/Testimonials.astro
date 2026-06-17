@@ -1,0 +1,123 @@
+---
+import { testimonials, testimonialsNote } from "../data/landing";
+
+const initials = (role: string) =>
+  role
+    .split(/\s+/)
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+---
+
+<section class="ts section" id="testimonials">
+  <div class="wrap">
+    <div class="ts-head" data-reveal>
+      <p class="eyebrow">— Loved by people who live in sources</p>
+      <h2 class="h-display ts-h2">Built for researchers, students, and writers.</h2>
+    </div>
+
+    <div class="ts-chat appwin" data-reveal>
+      <div class="appwin-bar">
+        <span class="appwin-dot" style="background:#e5756a"></span>
+        <span class="appwin-dot" style="background:#ebb447"></span>
+        <span class="appwin-dot" style="background:#6ac47f"></span>
+        <span class="appwin-title">Dome · Community</span>
+      </div>
+      <div class="ts-thread" data-reveal-group>
+        {testimonials.map((t) => (
+          <div class="ts-msg">
+            <span class="ts-avatar" style={`background:${t.accent}`}>{initials(t.role)}</span>
+            <div class="ts-col">
+              <div class="ts-bubble" style={`background:${t.accent}`}>{t.quote}</div>
+              <span class="ts-role">{t.role}</span>
+            </div>
+          </div>
+        ))}
+        <p class="ts-note">{testimonialsNote}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ts {
+    background: var(--color-bg);
+  }
+  .ts-head {
+    text-align: center;
+    margin-bottom: 2.2rem;
+  }
+  .ts-h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    margin: 0.5rem 0 0;
+  }
+  .ts-chat {
+    max-width: 46rem;
+    margin: 0 auto;
+  }
+  .ts-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 1.4rem;
+    background: var(--color-surface);
+  }
+  .ts-msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    max-width: 90%;
+  }
+  .ts-avatar {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-sage-dark);
+    border: 1px solid rgba(46, 53, 24, 0.12);
+  }
+  .ts-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .ts-bubble {
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    line-height: 1.35;
+    color: var(--color-text);
+    padding: 0.8rem 1rem;
+    border-radius: 4px 14px 14px 14px;
+    border: 1px solid rgba(46, 53, 24, 0.08);
+  }
+  .ts-role {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    padding-left: 0.2rem;
+  }
+  .ts-note {
+    text-align: center;
+    font-size: 0.76rem;
+    color: var(--color-ink-3);
+    font-style: italic;
+    margin: 0.4rem 0 0;
+  }
+
+  @media (max-width: 600px) {
+    .ts-msg {
+      max-width: 100%;
+    }
+    .ts-bubble {
+      font-size: 1rem;
+    }
+  }
+</style>

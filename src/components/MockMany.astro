@@ -135,7 +135,7 @@
   //   • Click "Send" to add another user turn + flip the AI to thinking.
   document.querySelectorAll<HTMLElement>("[data-mockmany]").forEach((root) => {
     const send = root.querySelector<HTMLButtonElement>("[data-send-mm]");
-    const donut = root.queryElement("[data-donut-mm]") as SVGCircleElement | null;
+    const donut = root.querySelector("[data-donut-mm]") as SVGCircleElement | null;
     const txt = root.querySelector<HTMLElement>("[data-budget-mm-txt]");
     if (!send || !donut || !txt) return;
 
@@ -166,12 +166,13 @@
       const thinkingMsg = thread?.querySelector<HTMLElement>("[data-thinking]");
       if (!thread || !thinkingMsg) return;
 
-      const userLine = document.createElement("div");
-      userLine.className = "msg msg-user";
-      userLine.innerHTML = `
-        <div class="msg-who">you</div>
-        <div class="msg-bubble">Add 5 more cards on the re-entry signal.</div>
-      `;
+      // Clone an existing styled message so Astro's scoped classes carry over.
+      const firstUser = thread.querySelector<HTMLElement>(".msg-user");
+      const userLine = firstUser
+        ? (firstUser.cloneNode(true) as HTMLElement)
+        : document.createElement("div");
+      const newBubble = userLine.querySelector(".msg-bubble");
+      if (newBubble) newBubble.textContent = "Add 5 more cards on the re-entry signal.";
       // Find the "thinking" message (last in the thread) and insert before it
       const allThinking = thread.querySelectorAll<HTMLElement>("[data-thinking]");
       const lastThinking = allThinking[allThinking.length - 1] ?? null;

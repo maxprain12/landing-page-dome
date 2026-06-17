@@ -1,6 +1,5 @@
 ---
 import MockMany from "./MockMany.astro";
-import ManyMascot from "./ManyMascot.astro";
 
 // Mockup of the real <ContextUsageIndicator /> in app/components/many/ContextUsageIndicator.tsx
 // (donut + segmented budget breakdown). Renders as an inline SVG so it works
@@ -10,7 +9,7 @@ import ManyMascot from "./ManyMascot.astro";
 
 <section class="mm" id="meet-many" aria-labelledby="mm-heading">
   <div class="mm-grid">
-    <div>
+    <div data-reveal>
       <p class="mm-eyebrow">— Many · Dome-native agent</p>
       <h2 id="mm-heading" class="mm-h2">
         A reasoning agent, not a chat window — with memory, tools, and your library on hand.
@@ -51,11 +50,11 @@ import ManyMascot from "./ManyMascot.astro";
       </figure>
 
       <div class="mm-quote">
-        <ManyMascot variant="think" size={80} />
+        <img class="mm-quote-many" src="/assets/wave.svg" alt="Many" width="64" height="64" style="background:var(--c-olive);border-radius:50%;padding:8px;flex:none" />
         <p class="mm-quote-txt">&quot;Your library is indexed. What should we find first?&quot;</p>
       </div>
     </div>
-    <div>
+    <div data-reveal>
       <MockMany />
     </div>
   </div>

@@ -1,107 +1,76 @@
 ---
-const releases = "https://github.com/maxprain12/dome/releases";
-const github = "https://github.com/maxprain12/dome";
-const docs = "https://github.com/maxprain12/dome#readme";
-const domeAccountUrl = (import.meta.env.PUBLIC_DOME_ACCOUNT_URL ?? "").trim();
-const domeUserDashboardUrl = (import.meta.env.PUBLIC_DOME_USER_DASHBOARD_URL ?? "").trim();
+import { nav } from "../data/landing";
 ---
 
-<nav class="na" aria-label="Main">
-  <div class="na-inner">
-    <a href="/" class="na-mark" aria-label="Dome home">
-      <img class="na-mark-ico" src="/Many.svg" alt="" width="28" height="28" />
-      <span class="na-mark-txt">Dome</span>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a href="/" class="nav-brand" aria-label={`${nav.brand} home`}>
+      <img src={nav.logo} alt="" height="32" width="32" />
+      <span class="nav-brand-txt">{nav.brand}</span>
     </a>
-    <div class="na-links">
-      <a href="#features">Features</a>
-      <a href="#feeders">Feeders</a>
-      <a href="#providers">Providers</a>
-      <a href="#marketplace">Agents</a>
-      <a href="#flow">How it works</a>
-      <a href={docs} target="_blank" rel="noopener">Docs</a>
-      {domeAccountUrl ? (
-        <a href={domeAccountUrl} target="_blank" rel="noopener">Cloud account</a>
-      ) : null}
-      {domeUserDashboardUrl ? (
-        <a href={domeUserDashboardUrl} target="_blank" rel="noopener">Usage & billing</a>
-      ) : null}
-      <a href={github} target="_blank" rel="noopener">GitHub</a>
-    </div>
-    <a class="na-dl" href={releases} target="_blank" rel="noopener">↓ Download</a>
+    <nav class="nav-links" aria-label="Main">
+      {nav.links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+    <a class="btn btn-primary nav-cta" href={nav.cta.href} target="_blank" rel="noopener">
+      {nav.cta.label}
+    </a>
   </div>
-</nav>
+</header>
 
 <style>
-  .na {
-    max-width: 1240px;
-    margin: 0 auto;
-    padding: 28px 48px 12px;
-    background: transparent;
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(251, 253, 246, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
   }
-
-  .na-inner {
+  .nav-in {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
   }
-
-  .na-mark {
-    display: flex;
+  .nav-brand {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     text-decoration: none;
+  }
+  .nav-brand img {
+    height: 32px;
+    width: auto;
+  }
+  .nav-brand-txt {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
     color: var(--color-text);
   }
-
-  .na-mark-txt {
-    font-family: var(--font-display);
-    font-size: 1.45rem;
-    font-weight: 400;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-
-  .na-links {
+  .nav-links {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 32px;
-    font-size: 14px;
+    gap: 1.8rem;
+    font-size: 0.92rem;
     color: var(--color-text-secondary);
   }
-
-  .na-links a:hover {
-    color: var(--color-text);
-  }
-
-  .na-dl {
-    background: var(--color-text);
-    color: var(--color-surface);
-    padding: 10px 18px;
-    font-size: 13px;
-    font-weight: 500;
-    border: none;
-    border-radius: 999px;
+  .nav-links a {
     text-decoration: none;
-    font-family: var(--font-sans);
-    transition: opacity 0.2s, transform 0.2s;
+    color: inherit;
+    transition: color 0.15s ease;
   }
-
-  .na-dl:hover {
-    opacity: 0.9;
+  .nav-links a:hover {
+    color: var(--color-accent);
   }
-
-  @media (max-width: 800px) {
-    .na {
-      padding: 20px 20px 8px;
-    }
-
-    .na-links {
-      order: 3;
-      width: 100%;
-      gap: 20px;
+  .nav-cta {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 720px) {
+    .nav-links {
+      display: none;
     }
   }
 </style>

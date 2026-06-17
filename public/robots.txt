@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dome.app/sitemap.xml
+Sitemap: https://dome.dowi.es/sitemap-index.xml

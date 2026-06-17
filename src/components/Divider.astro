@@ -1,0 +1,32 @@
+---
+// Separador decorativo de puntos (línea punteada + rombo central), en la estética previa.
+---
+
+<div class="divider" role="separator" aria-hidden="true">
+  <span class="divider-dot"></span>
+</div>
+
+<style>
+  .divider {
+    width: min(1120px, 92vw);
+    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.2rem 0;
+    background: var(--color-bg);
+  }
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    border-top: 2px dotted var(--color-border);
+  }
+  .divider-dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    background: var(--color-rust);
+    transform: rotate(45deg);
+  }
+</style>
