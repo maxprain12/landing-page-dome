@@ -18,9 +18,9 @@ Creá `.env` en la raíz del proyecto:
 
 ```bash
 # Base del provider (login, onboarding web)
-PUBLIC_DOME_ACCOUNT_URL=https://provider.dome.app
+PUBLIC_DOME_ACCOUNT_URL=https://dome-provider.dowi.es
 # Opcional: URL al dashboard de uso/cuota del usuario
-PUBLIC_DOME_USER_DASHBOARD_URL=https://provider.dome.app/dashboard
+PUBLIC_DOME_USER_DASHBOARD_URL=https://dome-provider.dowi.es/dashboard
 ```
 
 - **Cloud account** navega a `PUBLIC_DOME_ACCOUNT_URL`.
