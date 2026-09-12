@@ -1,0 +1,78 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  robots?: string;
+}
+
+const {
+  title,
+  description,
+  robots = "noindex, nofollow",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content={robots} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/png" href="/assets/many.png" />
+    <style is:global>
+      :root {
+        color-scheme: light dark;
+      }
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+      }
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+        background: #f6f4ef;
+        color: #16140f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1rem;
+      }
+      .card {
+        width: min(36rem, 100%);
+        background: #fffdf8;
+        border: 1px solid #d9d4c8;
+        border-radius: 16px;
+        padding: 1.75rem 1.5rem;
+        box-shadow: 0 12px 40px rgb(22 20 15 / 6%);
+      }
+      h1 {
+        font-size: 1.25rem;
+        margin: 0 0 0.5rem;
+      }
+      p,
+      li {
+        font-size: 0.95rem;
+        line-height: 1.55;
+        color: #4a463c;
+      }
+      p:last-child,
+      ul:last-child {
+        margin-bottom: 0;
+      }
+      a {
+        color: #16140f;
+      }
+      code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.85em;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <slot />
+    </main>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+---
+import OauthPage from "../_OauthPage.astro";
+---
+
+<OauthPage
+  title="Dome · Instagram"
+  description="Callback OAuth de Instagram para la aplicación de escritorio Dome."
+>
+  <h1>Conectando Instagram</h1>
+  <p id="status">Redirigiendo a Dome…</p>
+</OauthPage>
+
+<script is:inline>
+  (function () {
+    var DEFAULT_PORT = 8737;
+    var params = new URLSearchParams(window.location.search);
+    var status = document.getElementById("status");
+    var code = params.get("code");
+    var state = params.get("state") || "";
+    var error = params.get("error");
+
+    function portFromState(raw) {
+      try {
+        var pad = raw.length % 4 === 0 ? "" : "====".slice(raw.length % 4);
+        var json = JSON.parse(
+          atob(raw.replace(/-/g, "+").replace(/_/g, "/") + pad),
+        );
+        var port = Number(json && json.p);
+        if (Number.isInteger(port) && port >= 1025 && port <= 65535) return port;
+      } catch (err) {
+        /* legacy nonce without port */
+      }
+      return DEFAULT_PORT;
+    }
+
+    if (error) {
+      status.textContent =
+        params.get("error_description") || "Instagram canceló la conexión.";
+      return;
+    }
+
+    if (!code) {
+      status.textContent =
+        "Esta URL es el callback OAuth de Dome. Ábrela desde Ajustes → Social → Conectar Instagram.";
+      return;
+    }
+
+    var next = new URL(
+      "http://127.0.0.1:" + portFromState(state) + "/callback/instagram",
+    );
+    params.forEach(function (value, key) {
+      next.searchParams.set(key, value);
+    });
+    window.location.replace(next.toString());
+  })();
+</script>

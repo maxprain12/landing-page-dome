@@ -10,6 +10,7 @@ cmds = ["pnpm install --frozen-lockfile"]
 [phases.build]
 cmds = ["pnpm run build"]
 
-# Sin flag -s: sitio multipágina (/privacy/, /terms/); -s reescribe todo a index.html
+# Sin flag -s: sitio multipágina (/privacy/, /terms/, /oauth/instagram/…);
+# start = `node scripts/serve.mjs` (GET estático + POST 200 en deauthorize/data-deletion).
 [start]
 cmd = "pnpm run start"

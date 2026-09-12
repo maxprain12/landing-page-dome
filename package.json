@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "start": "serve dist --listen tcp://0.0.0.0:${PORT:-3000}",
+    "start": "node scripts/serve.mjs",
     "astro": "astro",
     "render:linkedin": "node scripts/render-linkedin-post.mjs"
   },

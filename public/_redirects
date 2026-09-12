@@ -3,3 +3,7 @@
 /terms.html    /terms/    301
 /privacy       /privacy/  301
 /terms         /terms/    301
+# Instagram OAuth (Meta). No 301 entre slash: el redirect_uri debe coincidir exacto.
+/oauth/instagram/callback.html       /oauth/instagram/callback        301
+/oauth/instagram/deauthorize.html    /oauth/instagram/deauthorize     301
+/oauth/instagram/data-deletion.html  /oauth/instagram/data-deletion   301
