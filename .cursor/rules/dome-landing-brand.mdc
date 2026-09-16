@@ -1,0 +1,13 @@
+---
+description: Identidad visual de landing-page-dome (Astro, Inter, tokens locales)
+alwaysApply: true
+---
+
+# Landing Dome
+
+- Tokens en `src/layouts/Layout.astro` `:root`. Componentes usan `var(--*)`, no hex sueltos.
+- Tipografía: Inter (UI) + JetBrains Mono (eyebrows). No sustituir Inter.
+- Botones pill. CTA primario → GitHub Releases. Login → `PUBLIC_DOME_ACCOUNT_URL`.
+- Copy concreto, local-first; nada de slogans vacíos.
+- GSAP es enhancement: el HTML debe leerse apagando JS. Honrar `prefers-reduced-motion`.
+- Un `h1` por página. Skip link + `<main>`. Nav móvil accesible si se ocultan los links.
