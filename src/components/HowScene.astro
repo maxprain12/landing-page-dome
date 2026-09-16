@@ -1,0 +1,474 @@
+---
+import type { Locale } from "../i18n";
+
+type SceneId = "library" | "many" | "study" | "people" | "calendar" | "agents";
+
+interface Props {
+  id: SceneId;
+  locale: Locale;
+}
+
+const { id, locale } = Astro.props;
+const es = locale === "es";
+
+const files = [
+  { name: "Designing for memory.pdf", meta: es ? "hace 2 minutos" : "2 min ago" },
+  { name: "Workshop notes · Atlas", meta: es ? "hace 2 minutos" : "2 min ago" },
+  { name: "Learning principles.md", meta: es ? "hace 2 minutos" : "2 min ago" },
+  { name: "Ideas for the next workshop", meta: es ? "hace 2 minutos" : "2 min ago" },
+];
+
+const people = [
+  { initials: "CR", name: "Clara Ruiz", next: es ? "correo de seguimiento" : "follow-up email", tone: "sage" as const },
+  { initials: "AV", name: "Andrés Vega", next: "LinkedIn", tone: "lavender" as const, lead: true },
+  { initials: "MS", name: "Marina Sol", next: es ? "llamar jueves" : "call Thursday", tone: "sage" as const },
+];
+
+const weekdays = es
+  ? ["lun", "mar", "mié", "jue", "vie", "sáb", "dom"]
+  : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+const septStart = (new Date(2026, 8, 1).getDay() + 6) % 7;
+const calendarCells: Array<number | null> = [
+  ...Array.from({ length: septStart }, () => null),
+  ...Array.from({ length: 30 }, (_, i) => i + 1),
+];
+
+const agents = [
+  {
+    name: "Researcher",
+    text: es ? "Cruza las fuentes de Atlas y deja el contexto listo." : "Cross Atlas sources and leave the context ready.",
+    badge: es ? "Listo" : "Ready",
+    state: "ready" as const,
+  },
+  {
+    name: "Brief writer",
+    text: es ? "Redacta el brief de la reunión con Elena." : "Draft the meeting brief for Elena.",
+    badge: es ? "En curso" : "Running",
+    state: "busy" as const,
+  },
+];
+---
+
+<div class="scene" data-scene={id}>
+  {
+    id === "library" && (
+      <div class="win">
+        <p class="win-kicker">{es ? "Retoma donde lo dejaste" : "Pick up where you left off"}</p>
+        <ul class="files">
+          {files.map((file) => (
+            <li>
+              <span class="file-icon" aria-hidden="true" />
+              <span>
+                <b>{file.name}</b>
+                <small>{file.meta}</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  {
+    id === "many" && (
+      <div class="win win-chat">
+        <p class="bubble bubble-user">
+          {es
+            ? "Compara los materiales de Atlas y prepárame un brief para Elena."
+            : "Compare the Atlas materials and prepare a brief for Elena."}
+        </p>
+        <div class="chat-row">
+          <span class="ghost" aria-hidden="true">
+            <svg viewBox="0 0 32 36" fill="none">
+              <path d="M25.2 24.6v-7.2C25.2 11.8 21.4 8 16.8 8S8.4 11.8 8.4 17.4v7.2c0 1.1 1.1 1.8 2.1 1.3.8-.4 1.7-.3 2.4.2 1 .6 2.1.6 3.1.2l.4-.3c.5-.4 1.3-.4 1.8 0l.4.3c1 .6 2.1.6 3.1.2.8-.5 1.7-.6 2.4-.2 1 .5 2.1-.2 2.1-1.3Z" fill="var(--color-many-body)" stroke="var(--color-many-stroke)" stroke-width=".7"></path>
+              <ellipse cx="13.4" cy="17.2" rx=".9" ry="1.3" fill="var(--color-many-stroke)"></ellipse>
+              <ellipse cx="20.2" cy="17.2" rx=".9" ry="1.3" fill="var(--color-many-stroke)"></ellipse>
+            </svg>
+          </span>
+          <p class="bubble-ai">
+            {es
+              ? "Los tres materiales coinciden: la memoria funciona mejor cuando el contexto y el siguiente paso viven juntos."
+              : "The three sources agree: memory works better when context and the next step live together."}
+          </p>
+        </div>
+        <ul class="brief">
+          <li>{es ? "Conecta cada decisión con la fuente original." : "Tie each decision back to the original source."}</li>
+          <li>{es ? "Comparte el brief de una página con Elena." : "Share the one-page brief with Elena."}</li>
+        </ul>
+      </div>
+    )
+  }
+  {
+    id === "study" && (
+      <div class="win">
+        <div class="metrics">
+          <div>
+            <b>12</b>
+            <span>{es ? "por repasar" : "to review"}</span>
+          </div>
+          <div>
+            <b>0%</b>
+            <span>{es ? "dominio" : "mastery"}</span>
+          </div>
+          <div>
+            <b>0</b>
+            <span>{es ? "racha" : "streak"}</span>
+          </div>
+        </div>
+        <div class="flash">
+          <small>{es ? "Flashcards · 12 pendientes" : "Flashcards · 12 due"}</small>
+          <strong>Learning to learn</strong>
+          <em>{es ? "Hoy" : "Today"}</em>
+        </div>
+      </div>
+    )
+  }
+  {
+    id === "people" && (
+      <div class="win">
+        <p class="search">{es ? "Buscar contactos…" : "Search contacts…"}</p>
+        <ul class="people">
+          {people.map((person) => (
+            <li>
+              <span class:list={["av", person.tone]}>{person.initials}</span>
+              <span class="who">
+                <b>
+                  {person.name}
+                  {person.lead ? <i>{es ? "Lead" : "Lead"}</i> : null}
+                </b>
+                <small>{person.next}</small>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  {
+    id === "calendar" && (
+      <div class="win">
+        <div class="cal-head">
+          <strong>{es ? "septiembre 2026" : "September 2026"}</strong>
+          <span>{es ? "Sincronizado" : "Synced"}</span>
+        </div>
+        <div class="cal-grid">
+          {weekdays.map((day) => (
+            <span class="dow">{day}</span>
+          ))}
+          {calendarCells.map((day) =>
+            day ? (
+              <span class:list={["day", day === 16 && "is-today"]}>{day}</span>
+            ) : (
+              <span class="day is-empty" />
+            )
+          )}
+        </div>
+        <div class="events">
+          <span class="ev sage">Atlas</span>
+          <span class="ev lavender">Clara</span>
+        </div>
+      </div>
+    )
+  }
+  {
+    id === "agents" && (
+      <div class="win">
+        {agents.map((agent) => (
+          <article class="agent">
+            <div class="agent-top">
+              <b>{agent.name}</b>
+              <span class:list={["st", agent.state]}>{agent.badge}</span>
+            </div>
+            <p>{agent.text}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .scene {
+    height: 100%;
+    padding: 0.35rem 0.7rem 0;
+  }
+  .win {
+    height: 100%;
+    padding: 0.9rem 0.85rem 1.4rem;
+    border-radius: 16px 16px 0 0;
+    background: var(--color-white);
+    box-shadow: 0 18px 36px rgba(24, 24, 27, 0.12);
+    color: var(--color-bg);
+  }
+  .win-kicker,
+  .search {
+    margin: 0 0 0.7rem;
+    font-size: 0.7rem;
+    color: var(--color-zinc-300);
+  }
+  .search {
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    background: var(--color-zinc-50);
+  }
+  .files,
+  .people,
+  .brief {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+  .files li,
+  .people li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    align-items: center;
+    padding: 0.55rem 0.45rem;
+    border-radius: 10px;
+    background: var(--color-text);
+  }
+  .files b,
+  .who b,
+  .flash strong,
+  .agent b,
+  .cal-head strong {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .files small,
+  .who small,
+  .flash small,
+  .metrics span,
+  .agent p {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--color-zinc-300);
+    font-style: normal;
+    font-weight: 400;
+  }
+  .file-icon {
+    width: 1.55rem;
+    height: 1.85rem;
+    border-radius: 4px;
+    background:
+      linear-gradient(var(--color-white), var(--color-white)) padding-box,
+      linear-gradient(var(--color-zinc-100), var(--color-zinc-100)) border-box;
+    border: 1px solid var(--color-accent-hover);
+    position: relative;
+  }
+  .file-icon::after {
+    content: "";
+    position: absolute;
+    inset: 0.35rem 0.28rem auto;
+    height: 1px;
+    background: var(--color-zinc-100);
+    box-shadow: 0 4px 0 var(--color-zinc-100), 0 8px 0 var(--color-zinc-100);
+  }
+  .bubble {
+    margin: 0 0 0.7rem auto;
+    max-width: 92%;
+    padding: 0.55rem 0.7rem;
+    border-radius: 12px 12px 4px 12px;
+    background: var(--c-mint);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--color-zinc-500);
+  }
+  .chat-row {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    gap: 0.4rem;
+    align-items: start;
+  }
+  .ghost {
+    width: 1.4rem;
+    height: 1.55rem;
+  }
+  .ghost svg {
+    width: 100%;
+    height: 100%;
+  }
+  .bubble-ai {
+    margin: 0;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--color-zinc-500);
+  }
+  .brief {
+    margin-top: 0.75rem;
+    gap: 0.35rem;
+  }
+  .brief li {
+    font-size: 0.7rem;
+    color: var(--color-zinc-400);
+    padding-left: 0.7rem;
+    position: relative;
+  }
+  .brief li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.45rem;
+    width: 0.28rem;
+    height: 0.28rem;
+    border-radius: 99px;
+    background: var(--color-olive-fill);
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+  .metrics div {
+    padding: 0.55rem 0.4rem;
+    border-radius: 10px;
+    background: var(--color-zinc-50);
+    text-align: center;
+  }
+  .metrics b {
+    display: block;
+    font-size: 1.15rem;
+    letter-spacing: -0.04em;
+  }
+  .flash {
+    padding: 0.85rem 0.8rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-scene-border);
+    background: linear-gradient(180deg, var(--color-text), var(--color-zinc-50));
+  }
+  .flash em {
+    display: inline-block;
+    margin-top: 0.55rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 99px;
+    background: var(--color-many-body);
+    color: var(--color-olive-ink);
+    font-size: 0.62rem;
+    font-style: normal;
+    font-weight: 600;
+  }
+  .av {
+    width: 1.85rem;
+    height: 1.85rem;
+    display: grid;
+    place-items: center;
+    border-radius: 99px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--color-white);
+  }
+  .av.sage {
+    background: var(--color-olive-bright);
+  }
+  .av.lavender {
+    background: var(--color-lavender-mid);
+  }
+  .who i {
+    display: inline-block;
+    margin-left: 0.35rem;
+    padding: 0.08rem 0.38rem;
+    border-radius: 99px;
+    background: var(--color-many-body);
+    color: var(--color-olive-ink);
+    font-size: 0.58rem;
+    font-style: normal;
+    font-weight: 600;
+    vertical-align: 0.08rem;
+  }
+  .cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+  }
+  .cal-head span {
+    padding: 0.12rem 0.4rem;
+    border-radius: 99px;
+    background: var(--c-lavender);
+    color: var(--color-zinc-550);
+    font-size: 0.58rem;
+    font-weight: 600;
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.18rem;
+    text-align: center;
+  }
+  .dow,
+  .day {
+    font-size: 0.58rem;
+    color: var(--color-text-secondary);
+  }
+  .day {
+    height: 1.45rem;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    color: var(--color-zinc-500);
+    font-variant-numeric: tabular-nums;
+  }
+  .day.is-empty {
+    visibility: hidden;
+  }
+  .day.is-today {
+    background: var(--color-olive-bright);
+    color: var(--color-white);
+    font-weight: 700;
+  }
+  .events {
+    display: grid;
+    gap: 0.35rem;
+    margin-top: 0.7rem;
+  }
+  .ev {
+    padding: 0.32rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+  .ev.sage {
+    background: var(--c-mint);
+    color: var(--color-olive-ink);
+  }
+  .ev.lavender {
+    background: var(--color-lavender-wash);
+    color: var(--color-zinc-550);
+  }
+  .agent + .agent {
+    margin-top: 0.55rem;
+  }
+  .agent {
+    padding: 0.7rem 0.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-scene-border);
+  }
+  .agent-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    margin-bottom: 0.3rem;
+  }
+  .st {
+    padding: 0.12rem 0.42rem;
+    border-radius: 99px;
+    font-size: 0.58rem;
+    font-weight: 600;
+  }
+  .st.ready {
+    background: var(--color-many-body);
+    color: var(--color-olive-ink);
+  }
+  .st.busy {
+    background: var(--color-amber);
+    color: var(--color-amber-ink);
+  }
+</style>

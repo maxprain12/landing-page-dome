@@ -1,0 +1,92 @@
+[
+  {
+    "scene": "library",
+    "format": "composition",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-library-composition-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=library&format=composition&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "library",
+    "format": "screen",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-library-screen-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=library&format=screen&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "library",
+    "format": "detail",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-library-detail-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=library&format=detail&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "many",
+    "format": "composition",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-many-composition-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=many&format=composition&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "many",
+    "format": "screen",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-many-screen-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=many&format=screen&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "many",
+    "format": "detail",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-many-detail-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=many&format=detail&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "study",
+    "format": "composition",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-study-composition-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=study&format=composition&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "study",
+    "format": "screen",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-study-screen-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=study&format=screen&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  },
+  {
+    "scene": "study",
+    "format": "detail",
+    "theme": "light",
+    "language": "es",
+    "state": "primary",
+    "ratio": "landscape",
+    "filename": "dome-study-detail-light-es-primary-landscape.png",
+    "preview": "http://127.0.0.1:5188/visual-studio.html?scene=study&format=detail&theme=light&language=es&state=primary&ratio=landscape&capture=1"
+  }
+]

@@ -1,123 +1,102 @@
 ---
-import { hero, manyDemo } from "../data/landing";
+import { links } from "../data/landing";
+import { localeFromPath, t, type Locale } from "../i18n";
+import DomeIcon from "./icons/DomeIcon.astro";
+import EditionSwitcher from "./EditionSwitcher.astro";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+const h = copy.hero;
+
+function letters(word: string) {
+  return [...word].map((ch, i, all) => ({ ch, i, n: Math.max(all.length - 1, 1) }));
+}
 ---
 
-<section class="hero">
-  <div class="wrap hero-in">
-    <div class="hero-copy">
-      <p class="eyebrow" data-reveal>— {hero.eyebrow}</p>
-      <h1 class="h-display hero-title" data-reveal>
-        {hero.title}<br />
-        <span class="hero-accent">{hero.titleAccent}</span>
-      </h1>
-      <p class="hero-sub" data-reveal>{hero.subtitle}</p>
-      <div class="hero-cta" data-reveal>
-        <a class="btn btn-primary" href={hero.primaryCta.href} target="_blank" rel="noopener">
-          {hero.primaryCta.label}
-        </a>
-        <a class="btn btn-ghost" href={hero.secondaryCta.href} target="_blank" rel="noopener">
-          {hero.secondaryCta.label}
-        </a>
+<section
+  class="hero"
+  data-hero
+  data-hero-story
+  data-pillar="documentos"
+  data-edition="pro"
+  data-phase="peek"
+  style="--reveal: 0; --split: 0;"
+>
+  <div class="hero-track" data-story-track id="ediciones">
+    <div class="hero-pin" data-story-pin>
+      <div class="hero-copy" data-hero-copy>
+        <h1 class="hero-title">
+          {h.h1Lead}<button
+            type="button"
+            class="hero-word"
+            data-hero-pill="documentos"
+            data-view="library"
+            aria-label={h.h1Documentos}
+          >{letters(h.h1Documentos).map((l) => (
+              <span class="hero-letter" style={`--i:${l.i};--n:${l.n}`}>{l.ch}</span>
+            ))}</button>{h.h1Mid}<button
+            type="button"
+            class="hero-word"
+            data-hero-pill="many"
+            data-view="draft"
+            aria-label={h.h1Acciones}
+          >{letters(h.h1Acciones).map((l) => (
+              <span class="hero-letter" style={`--i:${l.i};--n:${l.n}`}>{l.ch}</span>
+            ))}</button>{h.h1Mid2}<button
+            type="button"
+            class="hero-word"
+            data-hero-pill="personas"
+            data-view="person"
+            aria-label={h.h1Contexto}
+          >{letters(h.h1Contexto).map((l) => (
+              <span class="hero-letter" style={`--i:${l.i};--n:${l.n}`}>{l.ch}</span>
+            ))}</button>{h.h1End}
+        </h1>
+        <p class="hero-sub">{h.subhead}</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary hero-download" href={links.releases} target="_blank" rel="noopener">
+            {h.primaryCta}
+          </a>
+          <a class="btn-text hero-more" href="#como-funciona">
+            {h.secondaryCta}
+            <DomeIcon name="arrow" size={18} />
+          </a>
+        </div>
       </div>
-      <ul class="hero-proof" data-reveal>
-        {hero.proof.map((p) => <li>{p}</li>)}
-      </ul>
-    </div>
-
-    <div class="hero-art" data-reveal>
-      <div class="hero-chat appwin" data-many-chat>
-        <div class="appwin-bar">
-          <span class="appwin-dot" style="background:#e5756a"></span>
-          <span class="appwin-dot" style="background:#ebb447"></span>
-          <span class="appwin-dot" style="background:#6ac47f"></span>
-          <span class="appwin-title">Dome · Many</span>
-        </div>
-
-        <div class="hero-thread" data-thread>
-          <div class="hc-msg hc-ai">
-            <img class="hc-avatar" src={hero.mascot} alt="Many" width="28" height="28" />
-            <div class="hc-bubble">{manyDemo.greeting}</div>
-          </div>
-        </div>
-
-        <div class="hero-prompts" data-prompts>
-          <span class="hero-prompts-l">Try asking —</span>
-          <div class="hero-prompts-row">
-            {manyDemo.questions.map((item) => (
-              <button type="button" class="hero-chip" data-q={item.q} data-a={item.a}>
-                {item.q}
-              </button>
-            ))}
-          </div>
-          <p class="hero-done">✦ You've met Many — now meet your library.</p>
-        </div>
-      </div>
+      <EditionSwitcher locale={locale} />
     </div>
   </div>
+  <p class="story-note">{copy.editions.note}</p>
 </section>
 
+<script is:inline>
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(max-width: 860px)").matches) return;
+    var track = document.querySelector("[data-story-track]");
+    if (track) track.classList.add("is-pinned");
+  })();
+</script>
+
 <script>
-  // Many como chat de Dome: pulsar un prompt añade tu mensaje + Many "escribe" y responde.
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.querySelectorAll<HTMLElement>("[data-many-chat]").forEach((root) => {
-    const thread = root.querySelector<HTMLElement>("[data-thread]");
-    const chips = Array.from(root.querySelectorAll<HTMLButtonElement>(".hero-chip"));
-    const mascot = root.querySelector<HTMLImageElement>(".hc-avatar")?.src || "";
-    if (!thread) return;
-    const asked = new Set<string>();
-    let busy = false;
-
-    const scroll = () => (thread.scrollTop = thread.scrollHeight);
-    const addUser = (text: string) => {
-      const el = document.createElement("div");
-      el.className = "hc-msg hc-user";
-      el.innerHTML = `<div class="hc-bubble">${text}</div>`;
-      thread.appendChild(el);
-      scroll();
+  document.querySelectorAll<HTMLElement>("[data-hero]").forEach((hero) => {
+    const setPillar = (id: string, view?: string) => {
+      if (hero.dataset.phase === "editions") return;
+      hero.dataset.pillar = id;
+      const shell = hero.querySelector<HTMLElement>("[data-appshell]");
+      if (shell && view) shell.dataset.view = view;
     };
-    const addAI = (text: string) => {
-      const el = document.createElement("div");
-      el.className = "hc-msg hc-ai";
-      el.innerHTML =
-        `<img class="hc-avatar" src="${mascot}" alt="Many" width="28" height="28" />` +
-        `<div class="hc-bubble"><span class="hc-typing"><i></i><i></i><i></i></span></div>`;
-      thread.appendChild(el);
-      scroll();
-      const bubble = el.querySelector<HTMLElement>(".hc-bubble")!;
-      const reveal = () => {
-        if (reduce) {
-          bubble.textContent = text;
-          scroll();
-          busy = false;
-          return;
-        }
-        let i = 0;
-        let last = 0;
-        const step = (t: number) => {
-          if (t - last > 16) {
-            i += 1;
-            bubble.textContent = text.slice(0, i);
-            last = t;
-            scroll();
-          }
-          if (i < text.length) requestAnimationFrame(step);
-          else busy = false;
-        };
-        requestAnimationFrame(step);
-      };
-      window.setTimeout(reveal, reduce ? 0 : 650);
-    };
-
-    chips.forEach((chip) => {
-      chip.addEventListener("click", () => {
-        if (busy) return;
-        busy = true;
-        chip.setAttribute("data-asked", "1");
-        asked.add(chip.dataset.q || "");
-        addUser(chip.dataset.q || "");
-        addAI(chip.dataset.a || "");
-        if (asked.size === chips.length) root.setAttribute("data-complete", "1");
-      });
+    hero.querySelectorAll<HTMLButtonElement>("[data-hero-pill]").forEach((btn) => {
+      const id = btn.dataset.heroPill;
+      const view = btn.dataset.view;
+      if (!id) return;
+      btn.addEventListener("mouseenter", () => setPillar(id, view));
+      btn.addEventListener("focus", () => setPillar(id, view));
+      btn.addEventListener("click", () => setPillar(id, view));
     });
   });
 </script>
@@ -125,222 +104,250 @@ import { hero, manyDemo } from "../data/landing";
 <style>
   .hero {
     position: relative;
-    overflow: hidden;
-    background: var(--color-bg);
+    background-color: transparent;
+    background-image: none;
+    color: var(--hero-text);
+    --reveal: 0;
+    --split: 0;
   }
-  .hero-in {
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 3rem;
+  .hero-track {
+    position: relative;
+  }
+  .hero-pin {
+    position: relative;
+    min-height: calc(100svh - 4.75rem);
+    display: flex;
+    flex-direction: column;
+    padding: 4.5rem 1.25rem 0;
+    overflow: hidden;
+    z-index: 1;
+    isolation: isolate;
+  }
+  .hero-track.is-pinned .hero-pin {
+    --rail-w: 16.5rem;
+    --shot-h: min(
+      calc(100svh - 4.75rem - 16.5rem),
+      calc((100vw - 3.5rem - 18.5rem) * 1920 / 2880)
+    );
+    --shot-w: calc(var(--shot-h) * 2880 / 1920);
+    display: flex;
+    flex-direction: column;
+    height: calc(100svh - 4.75rem);
+    min-height: 0;
+    max-height: calc(100svh - 4.75rem);
+    padding: 0.85rem 0.9rem 0.5rem;
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(3.5rem, 8vw, 6rem);
+    justify-content: center;
+    text-align: center;
+    width: min(1120px, 94vw);
+    margin: 0 auto;
+    flex: 0 0 auto;
+    pointer-events: none;
+  }
+  .hero-track.is-pinned .hero-copy {
+    position: relative;
+    flex: 0 0 auto;
+    min-height: 0;
+    width: min(1120px, 94vw);
+    max-height: calc((1 - var(--reveal)) * 24rem);
+    opacity: calc(1 - var(--reveal) * 1.15);
+    transform: translate3d(0, calc(var(--reveal) * -24px), 0);
+    overflow: hidden;
+    padding-bottom: calc((1 - var(--reveal)) * 0.7rem);
+  }
+  .hero[data-phase="peek"] .hero-copy,
+  .hero[data-phase="full"] .hero-copy {
+    pointer-events: auto;
+  }
+  .hero-track:not(.is-pinned) .hero-copy {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  .hero-track:not(.is-pinned) .hero-pin {
+    min-height: auto;
+    padding-bottom: 0.5rem;
   }
   .hero-title {
-    font-size: clamp(2.6rem, 6vw, 4.6rem);
-    margin: 1rem 0 1.2rem;
-  }
-  .hero-accent {
-    font-style: italic;
-    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.45rem, 5.5vw, 4.15rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+    color: #fafafa;
+    margin: 0 auto 0.5rem;
+    max-width: 16.5em;
+    text-wrap: balance;
+    animation: hero-appear 0.55s ease-out both;
   }
   .hero-sub {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-    max-width: 34rem;
-    margin: 0 0 2rem;
+    max-width: 36rem;
+    margin: 0 auto;
+    font-size: clamp(0.95rem, 1.5vw, 1.12rem);
+    line-height: 1.45;
+    font-weight: 500;
+    color: #a1a1aa;
+    text-wrap: pretty;
+    animation: hero-appear 0.55s ease-out 0.12s both;
+  }
+  .hero-word {
+    appearance: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+  }
+  .hero-word[data-hero-pill="documentos"] {
+    --hue: 72;
+  }
+  .hero-word[data-hero-pill="many"] {
+    --hue: 196;
+  }
+  .hero-word[data-hero-pill="personas"] {
+    --hue: 308;
+  }
+  .hero-letter {
+    display: inline-block;
+    color: inherit;
+  }
+  .hero-word:hover .hero-letter,
+  .hero-word:focus-visible .hero-letter {
+    color: hsl(calc(var(--hue) + (320 * var(--i) / var(--n))) 78% 70%);
+  }
+  .hero-word::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.04em;
+    height: 0.07em;
+    border-radius: 99px;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      #e0eab4,
+      #cfd1eb,
+      #7dd3fc,
+      #f9a8d4,
+      #fde68a,
+      #e0eab4
+    );
+    pointer-events: none;
+  }
+  .hero-word:hover::after,
+  .hero-word:focus-visible::after {
+    opacity: 1;
   }
   .hero-cta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-bottom: 1.6rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem 1.4rem;
+    margin-top: 0.85rem;
+    animation: hero-appear 0.55s ease-out 0.24s both;
   }
-  .hero-proof {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.4rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 0.85rem;
-    color: var(--color-ink-3);
+  .hero-download {
+    font-size: 1.12rem;
+    padding: 1.05rem 1.85rem;
+    min-height: 3.15rem;
   }
-  .hero-proof li {
-    display: flex;
+  .hero-more {
+    display: inline-flex;
     align-items: center;
     gap: 0.4rem;
+    font-size: 1.05rem;
+    padding: 1.05rem 0.45rem;
   }
-  .hero-proof li::before {
-    content: "✦";
-    color: var(--color-rust);
-  }
-
-  /* Dome chat */
-  .hero-chat {
-    max-width: 25rem;
-    margin: 0 auto;
-  }
-  .hero-thread {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    padding: 1rem;
-    height: 17rem;
-    overflow-y: auto;
-    background: var(--color-surface);
-  }
-  /* chat bubble styles live in the is:global block below
-     (so JS-appended messages get styled too) */
-
-  .hero-prompts {
-    border-top: 1px dashed var(--color-border);
-    padding: 0.8rem 1rem 1rem;
-    background: var(--color-surface);
-  }
-  .hero-prompts-l {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--color-ink-3);
-  }
-  .hero-prompts-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-  }
-  .hero-chip {
-    font-family: var(--font-sans);
-    font-size: 0.78rem;
-    padding: 0.4rem 0.8rem;
-    border-radius: 999px;
-    border: 1px solid var(--color-border);
+  .story-note {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 1.4rem 1.25rem 2.2rem;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    text-align: center;
     background: var(--color-bg);
-    color: var(--color-text);
-    cursor: pointer;
-    transition:
-      background 0.15s ease,
-      border-color 0.15s ease,
-      transform 0.15s ease;
   }
-  .hero-chip:hover {
-    background: var(--c-mint);
-    border-color: var(--color-accent);
-    transform: translateY(-1px);
-  }
-  .hero-chip[data-asked] {
-    border-style: dashed;
-    color: var(--color-ink-3);
-  }
-  .hero-done {
-    display: none;
-    margin: 0.8rem 0 0;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-rust);
-  }
-  .hero-chat[data-complete] .hero-done {
-    display: block;
-    animation: hero-pop 0.4s ease;
-  }
-  @keyframes hero-pop {
+  @keyframes hero-appear {
     from {
       opacity: 0;
-      transform: translateY(6px);
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
-
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title,
+    .hero-sub,
+    .hero-cta {
+      animation: none;
+    }
+  }
+  @media (max-width: 700px) {
+    .hero-title {
+      max-width: none;
+    }
+  }
   @media (max-width: 860px) {
-    .hero-in {
-      grid-template-columns: 1fr;
-      text-align: center;
+    .hero-pin,
+    .hero-track.is-pinned .hero-pin {
+      --rail-w: 0px;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      overflow: visible;
+      padding: 1.1rem 1.05rem 1.5rem;
     }
-    .hero-copy {
-      order: 2;
+    .hero-copy,
+    .hero-track.is-pinned .hero-copy {
+      width: 100%;
+      max-height: none;
+      overflow: visible;
+      opacity: 1;
+      transform: none;
+      padding-bottom: 0.7rem;
     }
-    .hero-art {
-      order: 1;
+    .hero-title {
+      font-size: clamp(2.05rem, 8.2vw, 2.55rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.35rem;
     }
     .hero-sub {
-      margin-inline: auto;
+      font-size: 0.88rem;
+      line-height: 1.4;
     }
-    .hero-cta,
-    .hero-proof {
-      justify-content: center;
+    .hero-cta {
+      flex-direction: column;
+      gap: 0.15rem;
+      margin-top: 0.55rem;
     }
-    .hero-chat {
-      text-align: left;
+    .hero-download {
+      font-size: 1rem;
+      padding: 0.82rem 1.4rem;
+      min-height: 2.8rem;
     }
-  }
-</style>
-
-<style is:global>
-  /* Chat bubbles — global so JS-appended messages are styled too. */
-  .hc-msg {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.5rem;
-    max-width: 90%;
-  }
-  .hc-ai {
-    align-self: flex-start;
-  }
-  .hc-user {
-    align-self: flex-end;
-    flex-direction: row-reverse;
-  }
-  .hc-avatar {
-    width: 28px;
-    height: 28px;
-    flex: none;
-    border-radius: 50%;
-    background: var(--c-olive);
-    padding: 3px;
-  }
-  .hc-bubble {
-    font-size: 0.88rem;
-    line-height: 1.45;
-    padding: 0.55rem 0.8rem;
-    border-radius: 12px;
-  }
-  .hc-ai .hc-bubble {
-    background: var(--color-paper-deep);
-    color: var(--color-text);
-    border-bottom-left-radius: 3px;
-  }
-  .hc-user .hc-bubble {
-    background: var(--color-accent);
-    color: #fff;
-    border-bottom-right-radius: 3px;
-  }
-  .hc-typing {
-    display: inline-flex;
-    gap: 4px;
-    padding: 2px 0;
-  }
-  .hc-typing i {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--color-accent);
-    animation: hc-blink 1.1s infinite ease-in-out;
-  }
-  .hc-typing i:nth-child(2) {
-    animation-delay: 0.15s;
-  }
-  .hc-typing i:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-  @keyframes hc-blink {
-    0%, 70%, 100% {
-      opacity: 0.3;
+    .hero-more {
+      font-size: 0.95rem;
+      padding: 0.5rem 0.3rem;
     }
-    35% {
-      opacity: 1;
+    .story-note {
+      padding: 0.25rem 0 1.5rem;
     }
   }
 </style>

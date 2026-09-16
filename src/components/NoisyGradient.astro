@@ -1,0 +1,59 @@
+---
+import { originPosition, type GradientOrigin } from "../lib/gradient-origin";
+
+interface ColorStop {
+  color: string;
+  stop: string;
+}
+
+interface Props {
+  origin?: GradientOrigin;
+  size?: string;
+  colors?: ColorStop[];
+}
+
+const origin: GradientOrigin = Astro.props.origin ?? "bottom-middle";
+const size = Astro.props.size ?? "180% 95%";
+const at = originPosition(origin);
+const colors: ColorStop[] = Astro.props.colors ?? [
+  { color: "rgba(224,234,180,0.48)", stop: "0%" },
+  { color: "rgba(89,96,55,0.5)", stop: "28%" },
+  { color: "rgba(207,209,235,0.1)", stop: "52%" },
+  { color: "rgba(24,24,27,0)", stop: "78%" },
+];
+
+const gradient = `radial-gradient(${size} at ${at}, ${colors
+  .map((stop) => `${stop.color} ${stop.stop}`)
+  .join(", ")})`;
+const moonMask = `radial-gradient(${size} at ${at}, var(--color-black) 0%, var(--color-black) 36%, transparent 72%)`;
+---
+
+<div class="noisy" aria-hidden="true" style={`-webkit-mask-image:${moonMask};mask-image:${moonMask};`}>
+  <div class="noisy-wash" style={`background: ${gradient}`}></div>
+  <canvas
+    class="noisy-grain"
+    data-noisy-grain
+    data-pattern-size="90"
+    data-pattern-alpha="42"
+    data-intensity="1"
+    data-refresh="2"></canvas>
+</div>
+
+<style>
+  .noisy {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .noisy-wash,
+  .noisy-grain {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .noisy-grain {
+    mix-blend-mode: overlay;
+  }
+</style>

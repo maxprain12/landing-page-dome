@@ -1,0 +1,482 @@
+import type { Dictionary } from "./types";
+
+export const en: Dictionary = {
+  seo: {
+    title: "Dome — Local-first workspace for documents, people, and AI actions",
+    description:
+      "Connect your local library and relationships in one desktop workspace. Let Many prepare contextual briefs, emails, and follow-ups with the AI provider you choose.",
+  },
+  nav: {
+    how: "How it works",
+    editions: "Editions",
+    trust: "Trust",
+    faq: "FAQ",
+    download: "Download",
+    github: "GitHub",
+    login: "Log in",
+    langLabel: "Language",
+    langEs: "ES",
+    langEn: "EN",
+    menu: "Open menu",
+    close: "Close menu",
+  },
+  hero: {
+    eyebrow: "Documents · People · Many",
+    h1: "Turn your documents into actions with context.",
+    h1Before: "Turn your documents into ",
+    h1Accent: "actions",
+    h1After: " with context.",
+    h1Lead: "Turn your ",
+    h1Documentos: "documents",
+    h1Mid: " into ",
+    h1Acciones: "actions",
+    h1Mid2: " with ",
+    h1Contexto: "context",
+    h1End: ".",
+    subhead:
+      "Dome brings your library and your relationships into a local-first workspace. Many finds the relevant material, understands who you are working with, and prepares the next step. You review and approve.",
+    primaryCta: "Download Dome",
+    secondaryCta: "See how it works",
+    proof: "Desktop for macOS, Windows, and Linux · Choose your AI provider",
+    pillars: {
+      documentos: "Documents",
+      personas: "People",
+      many: "Many",
+    },
+    shotPending: "Screenshot pending",
+  },
+  shell: {
+    home: "Home",
+    projects: "Projects",
+    people: "People",
+    email: "Mail",
+    social: "Social",
+    agents: "Agents",
+    marketplace: "Marketplace",
+    settings: "Settings",
+    tab: "Acme proposal",
+    many: "Many",
+    chat: "Chat",
+    compose: "Ask Many…",
+  },
+  workflow: {
+    demoLabel: "Demonstration",
+    resourceTitle: "Acme proposal — Q3.pdf",
+    resourceKind: "PDF · Library",
+    resourceMeta: "Imported today · 14 pages",
+    resourceExcerpt:
+      "Scope: onboarding audit, three deliverables, and a 14-day follow-up. Estudio Norte remains the single point of contact.",
+    personName: "Elena Voss",
+    personRole: "Partner · Estudio Norte",
+    personNext: "Next step: follow-up email",
+    personHistory: "Last note: asked for a short brief before signing.",
+    draftLabel: "Many draft",
+    draftSubject: "Follow-up — Q3 proposal",
+    draftBody:
+      "Elena, returning to the onboarding proposal. Attached is the brief with the agreed scope and the next milestone in 14 days. Shall we confirm Thursday’s call?",
+    approvalState: "Requires approval",
+    sendLabel: "Send",
+  },
+  how: {
+    h2: "Use Dome with your library, your people, and Many.",
+    lead: "Dome does not separate the library from the relationships that grow out of it.",
+    cta: "See a demo of the flow",
+    features: [
+      {
+        id: "library",
+        title: "Library",
+        text: "Import PDFs, notes, video, audio, and URLs. The material lives on your computer and is ready for Many.",
+        prompt: "Import Designing for memory.pdf",
+      },
+      {
+        id: "many",
+        title: "Many",
+        text: "Ask with the open resource. Many cites sources and prepares the brief, email, or note.",
+        prompt: "Prepare a brief from Atlas’s 3 sources.",
+      },
+      {
+        id: "study",
+        title: "Study",
+        text: "Turn your sources into flashcards, quizzes, and spaced repetition without leaving the library.",
+        prompt: "Generate flashcards from Learning principles.",
+      },
+      {
+        id: "people",
+        title: "Contacts",
+        text: "Each person’s history and next step, next to the material that makes the conversation make sense.",
+        prompt: "Next step with Clara Ruiz.",
+      },
+      {
+        id: "calendar",
+        title: "Calendar",
+        text: "Events tied to your projects and the context you already keep in Dome.",
+        prompt: "Atlas meeting · Thursday 16.",
+      },
+      {
+        id: "agents",
+        title: "Agents",
+        text: "Agents that work on your library. Sensitive actions wait for your approval.",
+        prompt: "Research the sources and leave the brief ready.",
+      },
+    ],
+  },
+  pro: {
+    eyebrow: "Primary edition",
+    h2: "Your library and your relationships, in the same context.",
+    body: "Pro is for consultants, freelancers, small studios, and service creators. Keep each person’s history next to the material that gives the conversation meaning.",
+    examples: [
+      "From a client proposal to a follow-up email.",
+      "From a saved article to a post written for one relationship.",
+      "From a meeting note to a next step that stays on the record.",
+    ],
+    cta: "Explore Pro",
+  },
+  editions: {
+    h2: "One app. Three ways to work.",
+    intro: "Choose a focus when you open Dome, then change it later without deleting your library.",
+    note: "Pro leads this page. Study and Dev are entry paths for other work, not separate paid plans.",
+    proCta: "Explore Pro and work with your library and relationships in the same thread.",
+    study: {
+      name: "Study",
+      title: "Learn from your library.",
+      text: "Turn your sources into flashcards, quizzes, and guides. Spaced repetition brings back what you need today, without leaving Dome or losing the thread of what you already read.",
+      cta: "Open Study and turn your library into a daily study rhythm.",
+      href: "/study",
+    },
+    dev: {
+      name: "Dev",
+      title: "Build with your documents and your repo.",
+      text: "Connect GitHub, agents, and automations. Go from issue to change with the context of your documents, and keep the history next to the code you touch.",
+      cta: "Open Dev and go from issue to change with the context of your documents.",
+      href: "/dev",
+    },
+  },
+  capabilities: {
+    h2: "The context stays with you.",
+    items: [
+      {
+        title: "Library",
+        text: "Notes, PDFs, video, audio, and URLs ready for search and Many.",
+      },
+      {
+        title: "People",
+        text: "Contacts and leads with history and a next step.",
+      },
+      {
+        title: "Channels",
+        text: "Email and social tied to people, with drafts and approval.",
+      },
+      {
+        title: "Models",
+        text: "Local Ollama or the provider keys you choose.",
+      },
+    ],
+  },
+  trust: {
+    h2: "Know where your context lives.",
+    lead: "Local-first means your library and people stay on your computer by default. It also means we tell you when a cloud provider receives content.",
+    items: [
+      {
+        title: "Your data, your disk.",
+        text: "The library stays in Dome’s application storage. Many works on that material. Cloud is optional, and only when you connect it.",
+      },
+      {
+        title: "You choose the model.",
+        text: "Use local Ollama or connect your own keys. If you choose a cloud provider, that conversation’s content follows their policy.",
+      },
+      {
+        title: "You approve actions.",
+        text: "Sending email or publishing to social does not happen without your go-ahead.",
+      },
+    ],
+    rightTitle: "You stay in control.",
+    rightText: "The model, the send, and the cloud stay off until you choose them. Anything that leaves your disk waits for a decision.",
+    controls: [
+      "Local Ollama",
+      "Your own keys",
+      "Cloud only if you connect it",
+      "Email waits for approval",
+      "Social waits for approval",
+      "Library on disk",
+    ],
+    proofLabel: "Documentation",
+    localFirst: "Storage and permissions",
+    privacy: "Privacy",
+    license: "License",
+  },
+  proof: {
+    h2: "See the full flow, from import to approval.",
+    lead: "Import a resource, open a person, let Many prepare the next step, and approve before anything leaves your disk.",
+    items: [
+      {
+        title: "GitHub",
+        text: "Public code, issues, and architecture decisions.",
+        href: "https://github.com/maxprain12/dome",
+        external: true,
+      },
+      {
+        title: "Releases",
+        text: "Current installers for macOS, Windows, and Linux.",
+        href: "https://github.com/maxprain12/dome/releases",
+        external: true,
+      },
+      {
+        title: "Changelog",
+        text: "What changed in each version, in public.",
+        href: "https://github.com/maxprain12/dome/releases",
+        external: true,
+      },
+      {
+        title: "Manual",
+        text: "Install and the first workflow: import, person, draft, approve.",
+        href: "/manual",
+      },
+    ],
+    approvalCaption: "Demonstration — send stays blocked until you approve.",
+    tabs: [
+      {
+        id: "library",
+        title: "Library",
+        text: "Import PDFs, notes, and URLs.",
+        caption: "The material lives on your disk and is ready for Many.",
+      },
+      {
+        id: "people",
+        title: "People",
+        text: "History next to context.",
+        caption: "Each person, next to the material that makes the conversation make sense.",
+      },
+      {
+        id: "many",
+        title: "Many",
+        text: "Cite sources, prepare the step.",
+        caption: "Many works on what you have open and leaves the brief ready.",
+      },
+      {
+        id: "approve",
+        title: "Approve",
+        text: "Nothing sends without you.",
+        caption: "Demonstration — send stays blocked until you approve.",
+      },
+    ],
+  },
+  faq: {
+    h2: "FAQs",
+    intro: "Everything you need to know about Dome.",
+    help: "Can't find what you're looking for? Reach out to our",
+    support: "support team",
+    groups: [
+      {
+        id: "general",
+        label: "General",
+        items: [
+          {
+            q: "Is Dome a web app?",
+            a: "No. The primary product is a desktop app for macOS, Windows, and Linux.",
+          },
+          {
+            q: "Is Dome local?",
+            a: "It is local-first. Your library and people are stored locally by default, but if you connect a cloud provider, content sent to that provider follows their policy.",
+          },
+          {
+            q: "Do I need an account?",
+            a: "A local trial should not depend on a cloud account. A Dome account is for Provider features when they are available.",
+          },
+        ],
+      },
+      {
+        id: "uso",
+        label: "Usage",
+        items: [
+          {
+            q: "Can I use ChatGPT, Claude, or Ollama?",
+            a: "You can configure the compatible providers exposed by the published version of Dome.",
+          },
+          {
+            q: "What is the difference between Pro, Study, and Dev?",
+            a: "They are editions of the same app: Pro connects documents and people; Study prioritizes learning; Dev prioritizes GitHub and agents.",
+          },
+        ],
+      },
+      {
+        id: "biblioteca",
+        label: "Library",
+        items: [
+          {
+            q: "What can I import?",
+            a: "Notes, PDFs, video, audio, pages, and URLs — only the formats the published version supports stably.",
+          },
+        ],
+      },
+    ],
+  },
+  finalCta: {
+    h2: "Turn the next document into a next step.",
+    lead: "Download Dome, import a resource, and see whether Many understands the context.",
+    primary: "Download Dome",
+    secondary: "View on GitHub",
+  },
+  footer: {
+    tag: "Local-first workspace for documents, people, and AI actions. Source-available; commercial use requires written permission.",
+    product: "Product",
+    editionsCol: "Editions",
+    resources: "Resources",
+    project: "Project",
+    legal: "Legal",
+    how: "How it works",
+    editions: "Editions",
+    trust: "Trust",
+    faq: "FAQ",
+    download: "Download",
+    changelog: "Changelog",
+    github: "GitHub",
+    license: "License",
+    contact: "Contact",
+    privacy: "Privacy",
+    terms: "Terms",
+    manual: "Manual",
+    localFirst: "Local-first",
+    pro: "Pro",
+    study: "Study",
+    dev: "Dev",
+    rights: "All rights reserved.",
+  },
+  legal: {
+    back: "Back to home",
+    updated: "Last updated",
+    privacyTitle: "Privacy",
+    privacyEyebrow: "Privacy",
+    privacyDescription:
+      "How Dome handles data on your device, optional providers, and opt-in analytics.",
+    termsTitle: "Terms of use",
+    termsEyebrow: "Terms",
+    termsDescription:
+      "Terms for using Dome, the repository license, and optional third-party services.",
+  },
+  pages: {
+    pro: {
+      title: "Dome Pro — Documents, people, and actions",
+      description:
+        "Dome’s primary edition connects your local library with the people you need to follow up with.",
+      eyebrow: "Primary edition",
+      h1: "Document, person, action.",
+      lead: "Pro is for consultants, freelancers, small studios, and service creators. Many uses the open resource and the related person to prepare the next step.",
+      sections: [
+        {
+          h2: "The same context, not another inbox.",
+          text: "Open a PDF, note, or URL and the related person stays in view. History and the next step live next to the material that gives the conversation meaning.",
+        },
+        {
+          h2: "Many prepares. You approve.",
+          text: "A brief, email, or post comes from the open context. Sending or publishing waits for your go-ahead.",
+        },
+        {
+          h2: "An edition, not a paid plan.",
+          text: "Pro is a focus when you open Dome. You can switch to Study or Dev later without deleting the library.",
+        },
+      ],
+      primary: "Download Dome",
+      secondary: "See how it works",
+    },
+    study: {
+      title: "Dome Study — Learn from your library",
+      description:
+        "Study turns the sources you already have into flashcards, quizzes, and guides with spaced repetition.",
+      eyebrow: "Secondary edition",
+      h1: "Learn from the library you already have.",
+      lead: "Study is a way of working inside the same app. It does not replace the documents-and-people workflow.",
+      sections: [
+        {
+          h2: "From source to review.",
+          text: "Turn notes, PDFs, and pages into flashcards, quizzes, and guides. Spaced repetition uses material you already imported.",
+        },
+        {
+          h2: "Same library.",
+          text: "Switch editions in Settings. Your resources stay on disk.",
+        },
+      ],
+      primary: "Download Dome",
+      secondary: "Back to Pro",
+    },
+    dev: {
+      title: "Dome Dev — Documents, GitHub, and agents",
+      description:
+        "Dev connects your local library with GitHub, agents, and automations when you go from issue to change.",
+      eyebrow: "Secondary edition",
+      h1: "Build with your documents and your repo.",
+      lead: "Dev is an entry path for builders. The home page still sells the Pro loop: document, person, action.",
+      sections: [
+        {
+          h2: "From issue to change.",
+          text: "Connect GitHub and let Many work with the open resource and repository context.",
+        },
+        {
+          h2: "Agents when you need them.",
+          text: "Automations and agents live here as a focus, not as Dome’s primary message.",
+        },
+      ],
+      primary: "Download Dome",
+      secondary: "Back to Pro",
+    },
+    localFirst: {
+      title: "Dome local-first — Where your context lives",
+      description:
+        "Your library and people stay on your computer by default. If you connect a cloud provider, we say so.",
+      eyebrow: "Trust",
+      h1: "Local-first is not local-only.",
+      lead: "Local data lives in Dome’s application storage. A cloud provider only receives content when you configure it.",
+      sections: [
+        {
+          h2: "Storage",
+          text: "On macOS, Windows, and Linux the library, people, and semantic index live in the app data folder. Dome does not centralize your full library on its own servers by default.",
+        },
+        {
+          h2: "Models and providers",
+          text: "Use local Ollama or the provider keys you choose. Content in that conversation follows that provider’s policy.",
+        },
+        {
+          h2: "Permissions and actions",
+          text: "OAuth, email, and social are optional. Sending or publishing requires approval. Product analytics, if present, are opt-in.",
+        },
+        {
+          h2: "Dome cloud",
+          text: "Sync and credits are optional and depend on Provider when that feature is available. They are not required to try the local value.",
+        },
+      ],
+      primary: "Download Dome",
+      secondary: "Read the privacy policy",
+    },
+    manual: {
+      title: "Manual — Install Dome and complete the first workflow",
+      description:
+        "Download Dome, import a resource, open a person, and ask Many for a draft you can approve.",
+      eyebrow: "Manual",
+      h1: "Install and complete the first workflow.",
+      lead: "The primary product is a desktop app. A local trial should not depend on a cloud account.",
+      sections: [
+        {
+          h2: "1. Download",
+          text: "Open the GitHub releases and pick the macOS, Windows, or Linux installer. Install and launch Dome.",
+        },
+        {
+          h2: "2. Import a resource",
+          text: "Add a note, PDF, video, audio file, or URL to the local library.",
+        },
+        {
+          h2: "3. Open or create a person",
+          text: "Relate the material to someone you need to follow up with.",
+        },
+        {
+          h2: "4. Ask Many for a draft",
+          text: "Configure Ollama or your own keys. Ask for a brief, email, or note with the resource and person open.",
+        },
+        {
+          h2: "5. Approve before sending",
+          text: "Review the draft. Sensitive actions wait for your go-ahead.",
+        },
+      ],
+      primary: "Download Dome",
+      secondary: "View on GitHub",
+    },
+  },
+};

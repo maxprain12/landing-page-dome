@@ -1,0 +1,114 @@
+---
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+{
+  locale === "es" ? (
+    <>
+      <div class="legal-highlight">
+        <strong>Resumen:</strong> Dome es una aplicación de escritorio <strong>local-first</strong>.
+        Proyectos, archivos y ajustes se guardan en tu dispositivo por defecto. Si usas
+        funciones <strong>opcionales</strong> — proveedores de IA en la nube, Google Drive o
+        Calendar, o analítica <strong>opt-in</strong> — esos datos se tratan como se describe
+        abajo. Local-first no significa local-only.
+      </div>
+      <h2>1. Datos en tu dispositivo</h2>
+      <p>
+        El contenido que creas o importas (notas, recursos, adjuntos, ajustes, índice) se
+        guarda en local. Dome no centraliza tu biblioteca completa en servidores propios por
+        defecto.
+      </p>
+      <ul>
+        <li>
+          <strong>macOS:</strong> ~/Library/Application Support/dome/
+        </li>
+        <li>
+          <strong>Windows:</strong> %APPDATA%/dome/
+        </li>
+        <li>
+          <strong>Linux:</strong> ~/.config/dome/
+        </li>
+      </ul>
+      <h2>2. Servicios de Google (OAuth)</h2>
+      <p>
+        Si <strong>eliges</strong> conectar Google, Dome usa OAuth 2.0 en tu ordenador. Puedes
+        desconectar en Ajustes. Drive permite importar archivos que selecciones. Calendar, si
+        lo activas, usa los permisos que concedas. Los tokens se guardan en el dispositivo.
+      </p>
+      <h2>3. Proveedores de IA opcionales</h2>
+      <p>
+        Si configuras un proveedor cloud, la conversación enviada a ese proveedor queda
+        sujeta a su política. Ollama y las claves que introduzcas se quedan en tu máquina
+        salvo que tú envíes contenido a un servicio externo.
+      </p>
+      <h2>4. Índice semántico</h2>
+      <p>
+        El índice local (vectores, texto y grafo) permanece en el dispositivo. OCR, visión o
+        embeddings cloud solo ocurren si los configuras.
+      </p>
+      <h2>5. Analítica de producto</h2>
+      <p>Si existe, es opt-in y está desactivada hasta que la actives en la aplicación.</p>
+      <h2>6. Tus derechos</h2>
+      <p>
+        Puedes exportar datos donde la función exista, revocar integraciones en Ajustes y
+        borrar la carpeta de datos de la aplicación al desinstalar.
+      </p>
+    </>
+  ) : (
+    <>
+      <div class="legal-highlight">
+        <strong>Summary:</strong> Dome is a <strong>local-first</strong> desktop app. Projects,
+        files, and settings stay on your device by default. If you use <strong>optional</strong>{" "}
+        features — cloud AI providers, Google Drive or Calendar, or <strong>opt-in</strong>{" "}
+        analytics — that data is handled as described below. Local-first is not local-only.
+      </div>
+      <h2>1. Data stored on your device</h2>
+      <p>
+        Content you create or import (notes, resources, attachments, settings, index data) is
+        stored locally. Dome does not centralize your full library on its own servers by
+        default.
+      </p>
+      <ul>
+        <li>
+          <strong>macOS:</strong> ~/Library/Application Support/dome/
+        </li>
+        <li>
+          <strong>Windows:</strong> %APPDATA%/dome/
+        </li>
+        <li>
+          <strong>Linux:</strong> ~/.config/dome/
+        </li>
+      </ul>
+      <h2>2. Google services (OAuth)</h2>
+      <p>
+        If you <strong>choose</strong> to connect Google, Dome uses OAuth 2.0 on your computer.
+        You can disconnect in Settings. Drive lets you import files you select. Calendar, if
+        enabled, uses the permissions you grant. Tokens stay on the device.
+      </p>
+      <h2>3. Optional AI providers</h2>
+      <p>
+        If you configure a cloud provider, content sent in that conversation follows their
+        policy. Ollama and keys you enter stay on your machine unless you send content to an
+        external service.
+      </p>
+      <h2>4. Semantic index</h2>
+      <p>
+        The local index (vectors, text, and graph) stays on the device. Cloud OCR, vision, or
+        embeddings only run if you configure them.
+      </p>
+      <h2>5. Product analytics</h2>
+      <p>If present, analytics are opt-in and off until you enable them in the app.</p>
+      <h2>6. Your rights</h2>
+      <p>
+        You can export data where the feature exists, revoke integrations in Settings, and
+        delete the application data folder when uninstalling.
+      </p>
+    </>
+  )
+}

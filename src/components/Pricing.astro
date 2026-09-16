@@ -1,0 +1,166 @@
+---
+import { plans } from "../data/landing";
+---
+
+<section class="pr section" id="precios">
+  <div class="wrap">
+    <div class="pr-head" data-reveal>
+      <p class="eyebrow">Servicios cloud</p>
+      <h2 class="h-display pr-h2">Empieza en local. Añade servicios cuando los necesites.</h2>
+      <p class="pr-sub">
+        Puedes usar la aplicación de escritorio con Ollama o tus propias API keys. Los planes
+        de Dome añaden créditos, sincronización y servicios cloud cuando están disponibles.
+      </p>
+    </div>
+
+    <div class="pr-grid" data-reveal>
+      {plans.map((p) => (
+        <div class={`pr-card${p.highlighted ? " is-highlighted" : ""}`}>
+          {p.highlighted && <span class="pr-badge">Most popular</span>}
+          <h3 class="pr-name">{p.name}</h3>
+          <p class="pr-price">
+            <span class="pr-amount">${p.priceUsd}</span>
+            <span class="pr-period">/month</span>
+          </p>
+          <p class="pr-tagline">{p.tagline}</p>
+          <ul class="pr-features">
+            {p.features.map((f) => (
+              <li>{f}</li>
+            ))}
+          </ul>
+          <a
+            class={`btn ${p.highlighted ? "btn-primary" : "btn-ghost"} pr-cta`}
+            href={p.cta.href}
+            target="_blank"
+            rel="noopener"
+          >
+            {p.cta.label}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pr {
+    background: var(--color-paper-deep);
+  }
+  .pr-head {
+    max-width: 40rem;
+    margin: 0 auto 2.6rem;
+    text-align: center;
+  }
+  .pr-h2 {
+    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+    margin: 0.5rem 0 0.7rem;
+  }
+  .pr-sub {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  .pr-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+  .pr-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.6rem 1.4rem;
+  }
+  .pr-card.is-highlighted {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+  }
+  .pr-badge {
+    position: absolute;
+    top: -0.7rem;
+    left: 1.4rem;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+  .pr-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: 0;
+    color: var(--color-text);
+  }
+  .pr-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    margin: 0;
+  }
+  .pr-amount {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: var(--color-text);
+  }
+  .pr-period {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+  .pr-tagline {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin: 0;
+    min-height: 2.6em;
+  }
+  .pr-features {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+  .pr-features li {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .pr-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+  .pr-cta {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 0.88rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 980px) {
+    .pr-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .pr-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

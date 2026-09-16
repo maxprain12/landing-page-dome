@@ -1,206 +1,311 @@
 ---
+import { brand, links } from "../data/landing";
+import { localeFromPath, localeHome, localizePath, t, type Locale } from "../i18n";
+import DomeIcon from "./icons/DomeIcon.astro";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+const home = localeHome(locale);
+const hash = (id: string) => `${home === "/" ? "" : home.replace(/\/$/, "")}${id}`;
 const currentYear = new Date().getFullYear();
-const siteOrigin = Astro.site?.href ?? "https://dome.dowi.es/";
-const privacyUrl = new URL("/privacy/", siteOrigin).href;
-const termsUrl = new URL("/terms/", siteOrigin).href;
-const email = "alder.velasquezobando@gmail.com";
-const domeAccountUrl = (import.meta.env.PUBLIC_DOME_ACCOUNT_URL ?? "").trim();
-const domeUserDashboardUrl = (import.meta.env.PUBLIC_DOME_USER_DASHBOARD_URL ?? "").trim();
+
+interface FooterLink {
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
+const productLinks: FooterLink[] = [
+  { href: hash("#como-funciona"), label: copy.footer.how },
+  { href: hash("#ediciones"), label: copy.footer.editions },
+  { href: hash("#confianza"), label: copy.footer.trust },
+  { href: hash("#faq"), label: copy.footer.faq },
+  { href: links.releases, label: copy.footer.download, external: true },
+];
+
+const editionLinks: FooterLink[] = [
+  { href: localizePath("/pro", locale), label: copy.footer.pro },
+  { href: localizePath("/study", locale), label: copy.footer.study },
+  { href: localizePath("/dev", locale), label: copy.footer.dev },
+];
+
+const resourceLinks: FooterLink[] = [
+  { href: localizePath("/manual", locale), label: copy.footer.manual },
+  { href: localizePath("/local-first", locale), label: copy.footer.localFirst },
+  { href: links.changelog, label: copy.footer.changelog, external: true },
+];
+
+const projectLinks: FooterLink[] = [
+  { href: links.github, label: copy.footer.github, external: true },
+  { href: links.license, label: copy.footer.license, external: true },
+  { href: `mailto:${links.email}`, label: copy.footer.contact },
+];
+
+const legalLinks: FooterLink[] = [
+  { href: localizePath("/privacy", locale), label: copy.footer.privacy },
+  { href: localizePath("/terms", locale), label: copy.footer.terms },
+];
 ---
 
 <footer class="ft">
-  <div class="ft-inner">
+  <div class="ft-shell">
     <div class="ft-grid">
       <div class="ft-brand">
-        <a href="/" class="ft-mark">
-          <img src="/assets/wave.svg" alt="" width="26" height="26" />
+        <a href={home} class="ft-mark">
+          <img src={brand.logo} alt="" width="28" height="28" />
           <span>Dome</span>
         </a>
-        <p class="ft-tag">
-          Free for personal and educational use. Commercial use requires written permission — see
-          License in the repository.
-        </p>
+        <p class="ft-tag">{copy.footer.tag}</p>
+        <a class="ft-mail" href={`mailto:${links.email}`}>
+          <DomeIcon name="mail" size={15} />
+          <span>{links.email}</span>
+        </a>
+        <div class="ft-social">
+          <a
+            class="ft-social-btn"
+            href={links.github}
+            target="_blank"
+            rel="noopener"
+            aria-label={copy.footer.github}
+          >
+            <DomeIcon name="github" size={16} filled />
+          </a>
+          <a class="ft-social-btn" href={`mailto:${links.email}`} aria-label={copy.footer.contact}>
+            <DomeIcon name="mail" size={16} />
+          </a>
+        </div>
       </div>
+
       <div>
-        <h3 class="ft-colh">Product</h3>
+        <h3 class="ft-colh">{copy.footer.product}</h3>
         <ul class="ft-list" role="list">
-          <li><a href="#benefits">Benefits</a></li>
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#download">Download</a></li>
-          <li>
-            <a href="https://github.com/maxprain12/dome/releases" target="_blank" rel="noopener">Changelog</a>
-          </li>
-          {domeAccountUrl ? (
+          {productLinks.map((item) => (
             <li>
-              <a href={domeAccountUrl} target="_blank" rel="noopener">Cloud account</a>
+              <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener" : undefined}>
+                {item.label}
+                {item.external ? <span class="ft-ext" aria-hidden="true">↗</span> : null}
+              </a>
             </li>
-          ) : null}
-          {domeUserDashboardUrl ? (
-            <li>
-              <a href={domeUserDashboardUrl} target="_blank" rel="noopener">Usage & billing</a>
-            </li>
-          ) : null}
+          ))}
         </ul>
       </div>
+
       <div>
-        <h3 class="ft-colh">Learn</h3>
+        <h3 class="ft-colh">{copy.footer.editionsCol}</h3>
         <ul class="ft-list" role="list">
-          <li>
-            <a href="https://github.com/maxprain12/dome#readme" target="_blank" rel="noopener">Docs</a>
-          </li>
-          <li>
-            <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener">Guides</a>
-          </li>
-          <li>
-            <a href="https://github.com/ollama/ollama" target="_blank" rel="noopener">Ollama setup</a>
-          </li>
-          <li>
-            <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener">MCP servers</a>
-          </li>
+          {editionLinks.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
         </ul>
       </div>
+
       <div>
-        <h3 class="ft-colh">Project</h3>
+        <h3 class="ft-colh">{copy.footer.resources}</h3>
         <ul class="ft-list" role="list">
-          <li>
-            <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener">GitHub</a>
-          </li>
-          <li>
-            <a href="https://github.com/maxprain12/dome/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
-          </li>
-          <li>
-            <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener">Contribute</a>
-          </li>
-          <li>
-            <a href={`mailto:${email}`}>Contact</a>
-          </li>
+          {resourceLinks.map((item) => (
+            <li>
+              <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener" : undefined}>
+                {item.label}
+                {item.external ? <span class="ft-ext" aria-hidden="true">↗</span> : null}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="ft-colh">{copy.footer.project}</h3>
+        <ul class="ft-list" role="list">
+          {projectLinks.map((item) => (
+            <li>
+              <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener" : undefined}>
+                {item.label}
+                {item.external ? <span class="ft-ext" aria-hidden="true">↗</span> : null}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <h3 class="ft-colh ft-colh-late">{copy.footer.legal}</h3>
+        <ul class="ft-list" role="list">
+          {legalLinks.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
         </ul>
       </div>
     </div>
-    <div class="ft-rule" role="separator"></div>
+
     <div class="ft-bottom">
-      <span>© {currentYear} · Dome</span>
-      <a href={privacyUrl}>Privacy</a>
-      <a href={termsUrl}>Terms</a>
-      <a href={`mailto:${email}`}>{email}</a>
+      <span>© {currentYear} Dome. {copy.footer.rights}</span>
+      <div class="ft-bottom-links">
+        <a href={localizePath("/terms", locale)}>{copy.footer.terms}</a>
+        <a href={localizePath("/privacy", locale)}>{copy.footer.privacy}</a>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
   .ft {
-    background: var(--color-text);
-    color: #f1ead6;
-    padding: 4rem 48px 1.4rem;
-    border-top: none;
+    position: relative;
+    overflow: hidden;
+    padding: 2.4rem 1rem 1.4rem;
+    background: transparent;
   }
-
-  .ft-inner {
-    max-width: 1240px;
-    margin: 0 auto;
+  .ft-shell {
+    position: relative;
+    z-index: 1;
+    width: min(1120px, 100%);
+    margin-inline: auto;
+    padding: clamp(2.1rem, 4vw, 2.85rem) clamp(1.35rem, 3.4vw, 2.6rem) 1.15rem;
+    background: #1a1a1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+    color: #fafafa;
   }
-
   .ft-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 32px 40px;
-    margin-bottom: 28px;
+    grid-template-columns: minmax(15rem, 1.35fr) repeat(4, minmax(0, 1fr));
+    gap: 2.2rem 2.4rem;
+    margin-bottom: 2.1rem;
   }
-
   .ft-mark {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    color: #f1ead6;
-    text-decoration: none;
-    margin-bottom: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.85rem;
   }
-
+  .ft-mark img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+  }
   .ft-tag {
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     line-height: 1.55;
-    color: rgba(241, 234, 214, 0.75);
-    max-width: 20rem;
-    margin: 0;
+    color: #a1a1aa;
+    max-width: 22rem;
+    margin: 0 0 1.1rem;
   }
-
+  .ft-mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    max-width: 100%;
+    padding: 0.42rem 0.8rem 0.42rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: #e4e4e7;
+    font-size: 0.78rem;
+  }
+  .ft-mail span {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.3;
+  }
+  .ft-mail:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #fafafa;
+  }
+  .ft-social {
+    display: flex;
+    gap: 0.45rem;
+    margin-top: 1rem;
+  }
+  .ft-social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    color: #d4d4d8;
+  }
+  .ft-social-btn:hover {
+    background: rgba(255, 255, 255, 0.09);
+    color: #fafafa;
+  }
   .ft-colh {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--color-accent-light);
-    margin: 0 0 10px;
-    font-weight: 500;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #fafafa;
+    margin: 0 0 0.85rem;
   }
-
+  .ft-colh-late {
+    margin-top: 1.7rem;
+  }
   .ft-list {
     list-style: none;
-    margin: 0;
-    padding: 0;
   }
-
   .ft-list li {
-    margin-bottom: 6px;
+    margin-bottom: 0.42rem;
   }
-
   .ft-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
     font-size: 0.88rem;
-    color: rgba(241, 234, 214, 0.88);
-    text-decoration: none;
+    color: #a1a1aa;
   }
-
   .ft-list a:hover {
-    color: #f1ead6;
-    text-decoration: underline;
+    color: #fafafa;
   }
-
-  .ft-rule {
-    height: 1px;
-    background: rgba(241, 234, 214, 0.15);
-    margin: 0 0 1rem;
+  .ft-ext {
+    font-size: 0.72rem;
+    opacity: 0.7;
   }
-
   .ft-bottom {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 12px 24px;
-    font-size: 0.7rem;
-    color: rgba(241, 234, 214, 0.45);
-    font-family: var(--font-mono);
-    letter-spacing: 0.08em;
+    padding-top: 1.05rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+    color: #71717a;
   }
-
+  .ft-bottom-links {
+    display: flex;
+    gap: 1.15rem;
+  }
   .ft-bottom a {
-    color: rgba(241, 234, 214, 0.45);
-    text-decoration: none;
+    color: #71717a;
   }
-
   .ft-bottom a:hover {
-    color: rgba(241, 234, 214, 0.85);
+    color: #d4d4d8;
   }
-
-  @media (max-width: 900px) {
-    .ft {
-      padding: 40px 20px 28px;
+  @media (max-width: 1080px) {
+    .ft-grid {
+      grid-template-columns: minmax(15rem, 1.3fr) 1fr 1fr;
     }
-
+  }
+  @media (max-width: 900px) {
     .ft-grid {
       grid-template-columns: 1fr 1fr;
     }
-
     .ft-brand {
       grid-column: 1 / -1;
     }
   }
-
-  @media (max-width: 500px) {
+  @media (max-width: 560px) {
+    .ft-shell {
+      border-radius: 22px;
+      padding: 1.6rem 1.15rem 1rem;
+    }
     .ft-grid {
       grid-template-columns: 1fr;
+      gap: 1.6rem;
     }
   }
 </style>

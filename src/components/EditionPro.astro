@@ -1,0 +1,54 @@
+---
+import { localeFromPath, localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+---
+
+<section class="pro section">
+  <div class="wrap pro-in" data-reveal>
+    <p class="eyebrow">{copy.pro.eyebrow}</p>
+    <h2 class="h-display pro-h2">{copy.pro.h2}</h2>
+    <p class="pro-body">{copy.pro.body}</p>
+    <ul class="pro-ex">
+      {copy.pro.examples.map((item) => <li>{item}</li>)}
+    </ul>
+    <a class="btn btn-primary" href={localizePath("/pro", locale)}>{copy.pro.cta}</a>
+  </div>
+</section>
+
+<style>
+  .pro {
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .pro-in {
+    max-width: 40rem;
+  }
+  .pro-h2 {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    margin: 0.7rem 0 1rem;
+  }
+  .pro-body {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.3rem;
+  }
+  .pro-ex {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    margin: 0 0 1.8rem;
+  }
+  .pro-ex li {
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-text);
+    font-size: 0.98rem;
+  }
+</style>

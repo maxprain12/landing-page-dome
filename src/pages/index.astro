@@ -1,36 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Nav from "../components/Nav.astro";
-import Hero from "../components/Hero.astro";
-import SocialProof from "../components/SocialProof.astro";
-import MeetMany from "../components/MeetMany.astro";
-import Benefits from "../components/Benefits.astro";
-import HowItWorks from "../components/HowItWorks.astro";
-import Testimonials from "../components/Testimonials.astro";
-import FAQ from "../components/FAQ.astro";
-import FinalCTA from "../components/FinalCTA.astro";
-import Footer from "../components/Footer.astro";
-import Divider from "../components/Divider.astro";
+import LandingView from "../components/LandingView.astro";
 ---
 
-<Layout
-  title="Dome — Your knowledge, under one dome"
-  description="Dome is an open-source, local-first desktop app for researchers, students, and knowledge workers. Collect notes, PDFs, videos, and links, then let Many — your AI agent — search, explain, and connect everything. macOS, Windows, Linux."
->
-  <Nav />
-  <main>
-    <Hero />
-    <SocialProof />
-    <MeetMany />
-    <Divider />
-    <Benefits />
-    <Divider />
-    <HowItWorks />
-    <Divider />
-    <Testimonials />
-    <Divider />
-    <FAQ />
-    <FinalCTA />
-  </main>
-  <Footer />
+<Layout locale="es" canonicalPath="/">
+  <!-- Landmark: LandingView renders <main> -->
+  <LandingView locale="es" />
 </Layout>

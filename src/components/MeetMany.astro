@@ -1,10 +1,12 @@
 ---
-import MockMany from "./MockMany.astro";
+import { COMPOSITION_SIZE, shotForView } from "../data/shots";
 
 // Mockup of the real <ContextUsageIndicator /> in app/components/many/ContextUsageIndicator.tsx
 // (donut + segmented budget breakdown). Renders as an inline SVG so it works
 // without a screenshot asset and stays crisp on retina. Clicking the donut
 // cycles through different realistic budgets.
+
+const manyShot = shotForView("draft", "composition");
 ---
 
 <section class="mm" id="meet-many" aria-labelledby="mm-heading">
@@ -55,7 +57,19 @@ import MockMany from "./MockMany.astro";
       </div>
     </div>
     <div data-reveal>
-      <MockMany />
+      {
+        manyShot ? (
+          <img
+            class="mm-shot"
+            src={manyShot}
+            alt="Many en Dome, con el documento abierto y el compositor a la derecha"
+            width={COMPOSITION_SIZE.width}
+            height={COMPOSITION_SIZE.height}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null
+      }
     </div>
   </div>
 </section>
@@ -119,7 +133,7 @@ import MockMany from "./MockMany.astro";
     line-height: 1.05;
     letter-spacing: -0.03em;
     margin: 0 0 20px;
-    font-weight: 400;
+    font-weight: 700;
   }
 
   .mm-body {
@@ -210,6 +224,15 @@ import MockMany from "./MockMany.astro";
     max-width: 260px;
     line-height: 1.2;
     margin: 0;
+  }
+
+  .mm-shot {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
+    background: #f4f4f4;
   }
 
   @media (max-width: 900px) {

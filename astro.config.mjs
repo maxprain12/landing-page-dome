@@ -6,12 +6,26 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://dome.dowi.es',
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     react(),
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
+      i18n: {
+        defaultLocale: 'es',
+        locales: {
+          es: 'es',
+          en: 'en',
+        },
+      },
     }),
   ],
   compressHTML: true,

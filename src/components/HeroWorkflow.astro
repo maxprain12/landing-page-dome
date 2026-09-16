@@ -1,0 +1,13 @@
+---
+import AppShellFrame from "./AppShellFrame.astro";
+import { shotForView } from "../data/shots";
+import type { Dictionary } from "../i18n";
+
+interface Props {
+  copy: Dictionary;
+}
+
+const { copy } = Astro.props;
+---
+
+<AppShellFrame copy={copy} view="library" shot={shotForView("library")} variant="peek" />

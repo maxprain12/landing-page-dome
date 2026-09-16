@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import LegalShell from "../../components/LegalShell.astro";
+import PrivacyBody from "../../components/PrivacyBody.astro";
+import Footer from "../../components/Footer.astro";
+import { t } from "../../i18n";
+
+const locale = "en" as const;
+const legal = t(locale).legal;
+---
+
+<Layout locale={locale} title={`${legal.privacyTitle} — Dome`} description={legal.privacyDescription} canonicalPath="/privacy">
+  <LegalShell locale={locale} title={legal.privacyTitle} eyebrow={legal.privacyEyebrow} lastUpdated="2026-09-05">
+    <PrivacyBody locale={locale} />
+  </LegalShell>
+  <Footer locale={locale} />
+</Layout>

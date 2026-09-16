@@ -1,18 +1,24 @@
 ---
-import { finalCta } from "../data/landing";
+import { links } from "../data/landing";
+import { localeFromPath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
 ---
 
-<section class="fc" id="download">
-  <div class="wrap fc-in" data-reveal>
-    <img class="fc-mascot" src={finalCta.mascot} alt="" width="96" height="96" />
-    <h2 class="h-display fc-h2">{finalCta.title}</h2>
-    <p class="fc-sub">{finalCta.subtitle}</p>
-    <div class="fc-row">
-      <a class="btn fc-primary" href={finalCta.primary.href} target="_blank" rel="noopener">
-        {finalCta.primary.label}
-      </a>
-      <a class="btn fc-ghost" href={finalCta.secondary.href} target="_blank" rel="noopener">
-        {finalCta.secondary.label}
+<section class="fc section" id="download">
+  <div class="wrap">
+    <div class="fc-band" data-reveal>
+      <div class="fc-copy">
+        <h2 class="h-display fc-h2">{copy.finalCta.h2}</h2>
+        <p class="fc-sub">{copy.finalCta.lead}</p>
+      </div>
+      <a class="btn btn-primary fc-btn" href={links.releases} target="_blank" rel="noopener">
+        {copy.finalCta.primary}
       </a>
     </div>
   </div>
@@ -20,55 +26,43 @@ import { finalCta } from "../data/landing";
 
 <style>
   .fc {
-    background:
-      radial-gradient(60% 90% at 50% 0%, #6b7444 0%, transparent 60%),
-      var(--color-accent);
-    color: #fff;
-    text-align: center;
+    background: var(--color-bg);
+    padding-top: 1rem;
   }
-  .fc-in {
-    padding: clamp(3.5rem, 7vw, 5.5rem) 0;
+  .fc-band {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: clamp(2rem, 5vw, 3.1rem) clamp(1.6rem, 4.5vw, 2.6rem);
   }
-  .fc-mascot {
-    width: 96px;
-    height: 96px;
-    margin-bottom: 0.6rem;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+  .fc-copy {
+    max-width: 38rem;
+  }
+  .fc-btn {
+    font-size: 1.12rem;
+    padding: 1.05rem 1.85rem;
+    min-height: 3.15rem;
+    flex: 0 0 auto;
   }
   .fc-h2 {
-    color: #fff;
-    font-size: clamp(2rem, 4.5vw, 3.2rem);
-    margin: 0 0 0.6rem;
+    color: #fafafa;
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    margin: 0 0 0.55rem;
   }
   .fc-sub {
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.55;
-    color: rgba(255, 255, 255, 0.85);
-    max-width: 34rem;
-    margin: 0 0 1.8rem;
+    color: #a1a1aa;
+    margin: 0;
   }
-  .fc-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    justify-content: center;
-  }
-  .fc-primary {
-    background: #fff;
-    color: var(--color-accent);
-  }
-  .fc-primary:hover {
-    transform: translateY(-2px);
-  }
-  .fc-ghost {
-    background: transparent;
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.6);
-  }
-  .fc-ghost:hover {
-    background: rgba(255, 255, 255, 0.12);
+  @media (max-width: 700px) {
+    .fc-band {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 </style>

@@ -1,0 +1,119 @@
+---
+import type { Dictionary } from "../i18n";
+import { DETAIL_SIZE, SHOT_SIZE, shotForView, shotsByView } from "../data/shots";
+import type { ShellView } from "./appshell";
+
+interface Props {
+  copy: Dictionary;
+  view?: ShellView;
+  shot?: string | null;
+  variant?: "peek" | "full";
+  compact?: boolean;
+  priority?: boolean;
+  eager?: boolean;
+}
+
+const {
+  copy,
+  view = "library",
+  shot = null,
+  variant = "full",
+  compact = false,
+  priority = false,
+  eager = false,
+} = Astro.props;
+const format = compact ? "detail" : "screen";
+const src = shot ?? shotForView(view, format);
+const map = shotsByView(format);
+const size = compact ? DETAIL_SIZE : SHOT_SIZE;
+---
+
+<figure
+  class:list={["ashell", variant === "peek" && "is-peek", compact && "is-compact"]}
+  data-appshell
+  data-view={view}
+  data-shots={JSON.stringify(map)}
+  id={variant === "peek" ? "demo" : undefined}
+>
+  {
+    src ? (
+      <img
+        class="ashell-shot"
+        data-appshell-shot
+        src={src}
+        alt={copy.workflow.demoLabel}
+        width={size.width}
+        height={size.height}
+        loading={priority || eager ? "eager" : "lazy"}
+        decoding="async"
+        fetchpriority={priority ? "high" : undefined}
+      />
+    ) : (
+      <div class="ashell-empty">{copy.hero.shotPending}</div>
+    )
+  }
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-appshell]").forEach((root) => {
+    const img = root.querySelector<HTMLImageElement>("[data-appshell-shot]");
+    if (!img) return;
+
+    let map: Record<string, string | null> = {};
+    try {
+      map = JSON.parse(root.dataset.shots ?? "{}") as Record<string, string | null>;
+    } catch {
+      map = {};
+    }
+
+    const apply = () => {
+      const next = map[root.dataset.view ?? ""];
+      if (next && img.src !== new URL(next, window.location.origin).href) {
+        img.src = next;
+      }
+    };
+
+    new MutationObserver(apply).observe(root, {
+      attributes: true,
+      attributeFilter: ["data-view"],
+    });
+  });
+</script>
+
+<style>
+  .ashell {
+    position: relative;
+    margin: 0;
+    background: transparent;
+  }
+  .ashell.is-peek {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ashell-shot {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: 14px;
+  }
+  .ashell.is-compact .ashell-shot {
+    border-radius: 12px;
+    background: var(--color-zinc-950);
+  }
+  .ashell-empty {
+    display: grid;
+    place-items: center;
+    min-height: 220px;
+    height: 100%;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--color-zinc-300);
+  }
+</style>

@@ -1,110 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import LegalShell from "../components/LegalShell.astro";
+import TermsBody from "../components/TermsBody.astro";
 import Footer from "../components/Footer.astro";
+import { t } from "../i18n";
 
-const lastUpdated = "April 26, 2026";
-const licenseUrl = "https://github.com/maxprain12/dome/blob/main/LICENSE";
+const locale = "es" as const;
+const legal = t(locale).legal;
 ---
 
-<Layout
-  title="Terms of use — Dome | Intelligent desktop for knowledge and research"
-  description="Terms and conditions for using the Dome open-source desktop application, including the custom license and optional third-party services."
->
-  <LegalShell title="Terms of use" eyebrow="— Terms" lastUpdated={lastUpdated}>
-    <h2>1. Acceptance of terms</h2>
-    <p>
-      By downloading, installing, or using Dome (“the Application” or “Dome”),
-      you agree to these terms. If you do not agree, do not use the Application.
-    </p>
-
-    <h2>2. Description of the service</h2>
-    <p>
-      Dome is an <strong>open-source desktop application</strong> for knowledge
-      management and academic research, as described in the
-      <a href="https://github.com/maxprain12/dome" target="_blank" rel="noopener noreferrer"
-        >public repository</a
-      >. You organize notes, PDFs, videos, and URLs in projects; the app can
-      index, search, and help synthesize that material. You may run
-      <strong>local or cloud</strong> AI, depending on your configuration
-      (Settings and environment).
-    </p>
-
-    <h2>3. License to use the software</h2>
-    <p>
-      The Dome project is distributed under a
-      <strong>custom open-source license</strong> in the
-      <a href={licenseUrl} target="_blank" rel="noopener noreferrer">LICENSE</a>
-      file — it is <strong>not</strong> fairly summarized as a stock
-      <abbr title="Massachusetts Institute of Technology">MIT</abbr> or
-      <abbr title="GNU General Public License">GPL</abbr> grant alone.
-      <strong>Free for personal and educational use.</strong>
-      <strong>Commercial use requires written permission</strong> from the
-      licensor, unless a separate written agreement or the full license text
-      in the repository grants otherwise. Read and comply with the
-      <a href={licenseUrl} target="_blank" rel="noopener noreferrer">LICENSE</a>
-      file before commercial redistribution or use.
-    </p>
-    <ul>
-      <li>Source code, documentation, and release artifacts are distributed under the project license on GitHub</li>
-      <li>Attribution and any notice requirements in the LICENSE file apply to copies and derivatives</li>
-    </ul>
-
-    <h2>4. Use of third-party services</h2>
-    <p>
-      Optional integrations may connect to third-party services for AI, import,
-      calendar, and other features (for example OpenAI, Anthropic, Google, Ollama,
-      or MCP servers you configure). Use of those services is subject to
-      <strong>their</strong> terms and privacy policies. API keys and tokens you
-      provide are stored on your device as implemented in the app.
-    </p>
-
-    <h2>5. Intellectual property</h2>
-    <p>
-      Content you create in Dome (notes, annotations, your library) remains
-      yours. The Dome name, logo, and project branding are subject to the
-      repository license and any separate trademark or branding policy the
-      maintainers publish.
-    </p>
-
-    <h2>6. Disclaimer and limitation of liability</h2>
-    <p>
-      THE APPLICATION IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS
-      OR IMPLIED. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE AUTHORS
-      AND COPYRIGHT HOLDERS ARE NOT LIABLE FOR ANY INDIRECT, INCIDENTAL,
-      SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF DATA OR
-      PROFITS, ARISING FROM USE OF OR INABILITY TO USE THE APPLICATION. SEE THE
-      LICENSE AND APPLICABLE LAW FOR THE FULL SCOPE.
-    </p>
-
-    <h2>7. Contributions</h2>
-    <p>
-      If you contribute to the project, you agree that your contributions are
-      licensed under the same terms the project uses for contributions (as stated
-      in the repository’s contributing guidelines and license), and that
-      maintainers may need your confirmation for licensing clarity.
-    </p>
-
-    <h2>8. Changes to these terms</h2>
-    <p>
-      These terms may be updated from time to time. The “Last updated” date above
-      will change when we publish revisions. Continued use after changes
-      constitutes acceptance of the updated terms where permitted by law.
-    </p>
-
-    <h2>9. Contact</h2>
-    <p>
-      Questions: <a href="mailto:alder.velasquezobando@gmail.com"
-        >alder.velasquezobando@gmail.com</a
-      >
-      or
-      <a
-        href="https://github.com/maxprain12/dome"
-        target="_blank"
-        rel="noopener noreferrer"
-        >GitHub (issues)</a
-      >.
-    </p>
+<Layout locale={locale} title={`${legal.termsTitle} — Dome`} description={legal.termsDescription} canonicalPath="/terms">
+  <LegalShell locale={locale} title={legal.termsTitle} eyebrow={legal.termsEyebrow} lastUpdated="2026-09-05">
+    <TermsBody locale={locale} />
   </LegalShell>
-  <Footer />
+  <Footer locale={locale} />
 </Layout>

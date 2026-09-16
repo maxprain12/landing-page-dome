@@ -1,90 +1,269 @@
 ---
-import { socialProof } from "../data/landing";
+import type { ShellView } from "./appshell";
+import { SHOT_SIZE, shotForView } from "../data/shots";
+import { localeFromPath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+type ProofTabId = "library" | "people" | "many" | "approve";
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+
+function viewForTab(id: ProofTabId): ShellView {
+  switch (id) {
+    case "library":
+      return "library";
+    case "people":
+      return "person";
+    case "many":
+      return "draft";
+    case "approve":
+      return "approval";
+    default: {
+      const _exhaustive: never = id;
+      return _exhaustive;
+    }
+  }
+}
+
+function asTabId(id: string): ProofTabId | null {
+  switch (id) {
+    case "library":
+    case "people":
+    case "many":
+    case "approve":
+      return id;
+    default:
+      return null;
+  }
+}
+
+const tabs = copy.proof.tabs.flatMap((tab) => {
+  const id = asTabId(tab.id);
+  if (!id) return [];
+  return [{ ...tab, id, shot: shotForView(viewForTab(id)) }];
+});
+const initial = tabs.find((tab) => tab.id === "many") ?? tabs[0];
 ---
 
-<section class="sp">
-  <div class="wrap sp-in" data-reveal-group>
-    {socialProof.map((item) => (
-      <div class="sp-item">
-        <span class="sp-value">{item.value}</span>
-        <span class="sp-label">{item.label}</span>
-      </div>
-    ))}
+<section class="pf section" data-proof>
+  <div class="wrap pf-layout">
+    <h2 class="h-display pf-h2">{copy.proof.h2}</h2>
+    <p class="pf-lead">{copy.proof.lead}</p>
+
+    <div class="pf-tabs" role="tablist" aria-label={copy.proof.h2}>
+      {
+        tabs.map((tab) => (
+          <button
+            class:list={["pf-tab", tab.id === initial?.id && "is-on"]}
+            type="button"
+            role="tab"
+            id={`pf-tab-${tab.id}`}
+            aria-selected={tab.id === initial?.id}
+            aria-controls="pf-panel"
+            data-pf-tab={tab.id}
+            data-pf-shot={tab.shot ?? ""}
+            data-pf-caption={tab.caption}
+          >
+            <span class="pf-tab-title">{tab.title}</span>
+            <span class="pf-tab-text">{tab.text}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <figure class="pf-window" id="pf-panel" role="tabpanel" aria-labelledby={`pf-tab-${initial?.id ?? "many"}`}>
+      {
+        initial?.shot ? (
+          <img
+            data-pf-frame
+            src={initial.shot}
+            alt={initial.caption}
+            width={SHOT_SIZE.width}
+            height={SHOT_SIZE.height}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null
+      }
+      <figcaption data-pf-caption>{initial?.caption}</figcaption>
+    </figure>
+    <div class="pf-preload" aria-hidden="true">
+      {
+        tabs.map((tab) =>
+          tab.shot ? <img src={tab.shot} alt="" width="1" height="1" /> : null,
+        )
+      }
+    </div>
   </div>
 </section>
 
 <script>
-  // Contadores que cuentan hacia arriba al entrar en viewport.
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const countUp = (el: HTMLElement) => {
-    const m = el.textContent?.match(/^(\d+)(.*)$/s);
-    if (!m) return;
-    if (reduce) return;
-    const target = parseInt(m[1], 10);
-    const suffix = m[2] ?? "";
-    const dur = 1000;
-    let start = 0;
-    const tick = (t: number) => {
-      if (!start) start = t;
-      const p = Math.min(1, (t - start) / dur);
-      const eased = p * (2 - p);
-      el.textContent = Math.round(target * eased) + suffix;
-      if (p < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  };
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          countUp(e.target as HTMLElement);
-          io.unobserve(e.target);
-        }
+  document.querySelectorAll<HTMLElement>("[data-proof]").forEach((root) => {
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>("[data-pf-tab]")];
+    const panel = root.querySelector<HTMLElement>("#pf-panel");
+    const frame = root.querySelector<HTMLImageElement>("[data-pf-frame]");
+    const caption = root.querySelector<HTMLElement>("figcaption[data-pf-caption]");
+    if (!tabs.length || !panel || !frame || !caption) return;
+
+    const select = (tab: HTMLButtonElement) => {
+      tabs.forEach((btn) => {
+        const on = btn === tab;
+        btn.classList.toggle("is-on", on);
+        btn.setAttribute("aria-selected", on ? "true" : "false");
       });
-    },
-    { threshold: 0.5 },
-  );
-  document.querySelectorAll<HTMLElement>(".sp-value").forEach((el) => io.observe(el));
+      const shot = tab.dataset.pfShot;
+      const nextCaption = tab.dataset.pfCaption ?? "";
+      if (shot) frame.src = shot;
+      frame.alt = nextCaption;
+      caption.textContent = nextCaption;
+      panel.setAttribute("aria-labelledby", tab.id);
+    };
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => select(tab));
+    });
+
+    root.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      const current = tabs.findIndex((tab) => tab.classList.contains("is-on"));
+      if (current < 0) return;
+      event.preventDefault();
+      const delta = event.key === "ArrowRight" ? 1 : -1;
+      const next = tabs[(current + delta + tabs.length) % tabs.length];
+      if (!next) return;
+      next.focus();
+      select(next);
+    });
+  });
 </script>
 
 <style>
-  .sp {
-    border-top: 2px dotted var(--color-border);
-    border-bottom: 2px dotted var(--color-border);
-    background: var(--color-surface);
+  .pf {
+    background: var(--color-bg);
   }
-  .sp-in {
+  .pf-layout {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 1.6rem 0;
-    text-align: center;
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    column-gap: clamp(1.2rem, 4vw, 3.2rem);
+    row-gap: 1.6rem;
+    align-items: start;
   }
-  .sp-item {
+  .pf-h2 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    max-width: 16ch;
+    font-size: clamp(2.35rem, 5.2vw, 3.85rem);
+    letter-spacing: -0.055em;
+    line-height: 0.96;
+  }
+  .pf-lead {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0.35rem 0 0;
+    max-width: 28rem;
+    justify-self: end;
+    color: var(--color-text-secondary);
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .pf-tabs {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.4rem 1.2rem;
+  }
+  .pf-tab {
+    appearance: none;
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    align-items: flex-start;
+    gap: 0.28rem;
+    margin: 0;
+    padding: 0.15rem 0 0.85rem;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    background: none;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
   }
-  .sp-item:not(:last-child) {
-    border-right: 2px dotted var(--color-border);
+  .pf-tab-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--color-zinc-300);
   }
-  .sp-value {
-    font-family: var(--font-display);
-    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
-    color: var(--color-accent);
-    line-height: 1;
+  .pf-tab-text {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--color-zinc-400);
   }
-  .sp-label {
-    font-size: 0.78rem;
-    color: var(--color-ink-3);
+  .pf-tab:hover .pf-tab-title,
+  .pf-tab:hover .pf-tab-text {
+    color: var(--color-zinc-100);
   }
-  @media (max-width: 640px) {
-    .sp-in {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.4rem 1rem;
+  .pf-tab.is-on {
+    border-bottom-color: var(--color-text);
+  }
+  .pf-tab.is-on .pf-tab-title {
+    color: var(--color-text);
+  }
+  .pf-tab.is-on .pf-tab-text {
+    color: var(--color-text-secondary);
+  }
+  .pf-window {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin: 0.2rem 0 0;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--color-zinc-850);
+  }
+  .pf-window img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .pf-window figcaption {
+    padding: 0.75rem 1.1rem 0.9rem;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .pf-preload {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pf-tab {
+      transition: none;
     }
-    .sp-item:nth-child(2n) {
-      border-right: none;
+  }
+  @media (max-width: 860px) {
+    .pf-layout {
+      grid-template-columns: 1fr;
+    }
+    .pf-h2,
+    .pf-lead,
+    .pf-tabs,
+    .pf-window {
+      grid-column: 1;
+      grid-row: auto;
+      justify-self: start;
+    }
+    .pf-tabs {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem 1rem;
     }
   }
 </style>

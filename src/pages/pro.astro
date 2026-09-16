@@ -1,0 +1,18 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MarketingShell from "../components/MarketingShell.astro";
+import { shotForView } from "../data/shots";
+import { localeHome, t } from "../i18n";
+
+const locale = "es" as const;
+const page = t(locale).pages.pro;
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/pro">
+  <MarketingShell
+    locale={locale}
+    page={page}
+    shot={shotForView("library", "composition")}
+    secondaryHref={`${localeHome(locale)}#como-funciona`}
+  />
+</Layout>

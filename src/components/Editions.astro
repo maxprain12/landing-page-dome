@@ -1,0 +1,84 @@
+---
+import { localeFromPath, localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+const cards = [copy.editions.study, copy.editions.dev];
+---
+
+<section class="eds section" id="ediciones">
+  <div class="wrap">
+    <div class="eds-head" data-reveal>
+      <h2 class="h-display eds-h2">{copy.editions.h2}</h2>
+      <p class="eds-intro">{copy.editions.intro}</p>
+    </div>
+    <div class="eds-grid" data-reveal-group>
+      {
+        cards.map((card) => (
+          <a class="eds-card" href={localizePath(card.href, locale)}>
+            <p class="eyebrow">{card.name}</p>
+            <h3>{card.title}</h3>
+            <p>{card.text}</p>
+          </a>
+        ))
+      }
+    </div>
+    <p class="eds-note" data-reveal>{copy.editions.note}</p>
+  </div>
+</section>
+
+<style>
+  .eds {
+    background: var(--color-bg);
+  }
+  .eds-head {
+    max-width: 36rem;
+    margin-bottom: 2rem;
+  }
+  .eds-h2 {
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    margin: 0 0 0.7rem;
+  }
+  .eds-intro {
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+  }
+  .eds-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .eds-card {
+    display: block;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 1.4rem 1.3rem;
+  }
+  .eds-card:hover {
+    background: var(--color-white);
+  }
+  .eds-card h3 {
+    font-size: 1.25rem;
+    margin: 0.6rem 0 0.5rem;
+  }
+  .eds-card p:last-child {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+  }
+  .eds-note {
+    margin: 1.4rem 0 0;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    max-width: 40rem;
+  }
+  @media (max-width: 700px) {
+    .eds-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

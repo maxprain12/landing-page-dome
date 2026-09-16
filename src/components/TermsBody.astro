@@ -1,0 +1,97 @@
+---
+import { links } from "../data/landing";
+import type { Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+{
+  locale === "es" ? (
+    <>
+      <h2>1. Aceptación</h2>
+      <p>
+        Al descargar, instalar o usar Dome aceptas estos términos. Si no estás de acuerdo, no
+        uses la aplicación.
+      </p>
+      <h2>2. Descripción</h2>
+      <p>
+        Dome es una <strong>aplicación de escritorio de código público</strong> para conectar
+        una biblioteca local con personas y acciones. No es un servicio web como producto
+        principal. Puedes usar modelos locales o cloud según tu configuración.
+      </p>
+      <h2>3. Licencia</h2>
+      <p>
+        El proyecto se distribuye bajo la licencia del repositorio. Es{" "}
+        <strong>código público / source-available</strong>, no una licencia OSI genérica.
+        <strong> El uso personal y educativo está permitido.</strong>
+        <strong> El uso comercial requiere permiso escrito</strong> del licenciante, salvo
+        acuerdo distinto. Lee el{" "}
+        <a href={links.license} target="_blank" rel="noopener">
+          archivo LICENSE
+        </a>{" "}
+        antes de un uso comercial o de redistribución.
+      </p>
+      <h2>4. Servicios de terceros</h2>
+      <p>
+        Integraciones opcionales (IA, importación, calendario, email, social) se rigen por los
+        términos de esos proveedores. Las claves y tokens se guardan en tu dispositivo según
+        la implementación publicada.
+      </p>
+      <h2>5. Propiedad</h2>
+      <p>
+        El contenido que creas en Dome (notas, biblioteca, personas) es tuyo. El nombre y la
+        marca Dome están sujetos a la licencia y a cualquier política de marca publicada.
+      </p>
+      <h2>6. Exención</h2>
+      <p>
+        LA APLICACIÓN SE OFRECE «TAL CUAL», SIN GARANTÍAS. EN LA MEDIDA PERMITIDA POR LA LEY,
+        LOS AUTORES NO RESPONDEN POR DAÑOS INDIRECTOS NI PÉRDIDA DE DATOS DERIVADOS DEL USO.
+      </p>
+    </>
+  ) : (
+    <>
+      <h2>1. Acceptance</h2>
+      <p>
+        By downloading, installing, or using Dome you agree to these terms. If you do not
+        agree, do not use the application.
+      </p>
+      <h2>2. Description</h2>
+      <p>
+        Dome is a <strong>source-available desktop application</strong> that connects a local
+        library with people and actions. The primary product is not a web app. You may run
+        local or cloud models depending on your configuration.
+      </p>
+      <h2>3. License</h2>
+      <p>
+        The project is distributed under the repository license. It is{" "}
+        <strong>source-available / public code</strong>, not a generic OSI license.
+        <strong> Personal and educational use is permitted.</strong>
+        <strong> Commercial use requires written permission</strong> from the licensor unless
+        a separate agreement says otherwise. Read the{" "}
+        <a href={links.license} target="_blank" rel="noopener">
+          LICENSE
+        </a>{" "}
+        file before commercial use or redistribution.
+      </p>
+      <h2>4. Third-party services</h2>
+      <p>
+        Optional integrations (AI, import, calendar, email, social) follow those providers’
+        terms. Keys and tokens are stored on your device as implemented in the published app.
+      </p>
+      <h2>5. Intellectual property</h2>
+      <p>
+        Content you create in Dome (notes, library, people) remains yours. The Dome name and
+        branding are subject to the repository license and any published brand policy.
+      </p>
+      <h2>6. Disclaimer</h2>
+      <p>
+        THE APPLICATION IS PROVIDED “AS IS”, WITHOUT WARRANTY. TO THE MAXIMUM EXTENT PERMITTED
+        BY LAW, THE AUTHORS ARE NOT LIABLE FOR INDIRECT DAMAGES OR DATA LOSS ARISING FROM USE.
+      </p>
+    </>
+  )
+}

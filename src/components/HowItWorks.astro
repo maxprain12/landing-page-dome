@@ -1,449 +1,218 @@
 ---
-import { steps } from "../data/landing";
+import { localeFromPath, t, type Locale } from "../i18n";
+import HowScene from "./HowScene.astro";
+
+interface Props {
+  locale?: Locale;
+}
+
+type SceneId = "library" | "many" | "study" | "people" | "calendar" | "agents";
+
+const scenes: SceneId[] = ["library", "many", "study", "people", "calendar", "agents"];
+
+function isScene(id: string): id is SceneId {
+  return (scenes as readonly string[]).includes(id);
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+const prevLabel = locale === "en" ? "Previous" : "Anterior";
+const nextLabel = locale === "en" ? "Next" : "Siguiente";
 ---
 
-<section class="hw section" id="how">
-  <div class="wrap">
-    <div class="hw-head" data-reveal>
-      <p class="eyebrow">— How it works</p>
-      <h2 class="h-display hw-h2">See Dome work, step by step.</h2>
+<section class="how section" id="como-funciona">
+  <div class="how-head">
+    <h2 class="h-display how-h2">{copy.how.h2}</h2>
+    <div class="how-nav" data-how-nav>
+      <button type="button" class="how-arrow" data-how-prev aria-label={prevLabel}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M11.25 4.5 6.75 9l4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <button type="button" class="how-arrow" data-how-next aria-label={nextLabel}>
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
     </div>
-
-    <div class="hw-sim" data-stepper data-reveal>
-      <!-- App window that swaps screen per step -->
-      <div class="hw-screens appwin">
-        <div class="appwin-bar">
-          <span class="appwin-dot" style="background:#e5756a"></span>
-          <span class="appwin-dot" style="background:#ebb447"></span>
-          <span class="appwin-dot" style="background:#6ac47f"></span>
-          <span class="appwin-title" data-screen-title>Dome · Library</span>
-        </div>
-        <div class="hw-screens-body">
-          {/* Screen 0 — Add sources */}
-          <div class="hw-screen" data-screen="0" data-active>
-            <p class="hw-scr-ey">Your library · 4 sources</p>
-            <ul class="hw-srclist">
-              <li><span class="hw-ic">📝</span> Lecture notes — Week 1–6 <em>indexed</em></li>
-              <li><span class="hw-ic">📄</span> Smith et al. (2024).pdf <em>indexed</em></li>
-              <li><span class="hw-ic">▶</span> Krebs cycle — YouTube <em>transcribed</em></li>
-              <li class="is-new"><span class="hw-ic">🔗</span> arxiv.org/abs/2406… <em>adding…</em></li>
-            </ul>
-          </div>
-
-          {/* Screen 1 — Ask Many */}
-          <div class="hw-screen" data-screen="1">
-            <div class="hw-chat">
-              <div class="hw-cmsg hw-cu"><div class="hw-cb">What connects my Biology and Chemistry notes?</div></div>
-              <div class="hw-cmsg hw-ca">
-                <div class="hw-cb">
-                  Both cover enzyme kinetics. Smith (2024) links the Krebs-cycle video to your
-                  notes on activation energy <span class="hw-cite">p.91</span>.
-                </div>
+  </div>
+  <div class="how-viewport">
+    <div class="how-track" data-how-track>
+      {
+        copy.how.features.map((feature) => (
+          <article class="how-card" data-how-card={feature.id}>
+            <div class="how-copy">
+              <h3>{feature.title}</h3>
+              <p>{feature.text}</p>
+            </div>
+            <div class="how-visual">
+              {isScene(feature.id) ? <HowScene id={feature.id} locale={locale} /> : null}
+              <div class="how-prompt">
+                <span>{feature.prompt}</span>
+                <span class="how-prompt-send" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M7 11.5V2.5M7 2.5 3.5 6M7 2.5 10.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </span>
               </div>
             </div>
-          </div>
-
-          {/* Screen 2 — Learn (3D flashcard) */}
-          <div class="hw-screen" data-screen="2">
-            <div class="hw-flash" data-flash>
-              <div class="hw-flash-card" data-flash-card>
-                <div class="hw-flash-face hw-flash-front">
-                  <p class="hw-scr-ey">Card 7 / 24 · due now</p>
-                  <p class="hw-flash-q">What is FSRS?</p>
-                  <p class="hw-flash-hint">Click to reveal</p>
-                </div>
-                <div class="hw-flash-face hw-flash-back">
-                  <p class="hw-flash-a">A free spaced-repetition scheduler that times each card to how well you know it.</p>
-                </div>
-              </div>
-              <div class="hw-flash-actions">
-                <button type="button">Again<span>1m</span></button>
-                <button type="button">Hard<span>6m</span></button>
-                <button type="button" class="ok">Good<span>3d</span></button>
-                <button type="button">Easy<span>12d</span></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Step controller -->
-      <ol class="hw-steps">
-        {steps.map((s, i) => (
-          <li
-            class="hw-step"
-            data-step={i}
-            tabindex="0"
-            role="button"
-            aria-label={`Step ${s.n}: ${s.title}`}
-          >
-            <span class="hw-n">{s.n}</span>
-            <div>
-              <h3 class="hw-t">{s.title}</h3>
-              <p class="hw-p">{s.text}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
+          </article>
+        ))
+      }
     </div>
   </div>
 </section>
 
-<script>
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const TITLES = ["Dome · Library", "Dome · Many", "Dome · Study"];
-
-  // Step simulator: auto-advances, clickable; swaps the app screen.
-  document.querySelectorAll<HTMLElement>("[data-stepper]").forEach((sim) => {
-    const steps = Array.from(sim.querySelectorAll<HTMLElement>(".hw-step"));
-    const screens = Array.from(sim.querySelectorAll<HTMLElement>(".hw-screen"));
-    const title = sim.querySelector<HTMLElement>("[data-screen-title]");
-    if (!steps.length) return;
-    let active = 0;
-    let timer = 0;
-
-    const set = (i: number) => {
-      active = i;
-      steps.forEach((s, idx) => s.toggleAttribute("data-active", idx === i));
-      steps.forEach((s, idx) => s.toggleAttribute("data-done", idx < i));
-      screens.forEach((s, idx) => s.toggleAttribute("data-active", idx === i));
-      if (title) title.textContent = TITLES[i] ?? TITLES[0];
-      sim.style.setProperty("--p", String(steps.length > 1 ? i / (steps.length - 1) : 0));
-    };
-    const next = () => set((active + 1) % steps.length);
-    const restart = () => {
-      window.clearInterval(timer);
-      if (!reduce) timer = window.setInterval(next, 3500);
-    };
-    steps.forEach((s, i) => {
-      s.addEventListener("click", () => {
-        set(i);
-        restart();
-      });
-      s.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          set(i);
-          restart();
-        }
-      });
-    });
-    set(0);
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => (e.isIntersecting ? restart() : window.clearInterval(timer)));
-      },
-      { threshold: 0.3 },
-    );
-    io.observe(sim);
-  });
-
-  // Flashcard flip (independent of the stepper)
-  document.querySelectorAll<HTMLElement>("[data-flash]").forEach((root) => {
-    const card = root.querySelector<HTMLElement>("[data-flash-card]");
-    if (!card) return;
-    card.style.cursor = "pointer";
-    card.addEventListener("click", () => card.toggleAttribute("data-flipped"));
-  });
-</script>
-
 <style>
-  .hw {
-    background: var(--color-paper-deep);
+  .how {
+    background: var(--color-bg);
+    overflow: hidden;
   }
-  .hw-head {
+  .how-head {
+    width: min(1180px, calc(100% - 2.5rem));
+    margin: 0 auto 1.6rem;
+  }
+  .how-h2 {
+    margin: 0 auto 1.25rem;
     text-align: center;
-    margin-bottom: 2.4rem;
+    max-width: 15em;
+    font-size: clamp(2.15rem, 4.8vw, 3.25rem);
+    letter-spacing: -0.048em;
+    line-height: 1.08;
+    text-wrap: balance;
   }
-  .hw-h2 {
-    font-size: clamp(1.7rem, 3.4vw, 2.4rem);
-    margin: 0.5rem 0 0;
+  .how-nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.35rem;
   }
-  .hw-sim {
+  .how-arrow {
+    width: 2.25rem;
+    height: 2.25rem;
     display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 2rem;
-    align-items: center;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    color: #a1a1aa;
+    cursor: pointer;
   }
-
-  /* App window */
-  .hw-screens-body {
-    position: relative;
-    height: 320px;
-    background: var(--color-surface);
+  .how-arrow:hover:not(:disabled) {
+    color: #fafafa;
   }
-  .hw-screen {
-    position: absolute;
-    inset: 0;
-    padding: 1.1rem 1.2rem;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(8px);
-    transition:
-      opacity 0.4s ease,
-      transform 0.4s ease;
+  .how-arrow:disabled {
+    opacity: 0.28;
+    cursor: default;
   }
-  .hw-screen[data-active] {
-    opacity: 1;
-    visibility: visible;
-    transform: none;
+  .how-viewport {
+    width: min(1180px, calc(100% - 2.5rem));
+    margin-inline: auto;
+    overflow: hidden;
   }
-  .hw-scr-ey {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--color-ink-3);
-    margin: 0 0 0.8rem;
+  .how-track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 19.25rem;
+    gap: 0.85rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    touch-action: pan-x;
+    cursor: grab;
+    overscroll-behavior-x: contain;
   }
-  .hw-srclist {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .how-track.is-dragging {
+    cursor: grabbing;
+  }
+  .how-track::-webkit-scrollbar {
+    display: none;
+  }
+  .how-card {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    min-height: 36.5rem;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #f4f4f4;
+    color: #18181b;
   }
-  .hw-srclist li {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+  .how-copy {
+    padding: 1.45rem 1.3rem 0.55rem;
+    z-index: 2;
+  }
+  .how-copy h3 {
+    margin: 0 0 0.45rem;
+    font-size: 1.22rem;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    color: #18181b;
+  }
+  .how-copy p {
+    margin: 0;
     font-size: 0.9rem;
-    color: var(--color-text);
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 0.55rem 0.7rem;
-  }
-  .hw-srclist li em {
-    margin-left: auto;
-    font-style: normal;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-accent);
-  }
-  .hw-srclist li.is-new {
-    border-style: dashed;
-    animation: hw-pulse 1.6s ease-in-out infinite;
-  }
-  @keyframes hw-pulse {
-    50% {
-      background: var(--c-mint);
-    }
-  }
-  .hw-ic {
-    font-size: 1rem;
-  }
-
-  /* Chat screen */
-  .hw-chat {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .hw-cmsg {
-    max-width: 88%;
-  }
-  .hw-cu {
-    align-self: flex-end;
-  }
-  .hw-ca {
-    align-self: flex-start;
-  }
-  .hw-cb {
-    font-size: 0.88rem;
     line-height: 1.45;
-    padding: 0.55rem 0.8rem;
-    border-radius: 12px;
+    color: #52525b;
   }
-  .hw-cu .hw-cb {
-    background: var(--color-accent);
-    color: #fff;
-    border-bottom-right-radius: 3px;
-  }
-  .hw-ca .hw-cb {
-    background: var(--color-paper-deep);
-    color: var(--color-text);
-    border-bottom-left-radius: 3px;
-  }
-  .hw-cite {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    background: var(--c-mint);
-    padding: 0 4px;
-    border-radius: 2px;
-    color: var(--color-sage-dark);
-  }
-
-  /* Flashcard */
-  .hw-flash {
-    perspective: 1000px;
-    max-width: 22rem;
-    margin: 0 auto;
-  }
-  .hw-flash-card {
+  .how-visual {
     position: relative;
-    height: 168px;
-    transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    flex: 1 1 auto;
+    min-height: 26rem;
+    overflow: hidden;
   }
-  .hw-flash-card[data-flipped] {
-    transform: rotateY(180deg);
-  }
-  .hw-flash-face {
+  .how-prompt {
     position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    padding: 1rem 1.1rem;
+    left: 0.7rem;
+    right: 0.7rem;
+    bottom: 0.85rem;
+    z-index: 3;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .hw-flash-back {
-    transform: rotateY(180deg);
-    background: var(--c-mint);
-  }
-  .hw-flash-q {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    margin: 0.2rem 0;
-    color: var(--color-text);
-  }
-  .hw-flash-hint {
-    font-size: 0.78rem;
-    color: var(--color-ink-3);
-    margin: 0;
-  }
-  .hw-flash-a {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: var(--color-text);
-    margin: 0;
-  }
-  .hw-flash-actions {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.4rem;
-    margin-top: 0.7rem;
-  }
-  .hw-flash-actions button {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 2px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 0.4rem 0;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-text);
-    cursor: pointer;
-  }
-  .hw-flash-actions button span {
-    opacity: 0.6;
-    font-size: 9px;
-  }
-  .hw-flash-actions button.ok {
-    background: var(--color-accent-light);
-    border-color: var(--color-accent);
-  }
-
-  /* Step controller */
-  .hw-steps {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-  .hw-step {
-    display: flex;
-    gap: 0.9rem;
-    align-items: flex-start;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-left: 3px solid var(--color-border);
-    border-radius: 12px;
-    padding: 1rem 1.1rem;
-    cursor: pointer;
-    transition:
-      border-color 0.25s ease,
-      transform 0.2s ease,
-      box-shadow 0.2s ease,
-      opacity 0.25s ease;
-    opacity: 0.6;
-  }
-  .hw-step:hover,
-  .hw-step:focus-visible {
-    transform: translateX(2px);
-    outline: none;
-    opacity: 1;
-  }
-  .hw-step[data-active] {
-    opacity: 1;
-    border-left-color: var(--color-accent);
-    box-shadow: var(--shadow-md);
-  }
-  .hw-step[data-done] {
-    opacity: 1;
-  }
-  .hw-n {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.1rem;
-    height: 2.1rem;
-    flex: none;
+    gap: 0.55rem;
+    padding: 0.68rem 0.65rem 0.68rem 0.9rem;
     border-radius: 999px;
-    background: var(--color-surface);
-    border: 2px solid var(--color-border);
-    color: var(--color-ink-3);
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    transition:
-      background 0.25s ease,
-      color 0.25s ease,
-      border-color 0.25s ease;
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(24, 24, 27, 0.16);
+    font-size: 0.74rem;
+    line-height: 1.3;
+    color: #3f3f46;
   }
-  .hw-step[data-active] .hw-n,
-  .hw-step[data-done] .hw-n {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #fff;
+  .how-prompt span:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
   }
-  .hw-t {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 1.2rem;
-    margin: 0 0 0.15rem;
-    color: var(--color-text);
+  .how-prompt-send {
+    flex: 0 0 auto;
+    width: 1.65rem;
+    height: 1.65rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #18181b;
+    color: #fafafa;
   }
-  .hw-p {
-    font-size: 0.88rem;
-    line-height: 1.45;
-    color: var(--color-text-secondary);
-    margin: 0;
-  }
-
-  @media (max-width: 880px) {
-    .hw-sim {
-      grid-template-columns: 1fr;
-      gap: 1.4rem;
+  @media (max-width: 980px) {
+    .how-track {
+      grid-auto-columns: 18.5rem;
+    }
+    .how-card {
+      min-height: 38rem;
     }
   }
-  @media (prefers-reduced-motion: reduce) {
-    .hw-srclist li.is-new {
-      animation: none;
+  @media (max-width: 640px) {
+    .how-head,
+    .how-viewport {
+      width: calc(100% - 1.5rem);
+    }
+    .how-h2 {
+      max-width: 14ch;
+      font-size: clamp(1.85rem, 8vw, 2.35rem);
+    }
+    .how-track {
+      grid-auto-columns: min(20.5rem, 82vw);
+    }
+    .how-card {
+      min-height: 32rem;
+    }
+    .how-prompt {
+      font-size: 0.7rem;
     }
   }
 </style>

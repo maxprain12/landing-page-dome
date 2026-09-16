@@ -1,0 +1,236 @@
+export type Locale = "es" | "en";
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
+export interface FaqGroup {
+  id: string;
+  label: string;
+  items: FaqItem[];
+}
+
+export interface HowFeature {
+  id: string;
+  title: string;
+  text: string;
+  prompt: string;
+}
+
+export interface CapabilityItem {
+  title: string;
+  text: string;
+}
+
+export interface TrustItem {
+  title: string;
+  text: string;
+}
+
+export interface ProofItem {
+  title: string;
+  text: string;
+  href: string;
+  external?: boolean;
+}
+
+export interface ProofTab {
+  id: string;
+  title: string;
+  text: string;
+  caption: string;
+}
+
+export interface EditionCard {
+  name: string;
+  title: string;
+  text: string;
+  cta: string;
+  href: string;
+}
+
+export interface Dictionary {
+  seo: {
+    title: string;
+    description: string;
+  };
+  nav: {
+    how: string;
+    editions: string;
+    trust: string;
+    faq: string;
+    download: string;
+    github: string;
+    login: string;
+    langLabel: string;
+    langEs: string;
+    langEn: string;
+    menu: string;
+    close: string;
+  };
+  hero: {
+    eyebrow: string;
+    h1: string;
+    h1Before: string;
+    h1Accent: string;
+    h1After: string;
+    h1Lead: string;
+    h1Documentos: string;
+    h1Mid: string;
+    h1Acciones: string;
+    h1Mid2: string;
+    h1Contexto: string;
+    h1End: string;
+    subhead: string;
+    primaryCta: string;
+    secondaryCta: string;
+    proof: string;
+    pillars: {
+      documentos: string;
+      personas: string;
+      many: string;
+    };
+    shotPending: string;
+  };
+  shell: {
+    home: string;
+    projects: string;
+    people: string;
+    email: string;
+    social: string;
+    agents: string;
+    marketplace: string;
+    settings: string;
+    tab: string;
+    many: string;
+    chat: string;
+    compose: string;
+  };
+  workflow: {
+    demoLabel: string;
+    resourceTitle: string;
+    resourceKind: string;
+    resourceMeta: string;
+    resourceExcerpt: string;
+    personName: string;
+    personRole: string;
+    personNext: string;
+    personHistory: string;
+    draftLabel: string;
+    draftSubject: string;
+    draftBody: string;
+    approvalState: string;
+    sendLabel: string;
+  };
+  how: {
+    h2: string;
+    lead: string;
+    cta: string;
+    features: HowFeature[];
+  };
+  pro: {
+    eyebrow: string;
+    h2: string;
+    body: string;
+    examples: string[];
+    cta: string;
+  };
+  editions: {
+    h2: string;
+    intro: string;
+    note: string;
+    proCta: string;
+    study: EditionCard;
+    dev: EditionCard;
+  };
+  capabilities: {
+    h2: string;
+    items: CapabilityItem[];
+  };
+  trust: {
+    h2: string;
+    lead: string;
+    items: TrustItem[];
+    rightTitle: string;
+    rightText: string;
+    controls: string[];
+    proofLabel: string;
+    localFirst: string;
+    privacy: string;
+    license: string;
+  };
+  proof: {
+    h2: string;
+    lead: string;
+    items: ProofItem[];
+    tabs: ProofTab[];
+    approvalCaption: string;
+  };
+  faq: {
+    h2: string;
+    intro: string;
+    help: string;
+    support: string;
+    groups: FaqGroup[];
+  };
+  finalCta: {
+    h2: string;
+    lead: string;
+    primary: string;
+    secondary: string;
+  };
+  footer: {
+    tag: string;
+    product: string;
+    editionsCol: string;
+    resources: string;
+    project: string;
+    legal: string;
+    how: string;
+    editions: string;
+    trust: string;
+    faq: string;
+    download: string;
+    changelog: string;
+    github: string;
+    license: string;
+    contact: string;
+    privacy: string;
+    terms: string;
+    manual: string;
+    localFirst: string;
+    pro: string;
+    study: string;
+    dev: string;
+    rights: string;
+  };
+  legal: {
+    back: string;
+    updated: string;
+    privacyTitle: string;
+    privacyEyebrow: string;
+    privacyDescription: string;
+    termsTitle: string;
+    termsEyebrow: string;
+    termsDescription: string;
+  };
+  pages: {
+    pro: SubpageCopy;
+    study: SubpageCopy;
+    dev: SubpageCopy;
+    localFirst: SubpageCopy;
+    manual: SubpageCopy;
+  };
+}
+
+export interface SubpageCopy {
+  title: string;
+  description: string;
+  eyebrow: string;
+  h1: string;
+  lead: string;
+  sections: { h2: string; text: string }[];
+  primary: string;
+  secondary: string;
+}

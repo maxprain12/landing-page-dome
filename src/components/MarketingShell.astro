@@ -1,0 +1,116 @@
+---
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import { links } from "../data/landing";
+import { COMPOSITION_SIZE, SHOT_SIZE } from "../data/shots";
+import { localeFromPath, localizePath, type Locale } from "../i18n";
+import type { SubpageCopy } from "../i18n/types";
+
+interface Props {
+  locale?: Locale;
+  page: SubpageCopy;
+  secondaryHref?: string;
+  shot?: string | null;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const { page, shot = null } = Astro.props;
+const secondaryHref = Astro.props.secondaryHref ?? localizePath("/#como-funciona", locale);
+const shotSize = shot?.includes("-composition-") ? COMPOSITION_SIZE : SHOT_SIZE;
+---
+
+<Nav locale={locale} />
+<main class="mk">
+  <div class="wrap mk-in">
+    <p class="eyebrow">{page.eyebrow}</p>
+    <h1 class="h-display mk-h1">{page.h1}</h1>
+    <p class="mk-lead">{page.lead}</p>
+    <div class="mk-cta">
+      <a class="btn btn-primary" href={links.releases} target="_blank" rel="noopener">{page.primary}</a>
+      <a class="btn btn-ghost" href={secondaryHref}>{page.secondary}</a>
+    </div>
+  </div>
+  {
+    shot ? (
+      <figure class="mk-shot wrap">
+        <img
+          src={shot}
+          alt={page.h1}
+          width={shotSize.width}
+          height={shotSize.height}
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    ) : null
+  }
+  <div class="wrap mk-in">
+    {
+      page.sections.map((section) => (
+        <section class="mk-block">
+          <h2>{section.h2}</h2>
+          <p>{section.text}</p>
+        </section>
+      ))
+    }
+    <slot />
+  </div>
+</main>
+<Footer locale={locale} />
+
+<style>
+  .mk {
+    background: var(--color-bg);
+    padding: clamp(3rem, 6vw, 5rem) 0 4rem;
+  }
+  .mk-in {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+  .mk-h1 {
+    font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+    margin: 0.7rem 0 1rem;
+  }
+  .mk-lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.6rem;
+  }
+  .mk-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 2.8rem;
+  }
+  .mk-shot {
+    max-width: min(1120px, 92vw);
+    margin: 0 auto 2.8rem;
+    background: var(--color-zinc-75);
+    border-radius: 18px;
+    overflow: hidden;
+  }
+  .mk-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+  .mk-block {
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .mk-block:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .mk-block h2 {
+    font-size: 1.35rem;
+    margin: 0 0 0.6rem;
+  }
+  .mk-block p {
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+</style>

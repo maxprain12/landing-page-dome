@@ -1,0 +1,551 @@
+---
+import { links } from "../data/landing";
+import { localeFromPath, localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale);
+const es = locale === "es";
+const local = copy.trust.items[0];
+
+const steps = [
+  {
+    id: "library",
+    icon: "folder" as const,
+    type: "Local",
+    title: es ? "Biblioteca" : "Library",
+    text: es ? "Vive en este disco." : "Lives on this disk.",
+    chip: es ? "En disco" : "On disk",
+    chipKind: "done" as const,
+  },
+  {
+    id: "many",
+    icon: "many" as const,
+    type: es ? "Agente" : "Agent",
+    title: "Many",
+    text: es ? "Prepara el paso." : "Prepares the step.",
+    chip: es ? "Borrador" : "Draft",
+    chipKind: "draft" as const,
+  },
+  {
+    id: "approve",
+    icon: "lock" as const,
+    type: es ? "Puerta" : "Gate",
+    title: es ? "Aprobar envío" : "Approve send",
+    text: es ? "Nada sale sin ti." : "Leaves only with you.",
+    chip: es ? "En espera" : "Waiting",
+    chipKind: "wait" as const,
+  },
+];
+
+const edgeUp = es ? "Ruta local" : "Local path";
+const edgeDown = es ? "Te espera" : "Needs you";
+
+const queryDots = ["olive", "lavender", "olive", "lavender", "olive", "lavender"] as const;
+const queryOn = 3;
+---
+
+<section class="tr section" id="confianza">
+  <div class="wrap tr-shell">
+    <h2 class="h-display tr-h2" data-reveal>{copy.trust.h2}</h2>
+    <p class="tr-lead" data-reveal>{copy.trust.lead}</p>
+
+    <article class="tr-pane tr-pane-flow">
+      <h3>{local.title}</h3>
+      <p class="tr-copy">{local.text}</p>
+      <div class="tr-graph" aria-hidden="true">
+        <div class="tr-stage">
+          <svg class="tr-wires" viewBox="0 0 1000 540" fill="none" preserveAspectRatio="none">
+            <path class="is-mute" d="M48 252 H80" />
+            <path class="is-local" d="M376 236 H430 Q528 236 528 150 V84" />
+            <path class="is-gate" d="M376 268 H430 Q478 268 478 300 V380 Q478 392 498 392" />
+            <path class="is-mute" d="M798 392 H858" />
+          </svg>
+          <span class="tr-origin"></span>
+          {
+            steps.map((step) => (
+              <article class:list={["tr-step", `is-${step.id}`]}>
+                <span class:list={["tr-chip", `is-${step.chipKind}`]}>
+                  {step.chipKind === "done" ? (
+                    <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true">
+                      <path d="M2 5.2 4.1 7.2 8 2.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  ) : null}
+                  {step.chip}
+                </span>
+                <span class:list={["tr-ico", `is-${step.icon}`]}>
+                  {step.icon === "folder" && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M3.6 7.2A1.6 1.6 0 0 1 5.2 5.6h4.1l1.8 2H18.8A1.6 1.6 0 0 1 20.4 9.2v8A1.6 1.6 0 0 1 18.8 18.8H5.2A1.6 1.6 0 0 1 3.6 17.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                    </svg>
+                  )}
+                  {step.icon === "many" && (
+                    <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+                      <circle cx="7" cy="9" r="1.45" fill="var(--color-many-stroke)" />
+                      <circle cx="13" cy="9" r="1.45" fill="var(--color-many-stroke)" />
+                    </svg>
+                  )}
+                  {step.icon === "lock" && (
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6" />
+                      <path d="M8 11V8.2A4 4 0 0 1 16 8.2V11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                  )}
+                </span>
+                <div class="tr-step-copy">
+                  <div class="tr-step-row">
+                    <strong>{step.title}</strong>
+                    <span>{step.type}</span>
+                  </div>
+                  <small>{step.text}</small>
+                </div>
+              </article>
+            ))
+          }
+          <span class="tr-tag is-local">{edgeUp}</span>
+          <span class="tr-tag is-gate">{edgeDown}</span>
+          <span class="tr-plus">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 3.2v9.6M3.2 8h9.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </article>
+
+    <article class="tr-pane tr-pane-list">
+      <h3>{copy.trust.rightTitle}</h3>
+      <p class="tr-copy">{copy.trust.rightText}</p>
+      <ul class="tr-queries">
+        {
+          copy.trust.controls.map((label, index) => (
+            <li class:list={[index === queryOn && "is-on"]} style={`--q-o: ${index === queryOn ? 1 : Math.max(0.38, 0.58 - Math.abs(index - queryOn) * 0.06)}`}>
+              {index === queryOn ? (
+                <span class="tr-q-ico" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.7" />
+                    <path d="M8 11V8.2A4 4 0 0 1 16 8.2V11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                  </svg>
+                </span>
+              ) : (
+                <span class:list={["tr-q-dot", `is-${queryDots[index] ?? "olive"}`]} />
+              )}
+              {label}
+            </li>
+          ))
+        }
+      </ul>
+    </article>
+
+    <p class="tr-docs">
+      <span>{copy.trust.proofLabel}:</span>
+      <a href={localizePath("/local-first", locale)}>{copy.trust.localFirst}</a>
+      <a href={localizePath("/privacy", locale)}>{copy.trust.privacy}</a>
+      <a href={links.license} target="_blank" rel="noopener">{copy.trust.license}</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .tr {
+    background: var(--color-bg);
+  }
+  .tr-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.22fr) minmax(16rem, 0.78fr);
+    column-gap: clamp(1.1rem, 3vw, 2.6rem);
+    row-gap: 1.15rem;
+    align-items: start;
+  }
+  .tr-h2 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    max-width: 14ch;
+    font-size: clamp(2.35rem, 5.2vw, 3.85rem);
+    letter-spacing: -0.055em;
+    line-height: 0.96;
+  }
+  .tr-lead {
+    grid-column: 2;
+    grid-row: 1;
+    margin: 0.35rem 0 0;
+    max-width: 28rem;
+    justify-self: end;
+    color: var(--color-text-secondary);
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .tr-pane {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 31rem;
+    padding: 1.5rem 1.45rem 1.15rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
+    overflow: hidden;
+    background-color: var(--color-zinc-875);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .tr-pane-flow {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .tr-pane-list {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  .tr-pane h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.12rem;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+  .tr-copy {
+    margin: 0;
+    max-width: 44rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+  .tr-graph {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1000 / 540;
+    margin-top: auto;
+    overflow: hidden;
+  }
+  .tr-stage {
+    position: relative;
+    width: 1000px;
+    height: 540px;
+    transform-origin: 0 0;
+  }
+  .tr-wires {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .tr-wires path {
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .tr-wires .is-mute {
+    stroke: rgba(255, 255, 255, 0.16);
+  }
+  .tr-wires .is-local {
+    stroke: var(--color-olive-bright);
+  }
+  .tr-wires .is-gate {
+    stroke: var(--color-lavender-line);
+  }
+  .tr-origin {
+    position: absolute;
+    left: 42px;
+    top: 248px;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: var(--color-zinc-500);
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.05);
+  }
+  .tr-step {
+    position: absolute;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto max-content;
+    column-gap: 0.65rem;
+    align-items: center;
+    width: max-content;
+    min-width: 18.5rem;
+    min-height: 4.55rem;
+    padding: 0.72rem 0.9rem 0.7rem 0.8rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--color-zinc-800);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.34);
+  }
+  .tr-step.is-library {
+    left: 80px;
+    top: 216px;
+    border-color: rgba(127, 148, 99, 0.4);
+  }
+  .tr-step.is-many {
+    left: 528px;
+    top: 48px;
+    border-color: rgba(224, 234, 180, 0.42);
+  }
+  .tr-step.is-approve {
+    left: 498px;
+    top: 356px;
+    border-color: rgba(207, 209, 235, 0.3);
+  }
+  .tr-ico {
+    display: grid;
+    place-items: center;
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 7px;
+    color: var(--color-olive-icon);
+    background: var(--color-olive-muted);
+    flex: none;
+  }
+  .tr-ico.is-many {
+    background: var(--color-many-body);
+  }
+  .tr-ico.is-lock {
+    color: var(--color-bg);
+    background: var(--c-lavender);
+  }
+  .tr-step-copy {
+    min-width: max-content;
+  }
+  .tr-step-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.7rem;
+    white-space: nowrap;
+  }
+  .tr-step-row strong {
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .tr-step-row span {
+    color: var(--color-muted-strong);
+    font-size: 0.68rem;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .tr-step small {
+    display: block;
+    margin-top: 0.12rem;
+    color: var(--color-muted-soft);
+    font-size: 0.7rem;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
+  .tr-chip {
+    position: absolute;
+    top: -0.55rem;
+    right: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.22rem;
+    padding: 0.12rem 0.42rem;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+    background: var(--color-surface);
+  }
+  .tr-chip.is-done {
+    color: var(--color-olive-wash);
+    background: var(--color-olive-chip);
+    border-color: rgba(127, 148, 99, 0.45);
+  }
+  .tr-chip.is-draft {
+    color: var(--color-bg);
+    background: var(--color-many-body);
+  }
+  .tr-chip.is-wait {
+    color: var(--color-wait-text);
+    background: var(--color-lavender-chip);
+    border-color: rgba(207, 209, 235, 0.35);
+  }
+  .tr-tag {
+    position: absolute;
+    z-index: 2;
+    padding: 0.08rem 0.38rem;
+    border-radius: 6px;
+    background: var(--color-zinc-750);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--color-muted-tag);
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .tr-tag.is-local {
+    left: 430px;
+    top: 148px;
+  }
+  .tr-tag.is-gate {
+    left: 432px;
+    top: 318px;
+    color: var(--color-lavender-soft);
+    border-color: rgba(154, 160, 200, 0.28);
+  }
+  .tr-plus {
+    position: absolute;
+    left: 858px;
+    top: 372px;
+    display: grid;
+    place-items: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 999px;
+    color: var(--color-bg);
+    background: var(--c-lavender);
+    box-shadow:
+      0 0 0 7px rgba(207, 209, 235, 0.1),
+      0 0 26px rgba(207, 209, 235, 0.38);
+  }
+  .tr-queries {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.48rem;
+    flex: 1;
+    margin: 1.1rem 0 0;
+    padding: 0 0.35rem;
+  }
+  .tr-queries li {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    width: min(100%, 19.5rem);
+    margin-inline: auto;
+    padding: 0.68rem 0.9rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid transparent;
+    color: rgba(244, 244, 245, 0.48);
+    font-size: 0.84rem;
+    font-weight: 500;
+    opacity: var(--q-o, 0.42);
+  }
+  .tr-queries li.is-on {
+    opacity: 1;
+    color: var(--color-text);
+    background: var(--color-zinc-700);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+  }
+  .tr-q-dot {
+    width: 0.48rem;
+    height: 0.48rem;
+    border-radius: 999px;
+    flex: none;
+  }
+  .tr-q-dot.is-olive {
+    background: var(--color-olive-bright);
+  }
+  .tr-q-dot.is-lavender {
+    background: var(--c-lavender);
+  }
+  .tr-q-ico {
+    display: grid;
+    place-items: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    border-radius: 6px;
+    color: var(--color-bg);
+    background: var(--c-lavender);
+    flex: none;
+  }
+  .tr-docs {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    margin: 0.35rem 0 0;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+  }
+  .tr-docs a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    color: var(--color-text);
+  }
+  @media (max-width: 860px) {
+    .tr-shell {
+      grid-template-columns: 1fr;
+    }
+    .tr-h2,
+    .tr-lead,
+    .tr-pane-flow,
+    .tr-pane-list,
+    .tr-docs {
+      grid-column: 1;
+      grid-row: auto;
+      justify-self: start;
+    }
+    .tr-pane {
+      min-height: 0;
+    }
+    .tr-graph {
+      aspect-ratio: auto;
+      overflow: visible;
+      padding: 1.1rem 0 0.2rem;
+    }
+    .tr-stage {
+      width: 100%;
+      height: auto;
+      transform: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .tr-wires,
+    .tr-origin,
+    .tr-tag,
+    .tr-plus {
+      display: none;
+    }
+    .tr-step {
+      position: relative;
+      left: auto !important;
+      top: auto !important;
+      width: 100%;
+      min-width: 0;
+    }
+    .tr-step-copy {
+      min-width: 0;
+    }
+    .tr-queries li {
+      width: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tr-plus {
+      box-shadow: 0 0 0 6px rgba(207, 209, 235, 0.1);
+    }
+  }
+</style>
+
+<script>
+  function fitTrustStages() {
+    const stacked = window.matchMedia("(max-width: 860px)").matches;
+    document.querySelectorAll<HTMLElement>(".tr-graph").forEach((graph) => {
+      const stage = graph.querySelector<HTMLElement>(".tr-stage");
+      if (!stage) return;
+      if (stacked) {
+        stage.style.transform = "";
+        return;
+      }
+      const width = graph.clientWidth;
+      stage.style.transform = width > 0 ? `scale(${width / 1000})` : "";
+    });
+  }
+
+  fitTrustStages();
+  window.addEventListener("resize", fitTrustStages);
+  document.querySelectorAll(".tr-graph").forEach((graph) => {
+    new ResizeObserver(fitTrustStages).observe(graph);
+  });
+</script>

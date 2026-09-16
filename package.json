@@ -21,10 +21,10 @@
     "verify": "pnpm run check:guardrails && pnpm run check:astro && pnpm run build"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/react": "^6.0.5",
+    "@astrojs/sitemap": "^3.7.4",
     "@lucide/astro": "^0.563.0",
-    "astro": "^5.16.11",
+    "astro": "^7.3.2",
     "gsap": "^3.15.0",
     "puppeteer": "^24.36.1",
     "react": "^19.2.4",
