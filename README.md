@@ -1,6 +1,6 @@
 # Dome — Landing (sitio público)
 
-Marketing y descarga de **Dome**, la aplicación de escritorio open source para gestión del conocimiento. Stack: **Astro 5**, React donde hace falta efectos Three.js, Tailwind/CSS variables en componentes.
+Marketing y descarga de **Dome**, la aplicación de escritorio open source para gestión del conocimiento. Stack: **Astro**, React donde hace falta, CSS variables en `Layout.astro`.
 
 ## Cómo encaja con los otros repos
 
