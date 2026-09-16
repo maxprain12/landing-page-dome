@@ -16,7 +16,6 @@ export function scanA11y(text) {
 /** Existing English aria-labels on main — ratchet: do not add files. */
 export const RATCHET_EN_ARIA = new Set([
   'src/components/Nav.astro',
-  'src/components/Benefits.astro',
 ]);
 
 function walk(dir, out = []) {
