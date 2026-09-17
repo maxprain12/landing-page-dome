@@ -1,0 +1,107 @@
+---
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import DomeIcon from "./icons/DomeIcon.astro";
+import { links } from "../data/landing";
+import { localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const page = copy.pages.contact;
+---
+
+<Nav locale={locale} />
+<main id="main-content" class="ct">
+  <div class="wrap ct-hero">
+    <p class="eyebrow">{page.eyebrow}</p>
+    <h1 class="h-display ct-h1">{page.h1}</h1>
+    <p class="ct-lead">{page.lead}</p>
+    <div class="ct-cta">
+      <a class="btn btn-primary" href={`mailto:${links.email}`}>
+        <DomeIcon name="mail" size={16} />
+        {page.primary}
+      </a>
+      <a class="btn btn-ghost" href={links.github} target="_blank" rel="noopener">{page.secondary}</a>
+    </div>
+  </div>
+
+  <section class="wrap ct-grid">
+    <a class="ct-card" href={`mailto:${links.email}`}>
+      <p class="eyebrow">{copy.footer.contact}</p>
+      <h2>{links.email}</h2>
+      <p>{copy.content.contactDirect}</p>
+    </a>
+    {
+      page.sections.map((section) => (
+        <article class="ct-card">
+          <h2>{section.h2}</h2>
+          <p>{section.text}</p>
+        </article>
+      ))
+    }
+    <a class="ct-card" href={localizePath("/manual", locale)}>
+      <p class="eyebrow">{copy.nav.manuals}</p>
+      <h2>{copy.pages.manual.h1}</h2>
+      <p>{copy.pages.manual.lead}</p>
+    </a>
+  </section>
+</main>
+<Footer locale={locale} />
+
+<style>
+  .ct {
+    padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
+  }
+  .ct-hero {
+    max-width: 44rem;
+    margin-bottom: 2.4rem;
+  }
+  .ct-h1 {
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+    margin: 0.6rem 0 1rem;
+  }
+  .ct-lead {
+    font-size: 1.12rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+  }
+  .ct-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .ct-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .ct-card {
+    padding: 1.35rem 1.4rem 1.45rem;
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  }
+  .ct-card h2 {
+    font-size: 1.2rem;
+    margin: 0.4rem 0 0.55rem;
+    overflow-wrap: anywhere;
+  }
+  .ct-card p {
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.55;
+  }
+  a.ct-card:hover {
+    border-color: color-mix(in srgb, var(--color-white) 18%, var(--color-border));
+  }
+  @media (max-width: 720px) {
+    .ct-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

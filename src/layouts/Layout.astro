@@ -2,12 +2,24 @@
 import type { Locale } from "../i18n";
 import { localeFromPath, localizePath, t } from "../i18n";
 import NoisyGradient from "../components/NoisyGradient.astro";
+import { softwareJsonLd, webSiteJsonLd } from "../lib/seo";
+import { DEFAULT_OG_IMAGE, absoluteUrl, siteOrigin } from "../lib/site";
 
 interface Props {
   title?: string;
   description?: string;
   locale?: Locale;
   canonicalPath?: string;
+  hreflangEs?: string;
+  hreflangEn?: string;
+  ogImage?: string;
+  ogType?: "website" | "article";
+  robots?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
+  jsonLd?: unknown;
+  rssPath?: string;
+  editorial?: boolean;
 }
 
 const pathLocale = localeFromPath(Astro.url.pathname);
@@ -18,17 +30,33 @@ const {
   title = copy.seo.title,
   description = copy.seo.description,
   canonicalPath: canonicalPathProp,
+  hreflangEs,
+  hreflangEn,
+  ogImage = DEFAULT_OG_IMAGE,
+  ogType = "website",
+  robots = "index, follow",
+  publishedTime,
+  modifiedTime,
+  jsonLd,
+  rssPath,
+  editorial = false,
 } = Astro.props;
 
-const siteUrl = (Astro.site?.href || "https://dome.dowi.es").replace(/\/$/, "");
+const siteUrl = siteOrigin(Astro.site);
 const barePath = canonicalPathProp ?? (Astro.url.pathname.replace(/\/+$/, "") || "/");
-const esPath = localizePath(barePath === "/" ? "/" : barePath.replace(/^\/en/, "") || "/", "es");
-const enPath = localizePath(barePath === "/" ? "/" : barePath.replace(/^\/en/, "") || "/", "en");
+const esPath = hreflangEs ?? localizePath(barePath === "/" ? "/" : barePath.replace(/^\/en/, "") || "/", "es");
+const enPath = hreflangEn ?? localizePath(barePath === "/" ? "/" : barePath.replace(/^\/en/, "") || "/", "en");
 const canonicalUrl = `${siteUrl}${locale === "en" ? enPath : esPath === "/" ? "/" : esPath}`;
 const esUrl = `${siteUrl}${esPath === "/" ? "/" : esPath}`;
 const enUrl = `${siteUrl}${enPath}`;
 const ogLocale = locale === "es" ? "es_ES" : "en_US";
 const altOg = locale === "es" ? "en_US" : "es_ES";
+const ogImageUrl = absoluteUrl(ogImage, siteUrl);
+const isHome = (barePath.replace(/\/+$/, "") || "/") === "/";
+const structured =
+  jsonLd ??
+  (isHome ? [softwareJsonLd(siteUrl, description), webSiteJsonLd(siteUrl)] : undefined);
+const rssHref = rssPath ? `${siteUrl}${rssPath}` : `${siteUrl}${localizePath("/rss.xml", locale)}`;
 
 const moonColors = [
   { color: "rgba(224,234,180,0.48)", stop: "0%" },
@@ -56,45 +84,32 @@ const moonColors = [
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Alder Velasquez" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:locale:alternate" content={altOg} />
     <meta property="og:site_name" content="Dome" />
+    {publishedTime ? <meta property="article:published_time" content={publishedTime} /> : null}
+    {modifiedTime ? <meta property="article:modified_time" content={modifiedTime} /> : null}
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalUrl} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        name: "Dome",
-        applicationCategory: "DesktopApplication",
-        operatingSystem: ["macOS", "Windows", "Linux"],
-        description,
-        url: siteUrl,
-        author: {
-          "@type": "Person",
-          name: "Alder Velasquez",
-          email: "alder.velasquezobando@gmail.com",
-        },
-        license: "https://github.com/maxprain12/dome/blob/main/LICENSE",
-        featureList: [
-          "Local-first library",
-          "People records with history",
-          "Many drafts with human approval",
-          "Ollama or bring-your-own provider keys",
-        ],
-      })}
-    />
+    <link rel="alternate" type="application/rss+xml" title={`${copy.nav.blog} — Dome`} href={rssHref} />
+
+    {
+      structured ? (
+        <script type="application/ld+json" set:html={JSON.stringify(structured)} />
+      ) : null
+    }
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -140,12 +155,19 @@ const moonColors = [
     </script>
   </head>
   <body>
-    <div class="body-moon body-moon-top" aria-hidden="true">
-      <NoisyGradient origin="top-middle" size="180% 95%" colors={moonColors} />
-    </div>
-    <div class="body-moon body-moon-bot" aria-hidden="true">
-      <NoisyGradient origin="bottom-middle" size="180% 95%" colors={moonColors} />
-    </div>
+    <a class="skip-link" href="#main-content">{copy.nav.skip}</a>
+    {
+      editorial ? null : (
+        <>
+          <div class="body-moon body-moon-top" aria-hidden="true">
+            <NoisyGradient origin="top-middle" size="180% 95%" colors={moonColors} />
+          </div>
+          <div class="body-moon body-moon-bot" aria-hidden="true">
+            <NoisyGradient origin="bottom-middle" size="180% 95%" colors={moonColors} />
+          </div>
+        </>
+      )
+    }
     <div class="page-content">
       <slot />
     </div>
@@ -302,6 +324,28 @@ const moonColors = [
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: 0.85rem;
+    z-index: 200;
+    transform: translateY(-150%);
+    padding: 0.7rem 1.1rem;
+    border-radius: 999px;
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-weight: 650;
+    font-size: 0.9rem;
+  }
+  .skip-link:focus,
+  .skip-link:focus-visible {
+    transform: none;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-text);
+    outline-offset: 3px;
   }
 
   img {

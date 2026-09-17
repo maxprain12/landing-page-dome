@@ -1,0 +1,55 @@
+---
+title: "Instalar Dome y completar el primer workflow"
+description: "Descarga Dome, importa un recurso, abre una persona y pide a Many un borrador que puedas aprobar. La prueba local no depende de una cuenta cloud."
+locale: es
+permalink: first-workflow
+translationKey: first-workflow
+publishedAt: 2026-09-17
+category: Inicio
+order: 1
+tags:
+  - instalar
+  - workflow
+  - many
+ogImage: /dome-recursos-landing/dome-library-screen-light-es-primary-landscape.png
+heroImage: /dome-recursos-landing/dome-library-screen-light-es-primary-landscape.png
+heroAlt: "Pantalla inicial de la biblioteca de Dome tras instalar la aplicación."
+howTo:
+  - name: Descargar
+    text: Abre las releases de GitHub y elige el instalador de macOS, Windows o Linux.
+  - name: Importar un recurso
+    text: Añade una nota, un PDF, audio o una URL a la biblioteca local.
+  - name: Abrir una persona
+    text: Relaciona el material con alguien a quien tengas que dar seguimiento.
+  - name: Pedir un borrador a Many
+    text: Configura Ollama o tus claves y pide un brief o un correo con el contexto abierto.
+  - name: Aprobar
+    text: Revisa el borrador. Las acciones sensibles esperan tu visto bueno.
+---
+
+El producto principal es una aplicación de escritorio para macOS, Windows y Linux. Esta guía cubre el loop de **Pro**: documento, persona, acción. No necesitas una cuenta cloud para completar la prueba.
+
+<Flow title="Primer workflow">
+  <FlowStep title="Descarga">Abre las [releases de GitHub](https://github.com/maxprain12/dome/releases) y elige el instalador de tu sistema. Instala y arranca Dome.</FlowStep>
+  <FlowStep title="Elige Pro">En el onboarding, toma la edición Pro. Luego puedes cambiar a Study o Dev sin borrar la biblioteca.</FlowStep>
+  <FlowStep title="Importa un recurso">Añade una nota, un PDF, un vídeo, audio o una URL. El archivo queda en el almacenamiento local de Dome.</FlowStep>
+  <FlowStep title="Abre o crea una persona">En **Personas** (el hub de contactos), relaciona el material con alguien a quien tengas que dar seguimiento.</FlowStep>
+  <FlowStep title="Pide un borrador">Configura Ollama o tus propias claves. Abre Many y pide un brief, un correo o una nota con el recurso y la persona a la vista.</FlowStep>
+  <FlowStep title="Aprueba">Revisa el texto. Enviar un correo o publicar en redes espera tu visto bueno.</FlowStep>
+</Flow>
+
+<Image
+  src="/how/how-people.png"
+  alt="Ilustración del flujo de personas junto al material de la biblioteca."
+  width="1600"
+  height="1000"
+  caption="El historial de la persona vive junto al recurso que da sentido a la conversación."
+/>
+
+## Qué no hace falta todavía
+
+No hace falta conectar Gmail, redes ni el Provider para ver si Many entiende un PDF. Si quieres el modelo en local, lee [Many con Ollama](/blog/many-with-ollama). Si el recurso no aparece como listo para IA, sigue con [organizar la biblioteca](/manual/library).
+
+<Callout type="note" title="Edición, no plan de pago">
+Pro, Study y Dev son focos de la misma aplicación. No son planes publicados. Los precios cloud están en [Pricing](/pricing) como TBA.
+</Callout>

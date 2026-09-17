@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
+import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,10 +16,21 @@ export default defineConfig({
   },
   integrations: [
     react(),
+    mdx(),
     sitemap({
       changefreq: 'weekly',
       priority: 0.7,
-      lastmod: new Date(),
+      filter: (page) => !page.includes('/pricing'),
+      serialize(item) {
+        if (item.url.endsWith('/') && item.url.replace(/\/$/, '').split('/').pop() === '') {
+          item.priority = 1;
+        } else if (/\/(blog|manual)\/?$/.test(item.url) || /\/en\/(blog|manual)\/?$/.test(item.url)) {
+          item.priority = 0.8;
+        } else if (item.url.includes('/blog/') || item.url.includes('/manual/')) {
+          item.priority = 0.6;
+        }
+        return item;
+      },
       i18n: {
         defaultLocale: 'es',
         locales: {

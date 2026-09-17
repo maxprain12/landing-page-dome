@@ -16,7 +16,7 @@ const { title, eyebrow, lastUpdated } = Astro.props;
 
 <div class="legal-surface">
   <Nav locale={locale} />
-  <main class="legal-main">
+  <main class="legal-main" id="main-content">
     <article class="legal-doc">
       <a href={localeHome(locale)} class="legal-back">← {copy.legal.back}</a>
       <p class="legal-ey">{eyebrow}</p>

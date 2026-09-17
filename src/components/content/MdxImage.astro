@@ -1,0 +1,45 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  caption?: string;
+  priority?: boolean;
+}
+
+const { src, alt, width = 2800, height = 1800, caption, priority = false } = Astro.props;
+---
+
+<figure class="mdx-figure">
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={priority ? "eager" : "lazy"}
+    decoding="async"
+  />
+  {caption ? <figcaption>{caption}</figcaption> : null}
+</figure>
+
+<style>
+  .mdx-figure {
+    width: 100%;
+    max-width: 34rem;
+    margin: 2rem auto 2.2rem;
+    overflow: hidden;
+  }
+  .mdx-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+  figcaption {
+    padding: 0.65rem 0.1rem 0;
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    text-align: center;
+  }
+</style>

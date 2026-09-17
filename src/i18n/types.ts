@@ -68,6 +68,56 @@ export interface Dictionary {
     langEn: string;
     menu: string;
     close: string;
+    skip: string;
+    main: string;
+    product: string;
+    resources: string;
+    pricing: string;
+    contact: string;
+    blog: string;
+    manuals: string;
+    productCol: string;
+    editionsCol: string;
+    learnCol: string;
+    projectCol: string;
+    howHint: string;
+    editionsHint: string;
+    trustHint: string;
+    localFirstHint: string;
+    proHint: string;
+    studyHint: string;
+    devHint: string;
+    blogHint: string;
+    manualsHint: string;
+    faqHint: string;
+    githubHint: string;
+    changelogHint: string;
+  };
+  content: {
+    read: string;
+    updated: string;
+    minutes: string;
+    related: string;
+    toc: string;
+    published: string;
+    tags: string;
+    next: string;
+    prev: string;
+    rss: string;
+    open: string;
+    more: string;
+    demoNote: string;
+    contactDirect: string;
+    transcript: string;
+    featured: string;
+    morePosts: string;
+    backTo: string;
+    all: string;
+    search: string;
+    searchPlaceholder: string;
+    noMatches: string;
+    topics: string;
+    authorRole: string;
   };
   hero: {
     eyebrow: string;
@@ -203,6 +253,9 @@ export interface Dictionary {
     pro: string;
     study: string;
     dev: string;
+    blog: string;
+    pricing: string;
+    rss: string;
     rights: string;
   };
   legal: {
@@ -221,7 +274,16 @@ export interface Dictionary {
     dev: SubpageCopy;
     localFirst: SubpageCopy;
     manual: SubpageCopy;
+    blog: SubpageCopy;
+    contact: SubpageCopy;
+    pricing: PricingPageCopy;
   };
+}
+
+export interface PricingPageCopy extends SubpageCopy {
+  tba: string;
+  tbaTitle: string;
+  tbaBody: string;
 }
 
 export interface SubpageCopy {

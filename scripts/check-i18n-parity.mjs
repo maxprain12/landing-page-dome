@@ -37,7 +37,26 @@ if (isMain()) {
     console.log('check:i18n: skip (single-locale catalog in src/data/landing.ts)');
     process.exit(0);
   }
-  console.error('check:i18n: found src/i18n but this checker expects exportable JSON dictionaries.');
-  console.error('Keep es/en keys in sync when that tree lands.');
-  process.exit(0);
+
+  function objectSkeleton(source) {
+    const start = source.indexOf('= {');
+    const end = source.lastIndexOf('}');
+    let body = source.slice(start, end + 1);
+    body = body.replace(/`(?:\\.|[^\\`])*`/g, '""');
+    body = body.replace(/"(?:\\.|[^"\\])*"/g, '""');
+    body = body.replace(/'(?:\\.|[^'\\])*'/g, '""');
+    body = body.replace(/:\s*true\b/g, ':0');
+    body = body.replace(/:\s*false\b/g, ':0');
+    body = body.replace(/:\s*\d+/g, ':0');
+    body = body.replace(/:\s*""/g, ':0');
+    return body.replace(/\s+/g, '');
+  }
+
+  const enSkel = objectSkeleton(fs.readFileSync(enFile, 'utf8'));
+  const esSkel = objectSkeleton(fs.readFileSync(esFile, 'utf8'));
+  if (enSkel !== esSkel) {
+    console.error('check:i18n: es.ts and en.ts object shapes differ. Keep keys in the same order.');
+    process.exit(1);
+  }
+  console.log('check:i18n: OK');
 }
