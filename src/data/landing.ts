@@ -8,7 +8,7 @@ export const links = {
   docs: "https://github.com/maxprain12/dome#readme",
   changelog: "https://github.com/maxprain12/dome/releases",
   license: "https://github.com/maxprain12/dome/blob/main/LICENSE",
-  login: `${providerUrl}/login`,
+  login: import.meta.env.PUBLIC_DOME_ACCOUNT_URL || `${providerUrl}/login`,
   register: `${providerUrl}/register`,
   email: "alder.velasquezobando@gmail.com",
 };

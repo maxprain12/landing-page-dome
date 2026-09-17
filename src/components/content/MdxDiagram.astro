@@ -1,0 +1,143 @@
+---
+import { localeFromPath } from "../../i18n";
+
+interface Props {
+  variant?: "local-first" | "approval" | "library";
+  title?: string;
+}
+
+const { variant = "local-first", title } = Astro.props;
+const locale = localeFromPath(Astro.url.pathname);
+
+const diagrams = {
+  es: {
+    "local-first": {
+      title: "Dónde vive el contexto",
+      nodes: [
+        { id: "disk", label: "Disco local", text: "Biblioteca, personas e índice" },
+        { id: "many", label: "Many", text: "Lee lo que tienes abierto" },
+        { id: "cloud", label: "Proveedor cloud", text: "Solo si tú lo conectas" },
+      ],
+    },
+    approval: {
+      title: "Nada sale sin tu ok",
+      nodes: [
+        { id: "ctx", label: "Contexto abierto", text: "Recurso + persona" },
+        { id: "draft", label: "Borrador de Many", text: "Brief, correo o post" },
+        { id: "hitl", label: "Aprobación", text: "Enviar o publicar espera" },
+      ],
+    },
+    library: {
+      title: "Listo para IA",
+      nodes: [
+        { id: "import", label: "Importar", text: "PDF, nota, URL, audio" },
+        { id: "index", label: "Indexar", text: "Texto local; visión si hace falta" },
+        { id: "ready", label: "Listo para IA", text: "Many puede citar fuentes" },
+      ],
+    },
+  },
+  en: {
+    "local-first": {
+      title: "Where context lives",
+      nodes: [
+        { id: "disk", label: "Local disk", text: "Library, people, and index" },
+        { id: "many", label: "Many", text: "Reads what you have open" },
+        { id: "cloud", label: "Cloud provider", text: "Only if you connect it" },
+      ],
+    },
+    approval: {
+      title: "Nothing leaves without you",
+      nodes: [
+        { id: "ctx", label: "Open context", text: "Resource + person" },
+        { id: "draft", label: "Many draft", text: "Brief, email, or post" },
+        { id: "hitl", label: "Approval", text: "Send or publish waits" },
+      ],
+    },
+    library: {
+      title: "Ready for AI",
+      nodes: [
+        { id: "import", label: "Import", text: "PDF, note, URL, audio" },
+        { id: "index", label: "Index", text: "Local text; vision if needed" },
+        { id: "ready", label: "Ready for AI", text: "Many can cite sources" },
+      ],
+    },
+  },
+} as const;
+
+const diagram = diagrams[locale][variant];
+const heading = title ?? diagram.title;
+---
+
+<figure class="mdx-diagram">
+  <figcaption>{heading}</figcaption>
+  <ol class="mdx-diagram-track">
+    {
+      diagram.nodes.map((node, index) => (
+        <li class="mdx-diagram-node">
+          <span class="mdx-diagram-idx">{index + 1}</span>
+          <strong>{node.label}</strong>
+          <span>{node.text}</span>
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .mdx-diagram {
+    margin: 1.6rem 0 2rem;
+    padding: 1.15rem 1.15rem 1.25rem;
+    border-radius: 22px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-lavender-chip) 35%, var(--color-surface));
+  }
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-lavender-soft);
+    margin: 0 0 1rem;
+  }
+  .mdx-diagram-track {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+  }
+  .mdx-diagram-node {
+    display: grid;
+    gap: 0.28rem;
+    padding: 0.95rem 0.95rem 1rem;
+    border-radius: 16px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+  }
+  .mdx-diagram-idx {
+    width: 1.5rem;
+    height: 1.5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--c-lavender);
+    color: var(--color-bg);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  strong {
+    color: var(--color-text);
+    font-size: 0.95rem;
+  }
+  span {
+    color: var(--color-text-secondary);
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+  @media (max-width: 720px) {
+    .mdx-diagram-track {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

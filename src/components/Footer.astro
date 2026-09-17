@@ -10,7 +10,10 @@ interface Props {
 const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
 const copy = t(locale);
 const home = localeHome(locale);
-const hash = (id: string) => `${home === "/" ? "" : home.replace(/\/$/, "")}${id}`;
+const hash = (id: string) => {
+  const base = home === "/" ? "" : home.replace(/\/$/, "");
+  return `${base}/${id}`;
+};
 const currentYear = new Date().getFullYear();
 
 interface FooterLink {
@@ -24,6 +27,7 @@ const productLinks: FooterLink[] = [
   { href: hash("#ediciones"), label: copy.footer.editions },
   { href: hash("#confianza"), label: copy.footer.trust },
   { href: hash("#faq"), label: copy.footer.faq },
+  { href: localizePath("/pricing", locale), label: copy.footer.pricing },
   { href: links.releases, label: copy.footer.download, external: true },
 ];
 
@@ -34,15 +38,17 @@ const editionLinks: FooterLink[] = [
 ];
 
 const resourceLinks: FooterLink[] = [
+  { href: localizePath("/blog", locale), label: copy.footer.blog },
   { href: localizePath("/manual", locale), label: copy.footer.manual },
   { href: localizePath("/local-first", locale), label: copy.footer.localFirst },
+  { href: localizePath("/rss.xml", locale), label: copy.footer.rss },
   { href: links.changelog, label: copy.footer.changelog, external: true },
 ];
 
 const projectLinks: FooterLink[] = [
+  { href: localizePath("/contact", locale), label: copy.footer.contact },
   { href: links.github, label: copy.footer.github, external: true },
   { href: links.license, label: copy.footer.license, external: true },
-  { href: `mailto:${links.email}`, label: copy.footer.contact },
 ];
 
 const legalLinks: FooterLink[] = [

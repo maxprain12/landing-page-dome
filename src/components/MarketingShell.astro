@@ -20,7 +20,7 @@ const shotSize = shot?.includes("-composition-") ? COMPOSITION_SIZE : SHOT_SIZE;
 ---
 
 <Nav locale={locale} />
-<main class="mk">
+<main class="mk" id="main-content">
   <div class="wrap mk-in">
     <p class="eyebrow">{page.eyebrow}</p>
     <h1 class="h-display mk-h1">{page.h1}</h1>
@@ -60,7 +60,6 @@ const shotSize = shot?.includes("-composition-") ? COMPOSITION_SIZE : SHOT_SIZE;
 
 <style>
   .mk {
-    background: var(--color-bg);
     padding: clamp(3rem, 6vw, 5rem) 0 4rem;
   }
   .mk-in {

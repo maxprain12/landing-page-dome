@@ -1,0 +1,41 @@
+---
+interface Props {
+  title?: string;
+}
+
+const { title } = Astro.props;
+---
+
+<figure class="mdx-gallery">
+  {title ? <figcaption>{title}</figcaption> : null}
+  <div class="mdx-gallery-grid">
+    <slot />
+  </div>
+</figure>
+
+<style>
+  .mdx-gallery {
+    margin: 1.6rem 0 1.9rem;
+  }
+  figcaption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-3);
+    margin: 0 0 0.8rem;
+  }
+  .mdx-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+  .mdx-gallery-grid :global(.mdx-figure) {
+    margin: 0;
+  }
+  @media (max-width: 720px) {
+    .mdx-gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

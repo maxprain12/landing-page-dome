@@ -1,0 +1,39 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ContentIndex from "../../../components/content/ContentIndex.astro";
+import { publishedEntries } from "../../../lib/content";
+import { collectionJsonLd } from "../../../lib/seo";
+import { siteOrigin } from "../../../lib/site";
+import { localizePath, t } from "../../../i18n";
+
+const locale = "en" as const;
+const page = t(locale).pages.blog;
+const entries = await publishedEntries("blog", locale);
+const origin = siteOrigin(Astro.site);
+const url = `${origin}/en/blog`;
+---
+
+<Layout
+  locale={locale}
+  title={page.title}
+  description={page.description}
+  canonicalPath="/blog"
+  jsonLd={collectionJsonLd({
+    origin,
+    url,
+    name: page.title,
+    description: page.description,
+    items: entries.map((entry) => ({
+      name: entry.data.title,
+      url: `${origin}${localizePath(`/blog/${entry.data.permalink}`, locale)}`,
+    })),
+  })}
+>
+  <ContentIndex
+    locale={locale}
+    kind="blog"
+    page={page}
+    entries={entries}
+    secondaryHref={localizePath("/manual", locale)}
+  />
+</Layout>

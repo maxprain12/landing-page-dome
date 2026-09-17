@@ -1,0 +1,275 @@
+---
+import Footer from "../Footer.astro";
+import Nav from "../Nav.astro";
+import DomeIcon from "../icons/DomeIcon.astro";
+import { localizePath, t, type Locale } from "../../i18n";
+import type { SubpageCopy } from "../../i18n/types";
+import ContentCard from "./ContentCard.astro";
+import type { ContentEntry, ContentKind } from "../../lib/content";
+
+interface Props {
+  locale: Locale;
+  kind: ContentKind;
+  page: SubpageCopy;
+  entries: ContentEntry[];
+  secondaryHref?: string;
+}
+
+const { locale, kind, page, entries, secondaryHref } = Astro.props;
+const copy = t(locale);
+const rssHref = localizePath("/rss.xml", locale);
+const [featured, ...rest] = entries;
+const categories = [...new Set(entries.map((entry) => entry.data.category))];
+---
+
+<Nav locale={locale} />
+<main id="main-content" class="idx" data-magazine>
+  <header class="wrap idx-hero">
+    <h1 class="idx-h1">{page.h1}</h1>
+    <p class="idx-lead">{page.lead}</p>
+    <div class="idx-meta">
+      {
+        kind === "blog" ? (
+          <a class="idx-quiet" href={rssHref}>
+            {copy.content.rss}
+          </a>
+        ) : null
+      }
+      {
+        secondaryHref ? (
+          <a class="idx-quiet" href={secondaryHref}>
+            {page.secondary}
+          </a>
+        ) : null
+      }
+    </div>
+    {
+      entries.length ? (
+        <div class="idx-tools">
+          <div class="idx-pills" role="group" aria-label={copy.content.topics}>
+            <button type="button" class="idx-pill is-on" data-filter="" aria-pressed="true">
+              {copy.content.all}
+            </button>
+            {categories.map((category) => (
+              <button type="button" class="idx-pill" data-filter={category} aria-pressed="false">
+                {category}
+              </button>
+            ))}
+          </div>
+          <label class="idx-search">
+            <span class="idx-sr">{copy.content.search}</span>
+            <DomeIcon name="search" size={16} />
+            <input type="search" data-magazine-q placeholder={copy.content.searchPlaceholder} />
+          </label>
+        </div>
+      ) : null
+    }
+  </header>
+
+  {
+    entries.length ? (
+      <div class="wrap idx-board">
+        <div class="idx-grid" data-magazine-grid>
+          {featured ? (
+            <ContentCard locale={locale} kind={kind} entry={featured} variant="featured" />
+          ) : null}
+          {rest.map((entry) => (
+            <ContentCard locale={locale} kind={kind} entry={entry} />
+          ))}
+        </div>
+        <p class="idx-empty" data-magazine-empty hidden>{copy.content.noMatches}</p>
+      </div>
+    ) : null
+  }
+</main>
+<Footer locale={locale} />
+
+<script>
+  function bindMagazine(root: HTMLElement) {
+    const buttons = [...root.querySelectorAll<HTMLButtonElement>("[data-filter]")];
+    const cards = [...root.querySelectorAll<HTMLElement>("[data-entry]")];
+    const search = root.querySelector<HTMLInputElement>("[data-magazine-q]");
+    const empty = root.querySelector<HTMLElement>("[data-magazine-empty]");
+    let category = "";
+
+    const apply = () => {
+      const query = (search?.value ?? "").trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchCategory = !category || card.dataset.category === category;
+        const haystack = (card.dataset.search ?? "").toLowerCase();
+        const matchQuery = !query || haystack.includes(query);
+        const show = matchCategory && matchQuery;
+        card.hidden = !show;
+        visible += show ? 1 : 0;
+      });
+      if (empty) empty.hidden = visible !== 0;
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        category = button.dataset.filter ?? "";
+        buttons.forEach((item) => {
+          const on = item === button;
+          item.classList.toggle("is-on", on);
+          item.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+        apply();
+      });
+    });
+    search?.addEventListener("input", apply);
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-magazine]").forEach(bindMagazine);
+</script>
+
+<style>
+  .idx {
+    padding: clamp(2.4rem, 6vw, 4.4rem) 0 4.8rem;
+  }
+  .idx-hero {
+    text-align: center;
+    margin-bottom: 2.4rem;
+  }
+  .idx-h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3.1rem, 8vw, 5.4rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 1.02;
+    color: var(--color-text);
+    margin: 0 0 0.85rem;
+  }
+  .idx-lead {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 auto 0.85rem;
+    max-width: 36rem;
+  }
+  .idx-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+  }
+  .idx-quiet {
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .idx-quiet:hover {
+    color: var(--color-text);
+  }
+  .idx-tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem 0.85rem;
+  }
+  .idx-pills {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .idx-pill {
+    height: 2.35rem;
+    padding: 0 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 550;
+    cursor: pointer;
+  }
+  .idx-pill:hover {
+    color: var(--color-text);
+    border-color: color-mix(in srgb, var(--color-white) 22%, var(--color-border));
+  }
+  .idx-pill.is-on {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+  .idx-search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    height: 2.35rem;
+    width: 2.35rem;
+    padding: 0 0.7rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    overflow: hidden;
+    transition: width 0.2s ease;
+  }
+  .idx-search :global(svg) {
+    flex-shrink: 0;
+  }
+  .idx-search:focus-within {
+    width: min(14rem, 72vw);
+    color: var(--color-text);
+  }
+  .idx-search input {
+    width: 0;
+    min-width: 0;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.9rem;
+    outline: none;
+  }
+  .idx-search:focus-within input {
+    width: 100%;
+  }
+  .idx-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .idx-board {
+    display: grid;
+    gap: 1.4rem;
+  }
+  .idx-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.8rem 1.4rem;
+  }
+  .idx-grid > :global([hidden]) {
+    display: none;
+  }
+  .idx-empty {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  @media (max-width: 760px) {
+    .idx-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .idx-pill,
+    .idx-search {
+      transition: none;
+    }
+  }
+</style>

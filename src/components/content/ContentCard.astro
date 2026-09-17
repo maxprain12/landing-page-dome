@@ -1,0 +1,104 @@
+---
+import { contentPath, readingMinutes, type ContentEntry, type ContentKind } from "../../lib/content";
+import { localeFromPath, t, type Locale } from "../../i18n";
+import ContentCover from "./ContentCover.astro";
+
+interface Props {
+  locale?: Locale;
+  kind: ContentKind;
+  entry: ContentEntry;
+  variant?: "featured" | "grid";
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const { kind, entry, variant = "grid" } = Astro.props;
+const copy = t(locale);
+const href = contentPath(kind, entry.data.permalink, locale);
+const minutes = readingMinutes(entry.body);
+const featured = variant === "featured";
+const search = [entry.data.title, entry.data.description, entry.data.category].join(" ");
+---
+
+<a
+  class:list={["card", featured && "is-featured"]}
+  href={href}
+  data-entry
+  data-category={entry.data.category}
+  data-search={search}
+>
+  <div class="card-shot">
+    <ContentCover
+      src={entry.data.heroImage}
+      alt={entry.data.heroAlt ?? entry.data.title}
+      title={entry.data.title}
+      size={featured ? "featured" : "grid"}
+      eager={featured}
+      chip={entry.data.category}
+    />
+  </div>
+  <div class="card-body">
+    <div class="card-title-row">
+      <h2>{entry.data.title}</h2>
+      <p class="card-meta">
+        {minutes} {copy.content.minutes}
+      </p>
+    </div>
+    <p class="card-desc">{entry.data.description}</p>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: grid;
+    align-content: start;
+    color: inherit;
+  }
+  .card[hidden] {
+    display: none;
+  }
+  .card-shot :global(.cover) {
+    border-radius: 18px;
+  }
+  .card-body {
+    padding: 1.05rem 0.15rem 0.2rem;
+  }
+  .is-featured .card-body {
+    padding: 1.35rem 0.2rem 0.2rem;
+  }
+  .card-title-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: start;
+  }
+  h2 {
+    font-size: 1.28rem;
+    font-weight: 650;
+    margin: 0;
+    letter-spacing: -0.035em;
+    line-height: 1.22;
+    text-wrap: balance;
+  }
+  .card-desc {
+    color: var(--color-text-secondary);
+    font-size: 0.98rem;
+    line-height: 1.55;
+    margin: 0.55rem 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .is-featured .card-desc {
+    max-width: none;
+    -webkit-line-clamp: 3;
+  }
+  .card-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-3);
+    margin: 0.2rem 0 0;
+    white-space: nowrap;
+  }
+</style>

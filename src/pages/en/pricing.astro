@@ -1,0 +1,12 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PricingTBA from "../../components/PricingTBA.astro";
+import { t } from "../../i18n";
+
+const locale = "en" as const;
+const page = t(locale).pages.pricing;
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/pricing" robots="noindex, nofollow">
+  <PricingTBA locale={locale} />
+</Layout>

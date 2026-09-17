@@ -1,0 +1,157 @@
+---
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import { links } from "../data/landing";
+import { localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const page = copy.pages.pricing;
+---
+
+<Nav locale={locale} />
+<main id="main-content" class="tba">
+  <header class="wrap tba-hero">
+    <p class="eyebrow">{page.eyebrow}</p>
+    <h1 class="h-display tba-h1">{page.h1}</h1>
+    <p class="tba-lead">{page.lead}</p>
+    <div class="tba-cta">
+      <a class="btn btn-primary" href={links.releases} target="_blank" rel="noopener">{page.primary}</a>
+      <a class="btn btn-ghost" href={localizePath("/local-first", locale)}>{page.secondary}</a>
+    </div>
+  </header>
+
+  <section class="wrap tba-panel">
+    <span class="tba-badge">{page.tba}</span>
+    <h2>{page.tbaTitle}</h2>
+    <p>{page.tbaBody}</p>
+  </section>
+
+  <section class="wrap tba-grid">
+    {
+      ["Free", "Starter", "Cloud", "Max"].map((name) => (
+        <article class="tba-card">
+          <p class="eyebrow">{page.tba}</p>
+          <h2>{name}</h2>
+          <p>{page.tbaBody}</p>
+        </article>
+      ))
+    }
+  </section>
+
+  <section class="wrap tba-notes" data-reveal-group>
+    {
+      page.sections.map((section) => (
+        <article class="tba-note">
+          <h2>{section.h2}</h2>
+          <p>{section.text}</p>
+        </article>
+      ))
+    }
+  </section>
+</main>
+<Footer locale={locale} />
+
+<style>
+  .tba {
+    padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
+  }
+  .tba-hero {
+    max-width: 46rem;
+    margin-bottom: 2.2rem;
+  }
+  .tba-h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    margin: 0.6rem 0 1rem;
+  }
+  .tba-lead {
+    font-size: 1.12rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 1.5rem;
+  }
+  .tba-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .tba-panel {
+    max-width: 46rem;
+    margin: 0 auto 1.6rem;
+    padding: 1.5rem 1.5rem 1.6rem;
+    border-radius: 24px;
+    border: 1px solid color-mix(in srgb, var(--c-olive) 28%, var(--color-border));
+    background: color-mix(in srgb, var(--color-olive-muted) 70%, var(--color-surface));
+  }
+  .tba-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 1.7rem;
+    padding: 0 0.7rem;
+    border-radius: 999px;
+    background: var(--c-olive);
+    color: var(--color-olive-ink);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+  .tba-panel h2,
+  .tba-note h2,
+  .tba-card h2 {
+    font-size: 1.25rem;
+    margin: 0.7rem 0 0.5rem;
+  }
+  .tba-panel p,
+  .tba-note p,
+  .tba-card p {
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .tba-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.4rem;
+  }
+  .tba-card {
+    padding: 1.15rem 1.15rem 1.25rem;
+    border-radius: 18px;
+    border: 1px dashed var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 55%, transparent);
+    min-height: 11rem;
+  }
+  .tba-card p {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .tba-notes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .tba-note {
+    padding: 1.3rem 1.35rem;
+    border-radius: 18px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  }
+  @media (max-width: 960px) {
+    .tba-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .tba-grid,
+    .tba-notes {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

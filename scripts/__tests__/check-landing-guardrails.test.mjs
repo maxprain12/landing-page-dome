@@ -23,3 +23,11 @@ describe('extractAssetRefs', () => {
     assert.deepEqual(extractAssetRefs('src="/assets/wave.svg"'), ['/assets/wave.svg']);
   });
 });
+
+describe('checkContentParity', () => {
+  it('requires a matching translation and Image alt', async () => {
+    const { checkContentParity } = await import('../check-content-parity.mjs');
+    const errors = checkContentParity(process.cwd());
+    assert.equal(errors.length, 0, errors.join('\n'));
+  });
+});

@@ -37,7 +37,10 @@ pnpm install
 pnpm run dev       # http://localhost:4321 (Astro por defecto)
 pnpm run build
 pnpm run preview
+pnpm run verify    # guardrails + astro check + build
 ```
+
+Blog y manuales se editan en `src/content/`. Guía: [docs/content.md](./docs/content.md).
 
 Para producción con `astro build`, el artefacto queda en `dist/`.
 
