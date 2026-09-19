@@ -1,16 +1,17 @@
 # Dome — Landing (sitio público)
 
-Marketing y descarga de **Dome**, la aplicación de escritorio open source para gestión del conocimiento. Stack: **Astro**, React donde hace falta, CSS variables en `Layout.astro`.
+Marketing y descarga de **Dome**, workspace local-first para founder-creadores: documentos y personas. Stack: **Astro**, React donde hace falta, CSS variables en `Layout.astro`.
 
 ## Cómo encaja con los otros repos
 
 | Proyecto | Rol |
 |---------|-----|
-| [dome](../dome/) (Electron) | App instalable; opcionalmente se conecta al backend con cuenta en la nube |
-| [dome-provider](../dome-provider/) | Backend Next.js (OAuth, IA con cuota, Stripe): URL base típica en prod `APP_URL` |
+| [dome](https://github.com/maxprain12/dome) (Electron) | App instalable; opcionalmente se conecta al backend con cuenta en la nube |
+| [dome-provider](https://github.com/maxprain12/dome-provider) | Backend Next.js (OAuth, IA con cuota, Stripe): URL base típica en prod `APP_URL` |
+| [dome-companion](https://github.com/maxprain12/dome-companion) | App iOS de acompañamiento (SwiftUI); auth y chat vía Provider |
 | **Este repo** | Página pública + enlaces a [GitHub Releases](https://github.com/maxprain12/dome/releases); sin dependencia obligatoria del provider |
 
-Las rutas anteriores asumen los tres clones en el mismo directorio padre (p. ej. `~/Documents/dome`, `landing-page-dome`, `dome-provider`).
+En desarrollo local, los clones suelen vivir en el mismo directorio padre. Los enlaces de esta tabla apuntan a GitHub para que funcionen fuera de un checkout local.
 
 ## Variables de entorno (opcional)
 
@@ -59,5 +60,6 @@ No coincide con `:3000` a propósito: a veces ese puerto está ocupado por otras
 
 ## Repositorios y documentación
 
-- Índice del ecosistema: [../dome/MASTER.md](../dome/MASTER.md)
-- Integración Desktop ↔ Provider en el cliente: [../dome/docs/features/dome-provider-integration.md](../dome/docs/features/dome-provider-integration.md)
+- Índice del ecosistema: [MASTER.md](https://github.com/maxprain12/dome/blob/main/MASTER.md)
+- Integración Desktop ↔ Provider en el cliente: [dome-provider-integration.md](https://github.com/maxprain12/dome/blob/main/docs/features/dome-provider-integration.md)
+- Companion (iOS): [dome-companion](https://github.com/maxprain12/dome-companion)
