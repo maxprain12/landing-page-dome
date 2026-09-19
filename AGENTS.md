@@ -8,4 +8,4 @@ pnpm run verify
 
 `verify` = typecheck (si existe) + checks de marca/assets/huérfanos + build.
 
-Login/account URLs: `PUBLIC_DOME_ACCOUNT_URL` (no hardcodear el provider en componentes). Sister repos: `../dome`, `../dome-provider`.
+Login/account URLs: `PUBLIC_DOME_ACCOUNT_URL` (no hardcodear el provider en componentes). Sister repos: [dome](https://github.com/maxprain12/dome), [dome-provider](https://github.com/maxprain12/dome-provider), [dome-companion](https://github.com/maxprain12/dome-companion).
