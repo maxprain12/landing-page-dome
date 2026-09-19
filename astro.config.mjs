@@ -22,11 +22,14 @@ export default defineConfig({
       priority: 0.7,
       filter: (page) => !page.includes('/pricing'),
       serialize(item) {
-        if (item.url.endsWith('/') && item.url.replace(/\/$/, '').split('/').pop() === '') {
+        // pathname: '/' (ES home) and '/en' (EN home) → priority 1
+        // Previous check used .pop()==='' which never matched (host became last segment).
+        const pathname = new URL(item.url).pathname.replace(/\/$/, '') || '/';
+        if (pathname === '/' || pathname === '/en') {
           item.priority = 1;
-        } else if (/\/(blog|manual)\/?$/.test(item.url) || /\/en\/(blog|manual)\/?$/.test(item.url)) {
+        } else if (/\/(blog|manual)$/.test(pathname) || /\/en\/(blog|manual)$/.test(pathname)) {
           item.priority = 0.8;
-        } else if (item.url.includes('/blog/') || item.url.includes('/manual/')) {
+        } else if (pathname.includes('/blog/') || pathname.includes('/manual/')) {
           item.priority = 0.6;
         }
         return item;
