@@ -1,0 +1,12 @@
+{
+  "pack": "pdf-to-follow-up",
+  "pr": 9,
+  "files": [
+    { "file": "banner-linkedin.png", "preset": "linkedin" },
+    { "file": "banner-x.png", "preset": "x" },
+    { "file": "reel-01-biblioteca.png", "preset": "ig-reel" },
+    { "file": "reel-02-persona.png", "preset": "ig-reel" },
+    { "file": "reel-03-many.png", "preset": "ig-reel" },
+    { "file": "reel-04-aprobar.png", "preset": "ig-reel" }
+  ]
+}
