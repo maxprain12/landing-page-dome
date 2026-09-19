@@ -1,0 +1,8 @@
+{
+  "pack": "arc-p1-123",
+  "files": [
+    { "file": "01-beneficio.png", "preset": "ig-carousel", "width": 1080, "height": 1350 },
+    { "file": "02-loop.png", "preset": "ig-carousel", "width": 1080, "height": 1350 },
+    { "file": "03-cta-howto.png", "preset": "ig-carousel", "width": 1080, "height": 1350 }
+  ]
+}
