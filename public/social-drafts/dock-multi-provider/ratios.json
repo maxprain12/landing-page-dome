@@ -1,0 +1,13 @@
+{
+  "pack": "dock-multi-provider",
+  "pr": 10,
+  "files": [
+    { "file": "dock-01-ollama.png", "preset": "ig-reel" },
+    { "file": "dock-02-claude.png", "preset": "ig-reel" },
+    { "file": "dock-03-chatgpt.png", "preset": "ig-reel" },
+    { "file": "dock-04-google.png", "preset": "ig-reel" },
+    { "file": "dock-05-minimax.png", "preset": "ig-reel" },
+    { "file": "dock-06-openrouter.png", "preset": "ig-reel" },
+    { "file": "dock-07-deepseek.png", "preset": "ig-reel" }
+  ]
+}

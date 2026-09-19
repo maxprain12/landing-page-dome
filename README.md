@@ -39,7 +39,10 @@ pnpm run dev       # http://localhost:4321 (Astro por defecto)
 pnpm run build
 pnpm run preview
 pnpm run verify    # guardrails + astro check + build
+pnpm run check:social-drafts   # px de packs en public/social-drafts/
 ```
+
+Packs Instagram/LinkedIn/X: [public/social-drafts/README.md](./public/social-drafts/README.md). No publicar hasta `VALIDATION.md` firmado.
 
 Blog y manuales se editan en `src/content/`. Guía: [docs/content.md](./docs/content.md).
 

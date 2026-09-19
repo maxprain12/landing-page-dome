@@ -19,7 +19,8 @@
     "check:orphan-components": "node scripts/check-orphan-astro.mjs",
     "check:a11y": "node scripts/check-a11y-basics.mjs",
     "check:content-parity": "node scripts/check-content-parity.mjs",
-    "check:guardrails": "pnpm run check:brand-tokens && pnpm run check:i18n && pnpm run check:assets && pnpm run check:orphan-components && pnpm run check:a11y && pnpm run check:content-parity && node --test scripts/__tests__/check-landing-guardrails.test.mjs",
+    "check:social-drafts": "node scripts/check-social-draft-ratios.mjs",
+    "check:guardrails": "pnpm run check:brand-tokens && pnpm run check:i18n && pnpm run check:assets && pnpm run check:orphan-components && pnpm run check:a11y && pnpm run check:content-parity && pnpm run check:social-drafts && node --test scripts/__tests__/check-landing-guardrails.test.mjs scripts/__tests__/check-social-draft-ratios.test.mjs",
     "test:e2e": "playwright test",
     "check:astro": "astro check",
     "verify": "pnpm run check:guardrails && pnpm run check:astro && pnpm run build"
