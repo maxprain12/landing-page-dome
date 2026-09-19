@@ -7,7 +7,7 @@ Instagram congelado hasta checklist firmado.
 | Campo | Valor |
 | --- | --- |
 | Slug | `arc-p1-123` |
-| PR | (este) |
+| PR | [#18](https://github.com/maxprain12/landing-page-dome/pull/18) |
 | Canales | IG feed / carrusel |
 | **Slot de secuencia** | Pack cerrado del arco **1→2→3** (beneficio · loop · CTA how-to) |
 | Post anterior (pack o URL) | — (slot 1 del arco) |
