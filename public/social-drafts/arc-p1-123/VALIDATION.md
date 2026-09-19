@@ -48,14 +48,16 @@ Firma CTA: **Lucia** — fecha: 2026-09-19 — pendiente **Mateo**
 | Rol | Nombre | Fecha | OK |
 | --- | --- | --- | --- |
 | SEO | Virginia | 2026-09-19 | [x] |
-| Producto | Tomas | | [ ] |
+| Producto | Tomas | 2026-09-19 | [x] |
 | Técnico | Mateo | | [ ] |
 
-Claim aprobado (SEO OK):
+Claim aprobado (SEO + producto OK):
 
 > Menos idas y venidas. Más seguimientos con contexto. Local-first. Documento + persona. Many prepara, tú apruebas. CTA how-to PDF.
 
-Notas SEO: keyword alineada con `/blog/pdf-to-follow-up`; «tú envías — solo si conectas» en slide 03 evita overclaim; sin competidores ni métricas vanity. Secuencia 1→2→3 correcta.
+Notas producto: alineado con `docs/product/positioning.md`. Loop Documento → Persona → Many → Aprobar canónico. «tú envías — solo si conectas» en slide 03 evita overclaim. Sin chat único cloud ni DMs automáticos.
+
+Notas SEO: keyword alineada con `/blog/pdf-to-follow-up`; sin competidores ni métricas vanity. Secuencia 1→2→3 correcta.
 
 Sin métricas vanidosas. Sin nombrar competidores.
 
