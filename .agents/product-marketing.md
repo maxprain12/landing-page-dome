@@ -1,12 +1,12 @@
 # Product Marketing Context
 
-**Document version:** v1
+**Document version:** v2
 **Last updated:** 2026-09-19
 
 ## Product Overview
 **One-liner:** Workspace de escritorio local-first: documentos + personas → acciones con IA, con aprobación humana.
 **What it does:** Dome guarda biblioteca y relaciones en tu máquina. Many prepara briefs, correos y seguimientos con el proveedor de IA que elijas; nada sale sin tu ok. Ediciones Pro (producto que se vende), Study y Dev.
-**Product category:** Local-first knowledge / CRM ligero + AI assistant (no chatbot de redes).
+**Product category:** Workspace local-first (documentos + personas + acciones con IA). Matiz: relaciones/contacto en el mismo hilo (no shelf «CRM»). No chatbot de redes.
 **Product type:** Desktop app (Electron) + landing pública + provider opcional (cuenta cloud).
 **Business model:** Open-source desktop + Pro / cloud opcional (planes en evolución; pricing noindex hasta planes reales).
 
@@ -113,4 +113,5 @@
 
 ## Changelog
 *Newest first.*
+- v2 (2026-09-19) — Shelf principal = workspace local-first; «CRM ligero» solo matiz (feedback Tomas / positioning.md).
 - v1 (2026-09-19) — Initial context from positioning, SEO calendar (Pol), IG/social gates, and live landing copy.
