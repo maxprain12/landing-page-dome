@@ -25,7 +25,7 @@ Instagram congelado hasta checklist firmado.
 
 `pnpm run check:social-drafts -- arc-p1-123`
 
-Firma ratio: **Lucia** (medido PIL) — pendiente **Mateo/Roman** — fecha: 2026-09-19
+Firma ratio: **Lucia** (PIL) + **Mateo** (re-medido PNG IHDR 1080×1350) — fecha: 2026-09-19
 
 ## 2. Safe area
 
@@ -34,14 +34,14 @@ Firma ratio: **Lucia** (medido PIL) — pendiente **Mateo/Roman** — fecha: 202
 - [x] CTA URL completa visible
 - [x] Tags / botón Aprobar sin clip
 
-Firma safe area: **Lucia** — fecha: 2026-09-19 — pendiente revisión **Roman**
+Firma safe area: **Lucia** + **Mateo** (revisión visual) — fecha: 2026-09-19 — pendiente opcional **Roman**
 
 ## 3. CTA legible
 
 - [x] URL completa `https://dome.dowi.es/blog/pdf-to-follow-up` en las 3 slides
 - [x] Legible a 1080
 
-Firma CTA: **Lucia** — fecha: 2026-09-19 — pendiente **Mateo**
+Firma CTA: **Lucia** + **Mateo** — fecha: 2026-09-19
 
 ## 4. Claims de producto
 
@@ -49,15 +49,17 @@ Firma CTA: **Lucia** — fecha: 2026-09-19 — pendiente **Mateo**
 | --- | --- | --- | --- |
 | SEO | Virginia | 2026-09-19 | [x] |
 | Producto | Tomas | 2026-09-19 | [x] |
-| Técnico | Mateo | | [ ] |
+| Técnico | Mateo | 2026-09-19 | [x] |
 
-Claim aprobado (SEO + producto OK):
+Claim aprobado (SEO + producto + técnico OK):
 
 > Menos idas y venidas. Más seguimientos con contexto. Local-first. Documento + persona. Many prepara, tú apruebas. CTA how-to PDF.
 
 Notas producto: alineado con `docs/product/positioning.md`. Loop Documento → Persona → Many → Aprobar canónico. «tú envías — solo si conectas» en slide 03 evita overclaim. Sin chat único cloud ni DMs automáticos.
 
 Notas SEO: keyword alineada con `/blog/pdf-to-follow-up`; sin competidores ni métricas vanity. Secuencia 1→2→3 correcta.
+
+Notas técnico: sin overclaim; HITL explícito; «solo si conectas» correcto frente a producto.
 
 Sin métricas vanidosas. Sin nombrar competidores.
 
@@ -69,9 +71,9 @@ Sin métricas vanidosas. Sin nombrar competidores.
 - [x] Local-first: Many prepara / tú apruebas
 - [x] Many desde `assets/many.svg` (lima/oliva)
 
-Nota: no usa capturas crudas de pantalla; es composición de marca del loop. Si Mateo exige captura de componentes reales, iteramos.
+Nota QA: composición de marca del loop (estilo Zoe beneficio+tags), no capturas de pantalla. Aceptable para este pack; Stripe-style mock de componentes reales queda para un creativo posterior si se pide.
 
-Firma mock: **Lucia** — pendiente **Mateo/Roman** — fecha: 2026-09-19
+Firma mock: **Lucia** + **Mateo** — fecha: 2026-09-19
 
 ## 6. Secuencia editorial
 
@@ -91,9 +93,13 @@ Firma editorial / SEO: **Virginia** — 2026-09-19 — OK
 - [x] Tipografía Inter
 - [x] Sin paleta Zoe/Stripe/Manychat
 
+Firma tokens: **Mateo** — 2026-09-19 — OK
+
 ## 9. Firmas publicación
 
 | Rol | Nombre | Fecha | OK |
 | --- | --- | --- | --- |
 | Creativo | Lucia | 2026-09-19 | [x] |
 | Publicación | Sofia | | [ ] |
+
+**Resultado QA:** pack listo para publicar tras firma Sofia (puerta 9).
