@@ -15,6 +15,9 @@ No inventar credenciales ni publicar desde este repo.
 | Slug | `_template` |
 | PR | |
 | Canales | LinkedIn / X / IG feed / IG reel / avatar |
+| **Slot de secuencia** | `1` dolor/beneficio · `2` loop · `3` CTA how-to · `chapter-c2` · `chapter-dock` |
+| Post anterior (pack o URL) | (obligatorio salvo el slot 1) |
+| Post siguiente (si aplica) | |
 | CTA (URL completa) | https://dome.dowi.es/… |
 | Fecha del export | YYYY-MM-DD |
 
@@ -110,7 +113,72 @@ Firma mock: **Mateo / Roman** — fecha: ________
 
 ---
 
-## 6. OK creativo + OK de publicación
+## 6. Secuencia editorial (no un revoltijo)
+
+El feed no es un mishmash. Cada post ocupa **un** slot del arco y enlaza al anterior.
+
+Arco obligatorio (cluster P1), en este orden:
+
+1. **Dolor / beneficio**
+2. **Loop** Documento → Persona → Many → Aprobar
+3. **CTA how-to PDF** (p. ej. `https://dome.dowi.es/blog/pdf-to-follow-up`)
+
+**Capítulos aparte**, solo **después** de 1→2→3 publicados:
+
+- `chapter-c2` — anti-Manychat (no somos auto-DM)
+- `chapter-dock` — multi-provider (Dome + tu modelo)
+
+- [ ] Slot declarado arriba (`1` / `2` / `3` / `chapter-c2` / `chapter-dock`)
+- [ ] Este pack no mezcla slots (un carrusel puede contar el loop **o** el beneficio **o** el CTA, no los tres más un capítulo)
+- [ ] Enlace al post anterior rellenado (caption, sticker o slide). Slot 1: «es el arranque» anotado
+- [ ] Si es `chapter-*`: los slots 1–3 ya tienen publish OK. Si no, este pack queda bloqueado
+
+| Rol | Nombre | Fecha | OK |
+| --- | --- | --- | --- |
+| Editorial / SEO | Virginia | | [ ] |
+| Creativo (arco) | Lucia | | [ ] |
+
+---
+
+## 7. Formato cerrado (no slides huérfanos)
+
+Se publica un **carrusel o reel cerrado**, no recortes sueltos.
+
+- [ ] Carrusel: todos los slides del arco de *este* post, numerados, mismo ratio, `ratios.json` completo
+- [ ] Reel: todos los frames del beat + mp4 si el pack lo declara; no un still suelto de un reel de 4
+- [ ] Quote card / banner único: es una pieza cerrada, no la slide 03 de otro carrusel
+- [ ] Nada de «subimos solo la 2 y la 4»
+
+Pieza declarada: carrusel (N slides) / reel (N frames) / único (banner o quote)
+
+Firma formato: **Lucia / Roman** — fecha: ________
+
+---
+
+## 8. Tokens de marca Dome (obligatorio)
+
+Canon: [dome/docs/brand](https://github.com/maxprain12/dome/blob/main/docs/brand/README.md) + [tokens.md](https://github.com/maxprain12/dome/blob/main/docs/brand/tokens.md). Many: `assets/many.svg`.
+
+| Token | Hex / valor | ¿Este pack? |
+| --- | --- | --- |
+| Many body (lima) | **`#E0EAB4`** | [ ] |
+| Many ojos / stroke (oliva) | **`#596037`** | [ ] |
+| Ink zinc | `#27272A` light / `#FAFAFA` dark | [ ] |
+| Tipografía | **Inter** (UI/display); JetBrains Mono solo en code | [ ] |
+| Lima | solo en el símbolo Many, no como wash de slide | [ ] |
+
+- [ ] Many sale del SVG canónico, no redibujado
+- [ ] **Cero** paletas inventadas
+- [ ] **Cero** colores de competidor o de mock ajeno (morado Zoe, rosa Stripe, azul Manychat, papel cálido `#f1ead6`, Instrument Serif)
+
+| Rol | Nombre | Fecha | OK |
+| --- | --- | --- | --- |
+| Creativo | Lucia | | [ ] |
+| Técnico | Mateo | | [ ] |
+
+---
+
+## 9. OK creativo + OK de publicación
 
 Instagram (y el resto de canales del pack) no se publican hasta las dos firmas.
 
@@ -119,7 +187,7 @@ Instagram (y el resto de canales del pack) no se publican hasta las dos firmas.
 | Creativo | Lucia | | [ ] |
 | Publicación | Sofia | | [ ] |
 
-Sofía no publica con gates 1–5 abiertos ni sin `pnpm run check:social-drafts` en verde sobre este pack.
+Sofía no publica con gates 1–8 abiertos, sin slot de secuencia, ni sin `pnpm run check:social-drafts` en verde sobre este pack. Los `chapter-*` no se publican antes que 1→2→3.
 
 ---
 
