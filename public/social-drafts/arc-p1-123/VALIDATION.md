@@ -47,13 +47,15 @@ Firma CTA: **Lucia** — fecha: 2026-09-19 — pendiente **Mateo**
 
 | Rol | Nombre | Fecha | OK |
 | --- | --- | --- | --- |
-| SEO | Virginia | | [ ] |
+| SEO | Virginia | 2026-09-19 | [x] |
 | Producto | Tomas | | [ ] |
 | Técnico | Mateo | | [ ] |
 
-Claim aprobado (propuesto):
+Claim aprobado (SEO OK):
 
 > Menos idas y venidas. Más seguimientos con contexto. Local-first. Documento + persona. Many prepara, tú apruebas. CTA how-to PDF.
+
+Notas SEO: keyword alineada con `/blog/pdf-to-follow-up`; «tú envías — solo si conectas» en slide 03 evita overclaim; sin competidores ni métricas vanity. Secuencia 1→2→3 correcta.
 
 Sin métricas vanidosas. Sin nombrar competidores.
 
@@ -73,6 +75,8 @@ Firma mock: **Lucia** — pendiente **Mateo/Roman** — fecha: 2026-09-19
 
 - [x] Pack cerrado 01→02→03 = arco P1 completo
 - [x] C2 / dock **no** incluidos
+
+Firma editorial / SEO: **Virginia** — 2026-09-19 — OK
 
 ## 7. Formato cerrado
 
