@@ -1,0 +1,13 @@
+{
+  "pack": "_template",
+  "files": [
+    { "file": "banner-linkedin.png", "preset": "linkedin" },
+    { "file": "banner-x.png", "preset": "x" },
+    { "file": "feed-01.png", "preset": "ig-feed" },
+    { "file": "reel-01.png", "preset": "ig-reel" },
+    { "file": "quote-square.png", "preset": "ig-square" },
+    { "file": "avatar-320.png", "preset": "ig-avatar-320" },
+    { "file": "avatar-640.png", "preset": "ig-avatar-640" },
+    { "file": "avatar-1080.png", "preset": "ig-avatar-1080" }
+  ]
+}

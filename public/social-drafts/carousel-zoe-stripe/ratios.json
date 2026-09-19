@@ -1,0 +1,10 @@
+{
+  "pack": "carousel-zoe-stripe",
+  "pr": 14,
+  "files": [
+    { "file": "01-beneficio-tags.png", "preset": "ig-carousel" },
+    { "file": "02-contexto-tags.png", "preset": "ig-carousel" },
+    { "file": "03-mock-pdf-aprobar.png", "preset": "ig-carousel" },
+    { "file": "04-cta.png", "preset": "ig-carousel" }
+  ]
+}
