@@ -1,0 +1,11 @@
+Public SVG sources (no hand-drawn brand marks):
+- Safari: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/safari.svg (CC0)
+- iMessage: https://cdn.simpleicons.org/imessage (CC0)
+- OpenAI: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/openai.svg (CC0)
+- Anthropic/Claude: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/anthropic.svg (CC0)
+- Google: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/google.svg (CC0)
+- Ollama: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/ollama.svg (CC0)
+- DeepSeek: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/deepseek.svg (CC0)
+- OpenRouter: https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/openrouter.svg (CC0)
+- MiniMax: https://raw.githubusercontent.com/MiniMax-AI/MiniMax-01/main/figures/minimax.svg (official repo)
+- Dome app icon: https://raw.githubusercontent.com/maxprain12/dome/main/assets/icon.png
