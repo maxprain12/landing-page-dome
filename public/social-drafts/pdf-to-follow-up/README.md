@@ -1,11 +1,10 @@
-# Social drafts — pdf-to-follow-up (v3)
+# Social drafts — pdf-to-follow-up (v3 + reel)
 
-Borradores para revisión SEO de Virginia. **No publicar** en producción.
+Carpeta de assets en **draft**. No publicar. No mergear a `main` salvo petición explícita.
 
-- Regenerados desde código/tokens (no son capturas).
-- Marca de Many visible.
-- Foto stock para Elena.
-- Ratios nativos (sin recorte 16:9): LinkedIn 1584×396, X 1500×500, reels 1080×1920.
+- Virginia: SEO/visual **OK** en los stills v3.
+- Stills regenerados desde código/tokens (no son capturas). Marca de Many visible. Foto stock para Elena. Ratios nativos (sin recorte 16:9).
+- Reel MP4: `1080×1920`, ~19s, montado con los 4 frames (biblioteca → persona → Many → aprobar).
 - CTA: https://dome.dowi.es/blog/pdf-to-follow-up
 
 Archivos:
@@ -16,3 +15,4 @@ Archivos:
 - `reel-02-persona.png` — 1080×1920
 - `reel-03-many.png` — 1080×1920
 - `reel-04-aprobar.png` — 1080×1920
+- `dome-reel-pdf-follow-up-9x16.mp4` — 1080×1920, ~19s
