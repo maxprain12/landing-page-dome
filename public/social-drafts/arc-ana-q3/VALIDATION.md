@@ -27,7 +27,7 @@ Instagram congelado hasta checklist firmado.
 
 `pnpm run check:social-drafts -- arc-ana-q3`
 
-Firma ratio: **Lucia** (medido PIL) — pendiente **Mateo/Roman** — fecha: 2026-09-20
+Firma ratio: **Lucia** (PIL) + **Mateo** (medido local 1080×1350 + `check:social-drafts` OK en `cac9295`) — fecha: 2026-09-20
 
 ## 2. Safe area
 
@@ -36,7 +36,7 @@ Firma ratio: **Lucia** (medido PIL) — pendiente **Mateo/Roman** — fecha: 202
 - [x] CTA URL completa visible
 - [x] Botón Aprobar sin clip
 
-Firma safe area: **Lucia** — fecha: 2026-09-20 — pendiente revisión **Roman**
+Firma safe area: **Lucia** + **Mateo** (revisión visual) — fecha: 2026-09-20 — pendiente revisión **Roman** (opcional)
 
 ## 3. CTA legible
 
@@ -44,7 +44,7 @@ Firma safe area: **Lucia** — fecha: 2026-09-20 — pendiente revisión **Roman
 - [x] CTA button «Leer el how-to» en 03
 - [x] Legible a 1080
 
-Firma CTA: **Lucia** — fecha: 2026-09-20 — pendiente **Mateo**
+Firma CTA: **Lucia** + **Mateo** — fecha: 2026-09-20
 
 ## 4. Claims de producto
 
@@ -52,15 +52,15 @@ Firma CTA: **Lucia** — fecha: 2026-09-20 — pendiente **Mateo**
 | --- | --- | --- | --- |
 | SEO | Virginia | | [ ] |
 | Producto | Tomas | 2026-09-20 | [x] |
-| Técnico | Mateo | | [ ] |
+| Técnico | Mateo | 2026-09-20 | [x] |
 
-Claim aprobado (producto OK):
+Claim aprobado (producto + técnico OK):
 
 > El seguimiento no debería vivir en Descargas. propuesta Q3.pdf + Ana → borrador Many. Nada sale sin Aprobar. Local-first. Tú envías solo si conectas correo o LinkedIn/X. CTA how-to PDF.
 
 Notas producto: alineado con `docs/product/positioning.md`. Escenario concreto (PDF + persona nombrados). Cero jerga SaaS. «solo si conectas» evita overclaim.
 
-Sin métricas vanidosas. Sin nombrar competidores. Copy Virginia exacta.
+Notas técnico (Mateo): claims de producto coherentes con flujo real workspace/people/many/approval. Sin overclaim de envío automático. Sin métricas vanidosas. Sin competidores. Copy Virginia exacta.
 
 ## 5. Fidelidad del mock a Dome real
 
@@ -76,9 +76,10 @@ Sin métricas vanidosas. Sin nombrar competidores. Copy Virginia exacta.
 ### UI de Dome, no infografía (#19)
 
 - [x] Recreación de componentes reales: **workspace / people / many / approval**
-  - Slide 01: biblioteca «Documentos recientes» (`propuesta Q3.pdf` activo + secondary faded) + ficha Ana partial/cut
+  - Slide 01: biblioteca «Documentos recientes» (`propuesta Q3.pdf` activo + secondary faded) + ficha Ana
   - Slide 02: sidebar Espacio de trabajo · Archivos · Ana · Many draft email · botón **Aprobar**
-- [x] **No** diagramas numerados abstractos (cero 1→2→3, cero flow chart)
+  - Slide 03: chips nombrados PDF + Ana + Many prepara + Aprobar + CTA how-to (no diagrama numerado)
+- [x] **No** diagramas numerados abstractos (cero 1→2→3 flow chart genérico)
 - [x] **No** UI inventada ni chrome ajeno
 - [x] **No** framing chat-cloud / Manychat / Zapia / auto-DM / Zoe / Stripe
 - [x] Local-first: Many **prepara**, tú **apruebas / envías**
@@ -90,10 +91,10 @@ Sin métricas vanidosas. Sin nombrar competidores. Copy Virginia exacta.
 - [x] Cero veto: sin «agentes», «CRM», «escala», «Many hace el resto», «cluster P1»
 - [x] Cero pills de beneficio genérico sin PDF + persona nombrados
 
-- [ ] Gate 5 **Mateo** — checkbox formal pendiente
+- [x] Gate 5 **Mateo** — **OK** 2026-09-20 (`cac9295`)
 
-Firma mock: **Lucia** (creative) — pendiente **Mateo** gate 5 — fecha: 2026-09-20  
-Nota gate 5: firmar contra la puerta 5 de [#19](https://github.com/maxprain12/landing-page-dome/pull/19) (**merged**): UI real Ana + `propuesta Q3.pdf` + workspace / people / many / approval. Cero diagrama.
+Firma mock: **Lucia** (creative) + **Mateo** (gate 5) — fecha: 2026-09-20  
+Nota gate 5: UI real Ana + `propuesta Q3.pdf` + workspace / people / many / approval. Cero diagrama abstracto. Contraste claro vs [#18](https://github.com/maxprain12/landing-page-dome/pull/18).
 
 ## 6. Secuencia editorial
 
@@ -115,6 +116,8 @@ Firma formato: **Lucia** — fecha: 2026-09-20
 - [x] Tipografía Inter
 - [x] Sin paleta Zoe/Stripe/Manychat
 
+Firma tokens: **Mateo** — fecha: 2026-09-20
+
 ## 9. Firmas publicación
 
 | Rol | Nombre | Fecha | OK |
@@ -122,4 +125,4 @@ Firma formato: **Lucia** — fecha: 2026-09-20
 | Creativo | Lucia | 2026-09-20 | [x] |
 | Publicación | Sofia | | [ ] |
 
-Puerta 9 Sofia unchecked. Door 4 producto Tomas OK; SEO Virginia y técnico Mateo pendientes. Gate 5 Mateo open.
+**Pendiente para publicar:** Virginia (SEO puerta 4) + Sofia (puerta 9). Técnico Mateo + gate 5 + producto Tomas OK.
