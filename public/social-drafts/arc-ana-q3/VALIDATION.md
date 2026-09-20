@@ -50,17 +50,19 @@ Firma CTA: **Lucia** + **Mateo** — fecha: 2026-09-20
 
 | Rol | Nombre | Fecha | OK |
 | --- | --- | --- | --- |
-| SEO | Virginia | | [ ] |
+| SEO | Virginia | 2026-09-20 | [x] |
 | Producto | Tomas | 2026-09-20 | [x] |
 | Técnico | Mateo | 2026-09-20 | [x] |
 
-Claim aprobado (producto + técnico OK):
+Claim aprobado (producto + técnico + SEO OK):
 
 > El seguimiento no debería vivir en Descargas. propuesta Q3.pdf + Ana → borrador Many. Nada sale sin Aprobar. Local-first. Tú envías solo si conectas correo o LinkedIn/X. CTA how-to PDF.
 
 Notas producto: alineado con `docs/product/positioning.md`. Escenario concreto (PDF + persona nombrados). Cero jerga SaaS. «solo si conectas» evita overclaim.
 
 Notas técnico (Mateo): claims de producto coherentes con flujo real workspace/people/many/approval. Sin overclaim de envío automático. Sin métricas vanidosas. Sin competidores. Copy Virginia exacta.
+
+Notas SEO (Virginia): keyword alineada con `/blog/pdf-to-follow-up`; dolor concreto (Descargas); Ana + `propuesta Q3.pdf` en las 3 slides; sin «cluster P1»; CTA completa. Secuencia 01→02→03 OK.
 
 ## 5. Fidelidad del mock a Dome real
 
@@ -102,6 +104,8 @@ Nota gate 5: UI real Ana + `propuesta Q3.pdf` + workspace / people / many / appr
 - [x] Sin «cluster P1» en copy creativo
 - [x] Caption: propuesta Q3.pdf · Ana · Many prepara · tú apruebas. Local-first. How-to → dome.dowi.es/blog/pdf-to-follow-up
 
+Firma editorial / SEO: **Virginia** — 2026-09-20 — OK
+
 ## 7. Formato cerrado
 
 - [x] Carrusel de 3 slides completo (1080×1350)
@@ -125,4 +129,4 @@ Firma tokens: **Mateo** — fecha: 2026-09-20
 | Creativo | Lucia | 2026-09-20 | [x] |
 | Publicación | Sofia | | [ ] |
 
-**Pendiente para publicar:** Virginia (SEO puerta 4) + Sofia (puerta 9). Técnico Mateo + gate 5 + producto Tomas OK.
+**Pendiente para publicar:** Sofia (puerta 9). SEO Virginia + producto Tomas + técnico Mateo + gate 5 OK.
