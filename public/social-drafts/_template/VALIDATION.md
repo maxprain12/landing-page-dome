@@ -1,6 +1,6 @@
 # Validación pre-publicación — pack social
 
-Copiá este archivo a `public/social-drafts/<pack>/VALIDATION.md` y rellenalo **antes** de que Sofía publique. Instagram está congelado hasta que el pack pase este checklist.
+Copiá este archivo a `public/social-drafts/<pack>/VALIDATION.md` y rellenalo **antes** de que Sofía publique. Instagram / LinkedIn / X están **congelados** hasta que el pack pase este checklist **y** el listón estético Littlebird (puerta 5).
 
 Esta es la plantilla canónica. En un pack real, `VALIDATION.md` y `ratios.json` viven juntos en `public/social-drafts/<pack>/`.
 
@@ -20,6 +20,7 @@ No inventar credenciales ni publicar desde este repo.
 | Post siguiente (si aplica) | |
 | CTA (URL completa) | https://dome.dowi.es/… |
 | Fecha del export | YYYY-MM-DD |
+| Refs estéticas | Littlebird.ai (escena cinematográfica + UI) |
 
 ---
 
@@ -101,9 +102,11 @@ Notas / vetos:
 
 ---
 
-## 5. Fidelidad del mock a Dome real
+## 5. Fidelidad del mock a Dome real + listón estético
 
-El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`: diagramas abstractos + pills de beneficio genérico) **no pasa**. Si el creativo podría ser de cualquier herramienta, el pack queda bloqueado. «cluster P1» y el resto de jerga de este checklist son para **este archivo**, no para slides ni captions.
+El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`: diagramas abstractos + pills de beneficio genérico) **no pasa**. El pack Ana/Q3 flat (#20) **pasa claims** pero **no** el listón estético Littlebird (feedback Alder 2026-09-20): congelado hasta rehacer el envoltorio.
+
+Si el creativo podría ser de cualquier herramienta SaaS, o parece «card tipográfica + mock genérico», el pack queda bloqueado.
 
 ### Escenario concreto (obligatorio)
 
@@ -122,6 +125,19 @@ Una escena reconocible, no un beneficio genérico:
 - [ ] **No** framing de chat-cloud / Manychat / Zapia / auto-DM
 - [ ] Logos de proveedores solo desde SVG públicos del repo o `SOURCES.txt`
 
+### Listón estético Littlebird (obligatorio — Mateo vs refs)
+
+Refs: [Littlebird.ai](https://littlebird.ai) — foto/ilustración cinematográfica + UI (chat/composer) **integrada en la escena**, tipografía premium, narrativa.
+
+- [ ] **Escena cinematográfica** (foto o ilustración premium con profundidad/luz), no fondo plano zinc/gris tipográfico solo
+- [ ] **UI Dome real encima** de la escena (composer / many / approval / workspace), integrada — no cards flotantes genéricas ni mock aislado en vacío
+- [ ] Tipografía **Inter** con jerarquía clara; **prohibido** tipografía suelta a tamaño poster sin escena
+- [ ] **Prohibido:** pills sueltas de beneficio, chips 1→2→3, layout «SaaS carousel genérico»
+- [ ] Comparación explícita en evidencia: frame del pack **vs** captura/ref Littlebird (misma densidad narrativa)
+- [ ] Tokens Many lima `#E0EAB4` / oliva `#596037` respetados dentro de la UI
+
+Review visual: **Mateo** abre el PNG a tamaño real y bloquea si el listón no llega a «poco profesional → premium».
+
 ### Copy del creativo
 
 **Permitido:** local-first, «solo si conectas», Many prepara / tú apruebas.
@@ -135,7 +151,7 @@ Una escena reconocible, no un beneficio genérico:
 - [ ] Cero pills de beneficio sin el PDF + persona nombrados
 - [ ] Local-first visible: Many **prepara**, la persona **aprueba / envía**
 
-Firma mock: **Mateo / Roman** — fecha: ________
+Firma mock + listón: **Mateo / Roman** — fecha: ________
 
 ---
 
@@ -206,14 +222,14 @@ Canon: [dome/docs/brand](https://github.com/maxprain12/dome/blob/main/docs/brand
 
 ## 9. OK creativo + OK de publicación
 
-Instagram (y el resto de canales del pack) no se publican hasta las dos firmas.
+Instagram (y el resto de canales del pack) no se publican hasta las dos firmas **y** listón Littlebird OK en puerta 5.
 
 | Rol | Nombre | Fecha | OK |
 | --- | --- | --- | --- |
 | Creativo | Lucia | | [ ] |
 | Publicación | Sofia | | [ ] |
 
-Sofía no publica con gates 1–8 abiertos, sin slot de secuencia, ni sin `pnpm run check:social-drafts` en verde sobre este pack. Los `chapter-*` no se publican antes que 1→2→3.
+Sofía no publica con gates 1–8 abiertos, sin slot de secuencia, sin listón estético, ni sin `pnpm run check:social-drafts` en verde sobre este pack. Los `chapter-*` no se publican antes que 1→2→3.
 
 ---
 
@@ -223,6 +239,7 @@ Sofía no publica con gates 1–8 abiertos, sin slot de secuencia, ni sin `pnpm 
 | --- | --- |
 | Manifest de px | `ratios.json` |
 | Safe-area full-frame | `safe-area/` |
+| Comparación vs Littlebird (frame + ref) | |
 | Superdesign / canvas | |
 | PR de assets | |
 
@@ -230,5 +247,5 @@ Sofía no publica con gates 1–8 abiertos, sin slot de secuencia, ni sin `pnpm 
 
 ## Resultado
 
-- [ ] Pack **listo para publicar** (todas las firmas + script OK)
+- [ ] Pack **listo para publicar** (todas las firmas + script OK + listón Littlebird)
 - [ ] Pack **bloqueado** — motivo:

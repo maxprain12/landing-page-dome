@@ -2,15 +2,16 @@
 
 Carpeta de **packs creativos en draft**. No son la landing. No se publican en Instagram / LinkedIn / X hasta que el pack pase el checklist. El sitio auto-despliega desde `main`: no mergear un pack a `main` solo para «dejarlo visible».
 
-Instagram está congelado hasta que cada pack tenga validación firmada.
+**Congelado (2026-09-20, feedback Alder):** no hay publicaciones nuevas hasta que un pack pase la puerta 5 **y** el listón estético Littlebird (escena cinematográfica + UI Dome real encima). Claims de producto no cambian (Ana + `propuesta Q3.pdf` → Many → Aprobar + CTA how-to).
 
 ## Cómo validar un pack
 
 1. Copiá [`_template/VALIDATION.md`](./_template/VALIDATION.md) y [`_template/ratios.json`](./_template/ratios.json) a `public/social-drafts/<pack>/`.
 2. Editá `ratios.json`: un entry por export (png/jpg). Usá un `preset` de la tabla o `width` + `height` en px reales.
 3. Adjuntá capturas full-frame en `<pack>/safe-area/` (Many, CTA, badges y botones sin clip).
-4. Rellená las **nueve** puertas y las firmas (Virginia / Tomas / Mateo / Lucia / Roman / Sofia), incluido **escenario concreto (puerta 5)**, **slot de secuencia**, **formato cerrado** y **tokens de marca**.
-5. Corré el check de píxeles:
+4. Rellená las **nueve** puertas y las firmas (Virginia / Tomas / Mateo / Lucia / Roman / Sofia), incluido **escenario concreto + listón Littlebird (puerta 5)**, **slot de secuencia**, **formato cerrado** y **tokens de marca**.
+5. Adjuntá evidencia de comparación vs refs Littlebird (frame del pack + ref).
+6. Corré el check de píxeles:
 
 ```bash
 pnpm run check:social-drafts
@@ -20,18 +21,30 @@ pnpm run check:social-drafts -- public/social-drafts/pdf-to-follow-up
 
 El script lee el IHDR (PNG) o SOF (JPEG) y falla (exit ≠ 0) si el tamaño no coincide. Sin dependencias extra. Los mp4 no se miden. Las capturas en `safe-area/` no entran en el manifest.
 
-Sofía publica **después** de creative OK (Lucia) + publish OK (Sofia), script verde, y gates 5–8 (mock concreto, secuencia, formato cerrado, marca). No hay credenciales de Instagram en este repo.
+Sofía publica **después** de creative OK (Lucia) + publish OK (Sofia), script verde, gates 5–8 (mock concreto + listón Littlebird, secuencia, formato cerrado, marca). No hay credenciales de Instagram en este repo.
 
-## Puerta 5 — mock concreto (no infografía SaaS)
+## Puerta 5 — mock concreto + listón Littlebird
 
-El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`) quedó de ejemplo **rechazado**: loop abstracto, chips 1→2→3 y pills de beneficio sin escena. La puerta 5 exige:
+El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`) quedó de ejemplo **rechazado** (loop abstracto / pills). El carrusel Ana/Q3 (#20) pasó claims pero **no** el listón estético Alder — hay que rehacer el envoltorio.
 
-- **Escenario nombrado:** un PDF con nombre de archivo + una persona con nombre (p. ej. `propuesta Q3.pdf` + Ana) → borrador de Many → **Aprobar**. No «un documento» / «un contacto».
-- **UI de Dome:** recreación de componentes reales — **workspace / people / many / approval**. Prohibido diagramas numerados, flechas geométricas o flow charts.
-- **Veto en creativos** (slide, caption, overlay): «agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills genéricas sin escenario.
+### Producto / UI (sin cambio)
+
+- **Escenario nombrado:** PDF con nombre + persona con nombre (p. ej. `propuesta Q3.pdf` + Ana) → borrador de Many → **Aprobar**.
+- **UI de Dome:** workspace / people / many / approval. Prohibido diagramas numerados y flow charts.
+- **Veto:** «agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills genéricas sin escenario.
 - **Permitido:** local-first, «solo si conectas», Many prepara / tú apruebas.
 
-Firma: Mateo / Roman. No regenerar creatividades desde este repo: si un pack no cumple, se bloquea y se redibuja en el PR de assets.
+### Listón estético (nuevo — Mateo review vs refs)
+
+Refs: [Littlebird.ai](https://littlebird.ai) — escena cinematográfica + UI (chat/composer) integrada, tipografía premium, narrativa.
+
+1. Escena cinematográfica (foto/ilustración con profundidad), **no** fondo plano + tipografía suelta.
+2. UI Dome real **encima** de la escena (integrada), no cards genéricas ni mock en vacío.
+3. Inter con jerarquía; **cero** pills sueltas / chips 1→2→3 / carousel SaaS genérico.
+4. Evidencia: comparación frame vs ref Littlebird en el pack.
+5. Tokens Many lima `#E0EAB4` / oliva `#596037`.
+
+Firma: Mateo / Roman. Si el listón no llega a premium, se bloquea y se redibuja.
 
 ## Secuencia editorial (arco, no mishmash)
 
@@ -77,16 +90,16 @@ Lima solo en el símbolo Many. **No** paletas inventadas ni colores de competido
 
 ## Packs que necesitan revalidación
 
-Estos packs ya tienen (o tendrán) exports en PRs abiertos. **No regenerar creatividades** desde esta infra: copiar el checklist, declarar ratios y firmar. La puerta 5 endurecida aplica a todos (PDF + persona nombrados, UI Dome, sin jerga SaaS). El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`) queda de **ejemplo rechazado** — no entra a `main` con el loop abstracto.
+Estos packs ya tienen (o tendrán) exports en PRs abiertos. **No regenerar creatividades** desde esta infra: copiar el checklist, declarar ratios y firmar. La puerta 5 + listón Littlebird aplica a todos.
 
 | Pack | PR | Slot sugerido | Qué hay | Estado |
 | --- | --- | --- | --- | --- |
-| [`pdf-to-follow-up`](./pdf-to-follow-up/) | [#9](https://github.com/maxprain12/landing-page-dome/pull/9) | arco P1 (`1`–`3`) | LinkedIn 1584×396, X 1500×500, reels 1080×1920 | Revalidar |
-| [`dock-multi-provider`](./dock-multi-provider/) | [#10](https://github.com/maxprain12/landing-page-dome/pull/10) | `chapter-dock` (después de 1→2→3) | Stills + reel 1080×1920 | Revalidar |
-| [`c2-anti-manychat`](./c2-anti-manychat/) | [#11](https://github.com/maxprain12/landing-page-dome/pull/11) | `chapter-c2` (después de 1→2→3) | Quote card 1080×1080 | Revalidar |
+| [`pdf-to-follow-up`](./pdf-to-follow-up/) | [#9](https://github.com/maxprain12/landing-page-dome/pull/9) | arco P1 (`1`–`3`) | LinkedIn 1584×396, X 1500×500, reels 1080×1920 | Revalidar + listón |
+| [`dock-multi-provider`](./dock-multi-provider/) | [#10](https://github.com/maxprain12/landing-page-dome/pull/10) | `chapter-dock` (después de 1→2→3) | Stills + reel 1080×1920 | Revalidar + listón |
+| [`c2-anti-manychat`](./c2-anti-manychat/) | [#11](https://github.com/maxprain12/landing-page-dome/pull/11) | `chapter-c2` (después de 1→2→3) | Quote card 1080×1080 | Revalidar + listón |
 | [`carousel-zoe-stripe`](./carousel-zoe-stripe/) | [#14](https://github.com/maxprain12/landing-page-dome/pull/14) | a definir (no mezclar capítulo) | Carrusel 4 slides 1080×1350 | Revalidar — marca Zoe/Stripe |
 
-Quien valide (Lucia / Mateo / Roman) abre el `VALIDATION.md` del pack, corre el script sobre los PNG del PR de assets, y deja las firmas. Los PNG viven en esos PRs, no en este gate.
+Quien valide (Lucia / Mateo / Roman) abre el `VALIDATION.md` del pack, corre el script sobre los PNG del PR de assets, compara vs refs Littlebird, y deja las firmas.
 
 ## Convención de carpeta
 
