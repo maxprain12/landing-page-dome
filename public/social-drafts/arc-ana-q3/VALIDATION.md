@@ -51,14 +51,16 @@ Firma CTA: **Lucia** — fecha: 2026-09-20 — pendiente **Mateo**
 | Rol | Nombre | Fecha | OK |
 | --- | --- | --- | --- |
 | SEO | Virginia | | [ ] |
-| Producto | Tomas | | [ ] |
+| Producto | Tomas | 2026-09-20 | [x] |
 | Técnico | Mateo | | [ ] |
 
-Claim aprobado (propuesto):
+Claim aprobado (producto OK):
 
 > El seguimiento no debería vivir en Descargas. propuesta Q3.pdf + Ana → borrador Many. Nada sale sin Aprobar. Local-first. Tú envías solo si conectas correo o LinkedIn/X. CTA how-to PDF.
 
-Sin métricas vanidosas. Sin nombrar competidores. Copy Virginia exacta. Tomas/Mateo claims OK en chat — puertas 4 pendientes de checkbox formal.
+Notas producto: alineado con `docs/product/positioning.md`. Escenario concreto (PDF + persona nombrados). Cero jerga SaaS. «solo si conectas» evita overclaim.
+
+Sin métricas vanidosas. Sin nombrar competidores. Copy Virginia exacta.
 
 ## 5. Fidelidad del mock a Dome real
 
@@ -120,4 +122,4 @@ Firma formato: **Lucia** — fecha: 2026-09-20
 | Creativo | Lucia | 2026-09-20 | [x] |
 | Publicación | Sofia | | [ ] |
 
-Puerta 9 Sofia unchecked. Doors 4 / 5 Mateo / 9 Sofia open.
+Puerta 9 Sofia unchecked. Door 4 producto Tomas OK; SEO Virginia y técnico Mateo pendientes. Gate 5 Mateo open.
