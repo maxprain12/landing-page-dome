@@ -1,0 +1,69 @@
+---
+title: "Pair Dome Companion and control Many from iPhone"
+description: "Pair Dome Companion with the code from Settings → Remote Many. Control desktop Many from your iPhone; if the Mac is asleep, there is no cloud chat fallback."
+locale: en
+permalink: companion-remote-many
+translationKey: companion-remote-many
+publishedAt: 2026-09-20
+category: Companion
+order: 5
+tags:
+  - companion
+  - many
+  - iphone
+  - pairing
+ogImage: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
+heroImage: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
+heroAlt: "Many thread in Dome Desktop — the same Many Companion controls from iPhone when the Mac is awake."
+draft: true
+howTo:
+  - name: Code on the Mac
+    text: In Dome Desktop open Settings → Remote Many and generate the pairing code.
+  - name: Pair on iPhone
+    text: Sign in, open Account (the avatar), and enter the code.
+  - name: Mac awake
+    text: Leave the Mac awake with Dome Desktop running. If it is off or asleep, Many is unavailable.
+  - name: Open Many
+    text: In Companion, Many is the main screen after you sign in.
+  - name: Send with context
+    text: Pick documents, skills, or MCP in Context (+) and send. Material leaves the Mac through the tunnel, not into the cloud.
+  - name: Approve in Draft
+    text: In Draft mode, mutations wait for your go-ahead. Review and confirm before anything changes.
+---
+
+Dome Companion controls **Desktop Many** from iPhone. After you sign in, Many is the main screen: there are no library tabs on the phone. You pair with a code the Mac generates in **Settings → Remote Many**. Documents stay on the desktop.
+
+<Flow title="Remote Many">
+  <FlowStep title="Code on the Mac">In Dome Desktop open **Settings → Remote Many** and generate the pairing code.</FlowStep>
+  <FlowStep title="Pair on iPhone">Sign in, open **Account** (the avatar), and enter the code.</FlowStep>
+  <FlowStep title="Mac awake">Leave the Mac awake with Desktop running. If it is off or asleep, the status is “Mac asleep”.</FlowStep>
+  <FlowStep title="Open Many">In Companion, Many is the main screen. It is desktop Many, not a separate chat.</FlowStep>
+  <FlowStep title="Send with context">Pick documents, skills, or MCP in **Context** (`+`) and send. Material travels through the tunnel (`refs.list` / `refs.preview`).</FlowStep>
+  <FlowStep title="Approve in Draft">In Draft mode, mutations wait for your go-ahead. Sending email or publishing follows the same [human approval](/en/manual/email-and-social) rule.</FlowStep>
+</Flow>
+
+<Callout type="warning" title="If the Mac sleeps, Many is unavailable">
+If the Mac is off or asleep, Many is unavailable. Companion does not open a cloud chat fallback.
+</Callout>
+
+<Callout type="note" title="The library does not upload to the cloud">
+Documents, skills, and MCP are chosen in Context (`+`) and leave the Mac through the tunnel. Companion does not pull the library into the cloud.
+</Callout>
+
+<Image
+  src="/dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png"
+  alt="Detail of the Many thread in Dome Desktop, the Many Companion controls remotely."
+  caption="Many on the desktop: Companion controls it when the Mac is awake."
+/>
+
+## Context from the Mac
+
+Open **Context** (`+`) and pick what Many should see. References travel with `refs.list` and `refs.preview`. `refs.export` brings the generated file to the iPhone to open it (Quick Look) if the format is visible on mobile. Typing `/` shows skill suggestions above the input.
+
+The index and files stay on the Mac disk. If you have not imported material yet, go back to [organizing the library](/en/manual/library). The [PDF-to-follow-up](/en/blog/pdf-to-follow-up) loop is the same: document, person, draft, approval.
+
+## Plan, Draft, and Agent
+
+The **Plan**, **Draft**, and **Agent** modes travel with `mode.set` (and with the send). In Plan, Many asks with a questionnaire (one option, or “Write something”) and then Execute / Stay / Refine above the field. Draft asks for your ok to mutate. Nothing sensitive leaves without that go-ahead.
+
+If this is your first time with Dome on the desktop, start with the [first workflow](/en/manual/first-workflow).

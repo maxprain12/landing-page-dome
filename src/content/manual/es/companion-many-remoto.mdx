@@ -1,0 +1,69 @@
+---
+title: "Emparejar Dome Companion y controlar Many desde el iPhone"
+description: "Empareja Dome Companion con el código de Ajustes → Many remoto. Controla Many del escritorio desde el iPhone; si el Mac duerme, no hay chat en la nube."
+locale: es
+permalink: companion-remote-many
+translationKey: companion-remote-many
+publishedAt: 2026-09-20
+category: Companion
+order: 5
+tags:
+  - companion
+  - many
+  - iphone
+  - emparejar
+ogImage: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
+heroImage: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
+heroAlt: "Hilo de Many en Dome Desktop, el mismo Many que Companion controla desde el iPhone cuando el Mac está despierto."
+draft: true
+howTo:
+  - name: Código en el Mac
+    text: En Dome Desktop abre Ajustes → Many remoto y genera el código de emparejamiento.
+  - name: Empareja en el iPhone
+    text: Inicia sesión, abre Cuenta (el avatar) e introduce el código.
+  - name: Mac despierto
+    text: Deja el Mac despierto y Dome Desktop en marcha. Si está apagado o en reposo, Many no está disponible.
+  - name: Abre Many
+    text: En Companion, Many es la pantalla principal tras iniciar sesión.
+  - name: Envía con contexto
+    text: Elige documentos, skills o MCP en Contexto (+) y envía el mensaje. El material sale del Mac por el túnel, no a la nube.
+  - name: Aprueba en Draft
+    text: En modo Draft, las mutaciones esperan tu visto bueno. Revisa y confirma antes de que nada cambie.
+---
+
+Dome Companion controla el **Many de Desktop** desde el iPhone. Tras iniciar sesión, Many es la pantalla principal: no hay pestañas de biblioteca en el teléfono. Emparejas con un código que genera el Mac en **Ajustes → Many remoto**. Los documentos siguen en el escritorio.
+
+<Flow title="Many remoto">
+  <FlowStep title="Código en el Mac">En Dome Desktop abre **Ajustes → Many remoto** y genera el código de emparejamiento.</FlowStep>
+  <FlowStep title="Empareja en el iPhone">Inicia sesión, abre **Cuenta** (el avatar) e introduce el código.</FlowStep>
+  <FlowStep title="Mac despierto">Deja el Mac despierto y Desktop en marcha. Si está apagado o en reposo, el estado es «Mac en reposo».</FlowStep>
+  <FlowStep title="Abre Many">En Companion, Many es la pantalla principal. Es el Many del escritorio, no un chat aparte.</FlowStep>
+  <FlowStep title="Envía con contexto">Elige documentos, skills o MCP en **Contexto** (`+`) y envía. El material viaja por el túnel (`refs.list` / `refs.preview`).</FlowStep>
+  <FlowStep title="Aprueba en Draft">En modo Draft, las mutaciones esperan tu visto bueno. El envío de correo o una publicación sigue el mismo criterio de [aprobación humana](/manual/email-and-social).</FlowStep>
+</Flow>
+
+<Callout type="warning" title="Si el Mac duerme, Many no está">
+Si el Mac está apagado o en reposo, Many no está disponible. Companion no abre un chat en la nube de respaldo.
+</Callout>
+
+<Callout type="note" title="La biblioteca no sube a la nube">
+Documentos, skills y MCP se eligen en Contexto (`+`) y salen del Mac por el túnel. Companion no pide la biblioteca a la nube.
+</Callout>
+
+<Image
+  src="/dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png"
+  alt="Detalle del hilo de Many en Dome Desktop, el Many que Companion controla en remoto."
+  caption="Many en el escritorio: Companion lo controla cuando el Mac está despierto."
+/>
+
+## Contexto desde el Mac
+
+Abre **Contexto** (`+`) y elige lo que Many debe ver. Las referencias viajan con `refs.list` y `refs.preview`. `refs.export` trae el fichero generado al iPhone para abrirlo (Quick Look) si el formato se puede ver en móvil. Escribir `/` muestra sugerencias de skills encima del input.
+
+El índice y los archivos siguen en el disco del Mac. Si aún no has importado material, vuelve a [organizar la biblioteca](/manual/library). El loop de [un PDF a un seguimiento](/blog/pdf-to-follow-up) es el mismo: documento, persona, borrador, aprobación.
+
+## Plan, Draft y Agent
+
+Los modos **Plan**, **Draft** y **Agent** viajan con `mode.set` (y con el envío). En Plan, Many pregunta con un cuestionario (una opción, o «Escribe algo») y luego Execute / Stay / Refine encima del campo. Draft pide tu ok para mutar. Nada sensible sale sin ese visto bueno.
+
+Si es tu primera vez con Dome en el escritorio, empieza por el [primer workflow](/manual/first-workflow).
