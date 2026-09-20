@@ -8,7 +8,6 @@ Instagram congelado hasta checklist firmado.
 
 | Campo | Valor |
 | --- | --- |
-| Spug | `arc-ana-q3` |
 | Slug | `arc-ana-q3` |
 | PR | https://github.com/maxprain12/landing-page-dome/pull/20 |
 | Canales | IG feed / carrusel |
