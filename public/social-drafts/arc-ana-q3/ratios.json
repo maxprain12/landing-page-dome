@@ -1,0 +1,8 @@
+{
+  "pack": "arc-ana-q3",
+  "exports": [
+    { "file": "01-dolor.png", "preset": "ig-carousel", "width": 1080, "height": 1350 },
+    { "file": "02-loop.png", "preset": "ig-carousel", "width": 1080, "height": 1350 },
+    { "file": "03-cta.png", "preset": "ig-carousel", "width": 1080, "height": 1350 }
+  ]
+}
