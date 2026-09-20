@@ -91,7 +91,7 @@ Sin métricas vanidosas. Sin nombrar competidores. Copy Virginia exacta. Tomas/M
 - [ ] Gate 5 **Mateo** — checkbox formal pendiente
 
 Firma mock: **Lucia** (creative) — pendiente **Mateo** gate 5 — fecha: 2026-09-20  
-Nota gate 5: UI real Ana+propuesta Q3.pdf, cero diagrama. Refs `arc-ana/ui/dome-*-detail.png` + reel-01.
+Nota gate 5: firmar contra la puerta 5 de [#19](https://github.com/maxprain12/landing-page-dome/pull/19) (**merged**): UI real Ana + `propuesta Q3.pdf` + workspace / people / many / approval. Cero diagrama.
 
 ## 6. Secuencia editorial
 
