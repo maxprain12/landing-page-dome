@@ -15,7 +15,7 @@ Ratios declarados en [`ratios.json`](./ratios.json) (stills 1080×1920). No rege
 - [ ] Safe area
 - [ ] CTA URL completa
 - [ ] Claims (Virginia / Tomas / Mateo)
-- [ ] Mock Dome real
+- [ ] **Puerta 5 — mock concreto:** PDF + persona nombrados (p. ej. `propuesta Q3.pdf` + Ana) → Many → Aprobar; UI **workspace / people / many / approval**; **no** diagramas abstractos ni flow charts; **cero** jerga SaaS en creativos («agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills genéricas). Permitido: local-first, «solo si conectas», Many prepara / tú apruebas
 - [ ] Secuencia editorial (capítulo después de 1→2→3)
 - [ ] Formato cerrado (7 stills + reel, no un dock suelto)
 - [ ] Tokens de marca (lima `#E0EAB4` / oliva `#596037` / Inter / ink zinc)
