@@ -103,11 +103,37 @@ Notas / vetos:
 
 ## 5. Fidelidad del mock a Dome real
 
-- [ ] UI tomada de componentes reales de Dome (biblioteca, persona, Many, Aprobar, dock…)
+El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`: diagramas abstractos + pills de beneficio genérico) **no pasa**. Si el creativo podría ser de cualquier herramienta, el pack queda bloqueado. «cluster P1» y el resto de jerga de este checklist son para **este archivo**, no para slides ni captions.
+
+### Escenario concreto (obligatorio)
+
+Una escena reconocible, no un beneficio genérico:
+
+- [ ] PDF **con nombre de archivo** (p. ej. `propuesta Q3.pdf`)
+- [ ] Persona **con nombre** (p. ej. Ana)
+- [ ] Cadena visible: **ese PDF + esa persona → borrador de Many → Aprobar**
+- [ ] No vale «un documento», «un contacto», «el agente» sin nombre
+
+### UI de Dome, no infografía
+
+- [ ] Recreación de componentes reales: **workspace / people / many / approval** (biblioteca, persona, chat de Many, botón Aprobar; dock si el pack lo pide)
+- [ ] **No** diagramas numerados abstractos (1→2→3 en círculos, flechas geométricas, flow charts)
 - [ ] **No** UI inventada ni chrome de otro producto
 - [ ] **No** framing de chat-cloud / Manychat / Zapia / auto-DM
-- [ ] Local-first visible: Many **prepara**, la persona **aprueba / envía**
 - [ ] Logos de proveedores solo desde SVG públicos del repo o `SOURCES.txt`
+
+### Copy del creativo
+
+**Permitido:** local-first, «solo si conectas», Many prepara / tú apruebas.
+
+**Veto** (aparece en slide, caption u overlay → pack bloqueado):
+
+- «agentes», «CRM», «escala», «Many hace el resto», «cluster P1»
+- Pills de beneficio genérico sin escenario (`Más productividad`, `Tu equipo en un solo lugar`, `IA que trabaja por ti`…)
+
+- [ ] Cero jerga SaaS de la lista de veto
+- [ ] Cero pills de beneficio sin el PDF + persona nombrados
+- [ ] Local-first visible: Many **prepara**, la persona **aprueba / envía**
 
 Firma mock: **Mateo / Roman** — fecha: ________
 

@@ -15,7 +15,7 @@ Ratios declarados en [`ratios.json`](./ratios.json) (4 slides 1080×1350). No re
 - [ ] Safe area
 - [ ] CTA URL completa
 - [ ] Claims (Virginia / Tomas / Mateo)
-- [ ] Mock Dome real
+- [ ] **Puerta 5 — mock concreto:** PDF + persona nombrados (p. ej. `propuesta Q3.pdf` + Ana) → Many → Aprobar; UI **workspace / people / many / approval**; **no** diagramas abstractos ni flow charts; **cero** jerga SaaS en creativos («agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills genéricas). Permitido: local-first, «solo si conectas», Many prepara / tú apruebas
 - [ ] Secuencia editorial (un slot; enlace al anterior)
 - [ ] Formato cerrado (4 slides del mismo post, no huérfanas)
 - [ ] Tokens de marca (lima `#E0EAB4` / oliva `#596037` / Inter / ink zinc; **cero** morado Zoe / rosa Stripe)

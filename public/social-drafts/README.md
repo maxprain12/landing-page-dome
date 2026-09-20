@@ -9,7 +9,7 @@ Instagram está congelado hasta que cada pack tenga validación firmada.
 1. Copiá [`_template/VALIDATION.md`](./_template/VALIDATION.md) y [`_template/ratios.json`](./_template/ratios.json) a `public/social-drafts/<pack>/`.
 2. Editá `ratios.json`: un entry por export (png/jpg). Usá un `preset` de la tabla o `width` + `height` en px reales.
 3. Adjuntá capturas full-frame en `<pack>/safe-area/` (Many, CTA, badges y botones sin clip).
-4. Rellená las **nueve** puertas y las firmas (Virginia / Tomas / Mateo / Lucia / Roman / Sofia), incluido **slot de secuencia**, **formato cerrado** y **tokens de marca**.
+4. Rellená las **nueve** puertas y las firmas (Virginia / Tomas / Mateo / Lucia / Roman / Sofia), incluido **escenario concreto (puerta 5)**, **slot de secuencia**, **formato cerrado** y **tokens de marca**.
 5. Corré el check de píxeles:
 
 ```bash
@@ -20,7 +20,18 @@ pnpm run check:social-drafts -- public/social-drafts/pdf-to-follow-up
 
 El script lee el IHDR (PNG) o SOF (JPEG) y falla (exit ≠ 0) si el tamaño no coincide. Sin dependencias extra. Los mp4 no se miden. Las capturas en `safe-area/` no entran en el manifest.
 
-Sofía publica **después** de creative OK (Lucia) + publish OK (Sofia), script verde, y gates 6–8 (secuencia, formato cerrado, marca). No hay credenciales de Instagram en este repo.
+Sofía publica **después** de creative OK (Lucia) + publish OK (Sofia), script verde, y gates 5–8 (mock concreto, secuencia, formato cerrado, marca). No hay credenciales de Instagram en este repo.
+
+## Puerta 5 — mock concreto (no infografía SaaS)
+
+El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`) quedó de ejemplo **rechazado**: loop abstracto, chips 1→2→3 y pills de beneficio sin escena. La puerta 5 exige:
+
+- **Escenario nombrado:** un PDF con nombre de archivo + una persona con nombre (p. ej. `propuesta Q3.pdf` + Ana) → borrador de Many → **Aprobar**. No «un documento» / «un contacto».
+- **UI de Dome:** recreación de componentes reales — **workspace / people / many / approval**. Prohibido diagramas numerados, flechas geométricas o flow charts.
+- **Veto en creativos** (slide, caption, overlay): «agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills genéricas sin escenario.
+- **Permitido:** local-first, «solo si conectas», Many prepara / tú apruebas.
+
+Firma: Mateo / Roman. No regenerar creatividades desde este repo: si un pack no cumple, se bloquea y se redibuja en el PR de assets.
 
 ## Secuencia editorial (arco, no mishmash)
 
@@ -66,7 +77,7 @@ Lima solo en el símbolo Many. **No** paletas inventadas ni colores de competido
 
 ## Packs que necesitan revalidación
 
-Estos packs ya tienen (o tendrán) exports en PRs abiertos. **No regenerar creatividades** desde esta infra: copiar el checklist, declarar ratios y firmar.
+Estos packs ya tienen (o tendrán) exports en PRs abiertos. **No regenerar creatividades** desde esta infra: copiar el checklist, declarar ratios y firmar. La puerta 5 endurecida aplica a todos (PDF + persona nombrados, UI Dome, sin jerga SaaS). El pack [#18](https://github.com/maxprain12/landing-page-dome/pull/18) (`arc-p1-123`) queda de **ejemplo rechazado** — no entra a `main` con el loop abstracto.
 
 | Pack | PR | Slot sugerido | Qué hay | Estado |
 | --- | --- | --- | --- | --- |

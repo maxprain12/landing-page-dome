@@ -77,7 +77,7 @@
 - "Documento + persona. Many prepara. Tú das el ok."
 - "Dome + tu proveedor de IA"
 **Words to use:** local-first, Many, aprobación, documento + persona, si conectas, seguimiento aprobado
-**Words to avoid:** chatbot, DMs automáticos, agente cloud único, métricas vanity, “ManyChat alternative” en hero
+**Words to avoid:** chatbot, DMs automáticos, agente cloud único, métricas vanity, “ManyChat alternative” en hero. En creativos sociales además: «agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills de beneficio sin escenario.
 **Glossary:**
 | Term | Meaning |
 |------|---------|
@@ -104,14 +104,16 @@
 ## Goals
 **Business goal:** Posicionar Dome (no chatbot) y convertir a descarga / Pro.
 **Conversion action:** Visitar dome.dowi.es → how-to PDF / descarga.
-**Current metrics:** IG @dome.app activo; packs sociales en revalidación (gate 1–6).
+**Current metrics:** IG @dome.app activo; packs sociales en revalidación (gates 1–9; puerta 5 endurecida 2026-09-20).
 
 ## Content / Social rules (ops)
 - Secuencia editorial 1–2–3: beneficio → loop → how-to PDF; C2 y dock después
 - Creativos: formato completo + tokens `dome/docs/brand/` + VALIDATION.md
+- **Puerta 5 (mock):** escenario nombrado (PDF + persona → Many → Aprobar); UI workspace / people / many / approval. Veto en creativos: «agentes», «CRM», «escala», «Many hace el resto», «cluster P1», pills genéricas, diagramas abstractos. Permitido: local-first, «solo si conectas», Many prepara / tú apruebas. El pack #18 (`arc-p1-123`) es el ejemplo rechazado.
 - Refs competencia = formato a aprender, no plantilla
 
 ## Changelog
 *Newest first.*
+- v3 (2026-09-20) — Puerta 5 endurecida: escenario PDF+persona concreto; veto jerga SaaS / diagramas abstractos (rechazo del pack #18).
 - v2 (2026-09-19) — Shelf principal = workspace local-first; «CRM ligero» solo matiz (feedback Tomas / positioning.md).
 - v1 (2026-09-19) — Initial context from positioning, SEO calendar (Pol), IG/social gates, and live landing copy.
