@@ -3,6 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import { satteri } from '@astrojs/markdown-satteri';
+import { dropLeadingH1 } from './src/lib/mdast-drop-leading-h1.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -43,6 +45,11 @@ export default defineConfig({
       },
     }),
   ],
+  markdown: {
+    processor: satteri({
+      mdastPlugins: [dropLeadingH1],
+    }),
+  },
   compressHTML: true,
   /** Acepta /terms y /terms/ (y privacy) en dev y evita 404; production sigue con _redirects en public */
   trailingSlash: 'ignore',

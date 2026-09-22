@@ -8,33 +8,34 @@ export function contentBase(kind: ContentKind): "/blog" | "/manual" {
   return kind === "blog" ? "/blog" : "/manual";
 }
 
-export function contentPath(kind: ContentKind, permalink: string, locale: Locale): string {
-  return localizePath(`${contentBase(kind)}/${permalink}`, locale);
+export function contentPath(kind: ContentKind, slug: string, locale: Locale): string {
+  return localizePath(`${contentBase(kind)}/${slug}`, locale);
 }
 
-export function isPublished<T extends ContentEntry>(entry: T): boolean {
-  return !entry.data.draft;
+export function localeFromEntry(entry: ContentEntry): Locale {
+  const segment = entry.id.split("/")[0];
+  return segment === "en" ? "en" : "es";
+}
+
+export function contentCover(entry: ContentEntry): string {
+  return entry.data.cover || "/social.png";
 }
 
 export async function publishedEntries(kind: ContentKind, locale: Locale): Promise<ContentEntry[]> {
-  const entries = await getCollection(kind, (entry) => entry.data.locale === locale && isPublished(entry));
+  const entries = await getCollection(kind, (entry) => localeFromEntry(entry) === locale);
   if (kind === "manual") {
-    return entries.sort((a, b) => {
-      const aOrder = "order" in a.data ? a.data.order : 0;
-      const bOrder = "order" in b.data ? b.data.order : 0;
-      return aOrder - bOrder;
-    });
+    return entries.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
   }
-  return entries.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+  return entries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
 export async function findTranslation(
   kind: ContentKind,
-  translationKey: string,
+  slug: string,
   locale: Locale,
 ): Promise<ContentEntry | undefined> {
   const entries = await getCollection(kind, (entry) => {
-    return entry.data.translationKey === translationKey && entry.data.locale === locale && isPublished(entry);
+    return entry.data.slug === slug && localeFromEntry(entry) === locale;
   });
   return entries[0];
 }
@@ -58,13 +59,13 @@ export async function staticPathsFor(kind: ContentKind, locale: Locale) {
   const altLocale: Locale = locale === "es" ? "en" : "es";
   return Promise.all(
     entries.map(async (entry) => {
-      const translation = await findTranslation(kind, entry.data.translationKey, altLocale);
+      const translation = await findTranslation(kind, entry.data.slug, altLocale);
       return {
-        params: { slug: entry.data.permalink },
+        params: { slug: entry.data.slug },
         props: {
           entry,
           locale,
-          translationPath: translation ? contentPath(kind, translation.data.permalink, altLocale) : null,
+          translationPath: translation ? contentPath(kind, translation.data.slug, altLocale) : null,
         },
       };
     }),

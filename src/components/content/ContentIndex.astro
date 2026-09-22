@@ -19,7 +19,7 @@ const { locale, kind, page, entries, secondaryHref } = Astro.props;
 const copy = t(locale);
 const rssHref = localizePath("/rss.xml", locale);
 const [featured, ...rest] = entries;
-const categories = [...new Set(entries.map((entry) => entry.data.category))];
+const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))];
 ---
 
 <Nav locale={locale} />
@@ -50,9 +50,9 @@ const categories = [...new Set(entries.map((entry) => entry.data.category))];
             <button type="button" class="idx-pill is-on" data-filter="" aria-pressed="true">
               {copy.content.all}
             </button>
-            {categories.map((category) => (
-              <button type="button" class="idx-pill" data-filter={category} aria-pressed="false">
-                {category}
+            {tags.map((tag) => (
+              <button type="button" class="idx-pill" data-filter={tag} aria-pressed="false">
+                {tag}
               </button>
             ))}
           </div>
@@ -90,16 +90,17 @@ const categories = [...new Set(entries.map((entry) => entry.data.category))];
     const cards = [...root.querySelectorAll<HTMLElement>("[data-entry]")];
     const search = root.querySelector<HTMLInputElement>("[data-magazine-q]");
     const empty = root.querySelector<HTMLElement>("[data-magazine-empty]");
-    let category = "";
+    let tag = "";
 
     const apply = () => {
       const query = (search?.value ?? "").trim().toLowerCase();
       let visible = 0;
       cards.forEach((card) => {
-        const matchCategory = !category || card.dataset.category === category;
+        const tags = (card.dataset.tags ?? "").split("|").filter(Boolean);
+        const matchTag = !tag || tags.includes(tag);
         const haystack = (card.dataset.search ?? "").toLowerCase();
         const matchQuery = !query || haystack.includes(query);
-        const show = matchCategory && matchQuery;
+        const show = matchTag && matchQuery;
         card.hidden = !show;
         visible += show ? 1 : 0;
       });
@@ -108,7 +109,7 @@ const categories = [...new Set(entries.map((entry) => entry.data.category))];
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        category = button.dataset.filter ?? "";
+        tag = button.dataset.filter ?? "";
         buttons.forEach((item) => {
           const on = item === button;
           item.classList.toggle("is-on", on);

@@ -1,6 +1,6 @@
 # Contenido (blog y manuales)
 
-El copy de marketing de UI vive en `src/i18n`. Los artículos y manuales son colecciones MDX.
+El copy de marketing de UI vive en `src/i18n`. Los artículos y manuales son colecciones Markdown que Dome CMS puede publicar al repositorio.
 
 ## Dónde vive cada cosa
 
@@ -9,52 +9,46 @@ El copy de marketing de UI vive en `src/i18n`. Los artículos y manuales son col
 | Blog | `src/content/blog/{es,en}/` | `/blog/{slug}/`, `/en/blog/{slug}/` |
 | Manual | `src/content/manual/{es,en}/` | `/manual/{slug}/`, `/en/manual/{slug}/` |
 
+El idioma sale de la carpeta. Dome CMS v1 publica un archivo `{contentFolder}/{slug}.md`; cambia **Content folder** en el plugin según colección e idioma.
+
 Schema en `src/content.config.ts`. RSS: `/rss.xml` y `/en/rss.xml`.
 
-## Frontmatter mínimo
+## Frontmatter (contrato Dome CMS)
 
 ```yaml
 title: ""
+date: 2026-09-17
 description: ""
-locale: es # o en
-permalink: same-permalink-in-both-languages
-translationKey: unique-pair-id
-publishedAt: 2026-09-17
-category: ""
+cover: /dome-recursos-landing/...
 tags: []
-ogImage: /dome-recursos-landing/...
-heroImage: /dome-recursos-landing/...
-heroAlt: ""
-draft: false
+slug: same-slug-in-both-languages
 ```
 
-Los permalinks deben coincidir entre ES y EN para que el redirect de idioma (`dome-locale`) no 404. `translationKey` empareja las dos piezas. Los manuales añaden `order` y, si hay pasos, `howTo`.
+`cover` es opcional. `date` admite el texto ISO que escribe Dome. El `slug` es la fuente de la URL y debe coincidir con el nombre del archivo. El par ES/EN usa el mismo slug para que el redirect de idioma (`dome-locale`) no 404. Las imágenes van en `public/`; Dome CMS v1 no sube binarios.
 
-## Componentes MDX
+Los índices (`/blog`, `/manual`) filtran por etiquetas. La entrada abre con el `h1` y el lead; la portada (`cover`) va debajo, a tamaño natural. Si el cuerpo empieza por `# título`, el plugin de Markdown lo quita para no duplicar el `h1` del layout. Categoría, autor y fecha van solo al cierre. El autor visible es el de `src/lib/site.ts`.
 
-Disponibles vía el mapa en `src/components/content/mdx.ts`:
+## Cuerpo Markdown
 
-- `<Image src alt width height caption />`
-- `<Video poster title transcriptLabel>transcripción</Video>`
-- `<Callout type="note|tip|warning" title>`
-- `<Flow title><FlowStep title>…</FlowStep></Flow>`
-- `<Gallery title><Image … /></Gallery>`
-- `<Diagram variant="local-first|approval|library" title />`
+Portable, sin JSX. El mismo archivo que publica Dome:
+
+- imágenes: `![alt](src)` y, si hace falta, un pie en cursiva
+- pasos: listas numeradas
+- avisos: citas con el título en negrita
+- un enlace interno al menos
 
 Usa capturas reales de `public/dome-recursos-landing/` o `public/how/`. No inventes métricas, testimonios ni pantallas.
 
-Los índices (`/blog`, `/manual`) son una revista: título centrado, filtros por `category` y tarjetas con la foto, el chip de tema y el texto debajo. La entrada abre con el `h1` y el lead; la portada va debajo, a tamaño natural, sin overlay ni recorte. El cuerpo es una columna estrecha. Categoría, autor y fecha van solo al cierre.
-
 ## SEO
 
-`Layout.astro` emite canonical, hreflang, `og:image` y JSON-LD (`BlogPosting` o `HowTo`/`TechArticle`). Pricing queda `noindex` hasta que existan planes. Tras añadir un par ES/EN, corre `pnpm run check:content-parity`.
+`Layout.astro` emite canonical, hreflang, `og:image` (`cover` o `/social.png`) y JSON-LD (`BlogPosting` o `TechArticle`). Pricing queda `noindex` hasta que existan planes. Tras añadir un par ES/EN, corre `pnpm run check:content-parity`.
 
 Ese check exige:
 
-- el mismo `permalink` y `translationKey` en ambos idiomas
-- `ogImage`
-- `heroAlt` si hay `heroImage`
-- `alt` en cada `<Image />`
+- `title`, `description`, `date` y `slug`
+- carpeta `es` o `en`
+- el mismo `slug` en ambos idiomas y el mismo nombre de archivo
+- `alt` en cada `![alt](src)`
 - al menos un enlace interno
 
-Un `h1` por página lo cubre el layout editorial; no lo pongas otra vez en el MDX.
+Un `h1` por página lo cubre el layout editorial.

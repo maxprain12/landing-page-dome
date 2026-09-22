@@ -1,45 +1,30 @@
 ---
 title: "Gestionar contactos y leads con contexto"
+date: 2026-09-19
 description: "El hub de Contactos guarda historial y siguiente paso junto al material de la biblioteca. No es un CRM enterprise: es la ficha que da sentido a la conversación."
-locale: es
-permalink: contacts
-translationKey: contacts
-publishedAt: 2026-09-17
-category: Personas
-order: 3
+cover: /dome-recursos-landing/dome-social-detail-light-es-primary-landscape.png
 tags:
   - contactos
   - workflow
   - many
-ogImage: /dome-recursos-landing/dome-social-detail-light-es-primary-landscape.png
-heroImage: /dome-recursos-landing/dome-social-detail-light-es-primary-landscape.png
-heroAlt: "Ficha de una persona en Dome junto al contexto del workspace."
-howTo:
-  - name: Abrir Contactos
-    text: En la edición Pro, el hub de Contactos vive en la navegación principal.
-  - name: Crear o abrir una ficha
-    text: Añade el siguiente paso y relaciona el recurso que explica la conversación.
-  - name: Pedir el seguimiento a Many
-    text: Con la persona y el material abiertos, Many prepara el correo o la nota.
+slug: contacts
 ---
 
 En Pro, **Personas** es el hub de **Contactos**: fichas con historial, siguiente paso y el material que explica por qué escribes. No sustituye a un CRM de equipo. Evita que el seguimiento viva en otra herramienta mientras el PDF vive en Dome.
 
-<Image
-  src="/how/how-people.png"
-  alt="Escena de personas y seguimiento en Dome."
-  width="1600"
-  height="1000"
-  caption="Cada persona, junto al recurso que da sentido al siguiente paso."
-/>
+1. **Abrir Contactos.** En la edición Pro, el hub de Contactos vive en la navegación principal.
+2. **Crear o abrir una ficha.** Añade el siguiente paso y relaciona el recurso que explica la conversación.
+3. **Pedir el seguimiento a Many.** Con la persona y el material abiertos, Many prepara el correo o la nota.
+
+![Escena de personas y seguimiento en Dome.](/how/how-people.png)
+
+*Cada persona, junto al recurso que da sentido al siguiente paso.*
 
 ## Qué guarda una ficha
 
 Nombre, rol, notas, interacciones y el siguiente paso. Puedes enlazar identidades (correo, red) cuando hayas conectado un canal. Many puede ayudar a crear o actualizar una ficha a partir de un recurso o de un mensaje, pero tú revisas el resultado.
 
-<Callout type="note" title="Nombres de producto">
-En la interfaz verás **Contactos**. En documentación de código aparece el módulo Personas. Es la misma superficie.
-</Callout>
+> **Nombres de producto.** En la interfaz verás **Contactos**. En documentación de código aparece el módulo Personas. Es la misma superficie.
 
 ## De la ficha a la acción
 

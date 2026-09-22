@@ -6,7 +6,7 @@ import DomeIcon from "../icons/DomeIcon.astro";
 import { links } from "../../data/landing";
 import { contentPath, readingMinutes, relatedEntries, type ContentEntry, type ContentKind } from "../../lib/content";
 import { localizePath, t, type Locale } from "../../i18n";
-import { mdxComponents } from "./mdx";
+import { AUTHOR_NAME } from "../../lib/site";
 
 interface Props {
   locale: Locale;
@@ -21,17 +21,18 @@ const copy = t(locale);
 const { Content } = await render(entry);
 const minutes = readingMinutes(entry.body);
 const related = relatedEntries(siblings, entry);
-const publishedIso = entry.data.publishedAt.toISOString().slice(0, 10);
-const publishedLabel = entry.data.publishedAt.toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
+const publishedIso = entry.data.date.toISOString().slice(0, 10);
+const publishedLabel = entry.data.date.toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
   day: "numeric",
   month: "short",
   year: "numeric",
 });
 const indexHref = localizePath(kind === "blog" ? "/blog" : "/manual", locale);
 const indexLabel = kind === "blog" ? copy.nav.blog : copy.nav.manuals;
-const esHref = locale === "es" ? contentPath(kind, entry.data.permalink, "es") : (translationPath ?? undefined);
-const enHref = locale === "en" ? contentPath(kind, entry.data.permalink, "en") : (translationPath ?? undefined);
-const author = entry.data.author;
+const esHref = locale === "es" ? contentPath(kind, entry.data.slug, "es") : (translationPath ?? undefined);
+const enHref = locale === "en" ? contentPath(kind, entry.data.slug, "en") : (translationPath ?? undefined);
+const author = AUTHOR_NAME;
+const tag = entry.data.tags[0];
 const initials = author
   .split(/\s+/)
   .filter(Boolean)
@@ -56,11 +57,11 @@ const initials = author
   </header>
 
   {
-    entry.data.heroImage ? (
+    entry.data.cover ? (
       <figure class="article-shot">
         <img
-          src={entry.data.heroImage}
-          alt={entry.data.heroAlt ?? entry.data.title}
+          src={entry.data.cover}
+          alt={entry.data.title}
           width="2800"
           height="1800"
           loading="eager"
@@ -71,7 +72,7 @@ const initials = author
   }
 
   <article class="prose">
-    <Content components={mdxComponents} />
+    <Content />
   </article>
 
   {
@@ -84,7 +85,7 @@ const initials = author
         <ul class="related-list">
           {related.map((item) => (
             <li>
-              <a href={contentPath(kind, item.data.permalink, locale)}>{item.data.title}</a>
+              <a href={contentPath(kind, item.data.slug, locale)}>{item.data.title}</a>
             </li>
           ))}
         </ul>
@@ -94,7 +95,7 @@ const initials = author
 
   <footer class="article-end">
     <div class="article-bar">
-      <span class="article-chip">{entry.data.category}</span>
+      {tag ? <span class="article-chip">{tag}</span> : <span />}
       <span class="article-mins">{minutes} {copy.content.minutes}</span>
     </div>
     <div class="byline">
@@ -273,6 +274,25 @@ const initials = author
   }
   .prose :global(strong) {
     color: var(--color-text);
+  }
+  .prose :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+    margin: 1.6rem 0 0.4rem;
+  }
+  .prose :global(blockquote) {
+    margin: 1.4rem 0 1.6rem;
+    padding: 0.15rem 0 0.15rem 1rem;
+    border-left: 3px solid var(--color-border);
+    color: var(--color-text);
+  }
+  .prose :global(blockquote p) {
+    margin: 0;
+  }
+  .prose :global(em) {
+    color: var(--color-ink-3);
   }
   .prose :global(code) {
     font-family: var(--font-mono);

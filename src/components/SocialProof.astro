@@ -75,7 +75,13 @@ const initial = tabs.find((tab) => tab.id === "many") ?? tabs[0];
       }
     </div>
 
-    <figure class="pf-window" id="pf-panel" role="tabpanel" aria-labelledby={`pf-tab-${initial?.id ?? "many"}`}>
+    <div
+      class="pf-panel"
+      id="pf-panel"
+      role="tabpanel"
+      aria-labelledby={`pf-tab-${initial?.id ?? "many"}`}
+    >
+      <figure class="pf-window">
       {
         initial?.shot ? (
           <img
@@ -90,11 +96,12 @@ const initial = tabs.find((tab) => tab.id === "many") ?? tabs[0];
         ) : null
       }
       <figcaption data-pf-caption>{initial?.caption}</figcaption>
-    </figure>
+      </figure>
+    </div>
     <div class="pf-preload" aria-hidden="true">
       {
         tabs.map((tab) =>
-          tab.shot ? <img src={tab.shot} alt="" width="1" height="1" /> : null,
+          tab.shot ? <img src={tab.shot} alt="" width="1" height="1" loading="lazy" decoding="async" /> : null,
         )
       }
     </div>
@@ -197,12 +204,12 @@ const initial = tabs.find((tab) => tab.id === "many") ?? tabs[0];
     font-size: 0.98rem;
     font-weight: 600;
     letter-spacing: -0.02em;
-    color: var(--color-zinc-300);
+    color: var(--color-text-secondary);
   }
   .pf-tab-text {
     font-size: 0.82rem;
     line-height: 1.4;
-    color: var(--color-zinc-400);
+    color: var(--color-zinc-100);
   }
   .pf-tab:hover .pf-tab-title,
   .pf-tab:hover .pf-tab-text {
@@ -217,10 +224,13 @@ const initial = tabs.find((tab) => tab.id === "many") ?? tabs[0];
   .pf-tab.is-on .pf-tab-text {
     color: var(--color-text-secondary);
   }
-  .pf-window {
+  .pf-panel {
     grid-column: 1 / -1;
     grid-row: 3;
+  }
+  .pf-window {
     margin: 0.2rem 0 0;
+    display: block;
     border-radius: 22px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -256,6 +266,7 @@ const initial = tabs.find((tab) => tab.id === "many") ?? tabs[0];
     .pf-h2,
     .pf-lead,
     .pf-tabs,
+    .pf-panel,
     .pf-window {
       grid-column: 1;
       grid-row: auto;

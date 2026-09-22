@@ -110,25 +110,7 @@ export function techArticleJsonLd(args: {
   locale: Locale;
   publishedAt: Date;
   updatedAt?: Date;
-  steps?: { name: string; text: string }[];
 }) {
-  if (args.steps?.length) {
-    return {
-      "@context": "https://schema.org",
-      "@type": "HowTo",
-      name: args.title,
-      description: args.description,
-      image: absoluteUrl(args.image, args.origin),
-      url: args.url,
-      inLanguage: args.locale === "es" ? "es-ES" : "en-US",
-      step: args.steps.map((step, index) => ({
-        "@type": "HowToStep",
-        position: index + 1,
-        name: step.name,
-        text: step.text,
-      })),
-    };
-  }
   return {
     "@context": "https://schema.org",
     "@type": "TechArticle",

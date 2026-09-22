@@ -109,19 +109,11 @@ function initHeroStory(reduce: boolean): void {
 
   const stacked = window.matchMedia(MOBILE_MQ).matches;
   if (stacked || reduce) {
-    if (stacked) {
-      track.classList.remove("is-pinned");
-      root.style.setProperty("--reveal", "0");
-      pin.style.removeProperty("--shot-w");
-      pin.style.removeProperty("--shot-h");
-      pin.style.removeProperty("padding-top");
-    } else {
-      track.classList.add("is-pinned");
-      lastReveal = 1;
-      lastSplit = 1;
-      root.style.setProperty("--reveal", "1");
-      lockShotSize();
-    }
+    document.documentElement.classList.remove("hero-pin");
+    root.style.setProperty("--reveal", "0");
+    pin.style.removeProperty("--shot-w");
+    pin.style.removeProperty("--shot-h");
+    pin.style.removeProperty("padding-top");
     applyPhase("editions");
     applyEdition("pro");
     root.style.setProperty("--split", "1");
@@ -142,9 +134,8 @@ function initHeroStory(reduce: boolean): void {
     return;
   }
 
+  document.documentElement.classList.add("hero-pin");
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-  track.classList.add("is-pinned");
-  lockShotSize();
   window.addEventListener(
     "resize",
     () => {
@@ -250,7 +241,6 @@ function initHeroStory(reduce: boolean): void {
   }
 
   requestAnimationFrame(() => {
-    lockShotSize();
     ScrollTrigger.refresh();
   });
 }

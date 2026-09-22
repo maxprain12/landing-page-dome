@@ -1,19 +1,13 @@
 ---
 title: "From a PDF to an approved follow-up"
+date: 2026-09-17
 description: "From a PDF to an approved follow-up: import the resource, open the person, let Many draft, and approve before anything sends."
-locale: en
-permalink: pdf-to-follow-up
-translationKey: pdf-follow-up
-publishedAt: 2026-09-17
-updatedAt: 2026-09-19
-category: Workflow
+cover: /dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png
 tags:
   - workflow
   - many
   - contacts
-ogImage: /dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png
-heroImage: /dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png
-heroAlt: "Dome Many thread: brief for Elena from workspace PDFs, with Email and Social in the sidebar."
+slug: pdf-to-follow-up
 ---
 
 ## Document + person, not another inbox
@@ -24,12 +18,10 @@ The work Dome sells is not “another inbox”. It is a thread: a document, a pe
 
 This is how you go from a PDF to an approved follow-up without losing document + person context.
 
-<Flow title="From import to approval">
-  <FlowStep title="Import the resource">Add the PDF to the [local library](/en/manual/library). The file stays in Dome’s storage.</FlowStep>
-  <FlowStep title="Open or create the person">Relate the material to the person who should get the follow-up.</FlowStep>
-  <FlowStep title="Ask Many for a draft">With the resource and record open, Many cites sources and leaves the email (or brief) ready.</FlowStep>
-  <FlowStep title="Approve the send">Nothing leaves until you review it. Human approval before sending.</FlowStep>
-</Flow>
+1. **Import the resource.** Add the PDF to the [local library](/en/manual/library). The file stays in Dome’s storage.
+2. **Open or create the person.** Relate the material to the person who should get the follow-up.
+3. **Ask Many for a draft.** With the resource and record open, Many cites sources and leaves the email (or brief) ready.
+4. **Approve the send.** Nothing leaves until you review it. Human approval before sending.
 
 If this is your first run, the [first workflow](/en/manual/first-workflow) walks the same loop in [Pro](/en/pro).
 
@@ -37,28 +29,21 @@ If this is your first run, the [first workflow](/en/manual/first-workflow) walks
 
 You save the PDF. You jot the next step somewhere else. Weeks later, the email is written without the scope or the history in view. Pro keeps the person record next to the material that makes the conversation make sense: history, next step, and open resource.
 
-<Gallery title="The same thread, two surfaces">
-  <Image
-    src="/dome-recursos-landing/dome-library-composition-light-es-primary-landscape.png"
-    alt="Dome library composition with an open resource."
-    caption="Library: the PDF lives on your disk."
-  />
-  <Image
-    src="/dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png"
-    alt="Dome Many thread: brief for Elena from workspace PDFs, with Email and Social in the sidebar."
-    caption="Many: the draft comes from the open context."
-  />
-</Gallery>
+![Dome library composition with an open resource.](/dome-recursos-landing/dome-library-composition-light-es-primary-landscape.png)
+
+*Library: the PDF lives on your disk.*
+
+![Dome Many thread: brief for Elena from workspace PDFs, with Email and Social in the sidebar.](/dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png)
+
+*Many: the draft comes from the open context.*
 
 ## Many prepares, you approve — also on LinkedIn/X if you connect
 
 Many does not publish or send email on its own. Send tools wait for human approval. If you have not connected email yet, you can ask for a brief or a note and copy the text. If you connect email or social, the outbound channel can be email, LinkedIn, or X: Many prepares the draft and you approve. The loop does not depend on a cloud account. More in [channels with approval](/en/manual/email-and-social).
 
-<Callout type="tip" title="Demo, not a testimonial">
-Screenshots use the Atlas project and a demonstration flow. They are not a real account or a customer metric.
-</Callout>
+> **Demo, not a testimonial.** Screenshots use the Atlas project and a demonstration flow. They are not a real account or a customer metric.
 
-<Diagram variant="approval" title="Nothing leaves without you" />
+### Nothing leaves without you
 
 ## Next step
 

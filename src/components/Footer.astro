@@ -80,7 +80,7 @@ const legalLinks: FooterLink[] = [
           >
             <DomeIcon name="github" size={16} filled />
           </a>
-          <a class="ft-social-btn" href={`mailto:${links.email}`} aria-label={copy.footer.contact}>
+          <a class="ft-social-btn" href={`mailto:${links.email}`} aria-label={copy.footer.email}>
             <DomeIcon name="mail" size={16} />
           </a>
         </div>
@@ -279,14 +279,14 @@ const legalLinks: FooterLink[] = [
     padding-top: 1.05rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     font-size: 0.78rem;
-    color: #71717a;
+    color: var(--color-text-secondary);
   }
   .ft-bottom-links {
     display: flex;
     gap: 1.15rem;
   }
   .ft-bottom a {
-    color: #71717a;
+    color: var(--color-text-secondary);
   }
   .ft-bottom a:hover {
     color: #d4d4d8;

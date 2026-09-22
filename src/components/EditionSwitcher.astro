@@ -282,7 +282,7 @@ const editions: {
     opacity: 1;
   }
 
-  :global(.hero-track.is-pinned) .story-stage {
+  :global(html.hero-pin) .story-stage {
     display: block;
     position: relative;
     flex: 1 1 0;
@@ -291,7 +291,7 @@ const editions: {
     min-height: 0;
     overflow: visible;
   }
-  :global(.hero-track.is-pinned) .story-frame {
+  :global(html.hero-pin) .story-frame {
     display: block;
     position: absolute;
     left: 50%;
@@ -305,7 +305,7 @@ const editions: {
     will-change: transform;
     backface-visibility: hidden;
   }
-  :global(.hero-track.is-pinned) .story-window {
+  :global(html.hero-pin) .story-window {
     position: relative;
     width: var(--shot-w);
     height: var(--shot-h);
@@ -319,7 +319,7 @@ const editions: {
       0 28px 80px -24px rgba(0, 0, 0, calc(0.45 * (1 - var(--reveal, 0)))),
       0 0 0 1px rgba(255, 255, 255, calc(0.08 * (1 - var(--reveal, 0))));
   }
-  :global(.hero-track.is-pinned) .story-rail {
+  :global(html.hero-pin) .story-rail {
     position: absolute;
     z-index: 2;
     left: 0;
@@ -340,28 +340,28 @@ const editions: {
     pointer-events: auto;
   }
 
-  :global(.hero-track:not(.is-pinned)) .story-stage {
+  :global(html:not(.hero-pin)) .story-stage {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
   }
-  :global(.hero-track:not(.is-pinned)) .story-rail {
+  :global(html:not(.hero-pin)) .story-rail {
     order: 2;
   }
-  :global(.hero-track:not(.is-pinned)) .story-window {
+  :global(html:not(.hero-pin)) .story-window {
     order: 1;
     height: auto;
     box-shadow: 0 28px 80px -24px rgba(0, 0, 0, 0.45);
   }
-  :global(.hero-track:not(.is-pinned)) .story-window :global(.ashell),
-  :global(.hero-track:not(.is-pinned)) .story-window :global(.ashell-shot) {
+  :global(html:not(.hero-pin)) .story-window :global(.ashell),
+  :global(html:not(.hero-pin)) .story-window :global(.ashell-shot) {
     width: 100%;
     height: auto;
     max-width: 100%;
   }
 
   @media (max-width: 860px) {
-    :global(.hero-track.is-pinned) .story-stage,
+    :global(html.hero-pin) .story-stage,
     .story-stage {
       display: flex;
       flex-direction: column;
@@ -374,7 +374,7 @@ const editions: {
       gap: 0.85rem;
       padding-top: 0;
     }
-    :global(.hero-track.is-pinned) .story-frame,
+    :global(html.hero-pin) .story-frame,
     .story-frame {
       display: contents;
       position: static;
@@ -387,7 +387,7 @@ const editions: {
       padding-left: 0;
       transform: none;
     }
-    :global(.hero-track.is-pinned) .story-window,
+    :global(html.hero-pin) .story-window,
     .story-window {
       position: relative;
       order: 1;
@@ -400,7 +400,7 @@ const editions: {
       transform: none;
       box-shadow: 0 28px 80px -24px rgba(0, 0, 0, 0.45);
     }
-    :global(.hero-track.is-pinned) .story-rail,
+    :global(html.hero-pin) .story-rail,
     .story-rail {
       position: relative;
       order: 2;

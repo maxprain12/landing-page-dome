@@ -1,27 +1,20 @@
 ---
 title: "Many con Ollama: tu biblioteca personal sin API keys en la nube"
+date: 2026-09-17
 description: "Configura Ollama en local, deja que Many lea tus recursos indexados y trabaja sin enviar el contexto a un proveedor cloud."
-locale: es
-permalink: many-with-ollama
-translationKey: many-ollama
-publishedAt: 2026-09-17
-category: Modelos
+cover: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
 tags:
   - ollama
   - many
   - local-first
-ogImage: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
-heroImage: /dome-recursos-landing/dome-many-screen-light-es-primary-landscape.png
-heroAlt: "Pantalla de Many en Dome lista para preguntar sobre un recurso abierto."
+slug: many-with-ollama
 ---
 
 Puedes usar Dome sin cuenta cloud y sin claves de un proveedor remoto. En el onboarding, el paso de IA te deja elegir un modelo local con Ollama. Many entonces lee la biblioteca que ya tienes en disco.
 
-<Image
-  src="/dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png"
-  alt="Composición de Many con el contexto de la biblioteca visible."
-  caption="Many trabaja sobre el recurso abierto. El modelo puede ser Ollama en local."
-/>
+![Composición de Many con el contexto de la biblioteca visible.](/dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png)
+
+*Many trabaja sobre el recurso abierto. El modelo puede ser Ollama en local.*
 
 ## Qué necesitas
 
@@ -31,23 +24,19 @@ Puedes usar Dome sin cuenta cloud y sin claves de un proveedor remoto. En el onb
 
 No necesitas iniciar sesión en el Provider para esta prueba.
 
-<Callout type="warning" title="Offline no es automático para todo">
-El chat con Ollama puede quedarse en local. Indexar PDFs escaneados o imágenes puede pedir un modelo de visión; si no lo tienes en local, esa parte no estará 100 % offline.
-</Callout>
+> **Offline no es automático para todo.** El chat con Ollama puede quedarse en local. Indexar PDFs escaneados o imágenes puede pedir un modelo de visión; si no lo tienes en local, esa parte no estará 100 % offline.
 
-<Diagram variant="library" title="De archivo a Listo para IA" />
+### De archivo a Listo para IA
 
 ## Cómo pedirle trabajo a Many
 
 Abre el recurso. Abre Many (`Cmd+Shift+M` en el atajo documentado de la app). Pregunta con el archivo a la vista: un brief, un resumen, las tres fuentes de un proyecto. Many cita lo que puede recuperar del índice. Si el badge **Listo para IA** aún no aparece, espera a la indexación o revisa el [manual de biblioteca](/manual/library).
 
-<Video
-  poster="/dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png"
-  title="Many prepara un brief sobre el recurso abierto"
-  transcriptLabel="Transcripción"
->
-  Abres un PDF en la biblioteca. Many muestra el contexto del recurso. Pides un brief. El panel deja el texto listo para copiar o convertir en correo. Nada se envía.
-</Video>
+![Many prepara un brief sobre el recurso abierto](/dome-recursos-landing/dome-many-detail-light-es-primary-landscape.png)
+
+*Many prepara un brief sobre el recurso abierto*
+
+Abres un PDF en la biblioteca. Many muestra el contexto del recurso. Pides un brief. El panel deja el texto listo para copiar o convertir en correo. Nada se envía.
 
 ## Cuándo sí usar un proveedor cloud
 

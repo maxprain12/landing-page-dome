@@ -382,6 +382,7 @@ export const en: Dictionary = {
     github: "GitHub",
     license: "License",
     contact: "Contact",
+    email: "Email",
     privacy: "Privacy",
     terms: "Terms",
     manual: "Manual",

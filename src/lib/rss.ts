@@ -13,8 +13,8 @@ export async function blogFeed(context: APIContext, locale: Locale) {
     items: posts.map((post) => ({
       title: post.data.title,
       description: post.data.description,
-      pubDate: post.data.publishedAt,
-      link: contentPath("blog", post.data.permalink, locale),
+      pubDate: post.data.date,
+      link: contentPath("blog", post.data.slug, locale),
     })),
   });
 }

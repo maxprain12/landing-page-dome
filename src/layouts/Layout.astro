@@ -4,6 +4,7 @@ import { localeFromPath, localizePath, t } from "../i18n";
 import NoisyGradient from "../components/NoisyGradient.astro";
 import { softwareJsonLd, webSiteJsonLd } from "../lib/seo";
 import { DEFAULT_OG_IMAGE, absoluteUrl, siteOrigin } from "../lib/site";
+import { shotForView } from "../data/shots";
 
 interface Props {
   title?: string;
@@ -53,6 +54,7 @@ const ogLocale = locale === "es" ? "es_ES" : "en_US";
 const altOg = locale === "es" ? "en_US" : "es_ES";
 const ogImageUrl = absoluteUrl(ogImage, siteUrl);
 const isHome = (barePath.replace(/\/+$/, "") || "/") === "/";
+const lcpImage = isHome ? shotForView("library") : null;
 const structured =
   jsonLd ??
   (isHome ? [softwareJsonLd(siteUrl, description), webSiteJsonLd(siteUrl)] : undefined);
@@ -111,46 +113,37 @@ const moonColors = [
       ) : null
     }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
+    {isHome && lcpImage ? (
+      <link
+        rel="preload"
+        as="image"
+        href={lcpImage}
+        type={lcpImage.endsWith(".webp") ? "image/webp" : undefined}
+        fetchpriority="high"
+      />
+    ) : null}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
     <script is:inline>
       (function () {
-        var want = "es";
-        var stored = null;
         try {
-          stored = localStorage.getItem("dome-locale");
-          if (stored === "en" || stored === "es") want = stored;
-          else stored = null;
-        } catch (e) {
-          stored = null;
-        }
-        if (!stored) {
-          var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
-          for (var i = 0; i < langs.length; i++) {
-            var tag = String(langs[i] || "").toLowerCase();
-            if (tag.indexOf("en") === 0) {
-              want = "en";
-              break;
-            }
-            if (tag.indexOf("es") === 0) {
-              want = "es";
-              break;
+          var stored = localStorage.getItem("dome-locale");
+          if (stored === "en" || stored === "es") {
+            var path = location.pathname;
+            var onEn = path === "/en" || path.indexOf("/en/") === 0;
+            if (stored === "en" && !onEn) {
+              var dest = path === "/" ? "/en/" : "/en" + path;
+              location.replace(dest + location.search + location.hash);
+            } else if (stored === "es" && onEn) {
+              var rest = path === "/en" || path === "/en/" ? "/" : path.replace(/^\/en/, "") || "/";
+              location.replace(rest + location.search + location.hash);
             }
           }
-        }
-        var path = location.pathname;
-        var onEn = path === "/en" || path.indexOf("/en/") === 0;
-        if (want === "en" && !onEn) {
-          var dest = path === "/" ? "/en/" : "/en" + path;
-          location.replace(dest + location.search + location.hash);
-        } else if (want === "es" && onEn) {
-          var rest = path === "/en" || path === "/en/" ? "/" : path.replace(/^\/en/, "") || "/";
-          location.replace(rest + location.search + location.hash);
-        }
+        } catch (e) {}
+        try {
+          var desktop = window.matchMedia("(min-width: 861px)").matches;
+          var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (desktop && !reduce) document.documentElement.classList.add("hero-pin");
+        } catch (e2) {}
       })();
     </script>
   </head>
@@ -255,6 +248,21 @@ const moonColors = [
     --shadow-md: none;
     --transition-fast: 150ms ease;
     --transition-base: 250ms ease;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/inter-latin.woff2") format("woff2");
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 100 800;
+    font-display: swap;
+    src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
   }
 
   *,

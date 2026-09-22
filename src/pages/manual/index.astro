@@ -25,7 +25,7 @@ const url = `${origin}/manual`;
     description: page.description,
     items: entries.map((entry) => ({
       name: entry.data.title,
-      url: `${origin}${localizePath(`/manual/${entry.data.permalink}`, locale)}`,
+      url: `${origin}${localizePath(`/manual/${entry.data.slug}`, locale)}`,
     })),
   })}
 >

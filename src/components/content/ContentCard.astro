@@ -13,27 +13,27 @@ interface Props {
 const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
 const { kind, entry, variant = "grid" } = Astro.props;
 const copy = t(locale);
-const href = contentPath(kind, entry.data.permalink, locale);
+const href = contentPath(kind, entry.data.slug, locale);
 const minutes = readingMinutes(entry.body);
 const featured = variant === "featured";
-const search = [entry.data.title, entry.data.description, entry.data.category].join(" ");
+const search = [entry.data.title, entry.data.description, ...entry.data.tags].join(" ");
 ---
 
 <a
   class:list={["card", featured && "is-featured"]}
   href={href}
   data-entry
-  data-category={entry.data.category}
+  data-tags={entry.data.tags.join("|")}
   data-search={search}
 >
   <div class="card-shot">
     <ContentCover
-      src={entry.data.heroImage}
-      alt={entry.data.heroAlt ?? entry.data.title}
+      src={entry.data.cover}
+      alt={entry.data.title}
       title={entry.data.title}
       size={featured ? "featured" : "grid"}
       eager={featured}
-      chip={entry.data.category}
+      chip={entry.data.tags[0]}
     />
   </div>
   <div class="card-body">

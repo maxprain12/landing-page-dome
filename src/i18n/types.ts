@@ -246,6 +246,7 @@ export interface Dictionary {
     github: string;
     license: string;
     contact: string;
+    email: string;
     privacy: string;
     terms: string;
     manual: string;

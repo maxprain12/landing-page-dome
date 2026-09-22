@@ -1,37 +1,28 @@
 ---
 title: "Local-first isn’t local-only: where your data lives in Dome"
+date: 2026-09-17
 description: "Your library and people stay on disk. A cloud provider only receives content when you connect it, and sending or publishing waits for your approval."
-locale: en
-permalink: local-first
-translationKey: local-first
-publishedAt: 2026-09-17
-category: Trust
+cover: /dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png
 tags:
   - local-first
   - privacy
   - many
-ogImage: /dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png
-heroImage: /dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png
-heroAlt: "Many in Dome next to the provider picker, over the local library."
+slug: local-first
 ---
 
 Dome is **local-first**: the library, people records, and index live in the app’s storage on your Mac, Windows, or Linux machine. That is not **local-only**. If you run Ollama locally, that conversation stays on your computer. If you connect a cloud provider with your own keys, that conversation’s content follows that provider’s policy.
 
-<Callout type="note" title="The distinction that matters">
-Local-first describes the default. It is not a promise that nothing will ever leave your disk. OAuth, email, social, and a cloud model are opt-in.
-</Callout>
+> **The distinction that matters.** Local-first describes the default. It is not a promise that nothing will ever leave your disk. OAuth, email, social, and a cloud model are opt-in.
 
-<Diagram variant="local-first" title="Where context lives" />
+### Where context lives
 
 ## What stays on your computer
 
 On macOS, Windows, and Linux, Dome stores the library, people records, and semantic index in the application data folder. It does not centralize your full library on its own servers by default. Many works on that material: the open resource, the related person, and what you already indexed.
 
-<Image
-  src="/dome-recursos-landing/dome-library-screen-light-es-primary-landscape.png"
-  alt="Dome library with local resources open on the desktop."
-  caption="The library lives on your disk. This capture uses the Atlas demo project."
-/>
+![Dome library with local resources open on the desktop.](/dome-recursos-landing/dome-library-screen-light-es-primary-landscape.png)
+
+*The library lives on your disk. This capture uses the Atlas demo project.*
 
 ## What can leave, and when
 
@@ -41,9 +32,7 @@ There are three explicit hops:
 2. **Channels.** Email and social are optional. A Many draft does not send or publish without your go-ahead.
 3. **Dome cloud.** Sync and credits depend on Provider when they exist. They are not required to try the local value.
 
-<Callout type="warning" title="PDF and image indexing">
-Some formats may use a vision model from the provider you already configured. Do not assume a scanned PDF is indexed fully offline.
-</Callout>
+> **PDF and image indexing.** Some formats may use a vision model from the provider you already configured. Do not assume a scanned PDF is indexed fully offline.
 
 ## How to check this in practice
 

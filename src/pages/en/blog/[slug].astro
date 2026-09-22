@@ -1,7 +1,7 @@
 ---
 import Layout from "../../../layouts/Layout.astro";
 import ContentArticle from "../../../components/content/ContentArticle.astro";
-import { publishedEntries, staticPathsFor } from "../../../lib/content";
+import { contentCover, publishedEntries, staticPathsFor } from "../../../lib/content";
 import { blogPostingJsonLd, breadcrumbJsonLd } from "../../../lib/seo";
 import { siteOrigin } from "../../../lib/site";
 import { localizePath, t } from "../../../i18n";
@@ -21,10 +21,10 @@ interface Props {
 const { entry, locale, translationPath } = Astro.props;
 const siblings = await publishedEntries("blog", locale);
 const origin = siteOrigin(Astro.site);
-const path = localizePath(`/blog/${entry.data.permalink}`, locale);
+const path = localizePath(`/blog/${entry.data.slug}`, locale);
 const url = `${origin}${path}`;
 const copy = t(locale);
-const image = entry.data.ogImage || entry.data.heroImage || "/social.png";
+const image = contentCover(entry);
 ---
 
 <Layout
@@ -37,8 +37,8 @@ const image = entry.data.ogImage || entry.data.heroImage || "/social.png";
   hreflangEn={path}
   ogImage={image}
   ogType="article"
-  publishedTime={entry.data.publishedAt.toISOString()}
-  modifiedTime={(entry.data.updatedAt ?? entry.data.publishedAt).toISOString()}
+  publishedTime={entry.data.date.toISOString()}
+  modifiedTime={entry.data.date.toISOString()}
   jsonLd={[
     blogPostingJsonLd({
       origin,
@@ -47,8 +47,7 @@ const image = entry.data.ogImage || entry.data.heroImage || "/social.png";
       description: entry.data.description,
       image,
       locale,
-      publishedAt: entry.data.publishedAt,
-      updatedAt: entry.data.updatedAt,
+      publishedAt: entry.data.date,
     }),
     breadcrumbJsonLd(origin, [
       { name: "Dome", path: "/en/" },

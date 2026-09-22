@@ -17,12 +17,12 @@ function extractFrontmatter(text) {
   return data;
 }
 
-function walkMdx(dir, out = []) {
+function walkMd(dir, out = []) {
   if (!fs.existsSync(dir)) return out;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) walkMdx(full, out);
-    else if (/\.mdx$/.test(entry.name)) out.push(full);
+    if (entry.isDirectory()) walkMd(full, out);
+    else if (/\.md$/.test(entry.name)) out.push(full);
   }
   return out;
 }
@@ -30,51 +30,50 @@ function walkMdx(dir, out = []) {
 export function checkContentParity(repoRoot) {
   const errors = [];
   for (const kind of ["blog", "manual"]) {
-    const files = walkMdx(path.join(repoRoot, "src/content", kind));
-    const byKey = new Map();
+    const files = walkMd(path.join(repoRoot, "src/content", kind));
+    const bySlug = new Map();
     const slugs = { es: new Set(), en: new Set() };
     for (const file of files) {
       const rel = path.relative(repoRoot, file).split(path.sep).join("/");
+      const parts = rel.split("/");
+      const locale = parts[3];
+      const basename = path.basename(file, ".md");
       const text = fs.readFileSync(file, "utf8");
       const fm = extractFrontmatter(text);
       if (!fm) {
         errors.push(`${rel}: missing frontmatter`);
         continue;
       }
-      for (const field of ["title", "description", "locale", "permalink", "translationKey", "ogImage"]) {
+      for (const field of ["title", "description", "date", "slug"]) {
         if (!fm[field]) errors.push(`${rel}: missing ${field}`);
       }
-      if (fm.heroImage && !fm.heroAlt) {
-        errors.push(`${rel}: heroAlt required when heroImage is set`);
+      if (locale !== "es" && locale !== "en") {
+        errors.push(`${rel}: locale folder must be es or en`);
+        continue;
+      }
+      if (fm.slug && basename !== fm.slug) {
+        errors.push(`${rel}: filename must match slug ${fm.slug}`);
       }
       const body = text.replace(/^---[\s\S]*?---/, "");
-      for (const image of body.matchAll(/<Image\b[\s\S]*?\/>/g)) {
-        if (!/\balt=/.test(image[0])) errors.push(`${rel}: Image without alt`);
+      for (const image of body.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)) {
+        if (!image[1].trim()) errors.push(`${rel}: Image without alt`);
       }
       if (!/\]\((?:\/|https?:)/.test(body) && !/\bhref=/.test(body)) {
         errors.push(`${rel}: missing internal or related link`);
       }
-      if (fm.locale !== "es" && fm.locale !== "en") {
-        errors.push(`${rel}: locale must be es or en`);
-        continue;
+      if (fm.slug && slugs[locale].has(fm.slug)) {
+        errors.push(`${rel}: duplicate slug ${fm.slug} for ${locale}`);
       }
-      if (fm.permalink && slugs[fm.locale].has(fm.permalink)) {
-        errors.push(`${rel}: duplicate permalink ${fm.permalink} for ${fm.locale}`);
-      }
-      if (fm.permalink) slugs[fm.locale].add(fm.permalink);
-      if (fm.translationKey) {
-        const entry = byKey.get(fm.translationKey) ?? {};
-        entry[fm.locale] = { rel, permalink: fm.permalink };
-        byKey.set(fm.translationKey, entry);
+      if (fm.slug) slugs[locale].add(fm.slug);
+      if (fm.slug) {
+        const entry = bySlug.get(fm.slug) ?? {};
+        entry[locale] = { rel, slug: fm.slug };
+        bySlug.set(fm.slug, entry);
       }
     }
-    for (const [key, pair] of byKey) {
+    for (const [key, pair] of bySlug) {
       if (!pair.es || !pair.en) {
         errors.push(`${kind}:${key} missing ${pair.es ? "en" : "es"} translation`);
-        continue;
-      }
-      if (pair.es.permalink && pair.en.permalink && pair.es.permalink !== pair.en.permalink) {
-        errors.push(`${kind}:${key} permalink mismatch ${pair.es.permalink} vs ${pair.en.permalink}`);
       }
     }
   }

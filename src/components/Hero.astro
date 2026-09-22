@@ -73,15 +73,6 @@ function letters(word: string) {
   <p class="story-note">{copy.editions.note}</p>
 </section>
 
-<script is:inline>
-  (function () {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(max-width: 860px)").matches) return;
-    var track = document.querySelector("[data-story-track]");
-    if (track) track.classList.add("is-pinned");
-  })();
-</script>
-
 <script>
   document.querySelectorAll<HTMLElement>("[data-hero]").forEach((hero) => {
     const setPillar = (id: string, view?: string) => {
@@ -115,15 +106,15 @@ function letters(word: string) {
   }
   .hero-pin {
     position: relative;
-    min-height: calc(100svh - 4.75rem);
+    min-height: auto;
     display: flex;
     flex-direction: column;
-    padding: 4.5rem 1.25rem 0;
+    padding: 4.5rem 1.25rem 0.5rem;
     overflow: hidden;
     z-index: 1;
     isolation: isolate;
   }
-  .hero-track.is-pinned .hero-pin {
+  :global(html.hero-pin) .hero-track .hero-pin {
     --rail-w: 16.5rem;
     --shot-h: min(
       calc(100svh - 4.75rem - 16.5rem),
@@ -148,9 +139,11 @@ function letters(word: string) {
     width: min(1120px, 94vw);
     margin: 0 auto;
     flex: 0 0 auto;
-    pointer-events: none;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
   }
-  .hero-track.is-pinned .hero-copy {
+  :global(html.hero-pin) .hero-copy {
     position: relative;
     flex: 0 0 auto;
     min-height: 0;
@@ -160,19 +153,11 @@ function letters(word: string) {
     transform: translate3d(0, calc(var(--reveal) * -24px), 0);
     overflow: hidden;
     padding-bottom: calc((1 - var(--reveal)) * 0.7rem);
+    pointer-events: none;
   }
-  .hero[data-phase="peek"] .hero-copy,
-  .hero[data-phase="full"] .hero-copy {
+  :global(html.hero-pin) .hero[data-phase="peek"] .hero-copy,
+  :global(html.hero-pin) .hero[data-phase="full"] .hero-copy {
     pointer-events: auto;
-  }
-  .hero-track:not(.is-pinned) .hero-copy {
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-  .hero-track:not(.is-pinned) .hero-pin {
-    min-height: auto;
-    padding-bottom: 0.5rem;
   }
   .hero-title {
     font-family: var(--font-display);
@@ -305,7 +290,7 @@ function letters(word: string) {
   }
   @media (max-width: 860px) {
     .hero-pin,
-    .hero-track.is-pinned .hero-pin {
+    :global(html.hero-pin) .hero-track .hero-pin {
       --rail-w: 0px;
       height: auto;
       min-height: 0;
@@ -314,13 +299,14 @@ function letters(word: string) {
       padding: 1.1rem 1.05rem 1.5rem;
     }
     .hero-copy,
-    .hero-track.is-pinned .hero-copy {
+    :global(html.hero-pin) .hero-copy {
       width: 100%;
       max-height: none;
       overflow: visible;
       opacity: 1;
       transform: none;
       padding-bottom: 0.7rem;
+      pointer-events: auto;
     }
     .hero-title {
       font-size: clamp(2.05rem, 8.2vw, 2.55rem);

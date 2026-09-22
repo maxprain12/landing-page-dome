@@ -39,7 +39,9 @@ function publicUrl(rel: string): string | null {
 }
 
 function packFile(scene: ShotScene, format: ShotFormat): string {
-  return `${packDir}/dome-${scene}-${format}-light-es-primary-landscape.png`;
+  const stem = `${packDir}/dome-${scene}-${format}-light-es-primary-landscape`;
+  if (existsSync(join(publicDir, `${stem}.webp`))) return `${stem}.webp`;
+  return `${stem}.png`;
 }
 
 function fallbackFile(scene: ShotScene): string | null {

@@ -1,37 +1,28 @@
 ---
 title: "Local-first no es local-only: dónde viven tus datos en Dome"
+date: 2026-09-17
 description: "La biblioteca y las personas se guardan en tu disco. Un proveedor cloud solo recibe contenido cuando tú lo conectas, y enviar o publicar espera tu aprobación."
-locale: es
-permalink: local-first
-translationKey: local-first
-publishedAt: 2026-09-17
-category: Confianza
+cover: /dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png
 tags:
   - local-first
   - privacidad
   - many
-ogImage: /dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png
-heroImage: /dome-recursos-landing/dome-many-composition-light-es-primary-landscape.png
-heroAlt: "Many en Dome junto al selector de proveedor, sobre la biblioteca local."
+slug: local-first
 ---
 
 Dome es **local-first**: la biblioteca, las personas y el índice viven en el almacenamiento de la aplicación en tu Mac, Windows o Linux. Eso no significa **local-only**. Si conectas Ollama en local, el texto de esa conversación no sale de tu máquina. Si conectas un proveedor cloud con tus claves, el contenido de esa conversación sigue la política de ese proveedor.
 
-<Callout type="note" title="La distinción que importa">
-Local-first describe el valor por defecto. No es una promesa de que nada saldrá nunca de tu disco. OAuth, correo, redes y un modelo cloud son opt-in.
-</Callout>
+> **La distinción que importa.** Local-first describe el valor por defecto. No es una promesa de que nada saldrá nunca de tu disco. OAuth, correo, redes y un modelo cloud son opt-in.
 
-<Diagram variant="local-first" title="Dónde vive el contexto" />
+### Dónde vive el contexto
 
 ## Qué se queda en tu ordenador
 
 En macOS, Windows y Linux, Dome guarda la biblioteca, las fichas de personas y el índice semántico en la carpeta de datos de la aplicación. No centraliza tu biblioteca completa en un servidor propio por defecto. Many trabaja sobre ese material: el recurso abierto, la persona relacionada y lo que ya indexaste.
 
-<Image
-  src="/dome-recursos-landing/dome-library-screen-light-es-primary-landscape.png"
-  alt="Biblioteca de Dome con recursos locales abiertos en el escritorio."
-  caption="La biblioteca vive en tu disco. Esta captura usa el proyecto de demostración Atlas."
-/>
+![Biblioteca de Dome con recursos locales abiertos en el escritorio.](/dome-recursos-landing/dome-library-screen-light-es-primary-landscape.png)
+
+*La biblioteca vive en tu disco. Esta captura usa el proyecto de demostración Atlas.*
 
 ## Qué puede salir, y cuándo
 
@@ -41,9 +32,7 @@ Hay tres saltos explícitos:
 2. **Canales.** Correo y social son opcionales. Un borrador de Many no se envía ni se publica sin tu visto bueno.
 3. **Nube de Dome.** Sync y créditos dependen del Provider cuando existan. No son un requisito para probar el valor local.
 
-<Callout type="warning" title="Indexación de PDFs e imágenes">
-Algunos formatos pueden usar un modelo de visión del proveedor que ya configuraste. No asumas que un PDF escaneado se indexa 100 % offline.
-</Callout>
+> **Indexación de PDFs e imágenes.** Algunos formatos pueden usar un modelo de visión del proveedor que ya configuraste. No asumas que un PDF escaneado se indexa 100 % offline.
 
 ## Cómo comprobarlo en la práctica
 
