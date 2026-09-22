@@ -9,8 +9,10 @@ slug: prueba
 
 # prueba
 
-esto es una prueba de entrada a [local-first](/blog/local-first). 
+esto es una prueba de entrada a [local-first](/blog/local-first).
 
-![1.00](blob:http://localhost:5173/fd78f9ac-7d3d-48b2-8511-a35744f570ec)
+![1.00](/media/prueba/captura de pantalla 2026 09 15 a las 23 04 10.png)
 
-prueba de imagenes
+prueba 2
+
+![1.00](/media/prueba/image.png)
