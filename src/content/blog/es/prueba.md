@@ -9,4 +9,4 @@ slug: prueba
 
 # prueba
 
-esto es una prueba de entrada a
+esto es una prueba de entrada a [local-first](/blog/local-first).

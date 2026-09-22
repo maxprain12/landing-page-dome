@@ -17,8 +17,34 @@ export function localeFromEntry(entry: ContentEntry): Locale {
   return segment === "en" ? "en" : "es";
 }
 
+export const GENERIC_COVERS = [
+  "/covers/orb.webp",
+  "/covers/horizon.webp",
+  "/covers/veil.webp",
+  "/covers/glass.webp",
+  "/covers/swirl.webp",
+  "/covers/fog.webp",
+] as const;
+
+function hashString(value: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+export function genericCoverForSlug(slug: string): string {
+  return GENERIC_COVERS[hashString(slug) % GENERIC_COVERS.length];
+}
+
 export function contentCover(entry: ContentEntry): string {
-  return entry.data.cover || "/social.png";
+  return entry.data.cover || genericCoverForSlug(entry.data.slug);
+}
+
+export function contentCoverAlt(entry: ContentEntry): string {
+  return entry.data.cover ? entry.data.title : "";
 }
 
 export async function publishedEntries(kind: ContentKind, locale: Locale): Promise<ContentEntry[]> {

@@ -24,7 +24,7 @@ tags: []
 slug: same-slug-in-both-languages
 ```
 
-`cover` es opcional. `date` admite el texto ISO que escribe Dome. El `slug` es la fuente de la URL y debe coincidir con el nombre del archivo. El par ES/EN usa el mismo slug para que el redirect de idioma (`dome-locale`) no 404. Las imágenes van en `public/`; Dome CMS v1 no sube binarios.
+`cover` es opcional. Si no viene, la landing elige una portada genérica de `public/covers/` según el `slug` (el mismo par ES/EN comparte imagen). `date` admite el texto ISO que escribe Dome. El `slug` es la fuente de la URL y debe coincidir con el nombre del archivo. El par ES/EN usa el mismo slug para que el redirect de idioma (`dome-locale`) no 404. Las imágenes van en `public/`; Dome CMS v1 no sube binarios.
 
 Los índices (`/blog`, `/manual`) filtran por etiquetas. La entrada abre con el `h1` y el lead; la portada (`cover`) va debajo, a tamaño natural. Si el cuerpo empieza por `# título`, el plugin de Markdown lo quita para no duplicar el `h1` del layout. Categoría, autor y fecha van solo al cierre. El autor visible es el de `src/lib/site.ts`.
 
@@ -41,7 +41,7 @@ Usa capturas reales de `public/dome-recursos-landing/` o `public/how/`. No inven
 
 ## SEO
 
-`Layout.astro` emite canonical, hreflang, `og:image` (`cover` o `/social.png`) y JSON-LD (`BlogPosting` o `TechArticle`). Pricing queda `noindex` hasta que existan planes. Tras añadir un par ES/EN, corre `pnpm run check:content-parity`.
+`Layout.astro` emite canonical, hreflang, `og:image` (`cover` o una genérica de `/covers/`) y JSON-LD (`BlogPosting` o `TechArticle`). Pricing queda `noindex` hasta que existan planes. Tras añadir un par ES/EN, corre `pnpm run check:content-parity`.
 
 Ese check exige:
 

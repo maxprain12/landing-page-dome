@@ -1,5 +1,12 @@
 ---
-import { contentPath, readingMinutes, type ContentEntry, type ContentKind } from "../../lib/content";
+import {
+  contentCover,
+  contentCoverAlt,
+  contentPath,
+  readingMinutes,
+  type ContentEntry,
+  type ContentKind,
+} from "../../lib/content";
 import { localeFromPath, t, type Locale } from "../../i18n";
 import ContentCover from "./ContentCover.astro";
 
@@ -28,8 +35,8 @@ const search = [entry.data.title, entry.data.description, ...entry.data.tags].jo
 >
   <div class="card-shot">
     <ContentCover
-      src={entry.data.cover}
-      alt={entry.data.title}
+      src={contentCover(entry)}
+      alt={contentCoverAlt(entry)}
       title={entry.data.title}
       size={featured ? "featured" : "grid"}
       eager={featured}
