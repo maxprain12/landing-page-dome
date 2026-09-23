@@ -97,11 +97,22 @@ function initHeroStory(reduce: boolean): void {
     return;
   }
 
+  // ScrollTrigger parses start offsets with parseFloat, so "4.75rem" becomes 4.75px
+  // and the pinned hero slides under the nav. Measure the bar and keep the pin below it.
+  const syncNavOffset = () => {
+    const nav = document.querySelector(".nav");
+    const height = nav ? Math.ceil(nav.getBoundingClientRect().height) : 76;
+    document.documentElement.style.setProperty("--nav-h", `${height}px`);
+    return height;
+  };
+
+  syncNavOffset();
   document.documentElement.classList.add("hero-pin");
   gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
   window.addEventListener(
     "resize",
     () => {
+      syncNavOffset();
       ScrollTrigger.refresh();
     },
     { signal: ac.signal },
@@ -112,7 +123,7 @@ function initHeroStory(reduce: boolean): void {
   const storyTrigger = ScrollTrigger.create({
     id: "hero-story",
     trigger: pin,
-    start: "top 4.75rem",
+    start: () => `top ${syncNavOffset()}px`,
     end: "+=520%",
     pin: true,
     anticipatePin: 1,

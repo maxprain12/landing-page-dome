@@ -118,9 +118,9 @@ function letters(word: string) {
     --rail-w: 16.5rem;
     display: flex;
     flex-direction: column;
-    height: calc(100svh - 4.75rem);
+    height: calc(100svh - var(--nav-h, 4.75rem));
     min-height: 0;
-    max-height: calc(100svh - 4.75rem);
+    max-height: calc(100svh - var(--nav-h, 4.75rem));
     padding: 0.85rem 0.9rem 0.5rem;
   }
   .hero-copy {
