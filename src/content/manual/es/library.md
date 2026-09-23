@@ -1,7 +1,10 @@
 ---
-title: "Organizar tu biblioteca y dejar recursos listos para Many"
+title: Organizar tu biblioteca y dejar recursos listos para Many
+collection: manual
+language: es
 date: 2026-09-18
-description: "Importa PDFs, notas y URLs a la biblioteca local, espera el badge Listo para IA y deja que Many cite las fuentes."
+description: Importa PDFs, notas y URLs a la biblioteca local, espera el badge
+  Listo para IA y deja que Many cite las fuentes.
 cover: /dome-recursos-landing/dome-library-composition-light-es-primary-landscape.png
 tags:
   - biblioteca
@@ -35,3 +38,9 @@ El badge **Listo para IA** indica que el recurso se indexó lo bastante para que
 ## Preguntar con el recurso abierto
 
 Abre el archivo y pregunta. Many puede buscar en la biblioteca (`resource_search` y búsquedas híbridas en el producto) y devolver un brief con citas. El siguiente paso natural es relacionar ese recurso con una [persona](/manual/contacts) o pedir un [correo con aprobación](/manual/email-and-social).
+
+
+
+prueba de publicacion alder
+
+
