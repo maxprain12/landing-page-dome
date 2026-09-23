@@ -7,7 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 const EDITIONS = ["pro", "study", "dev"] as const;
-const SHOT_ASPECT = 2880 / 1920;
 const MOBILE_MQ = "(max-width: 860px)";
 
 let disposeHero: (() => void) | null = null;
@@ -19,18 +18,6 @@ function clamp01(value: number): number {
 function smoothstep(value: number): number {
   const x = clamp01(value);
   return x * x * (3 - 2 * x);
-}
-
-function cssLengthPx(value: string): number {
-  const raw = value.trim();
-  if (!raw) return 0;
-  const n = Number.parseFloat(raw);
-  if (!Number.isFinite(n)) return 0;
-  if (raw.endsWith("rem")) {
-    const rem = Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-    return n * rem;
-  }
-  return n;
 }
 
 function initHeroStory(reduce: boolean): void {
@@ -82,37 +69,13 @@ function initHeroStory(reduce: boolean): void {
     root.dataset.phase = phase;
   };
 
-  let peekCopyH = 0;
   let lastReveal = 0;
   let lastSplit = 0;
-  const lockShotSize = () => {
-    const copy = root.querySelector<HTMLElement>("[data-hero-copy]");
-    const stage = pin.querySelector<HTMLElement>("[data-story-stage]");
-    if (!stage) return;
-    const visualH = copy?.getBoundingClientRect().height ?? 0;
-    if (visualH > peekCopyH) peekCopyH = visualH;
-    const pinCs = getComputedStyle(pin);
-    const padY = cssLengthPx(pinCs.paddingTop) + cssLengthPx(pinCs.paddingBottom);
-    const railW = cssLengthPx(pinCs.getPropertyValue("--rail-w"));
-    const reserved = peekCopyH || (copy?.scrollHeight ?? 0) || 96;
-    const availH = Math.max(220, pin.clientHeight - padY - reserved - 16);
-    const availW = Math.max(220, stage.clientWidth - 56 - (railW + 32));
-    let height = availH;
-    let width = height * SHOT_ASPECT;
-    if (width > availW) {
-      width = availW;
-      height = width / SHOT_ASPECT;
-    }
-    pin.style.setProperty("--shot-w", `${Math.round(width)}px`);
-    pin.style.setProperty("--shot-h", `${Math.round(height)}px`);
-  };
 
   const stacked = window.matchMedia(MOBILE_MQ).matches;
   if (stacked || reduce) {
     document.documentElement.classList.remove("hero-pin");
     root.style.setProperty("--reveal", "0");
-    pin.style.removeProperty("--shot-w");
-    pin.style.removeProperty("--shot-h");
     pin.style.removeProperty("padding-top");
     applyPhase("editions");
     applyEdition("pro");
@@ -139,7 +102,6 @@ function initHeroStory(reduce: boolean): void {
   window.addEventListener(
     "resize",
     () => {
-      lockShotSize();
       ScrollTrigger.refresh();
     },
     { signal: ac.signal },

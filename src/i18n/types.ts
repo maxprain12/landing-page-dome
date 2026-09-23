@@ -68,7 +68,6 @@ export interface Dictionary {
     langEn: string;
     menu: string;
     close: string;
-    skip: string;
     main: string;
     product: string;
     resources: string;

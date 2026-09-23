@@ -19,7 +19,6 @@ export const en: Dictionary = {
     langEn: "EN",
     menu: "Open menu",
     close: "Close menu",
-    skip: "Skip to content",
     main: "Main",
     product: "Product",
     resources: "Resources",

@@ -10,4 +10,4 @@ alwaysApply: true
 - Botones pill. CTA primario → GitHub Releases. Login → `PUBLIC_DOME_ACCOUNT_URL`.
 - Copy concreto, local-first; nada de slogans vacíos.
 - GSAP es enhancement: el HTML debe leerse apagando JS. Honrar `prefers-reduced-motion`.
-- Un `h1` por página. Skip link + `<main>`. Nav móvil accesible si se ocultan los links.
+- Un `h1` por página y `<main id="main-content">`. Nav móvil accesible si se ocultan los links.

@@ -290,15 +290,22 @@ const editions: {
     height: auto;
     min-height: 0;
     overflow: visible;
+    box-sizing: border-box;
+    padding-top: 0.85rem;
+    container-type: size;
   }
   :global(html.hero-pin) .story-frame {
+    --fit-h: min(
+      100cqh,
+      max(0px, calc((100cqw - var(--rail-w, 16.5rem) - 2rem) * 1920 / 2880))
+    );
     display: block;
     position: absolute;
     left: 50%;
     top: 50%;
     bottom: auto;
-    height: var(--shot-h);
-    width: var(--shot-w);
+    height: var(--fit-h);
+    width: calc(var(--fit-h) * 2880 / 1920);
     padding-left: calc(var(--split, 0) * (var(--rail-w, 0px) + 2rem));
     box-sizing: content-box;
     transform: translate3d(-50%, -50%, 0);
@@ -307,8 +314,8 @@ const editions: {
   }
   :global(html.hero-pin) .story-window {
     position: relative;
-    width: var(--shot-w);
-    height: var(--shot-h);
+    width: 100%;
+    height: 100%;
     top: auto;
     right: auto;
     bottom: auto;
@@ -327,7 +334,7 @@ const editions: {
     bottom: auto;
     width: var(--rail-w);
     max-width: var(--rail-w);
-    height: var(--shot-h);
+    height: 100%;
     padding-top: 0;
     box-sizing: border-box;
     transform: none;
@@ -373,6 +380,7 @@ const editions: {
       overflow: visible;
       gap: 0.85rem;
       padding-top: 0;
+      container-type: normal;
     }
     :global(html.hero-pin) .story-frame,
     .story-frame {

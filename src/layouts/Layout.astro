@@ -148,7 +148,6 @@ const moonColors = [
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">{copy.nav.skip}</a>
     {
       editorial ? null : (
         <>
@@ -334,23 +333,6 @@ const moonColors = [
     text-decoration: none;
   }
 
-  .skip-link {
-    position: absolute;
-    left: 1rem;
-    top: 0.85rem;
-    z-index: 200;
-    transform: translateY(-150%);
-    padding: 0.7rem 1.1rem;
-    border-radius: 999px;
-    background: var(--color-text);
-    color: var(--color-bg);
-    font-weight: 650;
-    font-size: 0.9rem;
-  }
-  .skip-link:focus,
-  .skip-link:focus-visible {
-    transform: none;
-  }
   :focus-visible {
     outline: 2px solid var(--color-text);
     outline-offset: 3px;

@@ -36,11 +36,10 @@ if (isMain()) {
   const errors = [];
   const index = fs.readFileSync(path.join(root, 'src/pages/index.astro'), 'utf8');
   if (!/<main[\s>]/.test(index)) errors.push('src/pages/index.astro missing <main>');
-  const layout = fs.readFileSync(path.join(root, 'src/layouts/Layout.astro'), 'utf8');
   const landing = fs.readFileSync(path.join(root, 'src/components/LandingView.astro'), 'utf8');
   const nav = fs.readFileSync(path.join(root, 'src/components/Nav.astro'), 'utf8');
-  if (!/skip-link/.test(layout) || !/id="main-content"/.test(landing)) {
-    errors.push('missing skip link or main-content target');
+  if (!/id="main-content"/.test(landing)) {
+    errors.push('missing main-content target');
   }
   if (!/aria-expanded/.test(nav) || !/Escape/.test(nav) || !/aria-controls/.test(nav)) {
     errors.push('nav missing megamenu keyboard/ARIA pattern');
