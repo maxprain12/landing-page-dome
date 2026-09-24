@@ -18,7 +18,7 @@ You can use Dome without a cloud account and without remote provider keys. Durin
 
 ## What you need
 
-1. Dome installed from [GitHub Releases](https://github.com/maxprain12/dome/releases).
+1. Dome installed from the [download page](/en/download).
 2. [Ollama](https://ollama.com) running on your machine, with a compatible model exposed by the published Dome version.
 3. At least one library resource — a note or a PDF with selectable text is the most predictable path.
 

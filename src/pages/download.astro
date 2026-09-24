@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import DownloadView from "../components/DownloadView.astro";
+import { t } from "../i18n";
+
+const locale = "es" as const;
+const page = t(locale).pages.download;
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/download">
+  <DownloadView locale={locale} />
+</Layout>

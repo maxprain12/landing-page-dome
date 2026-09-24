@@ -1,5 +1,5 @@
 ---
-import { links } from "../data/landing";
+import { downloadUrl } from "../data/landing";
 import { localeFromPath, t, type Locale } from "../i18n";
 
 interface Props {
@@ -17,7 +17,7 @@ const copy = t(locale);
         <h2 class="h-display fc-h2">{copy.finalCta.h2}</h2>
         <p class="fc-sub">{copy.finalCta.lead}</p>
       </div>
-      <a class="btn btn-primary fc-btn" href={links.releases} target="_blank" rel="noopener">
+      <a class="btn btn-primary fc-btn" href={downloadUrl(locale)}>
         {copy.finalCta.primary}
       </a>
     </div>

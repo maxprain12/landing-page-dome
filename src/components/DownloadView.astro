@@ -1,0 +1,295 @@
+---
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import { changelogUrl, downloadUrl, links } from "../data/landing";
+import { localizePath, t, type Locale } from "../i18n";
+import {
+  findPlatformAsset,
+  formatSize,
+  getLatest,
+  type ReleaseAsset,
+} from "../lib/releases";
+
+interface Props {
+  locale: Locale;
+}
+
+type CardId = "mac-arm" | "mac-intel" | "win" | "linux-appimage" | "linux-flatpak";
+
+interface DownloadCard {
+  id: CardId;
+  label: string;
+  asset: ReleaseAsset | undefined;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const page = copy.pages.download;
+const contactHref = localizePath("/contact", locale);
+const entry = await getLatest("latest");
+
+const cards: DownloadCard[] = entry
+  ? [
+      {
+        id: "mac-arm",
+        label: page.platforms.macArm,
+        asset: findPlatformAsset(entry, { platform: "mac", arch: "arm64" }),
+      },
+      {
+        id: "mac-intel",
+        label: page.platforms.macIntel,
+        asset: findPlatformAsset(entry, { platform: "mac", arch: "x64" }),
+      },
+      {
+        id: "win",
+        label: page.platforms.windows,
+        asset: findPlatformAsset(entry, { platform: "win" }),
+      },
+      {
+        id: "linux-appimage",
+        label: page.platforms.linuxAppImage,
+        asset: findPlatformAsset(entry, { platform: "linux", kind: "appimage" }),
+      },
+      {
+        id: "linux-flatpak",
+        label: page.platforms.linuxFlatpak,
+        asset: findPlatformAsset(entry, { platform: "linux", kind: "flatpak" }),
+      },
+    ]
+  : [];
+
+const hasAnyAsset = cards.some((card) => Boolean(card.asset));
+const releasedLabel = entry
+  ? new Date(entry.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })
+  : "";
+const changelogHref = changelogUrl(locale);
+---
+
+<Nav locale={locale} esHref={downloadUrl("es")} enHref={downloadUrl("en")} />
+<main id="main-content" class="dl">
+  <div class="wrap dl-hero">
+    <p class="eyebrow">{page.eyebrow}</p>
+    <h1 class="h-display dl-h1">{page.h1}</h1>
+    <p class="dl-lead">{page.lead}</p>
+    {
+      entry && hasAnyAsset ? (
+        <p class="dl-meta">
+          <span>
+            {page.versionLabel} {entry.version}
+          </span>
+          <span aria-hidden="true">·</span>
+          <time datetime={entry.date}>{releasedLabel}</time>
+          <span aria-hidden="true">·</span>
+          <a href={`${changelogHref}#v${entry.version}`}>{page.changelogLink}</a>
+        </p>
+      ) : null
+    }
+  </div>
+
+  {
+    entry && hasAnyAsset ? (
+      <section class="wrap dl-grid" aria-label={page.h1} data-download-grid>
+        {cards.map((card) =>
+          card.asset ? (
+            <article class="dl-card" data-platform={card.id}>
+              <p class="dl-rec" hidden data-recommended>
+                {page.recommended}
+              </p>
+              <h2>{card.label}</h2>
+              <p class="dl-size">
+                {page.sizeLabel}: {formatSize(card.asset.size)}
+              </p>
+              <a class="btn btn-primary" href={card.asset.url} rel="noopener">
+                {page.downloadLabel}
+              </a>
+              <details class="dl-details">
+                <summary>{page.detailsSummary}</summary>
+                <p class="dl-sha">
+                  <span>{page.checksumLabel}</span>
+                  <code>{card.asset.sha512}</code>
+                </p>
+                <p class="dl-file">{card.asset.name}</p>
+              </details>
+            </article>
+          ) : null,
+        )}
+      </section>
+    ) : (
+      <section class="wrap dl-empty" aria-live="polite">
+        <p>{page.empty}</p>
+        <a class="btn btn-primary" href={contactHref}>
+          {page.emptyContact}
+        </a>
+        <a class="btn btn-ghost" href={links.github} target="_blank" rel="noopener">
+          {page.secondary}
+        </a>
+      </section>
+    )
+  }
+</main>
+<Footer locale={locale} />
+
+<script>
+  function detectPlatformKey(): string | null {
+    const nav = globalThis.navigator;
+    if (!nav) return null;
+    const uaData = (nav as Navigator & { userAgentData?: { platform?: string } }).userAgentData;
+    const raw =
+      uaData?.platform ??
+      // Fallback required: userAgentData is not universal yet.
+      (nav as Navigator & { platform?: string }).platform ??
+      "";
+    const platform = String(raw).toLowerCase();
+    if (platform.includes("win")) return "win";
+    if (platform.includes("linux")) return "linux-appimage";
+    if (
+      platform.includes("mac") ||
+      platform.includes("darwin") ||
+      platform.includes("iphone") ||
+      platform.includes("ipad")
+    ) {
+      return "mac-arm";
+    }
+    return null;
+  }
+
+  const key = detectPlatformKey();
+  if (key) {
+    const card = document.querySelector<HTMLElement>(`[data-download-grid] [data-platform="${key}"]`);
+    if (card) {
+      card.classList.add("is-recommended");
+      const badge = card.querySelector<HTMLElement>("[data-recommended]");
+      if (badge) badge.hidden = false;
+    }
+  }
+</script>
+
+<style>
+  .dl {
+    padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
+  }
+  .dl-hero {
+    max-width: 44rem;
+    margin-bottom: 2.2rem;
+  }
+  .dl-h1 {
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+    margin: 0.6rem 0 1rem;
+  }
+  .dl-lead {
+    font-size: 1.12rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+  .dl-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.65rem;
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--color-ink-3);
+  }
+  .dl-meta a {
+    color: var(--color-lavender-soft);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .dl-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .dl-card {
+    padding: 1.35rem 1.4rem 1.45rem;
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .dl-card.is-recommended {
+    border-color: color-mix(in srgb, var(--c-olive) 42%, var(--color-border));
+    background: color-mix(in srgb, var(--color-olive-muted) 55%, var(--color-surface));
+  }
+  .dl-rec {
+    margin: 0;
+    display: inline-flex;
+    align-self: flex-start;
+    height: 1.55rem;
+    align-items: center;
+    padding: 0 0.65rem;
+    border-radius: 999px;
+    background: var(--c-olive);
+    color: var(--color-olive-ink);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .dl-card h2 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  .dl-size {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.92rem;
+  }
+  .dl-card .btn {
+    align-self: flex-start;
+  }
+  .dl-details {
+    margin-top: 0.2rem;
+  }
+  .dl-details summary {
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    font-size: 0.86rem;
+  }
+  .dl-sha {
+    margin: 0.75rem 0 0.4rem;
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    display: grid;
+    gap: 0.35rem;
+  }
+  .dl-sha code {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.45;
+    word-break: break-all;
+    color: var(--c-olive);
+  }
+  .dl-file {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--color-ink-3);
+    word-break: break-all;
+  }
+  .dl-empty {
+    max-width: 36rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    align-items: center;
+  }
+  .dl-empty p {
+    flex: 1 1 100%;
+    margin: 0 0 0.4rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+  @media (max-width: 720px) {
+    .dl-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

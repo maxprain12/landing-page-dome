@@ -1,5 +1,5 @@
 ---
-import { links } from "../data/landing";
+import { downloadUrl } from "../data/landing";
 import { localeFromPath, t, type Locale } from "../i18n";
 import DomeIcon from "./icons/DomeIcon.astro";
 import EditionSwitcher from "./EditionSwitcher.astro";
@@ -58,7 +58,7 @@ function letters(word: string) {
         </h1>
         <p class="hero-sub">{h.subhead}</p>
         <div class="hero-cta">
-          <a class="btn btn-primary hero-download" href={links.releases} target="_blank" rel="noopener">
+          <a class="btn btn-primary hero-download" href={downloadUrl(locale)}>
             {h.primaryCta}
           </a>
           <a class="btn-text hero-more" href="#como-funciona">

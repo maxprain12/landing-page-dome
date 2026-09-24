@@ -1,5 +1,5 @@
 ---
-import { brand, links } from "../data/landing";
+import { brand, changelogUrl, downloadUrl, links } from "../data/landing";
 import { localeFromPath, localeHome, localizePath, t, type Locale } from "../i18n";
 import DomeIcon from "./icons/DomeIcon.astro";
 
@@ -28,7 +28,7 @@ const productLinks: FooterLink[] = [
   { href: hash("#confianza"), label: copy.footer.trust },
   { href: hash("#faq"), label: copy.footer.faq },
   { href: localizePath("/pricing", locale), label: copy.footer.pricing },
-  { href: links.releases, label: copy.footer.download, external: true },
+  { href: downloadUrl(locale), label: copy.footer.download },
 ];
 
 const editionLinks: FooterLink[] = [
@@ -42,7 +42,7 @@ const resourceLinks: FooterLink[] = [
   { href: localizePath("/manual", locale), label: copy.footer.manual },
   { href: localizePath("/local-first", locale), label: copy.footer.localFirst },
   { href: localizePath("/rss.xml", locale), label: copy.footer.rss },
-  { href: links.changelog, label: copy.footer.changelog, external: true },
+  { href: changelogUrl(locale), label: copy.footer.changelog },
 ];
 
 const projectLinks: FooterLink[] = [

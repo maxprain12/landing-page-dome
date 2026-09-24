@@ -3,7 +3,7 @@ import { render } from "astro:content";
 import Footer from "../Footer.astro";
 import Nav from "../Nav.astro";
 import DomeIcon from "../icons/DomeIcon.astro";
-import { links } from "../../data/landing";
+import { downloadUrl } from "../../data/landing";
 import {
   contentCover,
   contentCoverAlt,
@@ -113,7 +113,7 @@ const initials = author
   </footer>
 
   <div class="article-cta">
-    <a class="btn btn-primary" href={links.releases} target="_blank" rel="noopener">{copy.nav.download}</a>
+    <a class="btn btn-primary" href={downloadUrl(locale)}>{copy.nav.download}</a>
     <a class="btn btn-ghost" href={indexHref}>{copy.content.more} {indexLabel}</a>
   </div>
 </main>

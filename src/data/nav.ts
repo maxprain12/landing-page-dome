@@ -1,4 +1,4 @@
-import { links } from "./landing";
+import { changelogUrl, links } from "./landing";
 import { localeHome, localizePath, type Dictionary, type Locale } from "../i18n";
 
 export type NavItem = {
@@ -70,7 +70,7 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
           heading: copy.nav.projectCol,
           items: [
             { href: links.github, label: copy.nav.github, hint: copy.nav.githubHint, external: true },
-            { href: links.changelog, label: copy.footer.changelog, hint: copy.nav.changelogHint, external: true },
+            { href: changelogUrl(locale), label: copy.footer.changelog, hint: copy.nav.changelogHint },
           ],
         },
       ],

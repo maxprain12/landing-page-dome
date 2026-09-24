@@ -1,5 +1,5 @@
 ---
-import { brand, links } from "../data/landing";
+import { brand, downloadUrl } from "../data/landing";
 import { accountUrl, navDirectLinks, navMenus } from "../data/nav";
 import { alternatePath, localeFromPath, localeHome, t, type Locale } from "../i18n";
 import DomeIcon from "./icons/DomeIcon.astro";
@@ -18,6 +18,7 @@ const enHref = Astro.props.enHref ?? alternatePath(Astro.url.pathname, "en");
 const loginHref = accountUrl();
 const menus = navMenus(locale, copy);
 const directLinks = navDirectLinks(locale, copy);
+const downloadHref = downloadUrl(locale);
 ---
 
 <header class="nav">
@@ -93,7 +94,7 @@ const directLinks = navDirectLinks(locale, copy);
         >
       </div>
       <a class="nav-login" href={loginHref}>{copy.nav.login}</a>
-      <a class="nav-cta" href={links.releases} target="_blank" rel="noopener">
+      <a class="nav-cta" href={downloadHref}>
         {copy.nav.download}
       </a>
       <button

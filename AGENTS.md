@@ -10,4 +10,4 @@ pnpm run verify
 
 Packs sociales: `public/social-drafts/` + `pnpm run check:social-drafts`. No publicar sin `VALIDATION.md` firmado (puerta 5: escenario PDF+persona concreto y UI Dome real, sin jerga SaaS; secuencia 1→2→3; formato cerrado; tokens Many lima/oliva + Inter).
 
-Login/account URLs: `PUBLIC_DOME_ACCOUNT_URL` (no hardcodear el provider en componentes). Sister repos: [dome](https://github.com/maxprain12/dome), [dome-provider](https://github.com/maxprain12/dome-provider), [dome-companion](https://github.com/maxprain12/dome-companion).
+Login/account URLs: `PUBLIC_DOME_ACCOUNT_URL` (no hardcodear el provider en componentes). Índice de releases: `PUBLIC_RELEASES_INDEX_URL` (fallback `https://dl.dowi.es/index.json`). Sister repos: [dome](https://github.com/maxprain12/dome), [dome-provider](https://github.com/maxprain12/dome-provider), [dome-companion](https://github.com/maxprain12/dome-companion).

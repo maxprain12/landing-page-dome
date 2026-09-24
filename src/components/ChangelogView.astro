@@ -1,0 +1,208 @@
+---
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import { changelogUrl, links } from "../data/landing";
+import { localizePath, t, type Locale } from "../i18n";
+import { getReleaseIndex } from "../lib/releases";
+import { renderSafeMarkdown } from "../lib/safe-markdown";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const page = copy.pages.changelog;
+const contactHref = localizePath("/contact", locale);
+const index = await getReleaseIndex();
+const releases = await Promise.all(
+  index.releases.map(async (entry) => ({
+    ...entry,
+    notesHtml: await renderSafeMarkdown(entry.notesMarkdown),
+    dateLabel: new Date(entry.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }),
+  })),
+);
+const rssHref = localizePath("/changelog.xml", locale);
+---
+
+<Nav locale={locale} esHref={changelogUrl("es")} enHref={changelogUrl("en")} />
+<main id="main-content" class="cl">
+  <div class="wrap cl-hero">
+    <p class="eyebrow">{page.eyebrow}</p>
+    <h1 class="h-display cl-h1">{page.h1}</h1>
+    <p class="cl-lead">{page.lead}</p>
+    {
+      releases.length ? (
+        <p class="cl-rss">
+          <a href={rssHref}>{page.rssLabel}</a>
+        </p>
+      ) : null
+    }
+  </div>
+
+  {
+    releases.length ? (
+      <div class="wrap cl-list">
+        {releases.map((entry) => (
+          <article class="cl-item" id={`v${entry.version}`}>
+            <header class="cl-head">
+              <h2>{entry.version}</h2>
+              <time datetime={entry.date}>{entry.dateLabel}</time>
+            </header>
+            <div class="cl-badges">
+              {entry.channels.map((channel) => (
+                <span class:list={["cl-badge", channel === "beta" && "is-beta"]}>
+                  {channel === "latest"
+                    ? page.channelLatest
+                    : channel === "beta"
+                      ? page.channelBeta
+                      : channel}
+                </span>
+              ))}
+            </div>
+            {entry.notesHtml ? (
+              <div class="cl-notes prose" set:html={entry.notesHtml} />
+            ) : null}
+          </article>
+        ))}
+      </div>
+    ) : (
+      <section class="wrap cl-empty" aria-live="polite">
+        <p>{page.empty}</p>
+        <a class="btn btn-primary" href={contactHref}>
+          {page.emptyContact}
+        </a>
+        <a class="btn btn-ghost" href={links.github} target="_blank" rel="noopener">
+          {page.secondary}
+        </a>
+      </section>
+    )
+  }
+</main>
+<Footer locale={locale} />
+
+<style>
+  .cl {
+    padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
+  }
+  .cl-hero {
+    max-width: 44rem;
+    margin-bottom: 2.4rem;
+  }
+  .cl-h1 {
+    font-size: clamp(2.2rem, 5vw, 3.3rem);
+    margin: 0.6rem 0 1rem;
+  }
+  .cl-lead {
+    font-size: 1.12rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 0.9rem;
+  }
+  .cl-rss {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .cl-rss a {
+    color: var(--color-lavender-soft);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cl-list {
+    max-width: 44rem;
+    display: grid;
+    gap: 1.4rem;
+  }
+  .cl-item {
+    padding: 1.4rem 1.45rem 1.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+    scroll-margin-top: 5.5rem;
+  }
+  .cl-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+  }
+  .cl-head h2 {
+    margin: 0;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+  .cl-head time {
+    font-size: 0.88rem;
+    color: var(--color-ink-3);
+  }
+  .cl-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.75rem 0 0;
+  }
+  .cl-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 1.55rem;
+    padding: 0 0.65rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+  .cl-badge.is-beta {
+    border-color: color-mix(in srgb, var(--c-olive) 40%, var(--color-border));
+    color: var(--c-olive);
+  }
+  .cl-notes {
+    margin-top: 1rem;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-text-secondary);
+  }
+  .cl-notes :global(h2),
+  .cl-notes :global(h3),
+  .cl-notes :global(h4) {
+    color: var(--color-text);
+    margin: 1.1rem 0 0.45rem;
+  }
+  .cl-notes :global(p) {
+    margin: 0 0 0.75rem;
+  }
+  .cl-notes :global(ul),
+  .cl-notes :global(ol) {
+    margin: 0 0 0.85rem 1.1rem;
+  }
+  .cl-notes :global(a) {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .cl-notes :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    color: var(--c-olive);
+  }
+  .cl-empty {
+    max-width: 36rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    align-items: center;
+  }
+  .cl-empty p {
+    flex: 1 1 100%;
+    margin: 0 0 0.4rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+</style>

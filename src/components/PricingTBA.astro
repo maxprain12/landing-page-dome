@@ -1,7 +1,7 @@
 ---
 import Nav from "./Nav.astro";
 import Footer from "./Footer.astro";
-import { links } from "../data/landing";
+import { downloadUrl } from "../data/landing";
 import { localizePath, t, type Locale } from "../i18n";
 
 interface Props {
@@ -20,7 +20,7 @@ const page = copy.pages.pricing;
     <h1 class="h-display tba-h1">{page.h1}</h1>
     <p class="tba-lead">{page.lead}</p>
     <div class="tba-cta">
-      <a class="btn btn-primary" href={links.releases} target="_blank" rel="noopener">{page.primary}</a>
+      <a class="btn btn-primary" href={downloadUrl(locale)}>{page.primary}</a>
       <a class="btn btn-ghost" href={localizePath("/local-first", locale)}>{page.secondary}</a>
     </div>
   </header>

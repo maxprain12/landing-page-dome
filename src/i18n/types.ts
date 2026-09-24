@@ -276,6 +276,8 @@ export interface Dictionary {
     manual: SubpageCopy;
     blog: SubpageCopy;
     contact: SubpageCopy;
+    download: DownloadPageCopy;
+    changelog: ChangelogPageCopy;
     pricing: PricingPageCopy;
   };
 }
@@ -284,6 +286,33 @@ export interface PricingPageCopy extends SubpageCopy {
   tba: string;
   tbaTitle: string;
   tbaBody: string;
+}
+
+export interface DownloadPageCopy extends SubpageCopy {
+  empty: string;
+  emptyContact: string;
+  versionLabel: string;
+  changelogLink: string;
+  sizeLabel: string;
+  checksumLabel: string;
+  detailsSummary: string;
+  recommended: string;
+  downloadLabel: string;
+  platforms: {
+    macArm: string;
+    macIntel: string;
+    windows: string;
+    linuxAppImage: string;
+    linuxFlatpak: string;
+  };
+}
+
+export interface ChangelogPageCopy extends SubpageCopy {
+  empty: string;
+  emptyContact: string;
+  channelLatest: string;
+  channelBeta: string;
+  rssLabel: string;
 }
 
 export interface SubpageCopy {

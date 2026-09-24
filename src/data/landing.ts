@@ -1,17 +1,27 @@
 // Enlaces y flags de producto. El copy vive en src/i18n.
 
+import { localizePath, type Locale } from "../i18n";
+
 const providerUrl = "https://dome-provider.dowi.es";
 
 export const links = {
-  releases: "https://github.com/maxprain12/dome/releases",
+  releases: "/download",
   github: "https://github.com/maxprain12/dome",
   docs: "https://github.com/maxprain12/dome#readme",
-  changelog: "https://github.com/maxprain12/dome/releases",
+  changelog: "/changelog",
   license: "https://github.com/maxprain12/dome/blob/main/LICENSE",
   login: import.meta.env.PUBLIC_DOME_ACCOUNT_URL || `${providerUrl}/login`,
   register: `${providerUrl}/register`,
   email: "alder.velasquezobando@gmail.com",
 };
+
+export function downloadUrl(locale: Locale): string {
+  return localizePath("/download", locale);
+}
+
+export function changelogUrl(locale: Locale): string {
+  return localizePath("/changelog", locale);
+}
 
 export const flags = {
   showPricing: false,

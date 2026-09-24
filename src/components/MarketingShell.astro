@@ -1,7 +1,7 @@
 ---
 import Nav from "./Nav.astro";
 import Footer from "./Footer.astro";
-import { links } from "../data/landing";
+import { downloadUrl } from "../data/landing";
 import { COMPOSITION_SIZE, SHOT_SIZE } from "../data/shots";
 import { localeFromPath, localizePath, type Locale } from "../i18n";
 import type { SubpageCopy } from "../i18n/types";
@@ -26,7 +26,7 @@ const shotSize = shot?.includes("-composition-") ? COMPOSITION_SIZE : SHOT_SIZE;
     <h1 class="h-display mk-h1">{page.h1}</h1>
     <p class="mk-lead">{page.lead}</p>
     <div class="mk-cta">
-      <a class="btn btn-primary" href={links.releases} target="_blank" rel="noopener">{page.primary}</a>
+      <a class="btn btn-primary" href={downloadUrl(locale)}>{page.primary}</a>
       <a class="btn btn-ghost" href={secondaryHref}>{page.secondary}</a>
     </div>
   </div>

@@ -12,7 +12,7 @@ slug: first-workflow
 
 The primary product is a desktop app for macOS, Windows, and Linux. This guide covers the **Pro** loop: document, person, action. You do not need a cloud account to complete the trial.
 
-1. **Download.** Open [GitHub Releases](https://github.com/maxprain12/dome/releases) and pick the installer for your system. Install and launch Dome.
+1. **Download.** Open the [download page](/en/download) and pick the installer for your system. Install and launch Dome.
 2. **Choose Pro.** In onboarding, take the Pro edition. You can switch to Study or Dev later without deleting the library.
 3. **Import a resource.** Add a note, PDF, video, audio file, or URL. The file stays in Dome’s local storage.
 4. **Open or create a person.** In **People** (the contacts hub), relate the material to someone you need to follow up with.

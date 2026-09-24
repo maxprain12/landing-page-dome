@@ -18,7 +18,7 @@ Puedes usar Dome sin cuenta cloud y sin claves de un proveedor remoto. En el onb
 
 ## Qué necesitas
 
-1. Dome instalado desde [GitHub Releases](https://github.com/maxprain12/dome/releases).
+1. Dome instalado desde la página de [descargas](/download).
 2. [Ollama](https://ollama.com) en marcha en tu máquina, con un modelo compatible que exponga la versión publicada de Dome.
 3. Al menos un recurso en la biblioteca — una nota o un PDF con texto seleccionable es el camino más predecible.
 

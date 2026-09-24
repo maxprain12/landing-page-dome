@@ -12,7 +12,7 @@ slug: first-workflow
 
 El producto principal es una aplicación de escritorio para macOS, Windows y Linux. Esta guía cubre el loop de **Pro**: documento, persona, acción. No necesitas una cuenta cloud para completar la prueba.
 
-1. **Descarga.** Abre las [releases de GitHub](https://github.com/maxprain12/dome/releases) y elige el instalador de tu sistema. Instala y arranca Dome.
+1. **Descarga.** Abre la página de [descargas](/download) y elige el instalador de tu sistema. Instala y arranca Dome.
 2. **Elige Pro.** En el onboarding, toma la edición Pro. Luego puedes cambiar a Study o Dev sin borrar la biblioteca.
 3. **Importa un recurso.** Añade una nota, un PDF, un vídeo, audio o una URL. El archivo queda en el almacenamiento local de Dome.
 4. **Abre o crea una persona.** En **Personas** (el hub de contactos), relaciona el material con alguien a quien tengas que dar seguimiento.
