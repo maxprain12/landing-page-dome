@@ -121,7 +121,7 @@ const groups = [
                 <span class="os-icon dl-os" style={`--icon: url('${group.icon}')`}></span>
                 <h2>{primary.label}</h2>
                 <p class="dl-blurb">{primary.blurb}</p>
-                <a class="btn btn-primary" href={primary.asset.url} rel="noopener">
+                <a class="btn btn-primary dl-download" href={primary.asset.url} rel="noopener">
                   {page.downloadLabel}
                 </a>
                 <p class="dl-size">{formatSize(primary.asset.size)}</p>
@@ -147,7 +147,6 @@ const groups = [
             ) : null;
           })}
         </div>
-        <img class="dl-many" src="/assets/many.png" alt="" width="220" height="220" />
       </section>
     ) : (
       <section class="wrap dl-empty" aria-live="polite">
@@ -210,8 +209,9 @@ const groups = [
     padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
   }
   .dl-hero {
-    max-width: 44rem;
-    margin-bottom: 2.2rem;
+    max-width: 40rem;
+    margin: 0 auto 2.4rem;
+    text-align: center;
   }
   .dl-h1 {
     font-size: clamp(2.2rem, 5vw, 3.3rem);
@@ -226,6 +226,7 @@ const groups = [
   .dl-meta {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.45rem 0.65rem;
     margin: 0;
     font-size: 0.92rem;
@@ -237,16 +238,15 @@ const groups = [
     text-underline-offset: 3px;
   }
   .dl-stage {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(12rem, 0.85fr);
-    gap: clamp(1.5rem, 4vw, 3rem);
-    align-items: center;
+    max-width: 36rem;
+    margin-inline: auto;
   }
   .dl-tabs {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.45rem;
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.6rem;
   }
   .dl-tab {
     display: inline-flex;
@@ -274,9 +274,21 @@ const groups = [
     color: var(--color-bg);
     border-color: var(--color-text);
   }
+  .dl-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .dl-panel[hidden] {
+    display: none !important;
+  }
   .dl-panel h2 {
-    margin: 0.8rem 0 0.4rem;
+    margin: 0.35rem 0 0;
     font-size: 1.6rem;
+  }
+  .dl-download {
+    margin-top: 0.35rem;
   }
   .dl-os {
     width: 1.5rem;
@@ -295,11 +307,6 @@ const groups = [
     color: var(--color-text);
     text-decoration: underline;
     text-underline-offset: 3px;
-  }
-  .dl-many {
-    width: min(100%, 16rem);
-    height: auto;
-    justify-self: center;
   }
   .dl-card {
     padding: 1.35rem 1.4rem 1.45rem;
@@ -403,13 +410,5 @@ const groups = [
     margin: 0 0 0.4rem;
     color: var(--color-text-secondary);
     line-height: 1.55;
-  }
-  @media (max-width: 860px) {
-    .dl-stage {
-      grid-template-columns: 1fr;
-    }
-    .dl-many {
-      order: -1;
-    }
   }
 </style>
