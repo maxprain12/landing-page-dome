@@ -1,5 +1,94 @@
 {
-  "schemaVersion": 1,
-  "channels": {},
-  "releases": []
+    "schemaVersion": 1,
+    "generatedAt": "2026-09-24T22:46:35.607Z",
+    "channels": {
+        "latest": "2.9.0"
+    },
+    "releases": [
+        {
+            "version": "2.9.0",
+            "date": "2026-09-24",
+            "channels": [
+                "latest"
+            ],
+            "stagingPercentage": {
+                "latest": 100
+            },
+            "notesMarkdown": "Las instalaciones 2.8.x siguen actualiz\u00e1ndose desde GitHub. Esta versi\u00f3n publica el feed en `https://dl.dowi.es/feed`.\r\n\r\n### Added\r\n\r\n- **Remote Many.** Companion controla el Many de Desktop a trav\u00e9s de un relay cifrado en Provider (`remote-many/1`). Desktop no abre un puerto; Provider no ejecuta agentes ni descifra payloads. Contrato: [docs/architecture/remote-many.md](docs/architecture/remote-many.md), ADR-0016. (#1690)\r\n- **Trends Radar.** Pesta\u00f1a Social \u2192 Tendencias: radar h\u00edbrido (Tu radar / Para ti / Emergentes / Populares) con clusters, evidencia y afinidad. Contrato: [docs/plans/active/social-trends-radar.md](docs/plans/active/social-trends-radar.md). (#1688, #1686)\r\n- **Explorador tipo Finder.** Vista de workspace con previews en vivo de notas y artefactos. (#1689)\r\n- **Extensi\u00f3n de navegador.** Paridad Many en el panel, control de p\u00e1gina, pairing y puente loopback (`127.0.0.1:37215`). Gu\u00eda: [docs/features/browser-extension.md](docs/features/browser-extension.md). (#1635, #1645, #1658, #1691, #1692)\r\n\r\n### Changed\r\n\r\n- Plan mode y visor mermaid de planes en Many, junto con Remote Many. (#1690)\r\n- Trazas de actividad y tarjetas visuales para an\u00e1lisis social en Many. (#1687)",
+            "assets": [
+                {
+                    "platform": "mac",
+                    "arch": "arm64",
+                    "kind": "zip",
+                    "name": "Dome-2.9.0-arm64-mac.zip",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0-arm64-mac.zip",
+                    "size": 379248191,
+                    "sha512": "aFZAqStd+2v1DJr2UJGFqOl6jHAKHEeQaEfW6w9hVNKHQ9WdMCTR2D70nVO+QMbe6nPkPbLmOEgdv2Xywa67SQ=="
+                },
+                {
+                    "platform": "mac",
+                    "arch": "arm64",
+                    "kind": "dmg",
+                    "name": "Dome-2.9.0-arm64.dmg",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0-arm64.dmg",
+                    "size": 379415642,
+                    "sha512": "uER/D1FLn4Uuwc/ghLtDdVUNIS15ZjOm0YG0wfr2zMlAoKCcVe5eE3pVGKLUaQGgC7jqpErWsHwg7ici8EqmFg=="
+                },
+                {
+                    "platform": "mac",
+                    "arch": "universal",
+                    "kind": "zip",
+                    "name": "Dome-2.9.0-mac.zip",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0-mac.zip",
+                    "size": 387705409,
+                    "sha512": "jPGiA7n1NwOe7oDS3IkwUCepMX64Z4MtbmkRbtG/NNcjV9YH2kSbbiujVl+npizWN/+jwVymdx89v0uKw6x+6g=="
+                },
+                {
+                    "platform": "linux",
+                    "arch": "universal",
+                    "kind": "appimage",
+                    "name": "Dome-2.9.0.AppImage",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0.AppImage",
+                    "size": 407018533,
+                    "sha512": "ZuT75bD9AKjIng0XWYLV3K4Hlp1SXt1GlIwwUBwx3yZVOtJnOEDdRGlIECI+TDLqyjg2f7mkbd1iSoB/SmB3CA=="
+                },
+                {
+                    "platform": "mac",
+                    "arch": "universal",
+                    "kind": "dmg",
+                    "name": "Dome-2.9.0.dmg",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0.dmg",
+                    "size": 387873387,
+                    "sha512": "vn0ewnVKaDzpVVBmIB73GOMvwtMyJ199wMeyzENefWz8umnu79EJ8ALoNZXgKEiAwmHoRG0hC09Qc7XH4FxL6g=="
+                },
+                {
+                    "platform": "win",
+                    "arch": "universal",
+                    "kind": "portable",
+                    "name": "Dome-2.9.0.exe",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0.exe",
+                    "size": 294281512,
+                    "sha512": "eN97X3zPZkjsQaSiNkXzcM7yukUFBBtrRbinbh6j6lLNRfW30srm7gCWxXoTYrLpVKtfG9P51gGbAXHuKncGEw=="
+                },
+                {
+                    "platform": "linux",
+                    "arch": "universal",
+                    "kind": "flatpak",
+                    "name": "Dome-2.9.0.flatpak",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-2.9.0.flatpak",
+                    "size": 228602712,
+                    "sha512": "e4A5aU4LPx+0cEqbwuwmFMWkcrC0MiTr39UayaiQ8IluWCz6jazGfYfJLs+l9BEyaAvchqlaWLlt5oaitSFX6Q=="
+                },
+                {
+                    "platform": "win",
+                    "arch": "universal",
+                    "kind": "nsis",
+                    "name": "Dome-Setup-2.9.0.exe",
+                    "url": "https://dl.dowi.es/releases/v2.9.0/Dome-Setup-2.9.0.exe",
+                    "size": 294537336,
+                    "sha512": "Ewm+8yiSXm56bq1wlM/vPD+okOq2RaT2W+iQWwdlf4rN9YXSLhZ1dHm6kvIhb8Y5JGH9oO2AvH2LW8mejpZqaA=="
+                }
+            ]
+        }
+    ]
 }
