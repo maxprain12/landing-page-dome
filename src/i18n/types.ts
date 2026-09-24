@@ -298,6 +298,7 @@ export interface DownloadPageCopy extends SubpageCopy {
   detailsSummary: string;
   recommended: string;
   downloadLabel: string;
+  alsoLabel: string;
   platforms: {
     macArm: string;
     macIntel: string;

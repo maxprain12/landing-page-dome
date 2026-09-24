@@ -552,6 +552,7 @@ export const en: Dictionary = {
       detailsSummary: "Details and checksum",
       recommended: "Recommended for this device",
       downloadLabel: "Download",
+      alsoLabel: "Also",
       platforms: {
         macArm: "macOS Apple Silicon",
         macIntel: "macOS Intel",

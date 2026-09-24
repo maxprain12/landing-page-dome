@@ -74,13 +74,11 @@ const releasedLabel = entry
     })
   : "";
 const changelogHref = changelogUrl(locale);
-const logos: Record<CardId, string> = {
-  "mac-arm": "/assets/os/apple.svg",
-  "mac-intel": "/assets/os/apple.svg",
-  win: "/assets/os/windows.svg",
-  "linux-appimage": "/assets/os/appimage.svg",
-  "linux-flatpak": "/assets/os/flatpak.svg",
-};
+const groups = [
+  { id: "mac", label: "macOS", icon: "/assets/os/apple.svg", cards: cards.filter((card) => card.id.startsWith("mac") && card.asset) },
+  { id: "win", label: "Windows", icon: "/assets/os/windows.svg", cards: cards.filter((card) => card.id === "win" && card.asset) },
+  { id: "linux", label: "Linux", icon: "/assets/os/linux.svg", cards: cards.filter((card) => card.id.startsWith("linux") && card.asset) },
+].filter((group) => group.cards.length > 0);
 ---
 
 <Nav locale={locale} esHref={downloadUrl("es")} enHref={downloadUrl("en")} />
@@ -109,36 +107,47 @@ const logos: Record<CardId, string> = {
       <section class="wrap dl-stage" aria-label={page.h1}>
         <div>
           <div class="dl-tabs" role="tablist">
-            {cards.filter((card) => card.asset).map((card) => (
-              <button class="dl-tab" type="button" role="tab" data-tab={card.id} aria-selected="false">
-                <img src={logos[card.id]} alt="" width="16" height="16" />
-                {card.label}
+            {groups.map((group) => (
+              <button class="dl-tab" type="button" role="tab" data-tab={group.id} aria-selected="false">
+                <span class="os-icon" style={`--icon: url('${group.icon}')`}></span>
+                {group.label}
               </button>
             ))}
           </div>
-          {cards.map((card) =>
-            card.asset ? (
-              <article class="dl-panel" data-platform={card.id} hidden>
-                <img class="dl-os" src={logos[card.id]} alt="" width="28" height="28" />
-                <h2>{card.label}</h2>
-                <p class="dl-blurb">{card.blurb}</p>
-                <a class="btn btn-primary" href={card.asset.url} rel="noopener">
+          {groups.map((group) => {
+            const [primary, ...rest] = group.cards;
+            return primary?.asset ? (
+              <article class="dl-panel" data-platform={group.id} hidden>
+                <span class="os-icon dl-os" style={`--icon: url('${group.icon}')`}></span>
+                <h2>{primary.label}</h2>
+                <p class="dl-blurb">{primary.blurb}</p>
+                <a class="btn btn-primary" href={primary.asset.url} rel="noopener">
                   {page.downloadLabel}
                 </a>
-                <p class="dl-size">{formatSize(card.asset.size)}</p>
+                <p class="dl-size">{formatSize(primary.asset.size)}</p>
+                {rest.length ? (
+                  <p class="dl-also">
+                    {page.alsoLabel}:
+                    {rest.map((card) =>
+                      card.asset ? (
+                        <a href={card.asset.url} rel="noopener">{card.label}</a>
+                      ) : null,
+                    )}
+                  </p>
+                ) : null}
                 <details class="dl-details">
                   <summary>{page.detailsSummary}</summary>
                   <p class="dl-sha">
                     <span>{page.checksumLabel}</span>
-                    <code>{card.asset.sha512}</code>
+                    <code>{primary.asset.sha512}</code>
                   </p>
-                  <p class="dl-file">{card.asset.name}</p>
+                  <p class="dl-file">{primary.asset.name}</p>
                 </details>
               </article>
-            ) : null,
-          )}
+            ) : null;
+          })}
         </div>
-        <img class="dl-many" src="/assets/Many.svg" alt="" width="280" height="280" />
+        <img class="dl-many" src="/assets/many.png" alt="" width="220" height="220" />
       </section>
     ) : (
       <section class="wrap dl-empty" aria-live="polite">
@@ -164,14 +173,14 @@ const logos: Record<CardId, string> = {
       "";
     const platform = String(raw).toLowerCase();
     if (platform.includes("win")) return "win";
-    if (platform.includes("linux")) return "linux-appimage";
+    if (platform.includes("linux")) return "linux";
     if (
       platform.includes("mac") ||
       platform.includes("darwin") ||
       platform.includes("iphone") ||
       platform.includes("ipad")
     ) {
-      return "mac-arm";
+      return "mac";
     }
     return null;
   }
@@ -248,13 +257,17 @@ const logos: Record<CardId, string> = {
     border-radius: 999px;
     border: 1px solid var(--color-border);
     background: transparent;
-    color: var(--color-text-secondary);
+    color: var(--color-text);
     font: inherit;
     cursor: pointer;
   }
-  .dl-tab img {
+  .os-icon {
     width: 0.95rem;
     height: 0.95rem;
+    flex: 0 0 auto;
+    background: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+    mask: var(--icon) center / contain no-repeat;
   }
   .dl-tab[aria-selected="true"] {
     background: var(--color-text);
@@ -266,11 +279,25 @@ const logos: Record<CardId, string> = {
     font-size: 1.6rem;
   }
   .dl-os {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: var(--c-olive);
+  }
+  .dl-also {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.7rem;
+    margin: 0;
+    color: var(--color-ink-3);
+    font-size: 0.9rem;
+  }
+  .dl-also a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
   .dl-many {
-    width: min(100%, 18rem);
+    width: min(100%, 16rem);
     height: auto;
     justify-self: center;
   }

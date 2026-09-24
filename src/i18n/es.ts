@@ -552,6 +552,7 @@ export const es: Dictionary = {
       detailsSummary: "Detalles y checksum",
       recommended: "Recomendado para este equipo",
       downloadLabel: "Descargar",
+      alsoLabel: "También",
       platforms: {
         macArm: "macOS Apple Silicon",
         macIntel: "macOS Intel",
