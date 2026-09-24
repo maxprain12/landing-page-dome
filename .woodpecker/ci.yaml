@@ -22,4 +22,4 @@ steps:
       COOLIFY_URL:
         from_secret: coolify_url
     commands:
-      - curl -fsS -H "Authorization: Bearer $$COOLIFY_TOKEN" "$$COOLIFY_URL/api/v1/deploy?uuid=p1yng8mfa3wf3tv82wa8dzdd"
+      - 'curl -fsS -H "Authorization: Bearer $$COOLIFY_TOKEN" "$$COOLIFY_URL/api/v1/deploy?uuid=p1yng8mfa3wf3tv82wa8dzdd"'
