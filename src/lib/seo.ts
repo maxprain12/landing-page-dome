@@ -23,7 +23,6 @@ export function softwareJsonLd(origin: string, description: string) {
     description,
     url: origin,
     author,
-    license: "https://github.com/maxprain12/dome/blob/main/LICENSE",
     featureList: [
       "Local-first library",
       "People records with history",

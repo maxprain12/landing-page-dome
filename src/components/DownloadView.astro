@@ -1,7 +1,7 @@
 ---
 import Nav from "./Nav.astro";
 import Footer from "./Footer.astro";
-import { changelogUrl, downloadUrl, links } from "../data/landing";
+import { changelogUrl, downloadUrl } from "../data/landing";
 import { localizePath, t, type Locale } from "../i18n";
 import {
   formatSize,
@@ -140,9 +140,6 @@ const changelogHref = changelogUrl(locale);
         <p>{page.empty}</p>
         <a class="btn btn-primary" href={contactHref}>
           {page.emptyContact}
-        </a>
-        <a class="btn btn-ghost" href={links.github} target="_blank" rel="noopener">
-          {page.secondary}
         </a>
       </section>
     )

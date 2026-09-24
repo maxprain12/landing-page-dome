@@ -69,7 +69,6 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
         {
           heading: copy.nav.projectCol,
           items: [
-            { href: links.github, label: copy.nav.github, hint: copy.nav.githubHint, external: true },
             { href: changelogUrl(locale), label: copy.footer.changelog, hint: copy.nav.changelogHint },
           ],
         },

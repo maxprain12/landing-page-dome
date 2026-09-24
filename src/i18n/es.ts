@@ -258,12 +258,6 @@ export const es: Dictionary = {
     lead: "Importa un recurso, abre una persona, deja que Many prepare el siguiente paso y aprueba antes de que nada salga de tu disco.",
     items: [
       {
-        title: "GitHub",
-        text: "Código público, issues y decisiones de arquitectura.",
-        href: "https://github.com/maxprain12/dome",
-        external: true,
-      },
-      {
         title: "Releases",
         text: "Instaladores actuales para macOS, Windows y Linux.",
         href: "/download",
@@ -364,7 +358,7 @@ export const es: Dictionary = {
     secondary: "Ver el código en GitHub",
   },
   footer: {
-    tag: "Workspace local-first para documentos, personas y acciones con IA. Código público; el uso comercial requiere permiso escrito.",
+    tag: "Workspace local-first para documentos, personas y acciones con IA. El uso comercial requiere permiso escrito.",
     product: "Producto",
     editionsCol: "Ediciones",
     resources: "Recursos",

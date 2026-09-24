@@ -47,8 +47,6 @@ const resourceLinks: FooterLink[] = [
 
 const projectLinks: FooterLink[] = [
   { href: localizePath("/contact", locale), label: copy.footer.contact },
-  { href: links.github, label: copy.footer.github, external: true },
-  { href: links.license, label: copy.footer.license, external: true },
 ];
 
 const legalLinks: FooterLink[] = [
@@ -71,15 +69,6 @@ const legalLinks: FooterLink[] = [
           <span>{links.email}</span>
         </a>
         <div class="ft-social">
-          <a
-            class="ft-social-btn"
-            href={links.github}
-            target="_blank"
-            rel="noopener"
-            aria-label={copy.footer.github}
-          >
-            <DomeIcon name="github" size={16} filled />
-          </a>
           <a class="ft-social-btn" href={`mailto:${links.email}`} aria-label={copy.footer.email}>
             <DomeIcon name="mail" size={16} />
           </a>

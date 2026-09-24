@@ -258,12 +258,6 @@ export const en: Dictionary = {
     lead: "Import a resource, open a person, let Many prepare the next step, and approve before anything leaves your disk.",
     items: [
       {
-        title: "GitHub",
-        text: "Public code, issues, and architecture decisions.",
-        href: "https://github.com/maxprain12/dome",
-        external: true,
-      },
-      {
         title: "Releases",
         text: "Current installers for macOS, Windows, and Linux.",
         href: "/en/download",
@@ -364,7 +358,7 @@ export const en: Dictionary = {
     secondary: "View on GitHub",
   },
   footer: {
-    tag: "Local-first workspace for documents, people, and AI actions. Source-available; commercial use requires written permission.",
+    tag: "Local-first workspace for documents, people, and AI actions. Commercial use requires written permission.",
     product: "Product",
     editionsCol: "Editions",
     resources: "Resources",

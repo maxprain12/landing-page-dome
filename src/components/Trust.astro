@@ -1,5 +1,4 @@
 ---
-import { links } from "../data/landing";
 import { localeFromPath, localizePath, t, type Locale } from "../i18n";
 
 interface Props {
@@ -144,7 +143,6 @@ const queryOn = 3;
       <span>{copy.trust.proofLabel}:</span>
       <a href={localizePath("/local-first", locale)}>{copy.trust.localFirst}</a>
       <a href={localizePath("/privacy", locale)}>{copy.trust.privacy}</a>
-      <a href={links.license} target="_blank" rel="noopener">{copy.trust.license}</a>
     </p>
   </div>
 </section>
