@@ -50,7 +50,10 @@ const rssHref = localizePath("/changelog.xml", locale);
         {releases.map((entry) => (
           <article class="cl-item" id={`v${entry.version}`}>
             <header class="cl-head">
-              <h2>{entry.version}</h2>
+              <h2>
+                <span class="cl-mark" aria-hidden="true">D</span>
+                {entry.version}
+              </h2>
               <time datetime={entry.date}>{entry.dateLabel}</time>
             </header>
             <div class="cl-badges">
@@ -133,8 +136,22 @@ const rssHref = localizePath("/changelog.xml", locale);
   }
   .cl-head h2 {
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
     font-size: 1.35rem;
     letter-spacing: -0.02em;
+  }
+  .cl-mark {
+    width: 1.7rem;
+    height: 1.7rem;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--c-olive);
+    color: var(--color-olive-ink);
+    font-size: 0.85rem;
+    font-weight: 700;
   }
   .cl-head time {
     font-size: 0.88rem;

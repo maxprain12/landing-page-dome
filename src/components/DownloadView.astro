@@ -4,9 +4,9 @@ import Footer from "./Footer.astro";
 import { changelogUrl, downloadUrl, links } from "../data/landing";
 import { localizePath, t, type Locale } from "../i18n";
 import {
-  findPlatformAsset,
   formatSize,
   getLatest,
+  pickInstaller,
   type ReleaseAsset,
 } from "../lib/releases";
 
@@ -19,6 +19,7 @@ type CardId = "mac-arm" | "mac-intel" | "win" | "linux-appimage" | "linux-flatpa
 interface DownloadCard {
   id: CardId;
   label: string;
+  blurb: string;
   asset: ReleaseAsset | undefined;
 }
 
@@ -28,32 +29,38 @@ const page = copy.pages.download;
 const contactHref = localizePath("/contact", locale);
 const entry = await getLatest("latest");
 
+const blurbs = page.platformBlurbs;
 const cards: DownloadCard[] = entry
   ? [
       {
         id: "mac-arm",
         label: page.platforms.macArm,
-        asset: findPlatformAsset(entry, { platform: "mac", arch: "arm64" }),
+        blurb: blurbs.macArm,
+        asset: pickInstaller(entry, { platform: "mac", kind: "dmg", arch: "arm64" }),
       },
       {
         id: "mac-intel",
         label: page.platforms.macIntel,
-        asset: findPlatformAsset(entry, { platform: "mac", arch: "x64" }),
+        blurb: blurbs.macIntel,
+        asset: pickInstaller(entry, { platform: "mac", kind: "dmg", arch: "other" }),
       },
       {
         id: "win",
         label: page.platforms.windows,
-        asset: findPlatformAsset(entry, { platform: "win" }),
+        blurb: blurbs.windows,
+        asset: pickInstaller(entry, { platform: "win", kind: "nsis" }),
       },
       {
         id: "linux-appimage",
         label: page.platforms.linuxAppImage,
-        asset: findPlatformAsset(entry, { platform: "linux", kind: "appimage" }),
+        blurb: blurbs.linuxAppImage,
+        asset: pickInstaller(entry, { platform: "linux", kind: "appimage" }),
       },
       {
         id: "linux-flatpak",
         label: page.platforms.linuxFlatpak,
-        asset: findPlatformAsset(entry, { platform: "linux", kind: "flatpak" }),
+        blurb: blurbs.linuxFlatpak,
+        asset: pickInstaller(entry, { platform: "linux", kind: "flatpak" }),
       },
     ]
   : [];
@@ -99,7 +106,17 @@ const changelogHref = changelogUrl(locale);
               <p class="dl-rec" hidden data-recommended>
                 {page.recommended}
               </p>
+              <div class="dl-mark" aria-hidden="true">
+                {card.id.startsWith("mac") ? (
+                  <svg viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.2 1.8-3.2 1.9-3.3-1-1.5-2.6-1.7-3.2-1.7-1.3-.1-2.6.8-3.3.8s-1.7-.8-2.8-.7c-1.4.1-2.8.8-3.5 2.1-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.7 2.1 1.1 0 1.5-.7 2.8-.7s1.7.7 2.8.7 1.9-1 2.6-2.1c.8-1.2 1.1-2.3 1.2-2.4-.1 0-2.2-.8-2.3-3.4zM14.7 6.8c.6-.7 1-1.7.9-2.8-1 .1-2.1.6-2.8 1.4-.6.7-1.1 1.7-.9 2.7 1 .1 2.1-.5 2.8-1.3z" /></svg>
+                ) : card.id === "win" ? (
+                  <svg viewBox="0 0 24 24"><path d="M3 5.2 10.2 4.2v6.7H3V5.2zm8.2-.9L21 3v7.9h-9.8V4.3zM3 12.1h7.2V19L3 17.9v-5.8zm8.2 0H21V21l-9.8-1.4v-7.5z" /></svg>
+                ) : (
+                  <svg viewBox="0 0 24 24"><path d="M12 2.4c-1.6.3-2.8 1.6-3.1 3.1-.2.8 0 1.6.4 2.2-1.7.9-2.9 2.7-3.1 4.8-.5 3 .5 5.2 1.8 6.5.6.6.8 1.4.4 2.1-.5 1-.2 1.9.6 2.4.8.6 1.9.5 2.6-.2.4.6 1.1.9 1.9.9h.2c.8 0 1.5-.3 1.9-.9.7.7 1.8.8 2.6.2.8-.5 1.1-1.4.6-2.4-.4-.7-.2-1.5.4-2.1 1.3-1.3 2.3-3.5 1.8-6.5-.2-2.1-1.4-3.9-3.1-4.8.4-.6.6-1.4.4-2.2-.4-1.6-1.7-2.9-3.3-3.1z" /></svg>
+                )}
+              </div>
               <h2>{card.label}</h2>
+              <p class="dl-blurb">{card.blurb}</p>
               <p class="dl-size">
                 {page.sizeLabel}: {formatSize(card.asset.size)}
               </p>
@@ -233,9 +250,29 @@ const changelogHref = changelogUrl(locale);
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .dl-mark {
+    width: 2.4rem;
+    height: 2.4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--c-olive) 16%, var(--color-surface));
+    color: var(--c-olive);
+  }
+  .dl-mark svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: currentColor;
+  }
   .dl-card h2 {
     font-size: 1.2rem;
     margin: 0;
+  }
+  .dl-blurb {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.92rem;
+    line-height: 1.45;
   }
   .dl-size {
     margin: 0;

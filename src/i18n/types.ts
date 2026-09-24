@@ -305,6 +305,13 @@ export interface DownloadPageCopy extends SubpageCopy {
     linuxAppImage: string;
     linuxFlatpak: string;
   };
+  platformBlurbs: {
+    macArm: string;
+    macIntel: string;
+    windows: string;
+    linuxAppImage: string;
+    linuxFlatpak: string;
+  };
 }
 
 export interface ChangelogPageCopy extends SubpageCopy {

@@ -18,7 +18,7 @@ const releaseEntrySchema = z.object({
   version: z.string().min(1),
   date: z.string().min(1),
   channels: z.array(z.string()),
-  stagingPercentage: z.number(),
+  stagingPercentage: z.union([z.number(), z.record(z.string(), z.number())]).optional(),
   notesMarkdown: z.string(),
   assets: z.array(releaseAssetSchema),
 });
@@ -101,6 +101,18 @@ export function formatSize(bytes: number): string {
   }
   const digits = value >= 100 ? 0 : value >= 10 ? 1 : 2;
   return `${value.toFixed(digits)} ${units[unitIndex]}`;
+}
+
+export function pickInstaller(
+  entry: ReleaseEntry,
+  opts: { platform: PlatformGroup; kind: string; arch?: "arm64" | "other" },
+): ReleaseAsset | undefined {
+  return assetsByPlatform(entry)[opts.platform].find((asset) => {
+    if (asset.kind.toLowerCase() !== opts.kind.toLowerCase()) return false;
+    if (opts.arch === "arm64") return asset.arch.toLowerCase() === "arm64";
+    if (opts.arch === "other") return asset.arch.toLowerCase() !== "arm64";
+    return true;
+  });
 }
 
 export function findPlatformAsset(
