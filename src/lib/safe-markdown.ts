@@ -1,4 +1,4 @@
-import { createMarkdownProcessor } from "@astrojs/markdown-remark";
+import { markdownToHtml } from "satteri";
 
 const ALLOWED_TAGS = new Set([
   "p",
@@ -16,8 +16,6 @@ const ALLOWED_TAGS = new Set([
   "br",
   "blockquote",
 ]);
-
-let processorPromise: ReturnType<typeof createMarkdownProcessor> | null = null;
 
 function escapeAttr(value: string): string {
   return value
@@ -50,8 +48,6 @@ export function sanitizeNotesHtml(html: string): string {
 
 export async function renderSafeMarkdown(markdown: string): Promise<string> {
   if (!markdown.trim()) return "";
-  processorPromise ??= createMarkdownProcessor();
-  const processor = await processorPromise;
-  const { code } = await processor.render(markdown);
-  return sanitizeNotesHtml(code);
+  const { html } = markdownToHtml(markdown);
+  return sanitizeNotesHtml(html);
 }
