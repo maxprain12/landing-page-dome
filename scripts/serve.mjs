@@ -62,8 +62,34 @@ function resolveFile(pathname) {
   }
 }
 
+const INDEX_URL = process.env.PUBLIC_RELEASES_INDEX_URL || 'https://dl.dowi.es/index.json';
+let indexCache = { at: 0, body: '' };
+
+async function sendReleaseIndex(req, res) {
+  const now = Date.now();
+  if (!indexCache.body || now - indexCache.at > 60_000) {
+    const upstream = new URL(INDEX_URL);
+    upstream.searchParams.set('fresh', String(now));
+    const remote = await fetch(upstream, { headers: { 'cache-control': 'no-cache' } });
+    if (!remote.ok) throw new Error(`index ${remote.status}`);
+    indexCache = { at: now, body: await remote.text() };
+  }
+  res.writeHead(200, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+  });
+  res.end(req.method === 'HEAD' ? undefined : indexCache.body);
+}
+
 const server = http.createServer((req, res) => {
   const pathname = normalizePathname(req.url);
+  if (pathname === '/releases-index.json' && (req.method === 'GET' || req.method === 'HEAD')) {
+    sendReleaseIndex(req, res).catch(() => {
+      res.writeHead(502, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('index unavailable');
+    });
+    return;
+  }
   if (req.method === 'POST' && POST_OK.has(pathname)) {
     res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
     res.end('ok');

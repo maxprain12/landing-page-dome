@@ -91,10 +91,10 @@ const groups = [
       entry && hasAnyAsset ? (
         <p class="dl-meta">
           <span>
-            {page.versionLabel} {entry.version}
+            {page.versionLabel} <span data-live-version>{entry.version}</span>
           </span>
           <span aria-hidden="true">·</span>
-          <time datetime={entry.date}>{releasedLabel}</time>
+          <time data-live-date datetime={entry.date}>{releasedLabel}</time>
           <span aria-hidden="true">·</span>
           <a href={`${changelogHref}#v${entry.version}`}>{page.changelogLink}</a>
         </p>
@@ -121,12 +121,12 @@ const groups = [
                 <span class="os-icon dl-os" style={`--icon: url('${group.icon}')`}></span>
                 <h2>{primary.label}</h2>
                 <p class="dl-blurb">{primary.blurb}</p>
-                <a class="btn btn-primary dl-download" href={primary.asset.url} rel="noopener">
+                <a class="btn btn-primary dl-download" data-download href={primary.asset.url} rel="noopener">
                   {page.downloadLabel}
                 </a>
-                <p class="dl-size">{formatSize(primary.asset.size)}</p>
+                <p class="dl-size" data-size>{formatSize(primary.asset.size)}</p>
                 {rest.length ? (
-                  <p class="dl-also">
+                  <p class="dl-also" data-also data-also-label={page.alsoLabel}>
                     {page.alsoLabel}:
                     {rest.map((card) =>
                       card.asset ? (
@@ -139,9 +139,9 @@ const groups = [
                   <summary>{page.detailsSummary}</summary>
                   <p class="dl-sha">
                     <span>{page.checksumLabel}</span>
-                    <code>{primary.asset.sha512}</code>
+                    <code data-sha>{primary.asset.sha512}</code>
                   </p>
-                  <p class="dl-file">{primary.asset.name}</p>
+                  <p class="dl-file" data-file>{primary.asset.name}</p>
                 </details>
               </article>
             ) : null;
@@ -160,6 +160,10 @@ const groups = [
 </main>
 <Footer locale={locale} />
 
+<script>
+  import { startLiveReleases } from "../scripts/live-releases";
+  startLiveReleases().catch(() => undefined);
+</script>
 <script>
   function detectPlatformKey(): string | null {
     const nav = globalThis.navigator;

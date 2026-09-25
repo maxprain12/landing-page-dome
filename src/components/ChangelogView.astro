@@ -46,7 +46,7 @@ const rssHref = localizePath("/changelog.xml", locale);
 
   {
     releases.length ? (
-      <div class="wrap cl-list">
+      <div class="wrap cl-list" data-live-changelog>
         {releases.map((entry) => (
           <article class="cl-item" id={`v${entry.version}`}>
             <time class="cl-date" datetime={entry.date}>{entry.dateLabel}</time>
@@ -86,6 +86,11 @@ const rssHref = localizePath("/changelog.xml", locale);
   }
 </main>
 <Footer locale={locale} />
+
+<script>
+  import { startLiveReleases } from "../scripts/live-releases";
+  startLiveReleases().catch(() => undefined);
+</script>
 
 <style>
   .cl {
