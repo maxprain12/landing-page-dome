@@ -1,3 +1,5 @@
+import { releasesSignature } from "../lib/release-signature";
+
 type Asset = {
   platform: string;
   arch: string;
@@ -56,29 +58,45 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;");
 }
 
+function inlineMarkdown(value: string): string {
+  return value
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" rel="noopener">$1</a>')
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
+/** Small subset of what safe-markdown renders at build time: headings, lists, paragraphs, inline code/links/bold. */
 function notesToHtml(markdown: string): string {
   const lines = escapeHtml(markdown).split("\n");
   const html: string[] = [];
   let list = false;
+  let paragraph: string[] = [];
+  const flush = () => {
+    if (paragraph.length) html.push(`<p>${inlineMarkdown(paragraph.join(" "))}</p>`);
+    paragraph = [];
+    if (list) html.push("</ul>");
+    list = false;
+  };
   for (const line of lines) {
-    if (line.startsWith("### ")) {
-      if (list) html.push("</ul>");
-      list = false;
-      html.push(`<h3>${line.slice(4)}</h3>`);
-    } else if (line.startsWith("- ")) {
+    const trimmed = line.trim();
+    const heading = /^(#{2,4}) (.+)$/.exec(trimmed);
+    if (heading) {
+      flush();
+      const level = heading[1].length;
+      html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`);
+    } else if (trimmed.startsWith("- ")) {
+      if (paragraph.length) flush();
       if (!list) html.push("<ul>");
       list = true;
-      html.push(`<li>${line.slice(2).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")}</li>`);
-    } else if (line.trim() === "") {
-      if (list) html.push("</ul>");
-      list = false;
+      html.push(`<li>${inlineMarkdown(trimmed.slice(2))}</li>`);
+    } else if (trimmed === "") {
+      flush();
     } else {
-      if (list) html.push("</ul>");
-      list = false;
-      html.push(`<p>${line.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/`([^`]+)`/g, "<code>$1</code>")}</p>`);
+      if (list) flush();
+      paragraph.push(trimmed);
     }
   }
-  if (list) html.push("</ul>");
+  flush();
   return html.join("");
 }
 
@@ -129,12 +147,19 @@ function applyDownload(entry: Release) {
   }
 }
 
+function channelLabel(list: HTMLElement, channel: string): string {
+  if (channel === "latest") return list.dataset.labelLatest ?? channel;
+  if (channel === "beta") return list.dataset.labelBeta ?? channel;
+  return channel;
+}
+
+/** Mirrors the markup ChangelogView.astro renders at build time. */
 function applyChangelog(index: Index) {
-  const list = document.querySelector("[data-live-changelog]");
+  const list = document.querySelector<HTMLElement>("[data-live-changelog]");
   if (!list) return;
+  if (list.dataset.signature === releasesSignature(index.releases)) return;
   const locale = document.documentElement.lang === "en" ? "en-US" : "es-ES";
-  list.replaceChildren();
-  for (const entry of index.releases) {
+  const articles = index.releases.map((entry) => {
     const article = document.createElement("article");
     article.className = "cl-item";
     article.id = `v${entry.version}`;
@@ -157,13 +182,26 @@ function applyChangelog(index: Index) {
     mark.height = 32;
     title.append(mark, document.createTextNode(entry.version));
     header.append(title);
-    const notes = document.createElement("div");
-    notes.className = "cl-notes prose";
-    notes.innerHTML = notesToHtml(entry.notesMarkdown);
-    body.append(header, notes);
+    const badges = document.createElement("div");
+    badges.className = "cl-badges";
+    for (const channel of entry.channels) {
+      const badge = document.createElement("span");
+      badge.className = channel === "beta" ? "cl-badge is-beta" : "cl-badge";
+      badge.textContent = channelLabel(list, channel);
+      badges.append(badge);
+    }
+    body.append(header, badges);
+    const notesHtml = notesToHtml(entry.notesMarkdown);
+    if (notesHtml) {
+      const notes = document.createElement("div");
+      notes.className = "cl-notes prose";
+      notes.innerHTML = notesHtml;
+      body.append(notes);
+    }
     article.append(time, body);
-    list.append(article);
-  }
+    return article;
+  });
+  list.replaceChildren(...articles);
 }
 
 export async function startLiveReleases(): Promise<void> {

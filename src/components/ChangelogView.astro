@@ -4,6 +4,7 @@ import Footer from "./Footer.astro";
 import { changelogUrl } from "../data/landing";
 import { localizePath, t, type Locale } from "../i18n";
 import { getReleaseIndex } from "../lib/releases";
+import { releasesSignature } from "../lib/release-signature";
 import { renderSafeMarkdown } from "../lib/safe-markdown";
 
 interface Props {
@@ -46,7 +47,13 @@ const rssHref = localizePath("/changelog.xml", locale);
 
   {
     releases.length ? (
-      <div class="wrap cl-list" data-live-changelog>
+      <div
+        class="wrap cl-list"
+        data-live-changelog
+        data-signature={releasesSignature(index.releases)}
+        data-label-latest={page.channelLatest}
+        data-label-beta={page.channelBeta}
+      >
         {releases.map((entry) => (
           <article class="cl-item" id={`v${entry.version}`}>
             <time class="cl-date" datetime={entry.date}>{entry.dateLabel}</time>
@@ -124,7 +131,8 @@ const rssHref = localizePath("/changelog.xml", locale);
     display: grid;
     gap: 1.4rem;
   }
-  .cl-item {
+  /* The live script rebuilds these nodes without Astro's scope attribute. */
+  .cl-list :global(.cl-item) {
     display: grid;
     grid-template-columns: 9.5rem minmax(0, 1fr);
     gap: 1rem 1.5rem;
@@ -132,24 +140,24 @@ const rssHref = localizePath("/changelog.xml", locale);
     border-top: 1px solid var(--color-border);
     scroll-margin-top: 5.5rem;
   }
-  .cl-date {
+  .cl-list :global(.cl-date) {
     font-size: 0.82rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-ink-3);
   }
-  .cl-head h2 img {
+  .cl-list :global(.cl-head h2 img) {
     width: 2rem;
     height: 2rem;
   }
-  .cl-head {
+  .cl-list :global(.cl-head) {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
     gap: 0.5rem 1rem;
   }
-  .cl-head h2 {
+  .cl-list :global(.cl-head h2) {
     margin: 0;
     display: flex;
     align-items: center;
@@ -158,21 +166,17 @@ const rssHref = localizePath("/changelog.xml", locale);
     letter-spacing: -0.02em;
   }
   @media (max-width: 720px) {
-    .cl-item {
+    .cl-list :global(.cl-item) {
       grid-template-columns: 1fr;
     }
   }
-  .cl-head time {
-    font-size: 0.88rem;
-    color: var(--color-ink-3);
-  }
-  .cl-badges {
+  .cl-list :global(.cl-badges) {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
     margin: 0.75rem 0 0;
   }
-  .cl-badge {
+  .cl-list :global(.cl-badge) {
     display: inline-flex;
     align-items: center;
     height: 1.55rem;
@@ -185,35 +189,35 @@ const rssHref = localizePath("/changelog.xml", locale);
     text-transform: uppercase;
     color: var(--color-text-secondary);
   }
-  .cl-badge.is-beta {
+  .cl-list :global(.cl-badge.is-beta) {
     border-color: color-mix(in srgb, var(--c-olive) 40%, var(--color-border));
     color: var(--c-olive);
   }
-  .cl-notes {
+  .cl-list :global(.cl-notes) {
     margin-top: 1rem;
     font-size: 1rem;
     line-height: 1.65;
     color: var(--color-text-secondary);
   }
-  .cl-notes :global(h2),
-  .cl-notes :global(h3),
-  .cl-notes :global(h4) {
+  .cl-list :global(.cl-notes h2),
+  .cl-list :global(.cl-notes h3),
+  .cl-list :global(.cl-notes h4) {
     color: var(--color-text);
     margin: 1.1rem 0 0.45rem;
   }
-  .cl-notes :global(p) {
+  .cl-list :global(.cl-notes p) {
     margin: 0 0 0.75rem;
   }
-  .cl-notes :global(ul),
-  .cl-notes :global(ol) {
+  .cl-list :global(.cl-notes ul),
+  .cl-list :global(.cl-notes ol) {
     margin: 0 0 0.85rem 1.1rem;
   }
-  .cl-notes :global(a) {
+  .cl-list :global(.cl-notes a) {
     color: var(--color-text);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  .cl-notes :global(code) {
+  .cl-list :global(.cl-notes code) {
     font-family: var(--font-mono);
     font-size: 0.86em;
     color: var(--c-olive);
