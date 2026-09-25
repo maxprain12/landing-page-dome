@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProductPage from "../components/ProductPage.astro";
+import { extensionStores } from "../data/extension";
+import { productShot } from "../data/shots";
+import { t } from "../i18n";
+
+const locale = "es" as const;
+const page = t(locale).pages.extension;
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/extension">
+  <ProductPage locale={locale} page={page} stores={extensionStores} shot={productShot("extension")} />
+</Layout>

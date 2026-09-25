@@ -1,0 +1,107 @@
+---
+import { localeFromPath, localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale).apps;
+const cards = [
+  { href: localizePath("/companion", locale), title: copy.companionTitle, text: copy.companionText },
+  { href: localizePath("/extension", locale), title: copy.extensionTitle, text: copy.extensionText },
+];
+---
+
+<section class="ap section" id="apps" aria-labelledby="apps-title">
+  <div class="wrap ap-shell">
+    <div class="ap-head">
+      <p class="eyebrow" data-reveal>{copy.eyebrow}</p>
+      <h2 id="apps-title" class="h-display ap-h2" data-reveal>{copy.h2}</h2>
+      <p class="ap-lead" data-reveal>{copy.lead}</p>
+    </div>
+    <ul class="ap-grid" role="list">
+      {
+        cards.map((card) => (
+          <li>
+            <a class="ap-card" href={card.href}>
+              <h3>{card.title}</h3>
+              <p>{card.text}</p>
+              <span class="ap-more">{copy.more} →</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ap {
+    background: var(--color-bg);
+  }
+  .ap-shell {
+    display: grid;
+    gap: 1.6rem;
+  }
+  .ap-head {
+    max-width: 40rem;
+  }
+  .ap-h2 {
+    margin: 0.6rem 0 0.8rem;
+    font-size: clamp(2rem, 4.4vw, 3.1rem);
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .ap-lead {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+  .ap-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1rem;
+  }
+  .ap-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 22px;
+    background: var(--color-zinc-875);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+  .ap-card:hover {
+    border-color: var(--color-olive-bright);
+    background: var(--color-zinc-800);
+  }
+  .ap-card:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+  .ap-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    letter-spacing: -0.03em;
+  }
+  .ap-card p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+  }
+  .ap-more {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-many-body);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ap-card {
+      transition: none;
+    }
+  }
+</style>

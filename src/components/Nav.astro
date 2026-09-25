@@ -43,7 +43,7 @@ const downloadHref = downloadUrl(locale);
               <span>{menu.label}</span>
               <DomeIcon name="chevron" size={14} />
             </button>
-            <div class="nav-mega" id={`nav-menu-${menu.id}`} data-nav-panel hidden>
+            <div class="nav-mega" id={`nav-menu-${menu.id}`} style={`--nav-cols: ${menu.columns.length}`} data-nav-panel hidden>
               {
                 menu.columns.map((column) => (
                   <div class="nav-col">
@@ -345,9 +345,9 @@ const downloadHref = downloadUrl(locale);
     left: 50%;
     translate: -50% 0;
     display: grid;
-    grid-template-columns: repeat(2, minmax(13rem, 1fr));
+    grid-template-columns: repeat(var(--nav-cols, 2), minmax(12rem, 1fr));
     gap: 1.4rem 2rem;
-    min-width: 34rem;
+    min-width: calc(var(--nav-cols, 2) * 15.5rem);
     padding: 1.15rem 1.25rem 1.2rem;
     background: color-mix(in srgb, var(--color-zinc-850) 96%, transparent);
     border: 1px solid var(--color-border);

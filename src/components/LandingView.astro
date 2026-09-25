@@ -3,6 +3,7 @@ import Nav from "./Nav.astro";
 import Hero from "./Hero.astro";
 import HowItWorks from "./HowItWorks.astro";
 import Trust from "./Trust.astro";
+import AppsStrip from "./AppsStrip.astro";
 import SocialProof from "./SocialProof.astro";
 import FAQ from "./FAQ.astro";
 import FinalCTA from "./FinalCTA.astro";
@@ -23,6 +24,7 @@ const { locale } = Astro.props;
   <Hero locale={locale} />
   <HowItWorks locale={locale} />
   <Trust locale={locale} />
+  <AppsStrip locale={locale} />
   {flags.showPricing ? <Pricing /> : null}
   <SocialProof locale={locale} />
   <FAQ locale={locale} />

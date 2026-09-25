@@ -91,6 +91,11 @@ export interface Dictionary {
     faqHint: string;
     githubHint: string;
     changelogHint: string;
+    appsCol: string;
+    companion: string;
+    companionHint: string;
+    extension: string;
+    extensionHint: string;
   };
   content: {
     read: string;
@@ -223,6 +228,16 @@ export interface Dictionary {
     support: string;
     groups: FaqGroup[];
   };
+  apps: {
+    eyebrow: string;
+    h2: string;
+    lead: string;
+    companionTitle: string;
+    companionText: string;
+    extensionTitle: string;
+    extensionText: string;
+    more: string;
+  };
   finalCta: {
     h2: string;
     lead: string;
@@ -257,6 +272,8 @@ export interface Dictionary {
     pricing: string;
     rss: string;
     rights: string;
+    companion: string;
+    extension: string;
   };
   legal: {
     back: string;
@@ -279,7 +296,36 @@ export interface Dictionary {
     download: DownloadPageCopy;
     changelog: ChangelogPageCopy;
     pricing: PricingPageCopy;
+    companion: ProductPageCopy;
+    extension: ProductPageCopy;
   };
+}
+
+/** Dedicated page for a Dome surface outside the desktop app (Companion, browser extension). */
+export interface ProductPageCopy {
+  title: string;
+  description: string;
+  eyebrow: string;
+  h1: string;
+  lead: string;
+  /** Store button labels keyed by store id (see src/data/companion.ts, src/data/extension.ts). */
+  stores: Record<string, string>;
+  soon: string;
+  notify: string;
+  desktop: string;
+  shotAlt: string;
+  featuresTitle: string;
+  features: CapabilityItem[];
+  stepsTitle: string;
+  steps: CapabilityItem[];
+  privacyTitle: string;
+  privacyText: string;
+  requirementsTitle: string;
+  requirements: string[];
+  faqTitle: string;
+  faq: FaqItem[];
+  finalTitle: string;
+  finalLead: string;
 }
 
 export interface PricingPageCopy extends SubpageCopy {

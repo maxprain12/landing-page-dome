@@ -61,6 +61,11 @@ export function shotForView(view: ShellView, format: ShotFormat = "screen"): str
   return shotForScene(VIEW_SCENE[view], format);
 }
 
+/** Real capture for a product page (`public/products/<product>-hero.webp|png`); null until one is added. */
+export function productShot(product: "companion" | "extension"): string | null {
+  return publicUrl(`products/${product}-hero.webp`) ?? publicUrl(`products/${product}-hero.png`);
+}
+
 export const shots: Record<ShotScene, Record<ShotFormat, string | null>> = {
   library: {
     screen: shotForScene("library", "screen"),
