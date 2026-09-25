@@ -1,0 +1,280 @@
+---
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import { downloadUrl } from "../data/landing";
+import { liveStores, type StoreLink } from "../data/stores";
+import { localizePath, type Locale } from "../i18n";
+import type { ProductPageCopy } from "../i18n/types";
+
+interface Props {
+  locale: Locale;
+  page: ProductPageCopy;
+  stores: StoreLink[];
+  shot?: string | null;
+}
+
+const { locale, page, stores, shot = null } = Astro.props;
+const live = liveStores(stores);
+const contactHref = localizePath("/contact", locale);
+---
+
+<Nav locale={locale} />
+<main class="pp" id="main-content">
+  <section class="wrap pp-hero">
+    <p class="eyebrow">{page.eyebrow}</p>
+    <h1 class="h-display pp-h1">{page.h1}</h1>
+    <p class="pp-lead">{page.lead}</p>
+    <div class="pp-cta">
+      {
+        live.length > 0 ? (
+          live.map((store, index) => (
+            <a class:list={["btn", index === 0 ? "btn-primary" : "btn-ghost"]} href={store.href} rel="noopener">
+              {page.stores[store.id]}
+            </a>
+          ))
+        ) : (
+          <>
+            <span class="btn btn-ghost pp-soon" aria-disabled="true">{page.soon}</span>
+            <a class="btn btn-primary" href={contactHref}>{page.notify}</a>
+          </>
+        )
+      }
+      <a class="btn btn-text" href={downloadUrl(locale)}>{page.desktop}</a>
+    </div>
+  </section>
+
+  {
+    shot ? (
+      <figure class="wrap pp-shot">
+        <img src={shot} alt={page.shotAlt} loading="eager" decoding="async" />
+      </figure>
+    ) : null
+  }
+
+  <section class="wrap pp-section" aria-labelledby="pp-features">
+    <h2 id="pp-features" class="pp-h2">{page.featuresTitle}</h2>
+    <ul class="pp-grid" role="list">
+      {
+        page.features.map((item) => (
+          <li class="pp-card">
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="wrap pp-section" aria-labelledby="pp-steps">
+    <h2 id="pp-steps" class="pp-h2">{page.stepsTitle}</h2>
+    <ol class="pp-steps">
+      {
+        page.steps.map((step, index) => (
+          <li>
+            <span class="pp-num" aria-hidden="true">{index + 1}</span>
+            <div>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="wrap pp-section pp-split">
+    <div class="pp-panel">
+      <h2 class="pp-h2">{page.privacyTitle}</h2>
+      <p>{page.privacyText}</p>
+    </div>
+    <div class="pp-panel">
+      <h2 class="pp-h2">{page.requirementsTitle}</h2>
+      <ul class="pp-reqs" role="list">
+        {page.requirements.map((req) => <li>{req}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap pp-section" aria-labelledby="pp-faq">
+    <h2 id="pp-faq" class="pp-h2">{page.faqTitle}</h2>
+    <div class="pp-faq">
+      {
+        page.faq.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap pp-final">
+    <h2 class="h-display pp-final-h2">{page.finalTitle}</h2>
+    <p class="pp-lead">{page.finalLead}</p>
+    <div class="pp-cta">
+      {
+        live.length > 0 ? (
+          <a class="btn btn-primary" href={live[0].href} rel="noopener">{page.stores[live[0].id]}</a>
+        ) : (
+          <a class="btn btn-primary" href={contactHref}>{page.notify}</a>
+        )
+      }
+      <a class="btn btn-ghost" href={downloadUrl(locale)}>{page.desktop}</a>
+    </div>
+  </section>
+</main>
+<Footer locale={locale} />
+
+<style>
+  .pp {
+    padding: clamp(3rem, 6vw, 5rem) 0 4rem;
+  }
+  .pp-hero,
+  .pp-final {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .pp-h1 {
+    font-size: clamp(2.2rem, 4.8vw, 3.4rem);
+    margin: 0.7rem 0 1rem;
+  }
+  .pp-lead {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.6rem;
+  }
+  .pp-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .pp-soon {
+    cursor: default;
+    opacity: 0.7;
+  }
+  .pp-shot {
+    max-width: min(1120px, 92vw);
+    margin: clamp(2.4rem, 5vw, 3.6rem) auto 0;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--color-surface);
+  }
+  .pp-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .pp-section {
+    max-width: min(1120px, 92vw);
+    margin: clamp(3rem, 7vw, 5rem) auto 0;
+  }
+  .pp-h2 {
+    font-size: clamp(1.35rem, 2.6vw, 1.75rem);
+    letter-spacing: -0.03em;
+    margin: 0 0 1.2rem;
+  }
+  .pp-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+  .pp-card,
+  .pp-panel {
+    padding: 1.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    background: var(--color-zinc-800);
+  }
+  .pp-card h3,
+  .pp-steps h3 {
+    font-size: 1.02rem;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.45rem;
+  }
+  .pp-card p,
+  .pp-steps p,
+  .pp-panel p,
+  .pp-faq p {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .pp-steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+  }
+  .pp-steps li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+  }
+  .pp-num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-bg);
+    background: var(--color-many-body);
+  }
+  .pp-split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 1rem;
+  }
+  .pp-reqs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  .pp-reqs li::before {
+    content: "·";
+    margin-right: 0.5rem;
+    color: var(--color-olive-bright);
+  }
+  .pp-faq {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--color-border);
+  }
+  .pp-faq details {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .pp-faq summary {
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .pp-faq summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+  .pp-faq p {
+    margin-top: 0.6rem;
+  }
+  .pp-final {
+    margin-top: clamp(3.5rem, 8vw, 6rem);
+    text-align: center;
+  }
+  .pp-final .pp-cta {
+    justify-content: center;
+  }
+  .pp-final-h2 {
+    font-size: clamp(1.8rem, 3.6vw, 2.5rem);
+    margin: 0 0 0.8rem;
+  }
+</style>

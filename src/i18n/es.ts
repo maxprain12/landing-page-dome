@@ -42,6 +42,11 @@ export const es: Dictionary = {
     faqHint: "Preguntas frecuentes",
     githubHint: "Código y decisiones públicas",
     changelogHint: "Qué cambia en cada versión",
+    appsCol: "Más allá del Mac",
+    companion: "Dome Companion",
+    companionHint: "Many de tu Mac en el iPhone",
+    extension: "Extensión de navegador",
+    extensionHint: "Guarda páginas, notas y contactos",
   },
   content: {
     read: "Lectura",
@@ -351,6 +356,16 @@ export const es: Dictionary = {
       },
     ],
   },
+  apps: {
+    eyebrow: "Más allá del escritorio",
+    h2: "Tu Dome, también en el iPhone y en el navegador",
+    lead: "La biblioteca y Many siguen en tu ordenador. Companion y la extensión solo te dan otra puerta para llegar a ellos.",
+    companionTitle: "Dome Companion para iPhone",
+    companionText: "Pregunta a Many por el informe de ayer o aprueba el correo que dejó preparado, desde la cola del café. Todo se ejecuta en tu Mac.",
+    extensionTitle: "Extensión para Chrome, Edge y Safari",
+    extensionText: "Guarda el artículo que estás leyendo con su resumen, cita un párrafo en una nota o convierte un perfil en contacto, sin copiar y pegar.",
+    more: "Ver cómo funciona",
+  },
   finalCta: {
     h2: "Convierte el próximo documento en un siguiente paso.",
     lead: "Descarga Dome, importa un recurso y comprueba si Many entiende el contexto.",
@@ -385,6 +400,8 @@ export const es: Dictionary = {
     pricing: "Pricing",
     rss: "RSS",
     rights: "Todos los derechos reservados.",
+    companion: "Companion para iPhone",
+    extension: "Extensión de navegador",
   },
   legal: {
     back: "Volver al inicio",
@@ -606,6 +623,154 @@ export const es: Dictionary = {
       tbaTitle: "Planes cloud en preparación",
       tbaBody:
         "Estamos cerrando qué incluye cada plan y cómo se conecta al Provider. Mientras tanto, el valor está en el escritorio: importa, relaciona, deja que Many prepare y aprueba antes de enviar.",
+    },
+      companion: {
+      title: "Dome Companion para iPhone · Many de tu Mac en el bolsillo",
+      description: "Controla el Many de tu Mac desde el iPhone: pregunta a tu biblioteca, abre lo que cita y aprueba acciones. Cifrado de extremo a extremo, sin subir tus documentos.",
+      eyebrow: "Dome Companion · iPhone",
+      h1: "El Many de tu Mac, en el iPhone",
+      lead: "Pregunta por el PDF que importaste esta mañana o aprueba el borrador que Many dejó listo. Companion envía la petición a tu Mac; tus documentos no salen de allí.",
+      stores: {
+        appStore: "Descargar en la App Store",
+        testFlight: "Probar la beta en TestFlight",
+      },
+      soon: "Próximamente en la App Store",
+      notify: "Avísame cuando salga",
+      desktop: "Descargar Dome para Mac",
+      shotAlt: "Dome Companion en un iPhone mostrando una conversación con Many",
+      featuresTitle: "Qué puedes hacer desde el móvil",
+      features: [
+        {
+          title: "Preguntar a tu biblioteca",
+          text: "Many responde con tus notas, PDFs y transcripciones del Mac, con las mismas herramientas que en el escritorio.",
+        },
+        {
+          title: "Aprobar sin abrir el portátil",
+          text: "Cuando Many necesita tu visto bueno para enviar o modificar algo, te lo pide en el iPhone y esperas la respuesta allí.",
+        },
+        {
+          title: "Abrir lo que Many cita",
+          text: "Previsualiza el documento o la skill que menciona por el mismo túnel cifrado, sin sincronizar tu biblioteca con la nube.",
+        },
+      ],
+      stepsTitle: "Emparejar en un minuto",
+      steps: [
+        {
+          title: "Activa el control remoto",
+          text: "En Dome para Mac: Ajustes → Many remoto → Permitir control remoto.",
+        },
+        {
+          title: "Genera un código",
+          text: "Pulsa «Generar código». Caduca a los 10 minutos y solo sirve una vez.",
+        },
+        {
+          title: "Escríbelo en Companion",
+          text: "Inicia sesión en Companion con tu cuenta de Dome y pega el código en Cuenta.",
+        },
+      ],
+      privacyTitle: "Tu Mac hace el trabajo",
+      privacyText: "Los mensajes viajan cifrados de extremo a extremo entre el iPhone y el Mac. Dome Provider solo retransmite sobres que no puede leer y no ejecuta a Many. Si el Mac está apagado, Companion te lo dice: no hay respaldo en la nube.",
+      requirementsTitle: "Qué necesitas",
+      requirements: [
+        "iPhone con iOS 17 o posterior.",
+        "Dome para Mac abierto, con el control remoto activado y el Mac despierto.",
+        "Una cuenta de Dome con plan Starter, Pro o Max.",
+      ],
+      faqTitle: "Preguntas frecuentes",
+      faq: [
+        {
+          q: "¿Funciona si el Mac está en reposo?",
+          a: "No. Many se ejecuta en tu Mac, así que tiene que estar despierto y con Dome abierto. Companion te avisa cuando no está disponible.",
+        },
+        {
+          q: "¿Puedo emparejar varios iPhone?",
+          a: "Sí. Cada teléfono aparece en Ajustes → Many remoto y puedes revocarlo cuando quieras.",
+        },
+        {
+          q: "¿Y si pierdo el teléfono?",
+          a: "Revoca el dispositivo desde Dome para Mac. El código de emparejamiento y las claves de ese teléfono dejan de servir al instante.",
+        },
+        {
+          q: "¿Hay versión para Android?",
+          a: "Todavía no. Companion es solo para iPhone por ahora.",
+        },
+      ],
+      finalTitle: "Deja Many en el Mac. Llévalo en el bolsillo.",
+      finalLead: "Instala Dome en tu Mac, activa el control remoto y empareja el iPhone con un código.",
+    },
+    extension: {
+      title: "Extensión de navegador de Dome · Guarda la web en tu biblioteca local",
+      description: "Extensión para Chrome, Edge y Safari: guarda páginas con resumen, cita párrafos en notas y crea contactos desde perfiles. Habla solo con Dome en tu ordenador.",
+      eyebrow: "Extensión · Chrome, Edge y Safari",
+      h1: "Del navegador a tu biblioteca, sin copiar y pegar",
+      lead: "Estás leyendo un informe y quieres guardarlo con su resumen, citar un párrafo en la nota del proyecto o apuntar a la persona que lo firma. La extensión lo manda a Dome, en tu ordenador.",
+      stores: {
+        chrome: "Añadir a Chrome",
+        edge: "Añadir a Edge",
+        safari: "Descargar para Safari",
+      },
+      soon: "Próximamente en las tiendas",
+      notify: "Avísame cuando salga",
+      desktop: "Descargar Dome",
+      shotAlt: "Panel de la extensión de Dome abierto junto a un artículo en el navegador",
+      featuresTitle: "Qué hace",
+      features: [
+        {
+          title: "Guardar la página",
+          text: "Captura el enlace con título y un resumen de Many en el proyecto que elijas.",
+        },
+        {
+          title: "Notas con cita",
+          text: "Selecciona texto y añádelo a una nota con la cita y la fuente, en el mismo editor que usas en Dome.",
+        },
+        {
+          title: "Contactos desde perfiles",
+          text: "Detecta perfiles y datos de persona de la página. Revisas nombre, cargo y correo antes de guardar.",
+        },
+      ],
+      stepsTitle: "Conectarla con Dome",
+      steps: [
+        {
+          title: "Instala la extensión",
+          text: "Desde la tienda de tu navegador: Chrome Web Store, Edge Add-ons o la App Store para Safari.",
+        },
+        {
+          title: "Genera un código en Dome",
+          text: "En Dome: Ajustes → Extensión de navegador → Generar código. Caduca a los 10 minutos.",
+        },
+        {
+          title: "Pégalo en el panel",
+          text: "Pulsa el icono de Dome en el navegador y pega el código. Listo.",
+        },
+      ],
+      privacyTitle: "Solo habla con tu ordenador",
+      privacyText: "La extensión no lee la página hasta que pulsas su icono o el menú contextual. Envía lo que capturas a Dome en tu propio ordenador (127.0.0.1) con un token emparejado; ningún servidor de Dome lo recibe.",
+      requirementsTitle: "Qué necesitas",
+      requirements: [
+        "Chrome, Edge o Safari en una versión reciente.",
+        "Dome para escritorio abierto en el mismo ordenador.",
+      ],
+      faqTitle: "Preguntas frecuentes",
+      faq: [
+        {
+          q: "¿Funciona con Dome cerrado?",
+          a: "No. La extensión guarda directamente en tu biblioteca local, así que Dome tiene que estar abierto. El panel te avisa si no lo encuentra.",
+        },
+        {
+          q: "¿Por qué me pide permiso para un sitio?",
+          a: "Solo pide acceso a un sitio cuando capturas en él, y puedes retirarlo desde los ajustes del navegador.",
+        },
+        {
+          q: "¿Many usa mis datos para algo más?",
+          a: "Many usa el proveedor de IA que configuraste en Dome, igual que en el escritorio. La extensión no añade ningún servicio intermedio.",
+        },
+        {
+          q: "¿Y Firefox?",
+          a: "El código ya funciona en Firefox; la publicación en su tienda llegará más adelante.",
+        },
+      ],
+      finalTitle: "Lee en el navegador. Guarda en Dome.",
+      finalLead: "Instala Dome, añade la extensión y empareja con un código de ocho caracteres.",
     },
   },
 };

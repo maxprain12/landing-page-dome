@@ -1,0 +1,14 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProductPage from "../components/ProductPage.astro";
+import { companionStores } from "../data/companion";
+import { productShot } from "../data/shots";
+import { t } from "../i18n";
+
+const locale = "es" as const;
+const page = t(locale).pages.companion;
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/companion">
+  <ProductPage locale={locale} page={page} stores={companionStores} shot={productShot("companion")} />
+</Layout>

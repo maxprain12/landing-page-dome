@@ -52,6 +52,13 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
             { href: localizePath("/dev", locale), label: copy.footer.dev, hint: copy.nav.devHint },
           ],
         },
+        {
+          heading: copy.nav.appsCol,
+          items: [
+            { href: localizePath("/companion", locale), label: copy.nav.companion, hint: copy.nav.companionHint },
+            { href: localizePath("/extension", locale), label: copy.nav.extension, hint: copy.nav.extensionHint },
+          ],
+        },
       ],
     },
     {

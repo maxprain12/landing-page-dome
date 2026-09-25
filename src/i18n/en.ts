@@ -42,6 +42,11 @@ export const en: Dictionary = {
     faqHint: "Frequently asked questions",
     githubHint: "Public code and decisions",
     changelogHint: "What changes in each release",
+    appsCol: "Beyond the Mac",
+    companion: "Dome Companion",
+    companionHint: "Your Mac's Many on iPhone",
+    extension: "Browser extension",
+    extensionHint: "Save pages, notes and contacts",
   },
   content: {
     read: "Reading time",
@@ -351,6 +356,16 @@ export const en: Dictionary = {
       },
     ],
   },
+  apps: {
+    eyebrow: "Beyond the desktop",
+    h2: "Your Dome, on iPhone and in the browser too",
+    lead: "Your library and Many stay on your computer. Companion and the extension are just other doors into them.",
+    companionTitle: "Dome Companion for iPhone",
+    companionText: "Ask Many about yesterday's report or approve the email it drafted while you wait for coffee. Everything runs on your Mac.",
+    extensionTitle: "Extension for Chrome, Edge and Safari",
+    extensionText: "Save the article you're reading with its summary, quote a paragraph into a note, or turn a profile into a contact, without copy and paste.",
+    more: "See how it works",
+  },
   finalCta: {
     h2: "Turn the next document into a next step.",
     lead: "Download Dome, import a resource, and see whether Many understands the context.",
@@ -385,6 +400,8 @@ export const en: Dictionary = {
     pricing: "Pricing",
     rss: "RSS",
     rights: "All rights reserved.",
+    companion: "Companion for iPhone",
+    extension: "Browser extension",
   },
   legal: {
     back: "Back to home",
@@ -606,6 +623,154 @@ export const en: Dictionary = {
       tbaTitle: "Cloud plans in progress",
       tbaBody:
         "We are still locking what each plan includes and how it connects to Provider. Meanwhile, the value is on the desktop: import, relate, let Many prepare, and approve before sending.",
+    },
+      companion: {
+      title: "Dome Companion for iPhone · Your Mac's Many in your pocket",
+      description: "Control your Mac's Many from your iPhone: ask your library, open what it cites and approve actions. End-to-end encrypted, your documents never upload.",
+      eyebrow: "Dome Companion · iPhone",
+      h1: "Your Mac's Many, on your iPhone",
+      lead: "Ask about the PDF you imported this morning or approve the draft Many left ready. Companion sends the request to your Mac; your documents stay there.",
+      stores: {
+        appStore: "Download on the App Store",
+        testFlight: "Try the TestFlight beta",
+      },
+      soon: "Coming soon to the App Store",
+      notify: "Tell me when it's out",
+      desktop: "Download Dome for Mac",
+      shotAlt: "Dome Companion on an iPhone showing a conversation with Many",
+      featuresTitle: "What you can do from your phone",
+      features: [
+        {
+          title: "Ask your library",
+          text: "Many answers with the notes, PDFs and transcripts on your Mac, using the same tools as on the desktop.",
+        },
+        {
+          title: "Approve without opening the laptop",
+          text: "When Many needs your OK to send or change something, it asks on your iPhone and waits for you there.",
+        },
+        {
+          title: "Open what Many cites",
+          text: "Preview the document or skill it mentions through the same encrypted tunnel, without syncing your library to the cloud.",
+        },
+      ],
+      stepsTitle: "Pair in a minute",
+      steps: [
+        {
+          title: "Turn on remote control",
+          text: "In Dome for Mac: Settings → Remote Many → Allow remote control.",
+        },
+        {
+          title: "Generate a code",
+          text: "Click “Generate code”. It expires after 10 minutes and works once.",
+        },
+        {
+          title: "Enter it in Companion",
+          text: "Sign in to Companion with your Dome account and paste the code under Account.",
+        },
+      ],
+      privacyTitle: "Your Mac does the work",
+      privacyText: "Messages travel end-to-end encrypted between iPhone and Mac. Dome Provider only relays envelopes it can't read and never runs Many. If your Mac is off, Companion tells you: there is no cloud fallback.",
+      requirementsTitle: "What you need",
+      requirements: [
+        "An iPhone on iOS 17 or later.",
+        "Dome for Mac open, remote control on and the Mac awake.",
+        "A Dome account on the Starter, Pro or Max plan.",
+      ],
+      faqTitle: "Frequently asked questions",
+      faq: [
+        {
+          q: "Does it work while the Mac sleeps?",
+          a: "No. Many runs on your Mac, so it has to be awake with Dome open. Companion tells you when it isn't available.",
+        },
+        {
+          q: "Can I pair more than one iPhone?",
+          a: "Yes. Each phone shows up in Settings → Remote Many and you can revoke it any time.",
+        },
+        {
+          q: "What if I lose my phone?",
+          a: "Revoke the device from Dome for Mac. That phone's pairing and keys stop working immediately.",
+        },
+        {
+          q: "Is there an Android version?",
+          a: "Not yet. Companion is iPhone only for now.",
+        },
+      ],
+      finalTitle: "Keep Many on your Mac. Carry it in your pocket.",
+      finalLead: "Install Dome on your Mac, turn on remote control and pair your iPhone with a code.",
+    },
+    extension: {
+      title: "Dome browser extension · Save the web to your local library",
+      description: "Extension for Chrome, Edge and Safari: save pages with a summary, quote paragraphs into notes and create contacts from profiles. It only talks to Dome on your computer.",
+      eyebrow: "Extension · Chrome, Edge and Safari",
+      h1: "From the browser to your library, no copy and paste",
+      lead: "You're reading a report and want to save it with a summary, quote a paragraph into the project note or keep the author as a contact. The extension sends it to Dome, on your computer.",
+      stores: {
+        chrome: "Add to Chrome",
+        edge: "Add to Edge",
+        safari: "Download for Safari",
+      },
+      soon: "Coming soon to the stores",
+      notify: "Tell me when it's out",
+      desktop: "Download Dome",
+      shotAlt: "Dome extension panel open next to an article in the browser",
+      featuresTitle: "What it does",
+      features: [
+        {
+          title: "Save the page",
+          text: "Captures the link with its title and a summary from Many into the project you pick.",
+        },
+        {
+          title: "Notes with quotes",
+          text: "Select text and add it to a note with the quote and source, in the same editor you use in Dome.",
+        },
+        {
+          title: "Contacts from profiles",
+          text: "Detects profiles and person data on the page. You review name, role and email before saving.",
+        },
+      ],
+      stepsTitle: "Connect it to Dome",
+      steps: [
+        {
+          title: "Install the extension",
+          text: "From your browser's store: Chrome Web Store, Edge Add-ons or the App Store for Safari.",
+        },
+        {
+          title: "Generate a code in Dome",
+          text: "In Dome: Settings → Browser extension → Generate code. It expires after 10 minutes.",
+        },
+        {
+          title: "Paste it in the panel",
+          text: "Click the Dome icon in the browser and paste the code. Done.",
+        },
+      ],
+      privacyTitle: "It only talks to your computer",
+      privacyText: "The extension doesn't read the page until you click its icon or the context menu. It sends what you capture to Dome on your own computer (127.0.0.1) with a paired token; no Dome server receives it.",
+      requirementsTitle: "What you need",
+      requirements: [
+        "A recent version of Chrome, Edge or Safari.",
+        "Dome for desktop open on the same computer.",
+      ],
+      faqTitle: "Frequently asked questions",
+      faq: [
+        {
+          q: "Does it work with Dome closed?",
+          a: "No. The extension saves straight into your local library, so Dome has to be open. The panel tells you if it can't find it.",
+        },
+        {
+          q: "Why does it ask permission for a site?",
+          a: "It only asks for a site when you capture there, and you can remove it in the browser settings.",
+        },
+        {
+          q: "Does Many use my data for anything else?",
+          a: "Many uses the AI provider you set up in Dome, same as on the desktop. The extension adds no service in between.",
+        },
+        {
+          q: "What about Firefox?",
+          a: "The code already runs in Firefox; the listing in its store will come later.",
+        },
+      ],
+      finalTitle: "Read in the browser. Keep it in Dome.",
+      finalLead: "Install Dome, add the extension and pair with an eight-character code.",
     },
   },
 };
