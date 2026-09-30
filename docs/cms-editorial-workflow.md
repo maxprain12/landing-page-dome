@@ -36,3 +36,5 @@ También puedes proporcionar una ruta al checkout de Desktop: `node scripts/impo
 ## Comprobación aislada contra una rama real
 
 Con ambos checkouts y `gh` autenticado, ejecuta `pnpm run check:cms-editorial -- ../dome feat/complements-documentation`. El script usa el servicio CMS real para sincronizar los 28 manuales desde esa rama, editar una nota y preparar su publicación. La base SQLite y la bóveda son temporales; las funciones de escritura remota están bloqueadas y se verifica que el SHA remoto no cambie. No modifica el perfil Dome del usuario. Esta prueba cubre Markdown; las imágenes tienen pruebas separadas en Desktop.
+
+Comprobado el 2026-09-30 contra `feat/complements-documentation`: 28 manuales sincronizados, una edición guardada en bóveda temporal y publicación preparada, sin escrituras remotas. No se configuró ni modificó el perfil Dome del usuario.

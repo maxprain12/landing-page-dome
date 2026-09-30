@@ -9,8 +9,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const desktop = path.resolve(process.argv[2] || path.join(root, '../dome'));
-const branch = process.argv[3];
+const args = process.argv.slice(2).filter((arg) => arg !== '--');
+const desktop = path.resolve(args[0] || path.join(root, '../dome'));
+const branch = args[1];
 if (!branch || branch === 'main' || branch === 'master') throw new Error('Provide a non-production test branch');
 const require = createRequire(import.meta.url);
 const { createPluginService } = require(path.join(desktop, 'electron/plugins/plugin-service.cjs'));
