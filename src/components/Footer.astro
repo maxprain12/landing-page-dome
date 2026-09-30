@@ -28,6 +28,8 @@ const productLinks: FooterLink[] = [
   { href: hash("#confianza"), label: copy.footer.trust },
   { href: hash("#faq"), label: copy.footer.faq },
   { href: localizePath("/pricing", locale), label: copy.footer.pricing },
+  { href: localizePath("/funciones", locale), label: locale === "es" ? "Funciones" : "Features" },
+  { href: localizePath("/complementos", locale), label: locale === "es" ? "Complementos" : "Add-ons" },
   { href: downloadUrl(locale), label: copy.footer.download },
   { href: localizePath("/companion", locale), label: copy.footer.companion },
   { href: localizePath("/extension", locale), label: copy.footer.extension },

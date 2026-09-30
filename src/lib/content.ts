@@ -50,7 +50,12 @@ export function contentCoverAlt(entry: ContentEntry): string {
 export async function publishedEntries(kind: ContentKind, locale: Locale): Promise<ContentEntry[]> {
   const entries = await getCollection(kind, (entry) => localeFromEntry(entry) === locale);
   if (kind === "manual") {
-    return entries.sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf());
+    const order = ['getting-started', 'library', 'editor', 'many', 'agents', 'workflows', 'studio', 'learning', 'integrations', 'sync', 'complements', 'cms', 'extension', 'companion'];
+    return entries.sort((a, b) => {
+      const left = order.indexOf(a.data.slug);
+      const right = order.indexOf(b.data.slug);
+      return (left < 0 ? order.length : left) - (right < 0 ? order.length : right) || a.data.title.localeCompare(b.data.title);
+    });
   }
   return entries.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }

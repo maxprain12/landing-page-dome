@@ -1,0 +1,49 @@
+---
+import ExploreShell from './ExploreShell.astro';
+import catalog from '../data/complements-catalog.json';
+import { localizePath, type Locale } from '../i18n';
+interface Props { locale: Locale; slug?: string; }
+const { locale, slug } = Astro.props;
+const item = slug ? catalog.items.find((entry) => entry.slug === slug) : undefined;
+const copy = item?.locales[locale];
+const labels = locale === 'es'
+  ? { title: 'Complementos para tu Dome', lead: 'Plugins, agentes, workflows, skills y MCP. Elige una herramienta y revisa cómo encaja en tu trabajo.', search: 'Buscar complementos', category: 'Categoría', all: 'Todas', open: 'Abrir en Dome', details: 'Ver ficha', manual: 'Leer el manual', cases: 'Casos de uso', requirements: 'Requisitos', permissions: 'Permisos del plugin', empty: 'No hay complementos que coincidan con tu búsqueda.', review: 'Dome abre la ficha para que revises e instales. Si tienes una versión anterior, actualiza Desktop o busca el complemento en su catálogo.', back: 'Todos los complementos' }
+  : { title: 'Add-ons for your Dome', lead: 'Plugins, agents, workflows, skills and MCP. Choose a tool and review how it fits your work.', search: 'Search add-ons', category: 'Category', all: 'All', open: 'Open in Dome', details: 'View details', manual: 'Read the manual', cases: 'Use cases', requirements: 'Requirements', permissions: 'Plugin permissions', empty: 'No add-ons match your search.', review: 'Dome opens the entry for review and installation. If you use an older version, update Desktop or find the add-on in its catalog.', back: 'All add-ons' };
+const categories = locale === 'es' ? { plugins: 'Plugins', agents: 'Agentes', workflows: 'Workflows', skills: 'Skills', mcp: 'MCP' } : { plugins: 'Plugins', agents: 'Agents', workflows: 'Workflows', skills: 'Skills', mcp: 'MCP' };
+---
+<ExploreShell locale={locale} title={item?.name ?? labels.title} description={copy?.description ?? labels.lead}>
+  {item && copy ? <>
+    <div class="explore-actions"><a class="btn btn-primary" href={`dome://complements/${item.category}/${item.id}`}>{labels.open}</a><a class="btn btn-ghost" href={localizePath(`/manual/${item.manual}`, locale)}>{labels.manual}</a></div>
+    <p class="explore-meta">{item.author} · {categories[item.category as keyof typeof categories]} · {item.version}</p>
+    <div class="explore-body">
+      <div><section><h2>{locale === 'es' ? 'Cómo te ayuda' : 'How it helps'}</h2><p>{copy.body}</p></section><section><h2>{labels.cases}</h2><ul>{copy.useCases.map((text) => <li>{text}</li>)}</ul></section><p>{labels.review}</p></div>
+      <aside><section><h2>{labels.requirements}</h2><ul>{copy.requirements.map((text) => <li>{text}</li>)}</ul></section>{item.permissions.length > 0 && <section><h2>{labels.permissions}</h2><ul>{copy.permissionDescriptions.map((text) => <li>{text}</li>)}</ul></section>}</aside>
+    </div>
+    <a class="btn btn-ghost" href={localizePath('/complementos', locale)}>{labels.back}</a>
+  </> : <div data-complement-catalog>
+    <div class="explore-tools"><label>{labels.search}<input type="search" data-catalog-search /></label><label>{labels.category}<select data-catalog-category><option value="">{labels.all}</option>{Object.entries(categories).map(([value, text]) => <option value={value}>{text}</option>)}</select></label></div>
+    <div class="explore-grid">{catalog.items.map((entry) => <article class:list={['explore-card', entry.featured && 'is-featured']} data-catalog-card data-category={entry.category} data-search={`${entry.name} ${entry.author} ${entry.locales[locale].description}`}>
+      <span class="explore-meta">{categories[entry.category as keyof typeof categories]}</span><h2>{entry.name}</h2><p>{entry.locales[locale].description}</p><a class="btn btn-ghost" href={localizePath(`/complementos/${entry.slug}`, locale)}>{labels.details}<span class="sr-only">: {entry.name}</span></a>
+    </article>)}</div>
+    <p data-catalog-empty role="status" hidden>{labels.empty}</p>
+  </div>}
+</ExploreShell>
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-complement-catalog]')) {
+    const search = root.querySelector<HTMLInputElement>('[data-catalog-search]');
+    const category = root.querySelector<HTMLSelectElement>('[data-catalog-category]');
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-catalog-card]')];
+    const empty = root.querySelector<HTMLElement>('[data-catalog-empty]');
+    const apply = () => {
+      let count = 0;
+      const query = (search?.value ?? '').trim().toLocaleLowerCase();
+      for (const card of cards) {
+        card.hidden = !!((category?.value && card.dataset.category !== category.value) || !(card.dataset.search ?? '').toLocaleLowerCase().includes(query));
+        if (!card.hidden) count++;
+      }
+      if (empty) empty.hidden = count > 0;
+    };
+    search?.addEventListener('input', apply);
+    category?.addEventListener('change', apply);
+  }
+</script>

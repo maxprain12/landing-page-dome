@@ -5,6 +5,7 @@
  * while the marketing UI is being redesigned.
  */
 import http from 'node:http';
+import { contentRoute } from './content-routes.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -98,6 +99,12 @@ const server = http.createServer((req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { Allow: 'GET, HEAD, POST' });
     res.end();
+    return;
+  }
+  const content = contentRoute(pathname);
+  if (content) {
+    res.writeHead(content.status, content.location ? { Location: content.location } : { 'Content-Type': 'text/plain; charset=utf-8' });
+    res.end(req.method === 'HEAD' ? undefined : content.status === 410 ? 'This publication has been removed.' : undefined);
     return;
   }
   const file = resolveFile(pathname);

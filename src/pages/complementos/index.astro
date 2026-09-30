@@ -1,0 +1,7 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ComplementsPage from "../../components/ComplementsPage.astro";
+const locale = "es" as const;
+const description = "Descubre herramientas y funciones de Dome.";
+---
+<Layout locale={locale} title="Complementos · Dome" description={description} canonicalPath="/complementos"><ComplementsPage locale={locale} /></Layout>

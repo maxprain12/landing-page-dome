@@ -509,26 +509,24 @@ export const es: Dictionary = {
       secondary: "Leer la privacidad",
     },
     manual: {
-      title: "Manual de Dome — Instalar, biblioteca, contactos y aprobación",
-      description:
-        "Guías para instalar Dome, organizar la biblioteca local, gestionar contactos y aprobar correos o publicaciones.",
+      title: "Manuales de Dome — Funciones, complementos y dispositivos",
+      description: "Guías verificadas para instalar Dome, trabajar con Many, gestionar complementos y conectar navegador y móvil.",
       eyebrow: "Manuales",
-      h1: "Manual",
-      lead: "El producto principal es una aplicación de escritorio. Empieza en local, sin cuenta cloud, y sigue cada guía con capturas del propio Dome.",
+      h1: "Manuales de Dome",
+      lead: "Empieza con un proyecto y continúa con la función que necesitas. Cada guía incluye requisitos, pasos y recuperación de errores.",
       sections: [],
       primary: "Descargar Dome",
       secondary: "Leer el blog",
     },
     blog: {
-      title: "Blog de Dome — Local-first, documentos y Many",
-      description:
-        "Notas concretas sobre dónde viven tus datos, cómo pasar de un PDF a un seguimiento y cómo usar Many con Ollama.",
+      title: "Blog de Dome",
+      description: "Futuras publicaciones sobre Dome, sus funciones y su ecosistema de complementos.",
       eyebrow: "Blog",
       h1: "Blog",
-      lead: "Sin slogans vacíos: dónde se guarda el contexto, cuándo sale de tu disco y cómo Many prepara el siguiente paso.",
+      lead: "Aquí publicaremos novedades y ejemplos de trabajo con Dome. Mientras tanto, explora las funciones y los manuales.",
       sections: [],
       primary: "Descargar Dome",
-      secondary: "Abrir el manual",
+      secondary: "Abrir los manuales",
     },
     contact: {
       title: "Contacto — Dome",
@@ -626,10 +624,10 @@ export const es: Dictionary = {
     },
       companion: {
       title: "Dome Companion para iPhone · Many de tu Mac en el bolsillo",
-      description: "Controla el Many de tu Mac desde el iPhone: pregunta a tu biblioteca, abre lo que cita y aprueba acciones. Cifrado de extremo a extremo, sin subir tus documentos.",
+      description: "Controla el Many de tu Mac desde el iPhone: pregunta a tu biblioteca, abre lo que cita y aprueba acciones. Cifrado de extremo a extremo, sin copiar tu biblioteca a la nube.",
       eyebrow: "Dome Companion · iPhone",
       h1: "El Many de tu Mac, en el iPhone",
-      lead: "Pregunta por el PDF que importaste esta mañana o aprueba el borrador que Many dejó listo. Companion envía la petición a tu Mac; tus documentos no salen de allí.",
+      lead: "Pregunta por el PDF que importaste esta mañana o aprueba el borrador que Many dejó listo. Companion envía la petición a tu Mac; tu biblioteca permanece local y las referencias que abres viajan por el túnel cifrado.",
       stores: {
         appStore: "Descargar en la App Store",
         testFlight: "Probar la beta en TestFlight",
@@ -717,7 +715,7 @@ export const es: Dictionary = {
       features: [
         {
           title: "Guardar la página",
-          text: "Captura el enlace con título y un resumen de Many en el proyecto que elijas.",
+          text: "Captura el enlace en el proyecto que elijas y pide a Many un resumen cuando lo necesites.",
         },
         {
           title: "Notas con cita",
@@ -744,7 +742,7 @@ export const es: Dictionary = {
         },
       ],
       privacyTitle: "Solo habla con tu ordenador",
-      privacyText: "La extensión no lee la página hasta que pulsas su icono o el menú contextual. Envía lo que capturas a Dome en tu propio ordenador (127.0.0.1) con un token emparejado; ningún servidor de Dome lo recibe.",
+      privacyText: "El panel se conecta a Dome en tu ordenador con un token emparejado. Las acciones de Many sobre la página requieren revisión; el proveedor de IA que configuraste puede recibir el contexto necesario para responder.",
       requirementsTitle: "Qué necesitas",
       requirements: [
         "Chrome, Edge o Safari en una versión reciente.",

@@ -48,19 +48,15 @@ test('content indexes and TBA pages render with a single h1', async ({ page }) =
   }
 });
 
-test('blog magazine filters hide unmatched cards', async ({ page }) => {
+test('empty blog retains useful navigation and no article cards', async ({ page }) => {
   await page.goto('/blog');
-  const cards = page.locator('[data-entry]');
-  const total = await cards.count();
-  expect(total).toBeGreaterThan(1);
-  await page.getByRole('button', { name: /flujo|workflow/i }).click();
-  const visible = await cards.evaluateAll((nodes) => nodes.filter((node) => !node.hasAttribute('hidden')).length);
-  expect(visible).toBeGreaterThan(0);
-  expect(visible).toBeLessThan(total);
+  await expect(page.locator('[data-entry]')).toHaveCount(0);
+  await expect(page.getByRole('status')).toContainText('Todavía no hay publicaciones');
+  await expect(page.getByRole('link', { name: 'Abrir los manuales' })).toBeVisible();
 });
 
-test('sample article and manual render', async ({ page }) => {
-  for (const route of ['/blog/local-first', '/manual/first-workflow', '/en/blog/local-first', '/en/manual/first-workflow']) {
+test('replacement manuals render', async ({ page }) => {
+  for (const route of ['/manual/getting-started', '/manual/cms', '/en/manual/getting-started', '/en/manual/cms']) {
     const response = await page.goto(route);
     expect(response?.ok()).toBeTruthy();
     await expect(page.locator('h1')).toHaveCount(1);
@@ -77,10 +73,10 @@ test('rss feeds are reachable', async ({ page }) => {
   }
 });
 
-test('desktop product menu opens with the keyboard', async ({ page }) => {
+test('desktop resources menu opens with the keyboard', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/');
-  const trigger = page.getByRole('button', { name: /producto|product/i }).first();
+  const trigger = page.getByRole('button', { name: /recursos|resources/i }).first();
   await trigger.focus();
   await trigger.press('Enter');
   await expect(trigger).toHaveAttribute('aria-expanded', 'true');
@@ -88,25 +84,20 @@ test('desktop product menu opens with the keyboard', async ({ page }) => {
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('product menu anchors point to the homepage from inner pages', async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 800 });
+test('feature and catalog navigation resolves from inner pages', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/blog');
-  const trigger = page.getByRole('button', { name: /producto|product/i }).first();
-  await trigger.click();
-  await expect(page.getByRole('link', { name: /cómo funciona|how it works/i }).first()).toHaveAttribute(
-    'href',
-    /\/#como-funciona$/,
-  );
+  await expect(page.locator('.nav-links').getByRole('link', { name: 'Funciones', exact: true })).toHaveAttribute('href', '/funciones');
+  await expect(page.locator('.nav-links').getByRole('link', { name: 'Complementos', exact: true })).toHaveAttribute('href', '/complementos');
 });
 
 test('mobile menu stacks product links and keeps the language toggle in its pill', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.getByRole('button', { name: /abrir menú|open menu/i }).click();
-  await page.locator('.nav-acc').filter({ hasText: /producto|product/i }).locator('summary').click();
   const panel = page.locator('.nav-panel');
-  const how = panel.getByRole('link', { name: /cómo funciona|how it works/i });
-  const editions = panel.getByRole('link', { name: /^(ediciones|editions)$/i });
+  const how = panel.getByRole('link', { name: /^funciones$|^features$/i });
+  const editions = panel.getByRole('link', { name: /^(complementos|add-ons)$/i });
   const howBox = await how.boundingBox();
   const editionsBox = await editions.boundingBox();
   expect(howBox).toBeTruthy();

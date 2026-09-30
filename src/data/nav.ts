@@ -30,63 +30,19 @@ function hash(locale: Locale, id: string): string {
 }
 
 export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
-  return [
-    {
-      id: "product",
-      label: copy.nav.product,
-      columns: [
-        {
-          heading: copy.nav.productCol,
-          items: [
-            { href: hash(locale, "#como-funciona"), label: copy.nav.how, hint: copy.nav.howHint },
-            { href: hash(locale, "#ediciones"), label: copy.nav.editions, hint: copy.nav.editionsHint },
-            { href: hash(locale, "#confianza"), label: copy.nav.trust, hint: copy.nav.trustHint },
-            { href: localizePath("/local-first", locale), label: copy.footer.localFirst, hint: copy.nav.localFirstHint },
-          ],
-        },
-        {
-          heading: copy.nav.editionsCol,
-          items: [
-            { href: localizePath("/pro", locale), label: copy.footer.pro, hint: copy.nav.proHint },
-            { href: localizePath("/study", locale), label: copy.footer.study, hint: copy.nav.studyHint },
-            { href: localizePath("/dev", locale), label: copy.footer.dev, hint: copy.nav.devHint },
-          ],
-        },
-        {
-          heading: copy.nav.appsCol,
-          items: [
-            { href: localizePath("/companion", locale), label: copy.nav.companion, hint: copy.nav.companionHint },
-            { href: localizePath("/extension", locale), label: copy.nav.extension, hint: copy.nav.extensionHint },
-          ],
-        },
-      ],
-    },
-    {
-      id: "resources",
-      label: copy.nav.resources,
-      columns: [
-        {
-          heading: copy.nav.learnCol,
-          items: [
-            { href: localizePath("/blog", locale), label: copy.nav.blog, hint: copy.nav.blogHint },
-            { href: localizePath("/manual", locale), label: copy.nav.manuals, hint: copy.nav.manualsHint },
-            { href: hash(locale, "#faq"), label: copy.nav.faq, hint: copy.nav.faqHint },
-          ],
-        },
-        {
-          heading: copy.nav.projectCol,
-          items: [
-            { href: changelogUrl(locale), label: copy.footer.changelog, hint: copy.nav.changelogHint },
-          ],
-        },
-      ],
-    },
-  ];
+  return [{ id: "resources", label: copy.nav.resources, columns: [{ heading: copy.nav.learnCol, items: [
+    { href: localizePath("/blog", locale), label: copy.nav.blog },
+    { href: changelogUrl(locale), label: copy.footer.changelog },
+    { href: localizePath("/contact", locale), label: copy.nav.contact },
+  ] }] }];
 }
 
 export function navDirectLinks(locale: Locale, copy: Dictionary): NavItem[] {
   return [
-    { href: localizePath("/pricing", locale), label: copy.nav.pricing },
-    { href: localizePath("/contact", locale), label: copy.nav.contact },
+    { href: localizePath("/funciones", locale), label: locale === "es" ? "Funciones" : "Features" },
+    { href: localizePath("/complementos", locale), label: locale === "es" ? "Complementos" : "Add-ons" },
+    { href: localizePath("/extension", locale), label: copy.nav.extension },
+    { href: localizePath("/companion", locale), label: locale === "es" ? "App móvil" : "Mobile app" },
+    { href: localizePath("/manual", locale), label: copy.nav.manuals },
   ];
 }

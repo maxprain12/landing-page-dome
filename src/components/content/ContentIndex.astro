@@ -64,6 +64,7 @@ const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))];
         </div>
       ) : null
     }
+    {entries.length === 0 && <p role="status">{locale === "es" ? "Todavía no hay publicaciones. Consulta los manuales para empezar con Dome." : "There are no posts yet. Read the manuals to get started with Dome."}</p>}
   </header>
 
   {

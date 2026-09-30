@@ -1,0 +1,333 @@
+[
+  {
+    "slug": "library",
+    "manual": "library",
+    "scene": "library",
+    "locales": {
+      "es": {
+        "title": "Biblioteca y búsqueda",
+        "description": "Organiza recursos por proyecto y encuentra información con contexto.",
+        "capabilities": [
+          "Selecciona el proyecto y la carpeta de destino en la barra lateral.",
+          "Importa tus archivos o crea una nota. Abre el recurso para revisar su contenido.",
+          "Organiza los recursos en carpetas y usa nombres que puedas reconocer.",
+          "Busca por texto; para consultas semánticas configura la búsqueda documental en Ajustes → IA y comprueba la indexación en Ajustes."
+        ],
+        "result": "Los archivos conservan su formato y las notas se guardan como Markdown en la bóveda del proyecto.",
+        "requirements": [
+          "Un proyecto y archivos o notas.",
+          "Proveedor de embeddings configurado para búsqueda semántica."
+        ]
+      },
+      "en": {
+        "title": "Library and search",
+        "description": "Organize resources by project and find information in context.",
+        "capabilities": [
+          "Select the project and destination folder in the sidebar.",
+          "Import your files or create a note. Open the resource to review its content.",
+          "Organize resources in folders and use recognizable names.",
+          "Search by text; for semantic queries configure document search in Settings → AI and check indexing in Settings."
+        ],
+        "result": "Files retain their format and notes are saved as Markdown in the project vault.",
+        "requirements": [
+          "A project and files or notes.",
+          "An embeddings provider configured for semantic search."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "editor",
+    "manual": "editor",
+    "scene": "library",
+    "locales": {
+      "es": {
+        "title": "Notas y editor",
+        "description": "Escribe en Markdown y conserva el contexto de tus documentos.",
+        "capabilities": [
+          "Crea una nota o abre una existente en una pestaña.",
+          "Escribe el título y el contenido; utiliza las herramientas de formato para listas, enlaces, tablas e imágenes.",
+          "Abre el modo Markdown cuando necesites revisar la sintaxis original.",
+          "Comprueba el estado de guardado antes de cerrar. Para entradas CMS, edita colección, idioma y publicación desde la ficha del CMS."
+        ],
+        "result": "La nota queda guardada en la bóveda y puede utilizarse como contexto de Many.",
+        "requirements": [
+          "Una nota dentro de un proyecto."
+        ]
+      },
+      "en": {
+        "title": "Notes and editor",
+        "description": "Write in Markdown and keep your document context.",
+        "capabilities": [
+          "Create a note or open an existing one in a tab.",
+          "Write the title and content; use formatting tools for lists, links, tables and images.",
+          "Open Markdown mode when you need to review the source syntax.",
+          "Check the save status before closing. For CMS entries, edit collection, language and publication from the CMS entry."
+        ],
+        "result": "The note is saved in the vault and can be used as Many context.",
+        "requirements": [
+          "A note in a project."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "many",
+    "manual": "many",
+    "scene": "many",
+    "locales": {
+      "es": {
+        "title": "Configurar y usar Many",
+        "description": "Conversa con tus recursos y revisa las acciones que Many prepara.",
+        "capabilities": [
+          "Abre Ajustes → IA y configura el proveedor de conversación, sus credenciales y el modelo.",
+          "Guarda y comprueba la conexión. La comprobación puede consumir uso del proveedor.",
+          "Abre Many y aporta el recurso o proyecto que debe usar. Haz una petición concreta y revisa las referencias.",
+          "Configura búsqueda documental, voz y búsqueda web por separado si las necesitas. Revisa los detalles antes de aprobar una acción externa."
+        ],
+        "result": "Many responde con el modelo seleccionado y usa las herramientas autorizadas para la tarea.",
+        "requirements": [
+          "Un proveedor con credenciales válidas o un servidor Ollama accesible.",
+          "Un modelo disponible para ese proveedor."
+        ]
+      },
+      "en": {
+        "title": "Configure and use Many",
+        "description": "Chat with your resources and review actions prepared by Many.",
+        "capabilities": [
+          "Open Settings → AI and configure the conversation provider, credentials and model.",
+          "Save and check the connection. The check may consume provider usage.",
+          "Open Many and supply the resource or project it should use. Make a concrete request and review references.",
+          "Configure document search, voice and web search separately if needed. Review details before approving an external action."
+        ],
+        "result": "Many responds using the selected model and tools authorized for the task.",
+        "requirements": [
+          "A provider with valid credentials or an accessible Ollama server.",
+          "An available model for that provider."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "agents",
+    "manual": "agents",
+    "scene": "many",
+    "locales": {
+      "es": {
+        "title": "Agentes y equipos",
+        "description": "Especializa instrucciones y herramientas para tareas repetidas.",
+        "capabilities": [
+          "Abre Agentes y crea un agente o instala uno desde Complementos.",
+          "Revisa sus instrucciones, modelo y herramientas. Limita el acceso a lo necesario para la tarea.",
+          "Abre una conversación con el agente y proporciona el objetivo y los recursos.",
+          "Para trabajo coordinado, configura un equipo con supervisor y agentes especializados. Revisa el resultado y las acciones pendientes."
+        ],
+        "result": "El agente mantiene su configuración; el equipo coordina el trabajo a través del supervisor.",
+        "requirements": [
+          "Many configurado.",
+          "Recursos y herramientas que la tarea necesita."
+        ]
+      },
+      "en": {
+        "title": "Agents and teams",
+        "description": "Specialize instructions and tools for repeated tasks.",
+        "capabilities": [
+          "Open Agents and create an agent or install one from Add-ons.",
+          "Review its instructions, model and tools. Limit access to what the task needs.",
+          "Open a conversation with the agent and provide the goal and resources.",
+          "For coordinated work, configure a team with a supervisor and specialized agents. Review the result and pending actions."
+        ],
+        "result": "The agent retains its configuration; the team coordinates work through its supervisor.",
+        "requirements": [
+          "Configured Many.",
+          "Resources and tools needed for the task."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "workflows",
+    "manual": "workflows",
+    "scene": "many",
+    "locales": {
+      "es": {
+        "title": "Workflows y automatizaciones",
+        "description": "Encadena pasos y programa tareas con resultados revisables.",
+        "capabilities": [
+          "Instala una plantilla desde Complementos o abre el canvas de workflows.",
+          "Las plantillas iniciales incluidas abren un canvas sin nodos preconfigurados. Añade y configura nodos, conexiones y entradas antes de ejecutar.",
+          "Haz una ejecución de prueba y comprueba el resultado y los errores.",
+          "En Automatizaciones, configura el agente, la instrucción, el horario y el destino del resultado. Actívala después de revisar la configuración."
+        ],
+        "result": "El workflow ejecuta la secuencia configurada. La automatización realiza la tarea según su horario mientras Dome está disponible.",
+        "requirements": [
+          "Many y las herramientas necesarias configurados.",
+          "Dome abierto para ejecutar tareas locales programadas."
+        ]
+      },
+      "en": {
+        "title": "Workflows and automations",
+        "description": "Connect steps and schedule tasks with reviewable results.",
+        "capabilities": [
+          "Install a template from Add-ons or open the workflow canvas.",
+          "The bundled starter templates open a canvas without preconfigured nodes. Add and configure nodes, connections and inputs before running.",
+          "Run a test and check results and errors.",
+          "In Automations, configure the agent, instruction, schedule and output destination. Enable it after reviewing the configuration."
+        ],
+        "result": "The workflow runs its configured sequence. The automation performs the task on schedule while Dome is available.",
+        "requirements": [
+          "Many and necessary tools configured.",
+          "Dome running to execute scheduled local tasks."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "studio",
+    "manual": "studio",
+    "scene": "many",
+    "locales": {
+      "es": {
+        "title": "Estudio y contenido visual",
+        "description": "Prepara contenido generado y revisa sus resultados dentro del workspace.",
+        "capabilities": [
+          "Abre Estudio o pide a Many que prepare el contenido que necesitas.",
+          "Aporta fuentes, formato y objetivo. Comprueba el proveedor y los requisitos de la herramienta elegida.",
+          "Revisa el estado de generación y abre el resultado cuando esté disponible.",
+          "Comprueba contenido, fuentes y formato antes de exportarlo o utilizarlo."
+        ],
+        "result": "El resultado aparece en Dome para revisarlo y seguir trabajando con él.",
+        "requirements": [
+          "Proveedor y modelo compatibles con el tipo de generación.",
+          "Recursos y permisos necesarios para la tarea."
+        ]
+      },
+      "en": {
+        "title": "Studio and visual content",
+        "description": "Prepare generated content and review results within the workspace.",
+        "capabilities": [
+          "Open Studio or ask Many to prepare the content you need.",
+          "Provide sources, format and goal. Check the provider and requirements of the chosen tool.",
+          "Review generation status and open the result when available.",
+          "Check content, sources and format before exporting or using it."
+        ],
+        "result": "The result appears in Dome for review and further work.",
+        "requirements": [
+          "A provider and model supporting the generation type.",
+          "Resources and permissions needed for the task."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "learning",
+    "manual": "learning",
+    "scene": "study",
+    "locales": {
+      "es": {
+        "title": "Aprendizaje con tus fuentes",
+        "description": "Transforma documentos en material de estudio y revisa lo aprendido.",
+        "capabilities": [
+          "Abre Aprender y comienza la creación de material de estudio.",
+          "Elige el tipo de material, las fuentes y la configuración.",
+          "Revisa las preguntas, respuestas y referencias generadas antes de estudiar.",
+          "Abre la sesión de tarjetas o quiz según el material y consulta el historial del conjunto."
+        ],
+        "result": "El material queda organizado con sus fuentes y el historial de estudio.",
+        "requirements": [
+          "Recursos con texto accesible.",
+          "Many configurado para generar material."
+        ]
+      },
+      "en": {
+        "title": "Learning with your sources",
+        "description": "Turn documents into study material and review what you learned.",
+        "capabilities": [
+          "Open Learn and start creating study material.",
+          "Choose material type, sources and configuration.",
+          "Review generated questions, answers and references before studying.",
+          "Open a flashcard or quiz session according to the material and check the set history."
+        ],
+        "result": "The material is organized with its sources and study history.",
+        "requirements": [
+          "Resources with accessible text.",
+          "Configured Many to generate material."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "integrations",
+    "manual": "integrations",
+    "scene": "social",
+    "locales": {
+      "es": {
+        "title": "Cuentas e integraciones",
+        "description": "Conecta servicios y revisa el acceso que das a Dome.",
+        "capabilities": [
+          "Para correo, calendario, social y MCP, abre la sección correspondiente de Ajustes. Para GitHub, abre su apartado y conecta la cuenta.",
+          "Completa la conexión o configura las credenciales que solicite la integración.",
+          "Comprueba el estado de la cuenta y prueba una lectura antes de realizar cambios.",
+          "Revisa destinatarios, contenido y alcance antes de aprobar una acción de escritura o publicación."
+        ],
+        "result": "Las herramientas de la integración quedan disponibles según la cuenta, los permisos y la configuración.",
+        "requirements": [
+          "Una cuenta del servicio que quieras conectar.",
+          "Permisos y credenciales válidos para ese servicio."
+        ]
+      },
+      "en": {
+        "title": "Accounts and integrations",
+        "description": "Connect services and review the access you grant Dome.",
+        "capabilities": [
+          "For email, calendar, social and MCP, open the relevant Settings section. For GitHub, open its hub and connect your account.",
+          "Complete connection or configure the credentials requested by the integration.",
+          "Check account status and test a read before making changes.",
+          "Review recipients, content and scope before approving a write or publication action."
+        ],
+        "result": "Integration tools become available according to the account, permissions and configuration.",
+        "requirements": [
+          "An account for the service you want to connect.",
+          "Valid permissions and credentials for that service."
+        ]
+      }
+    }
+  },
+  {
+    "slug": "sync",
+    "manual": "sync",
+    "scene": "library",
+    "locales": {
+      "es": {
+        "title": "Sincronización y dispositivos",
+        "description": "Configura los servicios cloud sin perder de vista tu biblioteca local.",
+        "capabilities": [
+          "Abre Ajustes y revisa la sección de sincronización de Dome.",
+          "Inicia sesión y comprueba el acceso de tu cuenta y el estado de sincronización.",
+          "Revisa los datos que se sincronizan y prueba con un proyecto de prueba antes de depender del flujo.",
+          "Configura Many remoto por separado para Companion; sus referencias viajan por el túnel de Desktop."
+        ],
+        "result": "La sección de ajustes muestra el estado del servicio. Many remoto y sincronización son conexiones distintas.",
+        "requirements": [
+          "Cuenta Dome y acceso al servicio requerido por el plan.",
+          "Conexión a Internet para servicios cloud."
+        ]
+      },
+      "en": {
+        "title": "Sync and devices",
+        "description": "Configure cloud services while keeping track of your local library.",
+        "capabilities": [
+          "Open Settings and review Dome sync.",
+          "Sign in and check your account access and sync status.",
+          "Review which data is synced and test with a test project before relying on the flow.",
+          "Configure remote Many separately for Companion; its references travel through the Desktop tunnel."
+        ],
+        "result": "Settings show service status. Remote Many and sync are separate connections.",
+        "requirements": [
+          "A Dome account with service access under its plan.",
+          "Internet access for cloud services."
+        ]
+      }
+    }
+  }
+]

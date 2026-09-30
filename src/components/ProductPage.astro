@@ -11,6 +11,7 @@ interface Props {
   page: ProductPageCopy;
   stores: StoreLink[];
   shot?: string | null;
+  manualSlug?: string;
 }
 
 const { locale, page, stores, shot = null } = Astro.props;
@@ -40,6 +41,7 @@ const contactHref = localizePath("/contact", locale);
         )
       }
       <a class="btn btn-text" href={downloadUrl(locale)}>{page.desktop}</a>
+      {Astro.props.manualSlug && <a class="btn btn-ghost" href={localizePath(`/manual/${Astro.props.manualSlug}`, locale)}>{locale === "es" ? "Leer el manual" : "Read the manual"}</a>}
     </div>
   </section>
 

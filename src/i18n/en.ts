@@ -509,23 +509,21 @@ export const en: Dictionary = {
       secondary: "Read the privacy policy",
     },
     manual: {
-      title: "Dome manuals — Install, library, contacts, and approval",
-      description:
-        "Guides to install Dome, organize the local library, manage contacts, and approve email or social actions.",
+      title: "Dome manuals — Features, add-ons and devices",
+      description: "Verified guides to install Dome, work with Many, manage add-ons and connect your browser and phone.",
       eyebrow: "Manuals",
-      h1: "Manuals",
-      lead: "The primary product is a desktop app. Start locally, without a cloud account, and follow each guide with captures from Dome itself.",
+      h1: "Dome manuals",
+      lead: "Start with a project, then choose the feature you need. Each guide includes requirements, steps and error recovery.",
       sections: [],
       primary: "Download Dome",
       secondary: "Read the blog",
     },
     blog: {
-      title: "Dome blog — Local-first, documents, and Many",
-      description:
-        "Concrete notes on where your data lives, how to go from a PDF to a follow-up, and how to use Many with Ollama.",
+      title: "Dome blog",
+      description: "Future posts about Dome, its features and its add-on ecosystem.",
       eyebrow: "Blog",
       h1: "Blog",
-      lead: "No empty slogans: where context is stored, when it leaves your disk, and how Many prepares the next step.",
+      lead: "We will publish news and examples of working with Dome here. Meanwhile, explore the features and manuals.",
       sections: [],
       primary: "Download Dome",
       secondary: "Open the manuals",
@@ -629,7 +627,7 @@ export const en: Dictionary = {
       description: "Control your Mac's Many from your iPhone: ask your library, open what it cites and approve actions. End-to-end encrypted, your documents never upload.",
       eyebrow: "Dome Companion · iPhone",
       h1: "Your Mac's Many, on your iPhone",
-      lead: "Ask about the PDF you imported this morning or approve the draft Many left ready. Companion sends the request to your Mac; your documents stay there.",
+      lead: "Ask about the PDF you imported this morning or approve the draft Many left ready. Companion sends the request to your Mac; your library remains local and the references you open travel through the encrypted tunnel.",
       stores: {
         appStore: "Download on the App Store",
         testFlight: "Try the TestFlight beta",
@@ -717,11 +715,11 @@ export const en: Dictionary = {
       features: [
         {
           title: "Save the page",
-          text: "Captures the link with its title and a summary from Many into the project you pick.",
+          text: "Capture the link in your chosen project and ask Many for a summary when you need one.",
         },
         {
           title: "Notes with quotes",
-          text: "Select text and add it to a note with the quote and source, in the same editor you use in Dome.",
+          text: "Select text and add it to a note with its quote and source. Edit Markdown and recover drafts within the panel.",
         },
         {
           title: "Contacts from profiles",
@@ -744,7 +742,7 @@ export const en: Dictionary = {
         },
       ],
       privacyTitle: "It only talks to your computer",
-      privacyText: "The extension doesn't read the page until you click its icon or the context menu. It sends what you capture to Dome on your own computer (127.0.0.1) with a paired token; no Dome server receives it.",
+      privacyText: "The panel connects to Dome on your computer using a paired token. Many actions on the page require review; your configured AI provider may receive the context needed to respond.",
       requirementsTitle: "What you need",
       requirements: [
         "A recent version of Chrome, Edge or Safari.",
