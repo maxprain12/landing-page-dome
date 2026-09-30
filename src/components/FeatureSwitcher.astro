@@ -1,4 +1,5 @@
 ---
+import features from "../data/features.json";
 import type { ShellView } from "./appshell";
 import AppShellFrame from "./AppShellFrame.astro";
 import { SHOT_SIZE, shotForView } from "../data/shots";
@@ -11,76 +12,39 @@ interface Props {
 const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
 const copy = t(locale);
 
-const editions: {
-  id: "pro" | "study" | "dev";
-  view: ShellView;
-  shot: string | null;
-  name: string;
-  title: string;
-  text: string;
-  cta: string;
-  href: string;
-}[] = [
-  {
-    id: "pro",
-    view: "library",
-    shot: shotForView("library"),
-    name: "Pro",
-    title: copy.pro.h2,
-    text: copy.pro.body,
-    cta: copy.editions.proCta,
-    href: "/pro",
-  },
-  {
-    id: "study",
-    view: "study",
-    shot: shotForView("study"),
-    name: copy.editions.study.name,
-    title: copy.editions.study.title,
-    text: copy.editions.study.text,
-    cta: copy.editions.study.cta,
-    href: copy.editions.study.href,
-  },
-  {
-    id: "dev",
-    view: "dev",
-    shot: shotForView("dev"),
-    name: copy.editions.dev.name,
-    title: copy.editions.dev.title,
-    text: copy.editions.dev.text,
-    cta: copy.editions.dev.cta,
-    href: copy.editions.dev.href,
-  },
-];
+const sections = [{ id: 'library', view: 'library' as ShellView }, { id: 'learning', view: 'study' as ShellView }, { id: 'integrations', view: 'dev' as ShellView }].map(({id, view}) => {
+  const feature = features.find(entry => entry.slug === id)!;
+  return { id, view, shot: shotForView(view), name: feature.locales[locale].title, title: feature.locales[locale].description, text: feature.locales[locale].result, cta: locale === 'es' ? 'Explorar esta función →' : 'Explore this feature →', href: `/funciones/${id}` };
+});
 ---
 
 <div class="story-stage" data-story-stage>
   <div class="story-frame" data-story-frame>
-    <nav class="story-rail" data-story-rail aria-label={copy.nav.editions}>
-      <h2 class="story-sr">{copy.editions.h2}</h2>
+    <nav class="story-rail" data-story-rail aria-label={locale === "es" ? "Funciones de Dome" : "Dome features"}>
+      <h2 class="story-sr">{locale === "es" ? "Trabaja con tu biblioteca" : "Work with your library"}</h2>
       {
-        editions.map((edition, i) => (
+        sections.map((feature, i) => (
           <article
             class="story-item"
-            data-edition={edition.id}
+            data-feature={feature.id}
             data-active={i === 0 ? "" : undefined}
           >
             <button
               type="button"
               class="story-tab"
-              data-edition-tab={edition.id}
-              data-view={edition.view}
-              data-shot={edition.shot ?? ""}
+              data-feature-tab={feature.id}
+              data-view={feature.view}
+              data-shot={feature.shot ?? ""}
               aria-expanded={i === 0}
             >
-              <span class="story-name">{edition.name}</span>
+              <span class="story-name">{feature.name}</span>
             </button>
             <div class="story-body">
               <div class="story-body-in">
-                <p class="story-title">{edition.title}</p>
-                <p class="story-text">{edition.text}</p>
-                <a class="story-cta" href={localizePath(edition.href, locale)}>
-                  {edition.cta}
+                <p class="story-title">{feature.title}</p>
+                <p class="story-text">{feature.text}</p>
+                <a class="story-cta" href={localizePath(feature.href, locale)}>
+                  {feature.cta}
                 </a>
               </div>
             </div>
@@ -92,12 +56,12 @@ const editions: {
     <div class="story-window" data-story-window id="demo">
       <AppShellFrame copy={copy} view="library" shot={shotForView("library")} priority />
       {
-        editions.map((edition) =>
-          edition.shot ? (
+        sections.map((feature) =>
+          feature.shot ? (
             <img
               class="story-photo"
-              data-story-photo={edition.id}
-              src={edition.shot}
+              data-story-photo={feature.id}
+              src={feature.shot}
               alt=""
               width={SHOT_SIZE.width}
               height={SHOT_SIZE.height}
@@ -343,7 +307,7 @@ const editions: {
     overflow: visible;
     justify-content: center;
   }
-  :global(.hero[data-phase="editions"]) .story-rail {
+  :global(.hero[data-phase="features"]) .story-rail {
     pointer-events: auto;
   }
 

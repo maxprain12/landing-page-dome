@@ -7,3 +7,11 @@
 /oauth/instagram/callback.html       /oauth/instagram/callback        301
 /oauth/instagram/deauthorize.html    /oauth/instagram/deauthorize     301
 /oauth/instagram/data-deletion.html  /oauth/instagram/data-deletion   301
+
+# Las antiguas ediciones ahora se presentan como funciones.
+/pro /funciones/library 301
+/study /funciones/learning 301
+/dev /funciones/integrations 301
+/en/pro /en/funciones/library 301
+/en/study /en/funciones/learning 301
+/en/dev /en/funciones/integrations 301

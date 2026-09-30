@@ -1,0 +1,34 @@
+---
+import { Globe, Smartphone, Monitor, ArrowDown, ArrowUpRight, LockKeyhole, FileText, Quote, UserRound, CheckCheck } from '@lucide/astro';
+import type { Locale } from '../i18n';
+interface Props { locale: Locale; product: 'companion' | 'extension'; }
+const { locale, product } = Astro.props;
+const es = locale === 'es';
+const mobile = product === 'companion';
+const source = mobile ? 'iPhone' : es ? 'Tu navegador' : 'Your browser';
+const label = mobile ? es ? 'Petición y respuesta · túnel cifrado' : 'Request and response · encrypted tunnel' : es ? 'Captura · conexión local' : 'Capture · local connection';
+const caption = mobile ? es ? 'Companion conecta con Many en tu Mac.' : 'Companion connects to Many on your Mac.' : es ? 'De la página que lees a la biblioteca que construyes.' : 'From the page you read to the library you build.';
+const nodes = mobile ? [{Icon: Smartphone, text: es ? 'Preguntar' : 'Ask'}, {Icon: CheckCheck, text: es ? 'Aprobar' : 'Approve'}, {Icon: FileText, text: es ? 'Consultar fuentes' : 'Open sources'}] : [{Icon: Globe, text: es ? 'Página' : 'Page'}, {Icon: Quote, text: es ? 'Cita' : 'Quote'}, {Icon: UserRound, text: es ? 'Contacto' : 'Contact'}];
+---
+<figure class:list={['connection', mobile && 'connection-mobile']} aria-label={caption}>
+  <div class="connection-source"><span class="connection-kicker">{source}</span>{mobile ? <Smartphone size={56} stroke-width={1.2} /> : <Globe size={56} stroke-width={1.2} />}<div class="connection-actions">{nodes.map(({Icon, text}) => <div><Icon size={19} /><span>{text}</span></div>)}</div></div>
+  <div class="connection-path"><span class="connection-line"></span>{mobile ? <LockKeyhole size={17} /> : <ArrowDown size={19} />}<p>{label}</p><span class="connection-line"></span></div>
+  <div class="connection-destination"><div class="connection-desktop"><Monitor size={24} /><strong>Dome Desktop</strong><ArrowUpRight size={17} /></div><div class="connection-library"><img src="/assets/many.png" alt="" width="38" height="38" /><div><strong>{mobile ? 'Many' : es ? 'Tu biblioteca' : 'Your library'}</strong><p>{mobile ? es ? 'Se ejecuta en tu Mac' : 'Runs on your Mac' : es ? 'Recursos · notas · personas' : 'Resources · notes · people'}</p></div></div></div>
+  <figcaption>{caption}</figcaption>
+</figure>
+<style>
+  .connection { padding: 1.8rem; margin: 0; border-radius: 22px; background: var(--color-surface); border: 1px solid var(--color-border); }
+  .connection-source { display: grid; justify-items: center; gap: 1rem; padding: .5rem 0; color: var(--color-many-body); }
+  .connection-kicker { color: var(--color-text-secondary); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .1em; font-size: .7rem; }
+  .connection-actions { display: flex; gap: 1.2rem; justify-content: center; width: 100%; margin-top: .5rem; }
+  .connection-actions div { display: grid; justify-items: center; gap: .5rem; color: var(--color-text-secondary); font-size: .7rem; text-align: center; }
+  .connection-path { display: grid; justify-items: center; gap: .5rem; color: var(--color-many-body); padding: 1rem 0; }
+  .connection-path p { font-size: .72rem; text-align: center; color: var(--color-text-secondary); }
+  .connection-line { width: 1px; height: 18px; background: var(--color-border); }
+  .connection-destination { border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-bg); overflow: hidden; }
+  .connection-desktop { display: flex; align-items: center; gap: .7rem; padding: .8rem 1rem; border-bottom: 1px solid var(--color-border); font-size: .82rem; }
+  .connection-desktop > svg:last-child { margin-left: auto; color: var(--color-text-secondary); }
+  .connection-library { display: flex; align-items: center; gap: .8rem; padding: 1.2rem 1rem; font-size: .9rem; }
+  .connection-library p { font-size: .75rem; color: var(--color-text-secondary); margin-top: .4rem; }
+  .connection figcaption { margin-top: 1.3rem; color: var(--color-text-secondary); font-size: .75rem; line-height: 1.6; text-align: center; }
+</style>

@@ -38,3 +38,13 @@ También puedes proporcionar una ruta al checkout de Desktop: `node scripts/impo
 Con ambos checkouts y `gh` autenticado, ejecuta `pnpm run check:cms-editorial -- ../dome feat/complements-documentation`. El script usa el servicio CMS real para sincronizar los 28 manuales desde esa rama, editar una nota y preparar su publicación. La base SQLite y la bóveda son temporales; las funciones de escritura remota están bloqueadas y se verifica que el SHA remoto no cambie. No modifica el perfil Dome del usuario. Esta prueba cubre Markdown; las imágenes tienen pruebas separadas en Desktop.
 
 Comprobado el 2026-09-30 contra `feat/complements-documentation`: 28 manuales sincronizados, una edición guardada en bóveda temporal y publicación preparada, sin escrituras remotas. No se configuró ni modificó el perfil Dome del usuario.
+
+## Navegación y versiones públicas
+
+La web presenta las capacidades como funciones de la misma aplicación. Las rutas antiguas `/pro`, `/study` y `/dev` redirigen permanentemente a biblioteca, aprendizaje e integraciones, también en inglés, y quedan fuera del sitemap.
+
+Complementos usa búsqueda, categorías laterales, ordenación y fichas con instalación en Desktop. El catálogo sigue siendo curado; no se muestran actividad social ni cifras de instalaciones. Extensión y Companion incluyen diagramas de sus conexiones y recorridos por capacidades, sin presentar ilustraciones como capturas del producto.
+
+Descarga y Changelog consultan `/releases-index.json`, que el servidor de producción obtiene de `PUBLIC_RELEASES_INDEX_URL` (por defecto `dl.dowi.es`). El HTML inicial contiene un skeleton, sin versiones, notas o enlaces de instaladores del snapshot. Una petición fallida o un índice inválido ofrece reintentar; cada petición tiene un límite de diez segundos. Los instaladores disponibles se reconstruyen a partir del índice recibido, incluida la ausencia de una plataforma o una arquitectura.
+
+Validación del rediseño: `pnpm run verify`, 29 pruebas Playwright, tres pruebas del servidor de producción y `pnpm run catalog:check`. Las pruebas de versiones simulan carga pendiente, error, reintento, índice inválido, catálogo vacío y plataformas con solo Intel o Flatpak.

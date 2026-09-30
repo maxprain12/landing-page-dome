@@ -1,214 +1,43 @@
 ---
-import Nav from "./Nav.astro";
-import Footer from "./Footer.astro";
-import { changelogUrl, downloadUrl } from "../data/landing";
-import { localizePath, t, type Locale } from "../i18n";
-import {
-  formatSize,
-  getLatest,
-  pickInstaller,
-  type ReleaseAsset,
-} from "../lib/releases";
-
-interface Props {
-  locale: Locale;
-}
-
-type CardId = "mac-arm" | "mac-intel" | "win" | "linux-appimage" | "linux-flatpak";
-
-interface DownloadCard {
-  id: CardId;
-  label: string;
-  blurb: string;
-  asset: ReleaseAsset | undefined;
-}
-
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import ReleaseStatus from './ReleaseStatus.astro';
+import { changelogUrl, downloadUrl } from '../data/landing';
+import { t, type Locale } from '../i18n';
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
-const copy = t(locale);
-const page = copy.pages.download;
-const contactHref = localizePath("/contact", locale);
-const entry = await getLatest("latest");
-
-const blurbs = page.platformBlurbs;
-const cards: DownloadCard[] = entry
-  ? [
-      {
-        id: "mac-arm",
-        label: page.platforms.macArm,
-        blurb: blurbs.macArm,
-        asset: pickInstaller(entry, { platform: "mac", kind: "dmg", arch: "arm64" }),
-      },
-      {
-        id: "mac-intel",
-        label: page.platforms.macIntel,
-        blurb: blurbs.macIntel,
-        asset: pickInstaller(entry, { platform: "mac", kind: "dmg", arch: "other" }),
-      },
-      {
-        id: "win",
-        label: page.platforms.windows,
-        blurb: blurbs.windows,
-        asset: pickInstaller(entry, { platform: "win", kind: "nsis" }),
-      },
-      {
-        id: "linux-appimage",
-        label: page.platforms.linuxAppImage,
-        blurb: blurbs.linuxAppImage,
-        asset: pickInstaller(entry, { platform: "linux", kind: "appimage" }),
-      },
-      {
-        id: "linux-flatpak",
-        label: page.platforms.linuxFlatpak,
-        blurb: blurbs.linuxFlatpak,
-        asset: pickInstaller(entry, { platform: "linux", kind: "flatpak" }),
-      },
-    ]
-  : [];
-
-const hasAnyAsset = cards.some((card) => Boolean(card.asset));
-const releasedLabel = entry
-  ? new Date(entry.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    })
-  : "";
-const changelogHref = changelogUrl(locale);
+const page = t(locale).pages.download;
 const groups = [
-  { id: "mac", label: "macOS", icon: "/assets/os/apple.svg", cards: cards.filter((card) => card.id.startsWith("mac") && card.asset) },
-  { id: "win", label: "Windows", icon: "/assets/os/windows.svg", cards: cards.filter((card) => card.id === "win" && card.asset) },
-  { id: "linux", label: "Linux", icon: "/assets/os/linux.svg", cards: cards.filter((card) => card.id.startsWith("linux") && card.asset) },
-].filter((group) => group.cards.length > 0);
+  { id: 'mac', label: 'macOS', icon: '/assets/os/apple.svg', cards: [{platform: 'mac', kind: 'dmg', arch: 'arm64', label: page.platforms.macArm, blurb: page.platformBlurbs.macArm}, {platform: 'mac', kind: 'dmg', arch: 'other', label: page.platforms.macIntel, blurb: page.platformBlurbs.macIntel}] },
+  { id: 'win', label: 'Windows', icon: '/assets/os/windows.svg', cards: [{platform: 'win', kind: 'nsis', label: page.platforms.windows, blurb: page.platformBlurbs.windows}] },
+  { id: 'linux', label: 'Linux', icon: '/assets/os/linux.svg', cards: [{platform: 'linux', kind: 'appimage', label: page.platforms.linuxAppImage, blurb: page.platformBlurbs.linuxAppImage}, {platform: 'linux', kind: 'flatpak', label: page.platforms.linuxFlatpak, blurb: page.platformBlurbs.linuxFlatpak}] },
+];
 ---
-
-<Nav locale={locale} esHref={downloadUrl("es")} enHref={downloadUrl("en")} />
-<main id="main-content" class="dl">
-  <div class="wrap dl-hero">
-    <p class="eyebrow">{page.eyebrow}</p>
-    <h1 class="h-display dl-h1">{page.h1}</h1>
-    <p class="dl-lead">{page.lead}</p>
-    {
-      entry && hasAnyAsset ? (
-        <p class="dl-meta">
-          <span>
-            {page.versionLabel} <span data-live-version>{entry.version}</span>
-          </span>
-          <span aria-hidden="true">·</span>
-          <time data-live-date datetime={entry.date}>{releasedLabel}</time>
-          <span aria-hidden="true">·</span>
-          <a href={`${changelogHref}#v${entry.version}`}>{page.changelogLink}</a>
-        </p>
-      ) : null
-    }
+<Nav locale={locale} esHref={downloadUrl('es')} enHref={downloadUrl('en')} />
+<main id="main-content" class="dl" data-live-releases aria-busy="true">
+  <div class="wrap dl-hero"><p class="eyebrow">{page.eyebrow}</p><h1 class="h-display dl-h1">{page.h1}</h1><p class="dl-lead">{page.lead}</p>
+    <p class="dl-meta" data-release-ready hidden><span>{page.versionLabel} <span data-live-version></span></span><span aria-hidden="true">·</span><time data-live-date></time><span aria-hidden="true">·</span><a data-live-changelog-link href={changelogUrl(locale)}>{page.changelogLink}</a></p>
   </div>
-
-  {
-    entry && hasAnyAsset ? (
-      <section class="wrap dl-stage" aria-label={page.h1}>
-        <div>
-          <div class="dl-tabs" role="tablist">
-            {groups.map((group) => (
-              <button class="dl-tab" type="button" role="tab" data-tab={group.id} aria-selected="false">
-                <span class="os-icon" style={`--icon: url('${group.icon}')`}></span>
-                {group.label}
-              </button>
-            ))}
-          </div>
-          {groups.map((group) => {
-            const [primary, ...rest] = group.cards;
-            return primary?.asset ? (
-              <article class="dl-panel" data-platform={group.id} hidden>
-                <span class="os-icon dl-os" style={`--icon: url('${group.icon}')`}></span>
-                <h2>{primary.label}</h2>
-                <p class="dl-blurb">{primary.blurb}</p>
-                <a class="btn btn-primary dl-download" data-download href={primary.asset.url} rel="noopener">
-                  {page.downloadLabel}
-                </a>
-                <p class="dl-size" data-size>{formatSize(primary.asset.size)}</p>
-                {rest.length ? (
-                  <p class="dl-also" data-also data-also-label={page.alsoLabel}>
-                    {page.alsoLabel}:
-                    {rest.map((card) =>
-                      card.asset ? (
-                        <a href={card.asset.url} rel="noopener">{card.label}</a>
-                      ) : null,
-                    )}
-                  </p>
-                ) : null}
-                <details class="dl-details">
-                  <summary>{page.detailsSummary}</summary>
-                  <p class="dl-sha">
-                    <span>{page.checksumLabel}</span>
-                    <code data-sha>{primary.asset.sha512}</code>
-                  </p>
-                  <p class="dl-file" data-file>{primary.asset.name}</p>
-                </details>
-              </article>
-            ) : null;
-          })}
-        </div>
-      </section>
-    ) : (
-      <section class="wrap dl-empty" aria-live="polite">
-        <p>{page.empty}</p>
-        <a class="btn btn-primary" href={contactHref}>
-          {page.emptyContact}
-        </a>
-      </section>
-    )
-  }
+  <ReleaseStatus locale={locale} kind="download" />
+  <section class="wrap dl-stage" data-release-ready hidden aria-label={page.h1}>
+    <div class="dl-tabs" role="tablist" aria-label={locale === 'es' ? 'Sistema operativo' : 'Operating system'}>{groups.map(group => <button class="dl-tab" type="button" role="tab" id={`tab-${group.id}`} aria-controls={`panel-${group.id}`} data-tab={group.id} aria-selected="false" tabindex="-1"><span class="os-icon" style={`--icon: url('${group.icon}')`}></span>{group.label}</button>)}</div>
+    {groups.map(group => <article class="dl-panel" role="tabpanel" id={`panel-${group.id}`} aria-labelledby={`tab-${group.id}`} data-platform={group.id} data-cards={JSON.stringify(group.cards)} hidden>
+      <span class="os-icon dl-os" style={`--icon: url('${group.icon}')`}></span><h2 data-download-title></h2><p class="dl-blurb" data-download-blurb></p>
+      <a class="btn btn-primary dl-download" data-download rel="noopener">{page.downloadLabel}</a><p class="dl-size" data-size></p>
+      <p class="dl-also" data-also data-also-label={page.alsoLabel} hidden></p>
+      <details class="dl-details"><summary>{page.detailsSummary}</summary><p class="dl-sha"><span>{page.checksumLabel}</span><code data-sha></code></p><p class="dl-file" data-file></p></details>
+    </article>)}
+    <p class="dl-empty" data-download-empty hidden>{page.empty}</p>
+  </section>
 </main>
 <Footer locale={locale} />
-
 <script>
-  import { startLiveReleases } from "../scripts/live-releases";
-  startLiveReleases().catch(() => undefined);
+  import { startLiveReleases } from '../scripts/live-releases';
+  void startLiveReleases();
 </script>
-<script>
-  function detectPlatformKey(): string | null {
-    const nav = globalThis.navigator;
-    if (!nav) return null;
-    const uaData = (nav as Navigator & { userAgentData?: { platform?: string } }).userAgentData;
-    const raw =
-      uaData?.platform ??
-      // Fallback required: userAgentData is not universal yet.
-      (nav as Navigator & { platform?: string }).platform ??
-      "";
-    const platform = String(raw).toLowerCase();
-    if (platform.includes("win")) return "win";
-    if (platform.includes("linux")) return "linux";
-    if (
-      platform.includes("mac") ||
-      platform.includes("darwin") ||
-      platform.includes("iphone") ||
-      platform.includes("ipad")
-    ) {
-      return "mac";
-    }
-    return null;
-  }
-
-  const tabs = [...document.querySelectorAll<HTMLButtonElement>("[data-tab]")];
-  const panels = [...document.querySelectorAll<HTMLElement>("[data-platform]")];
-  function show(id: string) {
-    for (const tab of tabs) {
-      const on = tab.dataset.tab === id;
-      tab.setAttribute("aria-selected", on ? "true" : "false");
-    }
-    for (const panel of panels) {
-      panel.hidden = panel.dataset.platform !== id;
-    }
-  }
-  const first = detectPlatformKey() ?? tabs[0]?.dataset.tab ?? null;
-  if (first) show(first);
-  for (const tab of tabs) {
-    tab.addEventListener("click", () => {
-      if (tab.dataset.tab) show(tab.dataset.tab);
-    });
-  }
-</script>
-
 <style>
+  [hidden] { display: none !important; }
+  .dl-also :global(a) { color: var(--color-text); text-decoration: underline; text-underline-offset: 3px; }
   .dl {
     padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
   }
@@ -312,53 +141,6 @@ const groups = [
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  .dl-card {
-    padding: 1.35rem 1.4rem 1.45rem;
-    border-radius: 20px;
-    border: 1px solid var(--color-border);
-    background: color-mix(in srgb, var(--color-surface) 80%, transparent);
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-  .dl-card.is-recommended {
-    border-color: color-mix(in srgb, var(--c-olive) 42%, var(--color-border));
-    background: color-mix(in srgb, var(--color-olive-muted) 55%, var(--color-surface));
-  }
-  .dl-rec {
-    margin: 0;
-    display: inline-flex;
-    align-self: flex-start;
-    height: 1.55rem;
-    align-items: center;
-    padding: 0 0.65rem;
-    border-radius: 999px;
-    background: var(--c-olive);
-    color: var(--color-olive-ink);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .dl-mark {
-    width: 2.4rem;
-    height: 2.4rem;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--c-olive) 16%, var(--color-surface));
-    color: var(--c-olive);
-  }
-  .dl-mark svg {
-    width: 1.2rem;
-    height: 1.2rem;
-    fill: currentColor;
-  }
-  .dl-card h2 {
-    font-size: 1.2rem;
-    margin: 0;
-  }
   .dl-blurb {
     margin: 0;
     color: var(--color-text-secondary);
@@ -369,9 +151,6 @@ const groups = [
     margin: 0;
     color: var(--color-text-secondary);
     font-size: 0.92rem;
-  }
-  .dl-card .btn {
-    align-self: flex-start;
   }
   .dl-details {
     margin-top: 0.2rem;

@@ -1,49 +1,163 @@
 ---
-import ExploreShell from './ExploreShell.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import { Blocks, Bot, Workflow, Sparkles, Plug, Search, ArrowUpRight, BookOpen, ShieldCheck, FileText, GitBranch, Globe } from '@lucide/astro';
 import catalog from '../data/complements-catalog.json';
 import { localizePath, type Locale } from '../i18n';
 interface Props { locale: Locale; slug?: string; }
 const { locale, slug } = Astro.props;
 const item = slug ? catalog.items.find((entry) => entry.slug === slug) : undefined;
 const copy = item?.locales[locale];
+const es = locale === 'es';
+const href = (path: string) => localizePath(path, locale);
+const icons = { plugins: Blocks, agents: Bot, workflows: Workflow, skills: Sparkles, mcp: Plug };
+const ItemIcon = icons[item?.category as keyof typeof icons] ?? Blocks;
 const labels = locale === 'es'
-  ? { title: 'Complementos para tu Dome', lead: 'Plugins, agentes, workflows, skills y MCP. Elige una herramienta y revisa cómo encaja en tu trabajo.', search: 'Buscar complementos', category: 'Categoría', all: 'Todas', open: 'Abrir en Dome', details: 'Ver ficha', manual: 'Leer el manual', cases: 'Casos de uso', requirements: 'Requisitos', permissions: 'Permisos del plugin', empty: 'No hay complementos que coincidan con tu búsqueda.', review: 'Dome abre la ficha para que revises e instales. Si tienes una versión anterior, actualiza Desktop o busca el complemento en su catálogo.', back: 'Todos los complementos' }
-  : { title: 'Add-ons for your Dome', lead: 'Plugins, agents, workflows, skills and MCP. Choose a tool and review how it fits your work.', search: 'Search add-ons', category: 'Category', all: 'All', open: 'Open in Dome', details: 'View details', manual: 'Read the manual', cases: 'Use cases', requirements: 'Requirements', permissions: 'Plugin permissions', empty: 'No add-ons match your search.', review: 'Dome opens the entry for review and installation. If you use an older version, update Desktop or find the add-on in its catalog.', back: 'All add-ons' };
+  ? { title: 'Complementos', lead: 'Plugins, agentes, workflows, skills y MCP. Elige una herramienta y revisa cómo encaja en tu trabajo.', search: 'Buscar complementos', category: 'Categoría', all: 'Todas', open: 'Abrir en Dome', details: 'Ver ficha', manual: 'Leer el manual', cases: 'Casos de uso', requirements: 'Requisitos', permissions: 'Permisos del plugin', empty: 'No hay complementos que coincidan con tu búsqueda.', review: 'Dome abre la ficha para que revises e instales. Si tienes una versión anterior, actualiza Desktop o busca el complemento en su catálogo.', back: 'Todos los complementos' }
+  : { title: 'Add-ons', lead: 'Plugins, agents, workflows, skills and MCP. Choose a tool and review how it fits your work.', search: 'Search add-ons', category: 'Category', all: 'All', open: 'Open in Dome', details: 'View details', manual: 'Read the manual', cases: 'Use cases', requirements: 'Requirements', permissions: 'Plugin permissions', empty: 'No add-ons match your search.', review: 'Dome opens the entry for review and installation. If you use an older version, update Desktop or find the add-on in its catalog.', back: 'All add-ons' };
 const categories = locale === 'es' ? { plugins: 'Plugins', agents: 'Agentes', workflows: 'Workflows', skills: 'Skills', mcp: 'MCP' } : { plugins: 'Plugins', agents: 'Agents', workflows: 'Workflows', skills: 'Skills', mcp: 'MCP' };
+
+const ui = es ? { official: 'Catálogo oficial', featured: 'Destacado', author: 'Autor', version: 'Versión', about: 'Sobre el complemento', explore: 'Explorar', guide: 'Antes de instalar', guideText: 'Consulta los requisitos y permisos. La instalación se revisa dentro de Dome.', curated: 'Seleccionados para Dome', curatedText: 'Un catálogo de herramientas mantenidas para ampliar tu biblioteca y tus flujos de trabajo.', count: 'complementos', sort: 'Ordenar por', recommended: 'Recomendados', name: 'Nombre', cms: 'Escribe en Dome. Publica en tu web.', cmsText: 'Markdown, colecciones e idiomas, con publicación en GitHub para Astro.', download: 'Descargar Desktop', result: 'Tu flujo de publicación', tools: 'Documentación', review: 'Revisa la ficha en Desktop y confirma la instalación.' } : { official: 'Official catalog', featured: 'Featured', author: 'Author', version: 'Version', about: 'About this add-on', explore: 'Explore', guide: 'Before installing', guideText: 'Check requirements and permissions. Review installation inside Dome.', curated: 'Selected for Dome', curatedText: 'A catalog of maintained tools to extend your library and workflows.', count: 'add-ons', sort: 'Sort by', recommended: 'Recommended', name: 'Name', cms: 'Write in Dome. Publish to your site.', cmsText: 'Markdown, collections and languages, with GitHub publishing for Astro.', download: 'Download Desktop', result: 'Your publishing workflow', tools: 'Documentation', review: 'Review the entry in Desktop and confirm installation.' };
 ---
-<ExploreShell locale={locale} title={item?.name ?? labels.title} description={copy?.description ?? labels.lead}>
+<Nav locale={locale} />
+<main id="main-content" class="market" data-complement-catalog>
+  <aside class="market-nav">
+    <a class="market-brand" href={href('/complementos')}><Blocks size={22} /><span>{labels.title}</span></a>
+    <p class="market-caption">{ui.explore}</p>
+    <nav aria-label={labels.category} class="market-categories">
+      <a href={href('/complementos')} data-category-link="" aria-current={!item ? 'page' : undefined}>{labels.all}<span>{catalog.items.length}</span></a>
+      {Object.entries(categories).map(([key, name]) => { const Icon = icons[key as keyof typeof icons]; return <a href={`${href('/complementos')}?category=${key}`} data-category-link={key} aria-current={item?.category === key ? 'page' : undefined}><Icon size={17} />{name}<span>{catalog.items.filter(entry => entry.category === key).length}</span></a>; })}
+    </nav>
+    <div class="market-nav-bottom"><a href={href('/manual/complements')}><BookOpen size={17} />{labels.manual}</a><a class="btn btn-primary" href={href('/download')}>{ui.download}</a></div>
+  </aside>
+  <div class="market-main">
   {item && copy ? <>
-    <div class="explore-actions"><a class="btn btn-primary" href={`dome://complements/${item.category}/${item.id}`}>{labels.open}</a><a class="btn btn-ghost" href={localizePath(`/manual/${item.manual}`, locale)}>{labels.manual}</a></div>
-    <p class="explore-meta">{item.author} · {categories[item.category as keyof typeof categories]} · {item.version}</p>
-    <div class="explore-body">
-      <div><section><h2>{locale === 'es' ? 'Cómo te ayuda' : 'How it helps'}</h2><p>{copy.body}</p></section><section><h2>{labels.cases}</h2><ul>{copy.useCases.map((text) => <li>{text}</li>)}</ul></section><p>{labels.review}</p></div>
-      <aside><section><h2>{labels.requirements}</h2><ul>{copy.requirements.map((text) => <li>{text}</li>)}</ul></section>{item.permissions.length > 0 && <section><h2>{labels.permissions}</h2><ul>{copy.permissionDescriptions.map((text) => <li>{text}</li>)}</ul></section>}</aside>
+    <a class="market-back" href={href('/complementos')}>← {labels.back}</a>
+    <div class="market-detail-layout">
+      <div>
+        <header class="market-detail-head">
+          <div class:list={['market-icon', 'market-icon-large', item.category]}><ItemIcon size={40} /></div>
+          <div><span class="market-caption">{categories[item.category as keyof typeof categories]}</span><h1>{item.name}</h1><p class="market-meta">{item.author} · v{item.version}{item.featured && <span class="market-badge">{ui.featured}</span>}</p></div>
+        </header>
+        <p class="market-description">{copy.description}</p>
+        {item.id === 'dome-cms' && <figure class="market-flow"><figcaption>{ui.result}</figcaption><ol>{[{Icon: FileText, name: 'Markdown'}, {Icon: Blocks, name: 'Dome CMS'}, {Icon: GitBranch, name: 'GitHub'}, {Icon: Globe, name: 'Astro'}].map(({Icon, name}) => <li><Icon size={28} /><span>{name}</span></li>)}</ol></figure>}
+        <section class="market-section"><h2>{ui.about}</h2><p>{copy.body}</p></section>
+        <section class="market-section"><h2>{labels.cases}</h2><ol class="market-cases">{copy.useCases.map((text, i) => <li><span>{String(i + 1).padStart(2, '0')}</span><p>{text}</p></li>)}</ol></section>
+        <section class="market-section"><h2>{ui.tools}</h2><a class="market-text-link" href={href(`/manual/${item.manual}`)}><BookOpen size={18} />{labels.manual}<ArrowUpRight size={16} /></a></section>
+      </div>
+      <aside class="market-install">
+        <a class="btn btn-primary" href={`dome://complements/${item.category}/${item.id}`}>{labels.open}<ArrowUpRight size={17} /></a>
+        <p>{ui.review}</p>
+        <dl><dt>{ui.author}</dt><dd>{item.author}</dd><dt>{ui.version}</dt><dd>{item.version}</dd></dl>
+        <section><h2>{labels.requirements}</h2><ul>{copy.requirements.map(text => <li>{text}</li>)}</ul></section>
+        {item.permissions.length > 0 && <section><h2><ShieldCheck size={18} />{labels.permissions}</h2><ul>{copy.permissionDescriptions.map(text => <li>{text}</li>)}</ul></section>}
+        <p>{labels.review}</p><a class="market-text-link" href={href('/download')}>{ui.download} ↗</a>
+      </aside>
     </div>
-    <a class="btn btn-ghost" href={localizePath('/complementos', locale)}>{labels.back}</a>
-  </> : <div data-complement-catalog>
-    <div class="explore-tools"><label>{labels.search}<input type="search" data-catalog-search /></label><label>{labels.category}<select data-catalog-category><option value="">{labels.all}</option>{Object.entries(categories).map(([value, text]) => <option value={value}>{text}</option>)}</select></label></div>
-    <div class="explore-grid">{catalog.items.map((entry) => <article class:list={['explore-card', entry.featured && 'is-featured']} data-catalog-card data-category={entry.category} data-search={`${entry.name} ${entry.author} ${entry.locales[locale].description}`}>
-      <span class="explore-meta">{categories[entry.category as keyof typeof categories]}</span><h2>{entry.name}</h2><p>{entry.locales[locale].description}</p><a class="btn btn-ghost" href={localizePath(`/complementos/${entry.slug}`, locale)}>{labels.details}<span class="sr-only">: {entry.name}</span></a>
-    </article>)}</div>
-    <p data-catalog-empty role="status" hidden>{labels.empty}</p>
-  </div>}
-</ExploreShell>
+  </> : <>
+    <header class="market-head"><div><p class="market-caption">{ui.official}</p><h1>{labels.title}</h1></div><p>{labels.lead}</p></header>
+    <div class="market-search"><Search size={20} /><label class="market-sr" for="catalog-search">{labels.search}</label><input id="catalog-search" type="search" placeholder={labels.search} data-catalog-search /></div>
+    <div class="market-toolbar"><label>{labels.category}<select data-catalog-category><option value="">{labels.all}</option>{Object.entries(categories).map(([value, text]) => <option value={value}>{text}</option>)}</select></label><label>{ui.sort}<select data-catalog-sort><option value="recommended">{ui.recommended}</option><option value="name">{ui.name}</option></select></label><span data-catalog-count role="status">{catalog.items.length} {ui.count}</span></div>
+    <div class="market-content">
+      <div class="market-results" data-catalog-results>{catalog.items.map((entry) => { const Icon = icons[entry.category as keyof typeof icons]; return <article class="market-row" data-catalog-card data-category={entry.category} data-featured={entry.featured ? '1' : '0'} data-name={entry.name} data-search={`${entry.name} ${entry.author} ${entry.locales[locale].description}`}>
+        <a class="market-entry" href={href(`/complementos/${entry.slug}`)}><div class:list={['market-icon', entry.category]}><Icon size={28} /></div><div class="market-entry-copy"><h2>{entry.name}{entry.featured && <span class="market-badge">{ui.featured}</span>}</h2><p class="market-meta">{entry.author} · v{entry.version}</p><p class="market-summary">{entry.locales[locale].description}</p><span class="market-tag">{categories[entry.category as keyof typeof categories]}</span></div><ArrowUpRight size={16} class="market-arrow" /><span class="market-sr">{labels.details}: {entry.name}</span></a>
+      </article>; })}<p data-catalog-empty hidden>{labels.empty}</p></div>
+      <aside class="market-editorial"><section><ShieldCheck size={22} /><h2>{ui.curated}</h2><p>{ui.curatedText}</p></section><section><span class="market-caption">Dome CMS</span><h2>{ui.cms}</h2><p>{ui.cmsText}</p><a class="market-text-link" href={href('/complementos/dome-cms')}>{labels.details} <ArrowUpRight size={16} /></a></section><section><h2>{ui.guide}</h2><p>{ui.guideText}</p><a class="market-text-link" href={href('/manual/complements')}>{labels.manual} ↗</a></section></aside>
+    </div>
+  </>}
+  </div>
+</main>
+<Footer locale={locale} />
 <script>
   for (const root of document.querySelectorAll<HTMLElement>('[data-complement-catalog]')) {
     const search = root.querySelector<HTMLInputElement>('[data-catalog-search]');
     const category = root.querySelector<HTMLSelectElement>('[data-catalog-category]');
+    const sort = root.querySelector<HTMLSelectElement>('[data-catalog-sort]');
+    const results = root.querySelector<HTMLElement>('[data-catalog-results]');
     const cards = [...root.querySelectorAll<HTMLElement>('[data-catalog-card]')];
-    const empty = root.querySelector<HTMLElement>('[data-catalog-empty]');
+    if (!category || !results) continue;
     const apply = () => {
-      let count = 0;
       const query = (search?.value ?? '').trim().toLocaleLowerCase();
-      for (const card of cards) {
-        card.hidden = !!((category?.value && card.dataset.category !== category.value) || !(card.dataset.search ?? '').toLocaleLowerCase().includes(query));
+      let count = 0;
+      const sorted = [...cards].sort((a, b) => sort?.value === 'name' ? (a.dataset.name ?? '').localeCompare(b.dataset.name ?? '', document.documentElement.lang) : Number(b.dataset.featured) - Number(a.dataset.featured) || cards.indexOf(a) - cards.indexOf(b));
+      for (const card of sorted) {
+        card.hidden = !!((category.value && card.dataset.category !== category.value) || !(card.dataset.search ?? '').toLocaleLowerCase().includes(query));
         if (!card.hidden) count++;
+        results.append(card);
       }
-      if (empty) empty.hidden = count > 0;
+      const empty = root.querySelector<HTMLElement>('[data-catalog-empty]');
+      if (empty) { empty.hidden = count > 0; results.append(empty); }
+      const counter = root.querySelector<HTMLElement>('[data-catalog-count]');
+      if (counter) counter.textContent = `${count} ${document.documentElement.lang === 'es' ? 'complementos' : 'add-ons'}`;
+      root.querySelectorAll<HTMLElement>('[data-category-link]').forEach(link => { if (link.dataset.categoryLink === category.value) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
     };
-    search?.addEventListener('input', apply);
-    category?.addEventListener('change', apply);
+    const initial = new URLSearchParams(location.search).get('category');
+    if (initial && [...category.options].some(option => option.value === initial)) category.value = initial;
+    root.querySelectorAll<HTMLAnchorElement>('[data-category-link]').forEach(link => link.addEventListener('click', event => { event.preventDefault(); category.value = link.dataset.categoryLink ?? ''; const url = new URL(location.href); if (category.value) url.searchParams.set('category', category.value); else url.searchParams.delete('category'); history.replaceState(null, '', url); apply(); }));
+    search?.addEventListener('input', apply); category.addEventListener('change', apply); sort?.addEventListener('change', apply); apply();
   }
 </script>
+<style>
+  .market { display: grid; grid-template-columns: 190px minmax(0, 1fr); max-width: 1480px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; gap: 2rem; min-height: 75vh; }
+  .market-nav { border-right: 1px solid var(--color-border); padding-right: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
+  .market-brand { display: flex; gap: .65rem; align-items: center; font-weight: 700; margin-bottom: 1.5rem; }
+  .market-caption { font-size: .72rem; text-transform: uppercase; letter-spacing: .09em; color: var(--color-text-secondary); }
+  .market-categories { display: grid; gap: .25rem; }
+  .market-categories a { display: flex; align-items: center; gap: .6rem; padding: .7rem .6rem; border-radius: 9px; font-size: .9rem; color: var(--color-text-secondary); }
+  .market-categories a span { margin-left: auto; font-size: .75rem; }
+  .market-categories a[aria-current], .market-categories a:hover { background: var(--color-surface); color: var(--color-many-body); }
+  .market-nav-bottom { margin-top: auto; padding-top: 3rem; display: grid; gap: 1rem; font-size: .8rem; }
+  .market-nav-bottom a { display: flex; gap: .4rem; align-items: center; }
+  .market-nav-bottom .btn { padding: .7rem; font-size: .8rem; justify-content: center; }
+  .market-main { min-width: 0; }
+  .market-head { display: flex; gap: 2rem; align-items: end; justify-content: space-between; margin-bottom: 1.5rem; }
+  .market h1 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -.045em; margin: .3rem 0 0; line-height: 1.1; }
+  .market-head > p { color: var(--color-text-secondary); max-width: 27rem; font-size: .9rem; line-height: 1.5; }
+  .market-search { display: flex; align-items: center; gap: .7rem; background: var(--color-surface); border: 1px solid var(--color-border); padding: .9rem 1rem; border-radius: 12px; color: var(--color-text-secondary); }
+  .market-search input { border: 0; background: transparent; color: var(--color-text); font: inherit; width: 100%; min-width: 0; outline-offset: 4px; }
+  .market-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--color-border); font-size: .78rem; color: var(--color-text-secondary); }
+  .market-toolbar label { display: flex; align-items: center; gap: .5rem; }
+  .market-toolbar select { background: var(--color-bg); color: var(--color-text); border: 1px solid var(--color-border); border-radius: 6px; padding: .4rem; font: inherit; }
+  .market-toolbar > span { margin-left: auto; }
+  .market-content { display: grid; grid-template-columns: minmax(0, 1fr) 210px; gap: 1.7rem; }
+  .market-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; column-gap: 1.8rem; }
+  .market-row { min-width: 0; border-bottom: 1px solid var(--color-border); }
+  .market-row[hidden], [data-catalog-empty][hidden] { display: none; }
+  .market-entry { display: flex; align-items: flex-start; gap: .85rem; padding: 1.5rem 0; height: 100%; }
+  .market-entry:hover h2 { color: var(--color-many-body); }
+  .market-icon { width: 58px; height: 58px; border-radius: 13px; display: grid; place-items: center; flex: none; background: var(--color-surface); color: var(--color-many-body); border: 1px solid var(--color-border); }
+  .market-icon.agents { color: var(--color-lavender-soft); } .market-icon.skills { color: var(--color-text); }
+  .market-icon-large { width: 88px; height: 88px; border-radius: 20px; }
+  .market-entry-copy { min-width: 0; } .market-entry h2 { font-size: 1rem; letter-spacing: -.025em; line-height: 1.4; margin: 0; }
+  .market-badge { display: inline-flex; padding: .08rem .4rem; border-radius: 5px; color: var(--color-many-body); background: var(--color-surface); font-size: .65rem; font-weight: 500; margin-left: .5rem; vertical-align: middle; }
+  .market-meta { color: var(--color-text-secondary); font-size: .75rem; margin: .25rem 0; line-height: 1.6; }
+  .market-summary { font-size: .85rem; color: var(--color-text-secondary); line-height: 1.5; margin: .4rem 0 .6rem; }
+  .market-tag { display: inline-block; background: var(--color-surface); color: var(--color-text-secondary); font-size: .68rem; border-radius: 4px; padding: .2rem .4rem; }
+  .market-arrow { flex: none; margin-left: auto; color: var(--color-text-secondary); }
+  .market-editorial { border-left: 1px solid var(--color-border); padding-left: 1.5rem; }
+  .market-editorial section { padding: 1.5rem 0; border-bottom: 1px solid var(--color-border); }
+  .market-editorial h2 { font-size: .95rem; margin: .6rem 0; line-height: 1.4; }
+  .market-editorial p, .market-install p, .market-install li { font-size: .82rem; color: var(--color-text-secondary); line-height: 1.65; }
+  .market-text-link { display: inline-flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--color-many-body); margin-top: .8rem; }
+  .market-back { display: inline-block; font-size: .8rem; color: var(--color-text-secondary); margin-bottom: 2rem; }
+  .market-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) 285px; gap: 3rem; }
+  .market-detail-head { display: flex; gap: 1.25rem; align-items: center; }
+  .market-description { font-size: 1.12rem; line-height: 1.65; color: var(--color-text-secondary); margin: 1.6rem 0 2rem; }
+  .market-section { padding: 1.5rem 0; border-top: 1px solid var(--color-border); }
+  .market-section h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+  .market-section p { color: var(--color-text-secondary); line-height: 1.75; }
+  .market-flow { background: var(--color-surface); padding: 1.5rem; margin: 0 0 2rem; border-radius: 14px; }
+  .market-flow figcaption { font-size: .75rem; color: var(--color-text-secondary); margin-bottom: 1.5rem; }
+  .market-flow ol { display: flex; list-style: none; justify-content: space-between; gap: .7rem; }
+  .market-flow li { display: grid; justify-items: center; gap: .7rem; font-size: .8rem; color: var(--color-many-body); }
+  .market-cases { list-style: none; } .market-cases li { display: flex; gap: 1.1rem; margin-top: 1rem; } .market-cases li > span { font-family: var(--font-mono); color: var(--color-many-body); font-size: .8rem; padding-top: .3rem; }
+  .market-install { align-self: start; position: sticky; top: 6rem; border-left: 1px solid var(--color-border); padding-left: 1.5rem; }
+  .market-install .btn { width: 100%; display: flex; justify-content: center; gap: .4rem; padding: .8rem; font-size: .9rem; margin-bottom: .8rem; }
+  .market-install dl { display: grid; grid-template-columns: auto 1fr; gap: .7rem; margin: 1.5rem 0; font-size: .8rem; } .market-install dt { color: var(--color-text-secondary); } .market-install dd { text-align: right; }
+  .market-install section { border-top: 1px solid var(--color-border); padding: 1.2rem 0; } .market-install h2 { display: flex; align-items: center; gap: .5rem; font-size: .9rem; margin-bottom: .6rem; } .market-install ul { padding-left: 1rem; } .market-install li { margin-bottom: .6rem; }
+  .market-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .market a:focus-visible, .market select:focus-visible, .market input:focus-visible { outline: 2px solid var(--color-many-body); outline-offset: 4px; }
+  @media (max-width: 1200px) { .market-content { grid-template-columns: minmax(0, 1fr); } .market-editorial { display: none; } }
+  @media (max-width: 900px) { .market { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem 1rem 3rem; } .market-nav { border: 0; padding: 0; } .market-brand, .market-nav > p, .market-nav-bottom { display: none; } .market-categories { display: flex; gap: .3rem; flex-wrap: wrap; } .market-categories a { padding: .6rem; font-size: .8rem; } .market-categories a span { display: none; } .market-head { align-items: start; } .market-detail-layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } .market-detail-layout > div { display: contents; } .market-install { grid-row: 3; position: static; border: 0; padding: 0; } .market-install > p:last-of-type { margin-top: .7rem; } }
+  @media (max-width: 600px) { .market-results { grid-template-columns: minmax(0, 1fr); } .market-head { display: block; } .market-head > p { margin-top: .8rem; } .market-entry { padding: 1.2rem 0; } .market-toolbar { gap: .7rem; } .market-toolbar > span { flex: 1 1 100%; margin: 0; } .market-detail-head { gap: .8rem; } .market-detail-head h1 { font-size: 2rem; } .market-icon-large { width: 70px; height: 70px; } }
+</style>

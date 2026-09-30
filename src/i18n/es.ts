@@ -8,7 +8,6 @@ export const es: Dictionary = {
   },
   nav: {
     how: "Cómo funciona",
-    editions: "Ediciones",
     trust: "Confianza",
     faq: "FAQ",
     download: "Descargar",
@@ -27,16 +26,11 @@ export const es: Dictionary = {
     blog: "Blog",
     manuals: "Manuales",
     productCol: "Usar Dome",
-    editionsCol: "Ediciones",
     learnCol: "Aprender",
     projectCol: "Proyecto",
     howHint: "Biblioteca, personas y Many",
-    editionsHint: "Pro, Study y Dev en la misma app",
     trustHint: "Dónde vive tu contexto",
     localFirstHint: "Almacenamiento y permisos",
-    proHint: "Documentos, personas y acciones",
-    studyHint: "Aprende desde tu biblioteca",
-    devHint: "Documentos, GitHub y agentes",
     blogHint: "Notas concretas, local-first",
     manualsHint: "Instalación y primer workflow",
     faqHint: "Preguntas frecuentes",
@@ -150,7 +144,7 @@ export const es: Dictionary = {
       },
       {
         id: "study",
-        title: "Study",
+        title: "Aprendizaje",
         text: "Convierte tus fuentes en flashcards, quizzes y repaso espaciado sin salir de la biblioteca.",
         prompt: "Genera flashcards de Learning principles.",
       },
@@ -173,37 +167,6 @@ export const es: Dictionary = {
         prompt: "Investiga las fuentes y deja el brief listo.",
       },
     ],
-  },
-  pro: {
-    eyebrow: "Edición principal",
-    h2: "Tu biblioteca y tus relaciones, en el mismo contexto.",
-    body: "Pro está pensado para consultores, freelancers, pequeños estudios y creadores de servicios. Conserva el historial de cada persona junto al material que da sentido a la conversación.",
-    examples: [
-      "De una propuesta de cliente a un correo de seguimiento.",
-      "De un artículo guardado a un post adaptado para una relación concreta.",
-      "De una nota de reunión a un siguiente paso que queda registrado.",
-    ],
-    cta: "Explorar Pro",
-  },
-  editions: {
-    h2: "Una aplicación. Tres formas de trabajar.",
-    intro: "Elige un foco al abrir Dome y cámbialo después sin borrar tu biblioteca.",
-    note: "Pro es la edición que lidera la página. Study y Dev son rutas de entrada para otros trabajos, no planes de pago separados.",
-    proCta: "Explora Pro y trabaja con tu biblioteca y tus relaciones en el mismo hilo.",
-    study: {
-      name: "Study",
-      title: "Aprende desde tu biblioteca.",
-      text: "Convierte tus fuentes en flashcards, quizzes y guías. La repetición espaciada te trae lo que toca hoy, sin salir de Dome ni perder el hilo de lo que ya leíste.",
-      cta: "Abre Study y convierte tu biblioteca en un ritmo de estudio diario.",
-      href: "/study",
-    },
-    dev: {
-      name: "Dev",
-      title: "Construye con tus documentos y tu repo.",
-      text: "Conecta GitHub, agentes y automatizaciones. Pasa del issue al cambio con el contexto de tus documentos, y deja el historial junto al código que tocas.",
-      cta: "Abre Dev y pasa del issue al cambio con el contexto de tus documentos.",
-      href: "/dev",
-    },
   },
   capabilities: {
     h2: "El contexto permanece contigo.",
@@ -339,8 +302,8 @@ export const es: Dictionary = {
             a: "Puedes configurar los proveedores compatibles que exponga la versión publicada de Dome.",
           },
           {
-            q: "¿Qué diferencia hay entre Pro, Study y Dev?",
-            a: "Son ediciones de la misma aplicación: Pro conecta documentos y personas; Study prioriza el aprendizaje; Dev prioriza GitHub y agentes.",
+            q: "¿Puedo usar Dome para trabajar y aprender?",
+            a: "Sí. La biblioteca, Many, el aprendizaje y las integraciones forman parte de la misma aplicación. Consulta Funciones para ver cada flujo de trabajo.",
           },
         ],
       },
@@ -375,12 +338,10 @@ export const es: Dictionary = {
   footer: {
     tag: "Workspace local-first para documentos, personas y acciones con IA. El uso comercial requiere permiso escrito.",
     product: "Producto",
-    editionsCol: "Ediciones",
     resources: "Recursos",
     project: "Proyecto",
     legal: "Legal",
     how: "Cómo funciona",
-    editions: "Ediciones",
     trust: "Confianza",
     faq: "FAQ",
     download: "Descargar",
@@ -393,9 +354,6 @@ export const es: Dictionary = {
     terms: "Términos",
     manual: "Manual",
     localFirst: "Local-first",
-    pro: "Pro",
-    study: "Study",
-    dev: "Dev",
     blog: "Blog",
     pricing: "Pricing",
     rss: "RSS",
@@ -416,70 +374,6 @@ export const es: Dictionary = {
       "Condiciones de uso de Dome, licencia del repositorio y servicios de terceros opcionales.",
   },
   pages: {
-    pro: {
-      title: "Dome Pro — Documentos, personas y acciones",
-      description:
-        "La edición principal de Dome conecta tu biblioteca local con las personas a las que tienes que dar seguimiento.",
-      eyebrow: "Edición principal",
-      h1: "Documento, persona, acción.",
-      lead: "Pro está pensado para consultores, freelancers, pequeños estudios y creadores de servicios. Many usa el recurso abierto y la ficha relacionada para preparar el siguiente paso.",
-      sections: [
-        {
-          h2: "El mismo contexto, no otra bandeja.",
-          text: "Abres un PDF, una nota o una URL y la persona relacionada queda a la vista. El historial y el siguiente paso viven junto al material que da sentido a la conversación.",
-        },
-        {
-          h2: "Many prepara. Tú apruebas.",
-          text: "Un brief, un correo o un post salen del contexto abierto. Enviar o publicar espera tu visto bueno.",
-        },
-        {
-          h2: "Una aplicación, no un plan de pago.",
-          text: "Pro es un foco al abrir Dome. Puedes cambiar a Study o Dev después sin borrar la biblioteca.",
-        },
-      ],
-      primary: "Descargar Dome",
-      secondary: "Ver cómo funciona",
-    },
-    study: {
-      title: "Dome Study — Aprende desde tu biblioteca",
-      description:
-        "Study convierte las fuentes que ya tienes en flashcards, quizzes y guías con repetición espaciada.",
-      eyebrow: "Edición secundaria",
-      h1: "Aprende desde la biblioteca que ya tienes.",
-      lead: "Study es una forma de trabajar dentro de la misma aplicación. No borra Pro ni sustituye el workflow de documentos y personas.",
-      sections: [
-        {
-          h2: "De la fuente al repaso.",
-          text: "Convierte notas, PDFs y páginas en flashcards, quizzes y guías. La repetición espaciada usa el material que ya importaste.",
-        },
-        {
-          h2: "Misma biblioteca.",
-          text: "Cambias de edición en Ajustes. Tus recursos se quedan en el disco.",
-        },
-      ],
-      primary: "Descargar Dome",
-      secondary: "Volver a Pro",
-    },
-    dev: {
-      title: "Dome Dev — Documentos, GitHub y agentes",
-      description:
-        "Dev conecta tu biblioteca local con GitHub, agentes y automatizaciones cuando pasas del issue al cambio.",
-      eyebrow: "Edición secundaria",
-      h1: "Construye con tus documentos y tu repo.",
-      lead: "Dev es una ruta de entrada para builders. El producto que vende la home sigue siendo el loop de Pro: documento, persona, acción.",
-      sections: [
-        {
-          h2: "Del issue al cambio.",
-          text: "Conecta GitHub y deja que Many trabaje sobre el recurso abierto y el contexto del repositorio.",
-        },
-        {
-          h2: "Agentes cuando hacen falta.",
-          text: "Automatizaciones y agentes viven aquí como foco, no como el mensaje principal de Dome.",
-        },
-      ],
-      primary: "Descargar Dome",
-      secondary: "Volver a Pro",
-    },
     localFirst: {
       title: "Dome local-first — Dónde vive tu contexto",
       description:

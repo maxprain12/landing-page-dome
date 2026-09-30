@@ -2,7 +2,7 @@
 import { downloadUrl } from "../data/landing";
 import { localeFromPath, t, type Locale } from "../i18n";
 import DomeIcon from "./icons/DomeIcon.astro";
-import EditionSwitcher from "./EditionSwitcher.astro";
+import FeatureSwitcher from "./FeatureSwitcher.astro";
 
 interface Props {
   locale?: Locale;
@@ -22,11 +22,11 @@ function letters(word: string) {
   data-hero
   data-hero-story
   data-pillar="documentos"
-  data-edition="pro"
+  data-feature="library"
   data-phase="peek"
   style="--reveal: 0; --split: 0;"
 >
-  <div class="hero-track" data-story-track id="ediciones">
+  <div class="hero-track" data-story-track id="vista-producto">
     <div class="hero-pin" data-story-pin>
       <div class="hero-copy" data-hero-copy>
         <h1 class="hero-title">
@@ -67,16 +67,16 @@ function letters(word: string) {
           </a>
         </div>
       </div>
-      <EditionSwitcher locale={locale} />
+      <FeatureSwitcher locale={locale} />
     </div>
   </div>
-  <p class="story-note">{copy.editions.note}</p>
+  <p class="story-note">{locale === "es" ? "Biblioteca, aprendizaje e integraciones en una misma aplicación." : "Library, learning and integrations in one application."}</p>
 </section>
 
 <script>
   document.querySelectorAll<HTMLElement>("[data-hero]").forEach((hero) => {
     const setPillar = (id: string, view?: string) => {
-      if (hero.dataset.phase === "editions") return;
+      if (hero.dataset.phase === "features") return;
       hero.dataset.pillar = id;
       const shell = hero.querySelector<HTMLElement>("[data-appshell]");
       if (shell && view) shell.dataset.view = view;

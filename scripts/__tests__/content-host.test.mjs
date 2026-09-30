@@ -23,6 +23,11 @@ test('production host serves replacements, redirects old manuals and returns 410
       assert.equal(response.status, 301);
       assert.equal(response.headers.get('location'), `${locale}/manual/${replacement}`);
     }
+    for (const [old, current] of [['pro', 'library'], ['study', 'learning'], ['dev', 'integrations']]) {
+      const response = await fetch(`${base}${locale}/${old}/`, { redirect: 'manual' });
+      assert.equal(response.status, 301);
+      assert.equal(response.headers.get('location'), `${locale}/funciones/${current}`);
+    }
     assert.equal((await fetch(`${base}${locale}/manual/library`)).status, 200);
     assert.equal((await fetch(`${base}${locale}/complementos/dome-cms`)).status, 200);
     const rss = await (await fetch(`${base}${locale}/rss.xml`)).text();
@@ -30,6 +35,7 @@ test('production host serves replacements, redirects old manuals and returns 410
     assert.doesNotMatch(rss, /<item>/);
   }
   const sitemap = fs.readFileSync(new URL('dist/sitemap-0.xml', root), 'utf8');
+  assert.doesNotMatch(sitemap, /\/(pro|study|dev)(?:<|\/)/);
   assert.doesNotMatch(sitemap, /\/blog\/(pdf-to-follow-up|local-first|many-with-ollama)/);
 });
 

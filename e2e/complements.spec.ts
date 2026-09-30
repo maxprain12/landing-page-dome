@@ -16,7 +16,7 @@ for (const locale of ['', '/en']) {
     await cards.first().getByRole('link').click();
     await expect(page.locator('h1')).toHaveText('Dome CMS');
     await expect(page.locator('a[href="dome://complements/plugins/dome-cms"]')).toBeVisible();
-    await expect(page.locator('main a[href$="/download"]')).toBeVisible();
+    await expect(page.locator('main a[href$="/download"]').first()).toBeVisible();
     await expect(page.locator('main a[href$="/manual/cms"]')).toBeVisible();
   });
 

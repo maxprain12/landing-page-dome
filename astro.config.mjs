@@ -1,17 +1,29 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
-import react from '@astrojs/react';
-import mdx from '@astrojs/mdx';
-import { satteri } from '@astrojs/markdown-satteri';
-import { dropLeadingH1 } from './src/lib/mdast-drop-leading-h1.ts';
+import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+import react from "@astrojs/react";
+import mdx from "@astrojs/mdx";
+import { satteri } from "@astrojs/markdown-satteri";
+import { dropLeadingH1 } from "./src/lib/mdast-drop-leading-h1.ts";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://dome.dowi.es',
+  site: "https://dome.dowi.es",
+  redirects: Object.fromEntries(
+    ["", "/en"].flatMap((locale) =>
+      Object.entries({
+        pro: "library",
+        study: "learning",
+        dev: "integrations",
+      }).map(([from, to]) => [
+        `${locale}/${from}`,
+        { status: 301, destination: `${locale}/funciones/${to}` },
+      ]),
+    ),
+  ),
   i18n: {
-    defaultLocale: 'es',
-    locales: ['es', 'en'],
+    defaultLocale: "es",
+    locales: ["es", "en"],
     routing: {
       prefixDefaultLocale: false,
     },
@@ -20,27 +32,35 @@ export default defineConfig({
     react(),
     mdx(),
     sitemap({
-      changefreq: 'weekly',
+      changefreq: "weekly",
       priority: 0.7,
-      filter: (page) => !page.includes('/pricing'),
+      filter: (page) =>
+        !page.includes("/pricing") &&
+        !/\/(pro|study|dev)\/?$/.test(new URL(page).pathname),
       serialize(item) {
         // pathname: '/' (ES home) and '/en' (EN home) → priority 1
         // Previous check used .pop()==='' which never matched (host became last segment).
-        const pathname = new URL(item.url).pathname.replace(/\/$/, '') || '/';
-        if (pathname === '/' || pathname === '/en') {
+        const pathname = new URL(item.url).pathname.replace(/\/$/, "") || "/";
+        if (pathname === "/" || pathname === "/en") {
           item.priority = 1;
-        } else if (/\/(blog|manual)$/.test(pathname) || /\/en\/(blog|manual)$/.test(pathname)) {
+        } else if (
+          /\/(blog|manual)$/.test(pathname) ||
+          /\/en\/(blog|manual)$/.test(pathname)
+        ) {
           item.priority = 0.8;
-        } else if (pathname.includes('/blog/') || pathname.includes('/manual/')) {
+        } else if (
+          pathname.includes("/blog/") ||
+          pathname.includes("/manual/")
+        ) {
           item.priority = 0.6;
         }
         return item;
       },
       i18n: {
-        defaultLocale: 'es',
+        defaultLocale: "es",
         locales: {
-          es: 'es',
-          en: 'en',
+          es: "es",
+          en: "en",
         },
       },
     }),
@@ -52,10 +72,10 @@ export default defineConfig({
   },
   compressHTML: true,
   /** Acepta /terms y /terms/ (y privacy) en dev y evita 404; production sigue con _redirects en public */
-  trailingSlash: 'ignore',
+  trailingSlash: "ignore",
   build: {
-    inlineStylesheets: 'auto',
+    inlineStylesheets: "auto",
     // directorio/privacy/index.html → /privacy/ resuelve bien con try_files $uri/; /privacy.html ya no existe
-    format: 'directory',
+    format: "directory",
   },
 });

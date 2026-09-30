@@ -71,7 +71,7 @@ async function sendReleaseIndex(req, res) {
   if (!indexCache.body || now - indexCache.at > 60_000) {
     const upstream = new URL(INDEX_URL);
     upstream.searchParams.set('fresh', String(now));
-    const remote = await fetch(upstream, { headers: { 'cache-control': 'no-cache' } });
+    const remote = await fetch(upstream, { signal: AbortSignal.timeout(10_000), headers: { 'cache-control': 'no-cache' } });
     if (!remote.ok) throw new Error(`index ${remote.status}`);
     indexCache = { at: now, body: await remote.text() };
   }
