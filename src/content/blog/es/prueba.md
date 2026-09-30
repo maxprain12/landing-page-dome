@@ -4,7 +4,7 @@ collection: blog
 language: es
 date: 2026-09-29
 description: prueba de entrada
-slug: prueba
+slug: test
 ---
 
 dfsdfsdfsdfsdfsdf
