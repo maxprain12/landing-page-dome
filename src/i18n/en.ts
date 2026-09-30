@@ -8,7 +8,6 @@ export const en: Dictionary = {
   },
   nav: {
     how: "How it works",
-    editions: "Editions",
     trust: "Trust",
     faq: "FAQ",
     download: "Download",
@@ -27,16 +26,11 @@ export const en: Dictionary = {
     blog: "Blog",
     manuals: "Manuals",
     productCol: "Use Dome",
-    editionsCol: "Editions",
     learnCol: "Learn",
     projectCol: "Project",
     howHint: "Library, people, and Many",
-    editionsHint: "Pro, Study, and Dev in one app",
     trustHint: "Where your context lives",
     localFirstHint: "Storage and permissions",
-    proHint: "Documents, people, and actions",
-    studyHint: "Learn from your library",
-    devHint: "Documents, GitHub, and agents",
     blogHint: "Concrete notes, local-first",
     manualsHint: "Install and first workflow",
     faqHint: "Frequently asked questions",
@@ -150,7 +144,7 @@ export const en: Dictionary = {
       },
       {
         id: "study",
-        title: "Study",
+        title: "Learning",
         text: "Turn your sources into flashcards, quizzes, and spaced repetition without leaving the library.",
         prompt: "Generate flashcards from Learning principles.",
       },
@@ -173,37 +167,6 @@ export const en: Dictionary = {
         prompt: "Research the sources and leave the brief ready.",
       },
     ],
-  },
-  pro: {
-    eyebrow: "Primary edition",
-    h2: "Your library and your relationships, in the same context.",
-    body: "Pro is for consultants, freelancers, small studios, and service creators. Keep each person’s history next to the material that gives the conversation meaning.",
-    examples: [
-      "From a client proposal to a follow-up email.",
-      "From a saved article to a post written for one relationship.",
-      "From a meeting note to a next step that stays on the record.",
-    ],
-    cta: "Explore Pro",
-  },
-  editions: {
-    h2: "One app. Three ways to work.",
-    intro: "Choose a focus when you open Dome, then change it later without deleting your library.",
-    note: "Pro leads this page. Study and Dev are entry paths for other work, not separate paid plans.",
-    proCta: "Explore Pro and work with your library and relationships in the same thread.",
-    study: {
-      name: "Study",
-      title: "Learn from your library.",
-      text: "Turn your sources into flashcards, quizzes, and guides. Spaced repetition brings back what you need today, without leaving Dome or losing the thread of what you already read.",
-      cta: "Open Study and turn your library into a daily study rhythm.",
-      href: "/study",
-    },
-    dev: {
-      name: "Dev",
-      title: "Build with your documents and your repo.",
-      text: "Connect GitHub, agents, and automations. Go from issue to change with the context of your documents, and keep the history next to the code you touch.",
-      cta: "Open Dev and go from issue to change with the context of your documents.",
-      href: "/dev",
-    },
   },
   capabilities: {
     h2: "The context stays with you.",
@@ -339,8 +302,8 @@ export const en: Dictionary = {
             a: "You can configure the compatible providers exposed by the published version of Dome.",
           },
           {
-            q: "What is the difference between Pro, Study, and Dev?",
-            a: "They are editions of the same app: Pro connects documents and people; Study prioritizes learning; Dev prioritizes GitHub and agents.",
+            q: "Can I use Dome for work and learning?",
+            a: "Yes. The library, Many, learning and integrations are part of the same application. Explore Features to see each workflow.",
           },
         ],
       },
@@ -375,12 +338,10 @@ export const en: Dictionary = {
   footer: {
     tag: "Local-first workspace for documents, people, and AI actions. Commercial use requires written permission.",
     product: "Product",
-    editionsCol: "Editions",
     resources: "Resources",
     project: "Project",
     legal: "Legal",
     how: "How it works",
-    editions: "Editions",
     trust: "Trust",
     faq: "FAQ",
     download: "Download",
@@ -393,9 +354,6 @@ export const en: Dictionary = {
     terms: "Terms",
     manual: "Manual",
     localFirst: "Local-first",
-    pro: "Pro",
-    study: "Study",
-    dev: "Dev",
     blog: "Blog",
     pricing: "Pricing",
     rss: "RSS",
@@ -416,70 +374,6 @@ export const en: Dictionary = {
       "Terms for using Dome, the repository license, and optional third-party services.",
   },
   pages: {
-    pro: {
-      title: "Dome Pro — Documents, people, and actions",
-      description:
-        "Dome’s primary edition connects your local library with the people you need to follow up with.",
-      eyebrow: "Primary edition",
-      h1: "Document, person, action.",
-      lead: "Pro is for consultants, freelancers, small studios, and service creators. Many uses the open resource and the related person to prepare the next step.",
-      sections: [
-        {
-          h2: "The same context, not another inbox.",
-          text: "Open a PDF, note, or URL and the related person stays in view. History and the next step live next to the material that gives the conversation meaning.",
-        },
-        {
-          h2: "Many prepares. You approve.",
-          text: "A brief, email, or post comes from the open context. Sending or publishing waits for your go-ahead.",
-        },
-        {
-          h2: "An edition, not a paid plan.",
-          text: "Pro is a focus when you open Dome. You can switch to Study or Dev later without deleting the library.",
-        },
-      ],
-      primary: "Download Dome",
-      secondary: "See how it works",
-    },
-    study: {
-      title: "Dome Study — Learn from your library",
-      description:
-        "Study turns the sources you already have into flashcards, quizzes, and guides with spaced repetition.",
-      eyebrow: "Secondary edition",
-      h1: "Learn from the library you already have.",
-      lead: "Study is a way of working inside the same app. It does not replace the documents-and-people workflow.",
-      sections: [
-        {
-          h2: "From source to review.",
-          text: "Turn notes, PDFs, and pages into flashcards, quizzes, and guides. Spaced repetition uses material you already imported.",
-        },
-        {
-          h2: "Same library.",
-          text: "Switch editions in Settings. Your resources stay on disk.",
-        },
-      ],
-      primary: "Download Dome",
-      secondary: "Back to Pro",
-    },
-    dev: {
-      title: "Dome Dev — Documents, GitHub, and agents",
-      description:
-        "Dev connects your local library with GitHub, agents, and automations when you go from issue to change.",
-      eyebrow: "Secondary edition",
-      h1: "Build with your documents and your repo.",
-      lead: "Dev is an entry path for builders. The home page still sells the Pro loop: document, person, action.",
-      sections: [
-        {
-          h2: "From issue to change.",
-          text: "Connect GitHub and let Many work with the open resource and repository context.",
-        },
-        {
-          h2: "Agents when you need them.",
-          text: "Automations and agents live here as a focus, not as Dome’s primary message.",
-        },
-      ],
-      primary: "Download Dome",
-      secondary: "Back to Pro",
-    },
     localFirst: {
       title: "Dome local-first — Where your context lives",
       description:
@@ -509,23 +403,21 @@ export const en: Dictionary = {
       secondary: "Read the privacy policy",
     },
     manual: {
-      title: "Dome manuals — Install, library, contacts, and approval",
-      description:
-        "Guides to install Dome, organize the local library, manage contacts, and approve email or social actions.",
+      title: "Dome manuals — Features, add-ons and devices",
+      description: "Verified guides to install Dome, work with Many, manage add-ons and connect your browser and phone.",
       eyebrow: "Manuals",
-      h1: "Manuals",
-      lead: "The primary product is a desktop app. Start locally, without a cloud account, and follow each guide with captures from Dome itself.",
+      h1: "Dome manuals",
+      lead: "Start with a project, then choose the feature you need. Each guide includes requirements, steps and error recovery.",
       sections: [],
       primary: "Download Dome",
       secondary: "Read the blog",
     },
     blog: {
-      title: "Dome blog — Local-first, documents, and Many",
-      description:
-        "Concrete notes on where your data lives, how to go from a PDF to a follow-up, and how to use Many with Ollama.",
+      title: "Dome blog",
+      description: "Future posts about Dome, its features and its add-on ecosystem.",
       eyebrow: "Blog",
       h1: "Blog",
-      lead: "No empty slogans: where context is stored, when it leaves your disk, and how Many prepares the next step.",
+      lead: "We will publish news and examples of working with Dome here. Meanwhile, explore the features and manuals.",
       sections: [],
       primary: "Download Dome",
       secondary: "Open the manuals",
@@ -629,7 +521,7 @@ export const en: Dictionary = {
       description: "Control your Mac's Many from your iPhone: ask your library, open what it cites and approve actions. End-to-end encrypted, your documents never upload.",
       eyebrow: "Dome Companion · iPhone",
       h1: "Your Mac's Many, on your iPhone",
-      lead: "Ask about the PDF you imported this morning or approve the draft Many left ready. Companion sends the request to your Mac; your documents stay there.",
+      lead: "Ask about the PDF you imported this morning or approve the draft Many left ready. Companion sends the request to your Mac; your library remains local and the references you open travel through the encrypted tunnel.",
       stores: {
         appStore: "Download on the App Store",
         testFlight: "Try the TestFlight beta",
@@ -717,11 +609,11 @@ export const en: Dictionary = {
       features: [
         {
           title: "Save the page",
-          text: "Captures the link with its title and a summary from Many into the project you pick.",
+          text: "Capture the link in your chosen project and ask Many for a summary when you need one.",
         },
         {
           title: "Notes with quotes",
-          text: "Select text and add it to a note with the quote and source, in the same editor you use in Dome.",
+          text: "Select text and add it to a note with its quote and source. Edit Markdown and recover drafts within the panel.",
         },
         {
           title: "Contacts from profiles",
@@ -744,7 +636,7 @@ export const en: Dictionary = {
         },
       ],
       privacyTitle: "It only talks to your computer",
-      privacyText: "The extension doesn't read the page until you click its icon or the context menu. It sends what you capture to Dome on your own computer (127.0.0.1) with a paired token; no Dome server receives it.",
+      privacyText: "The panel connects to Dome on your computer using a paired token. Many actions on the page require review; your configured AI provider may receive the context needed to respond.",
       requirementsTitle: "What you need",
       requirements: [
         "A recent version of Chrome, Edge or Safari.",

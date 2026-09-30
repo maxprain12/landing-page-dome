@@ -1,46 +1,34 @@
 ---
-title: Organizar tu biblioteca y dejar recursos listos para Many
-collection: manual
-language: es
-date: 2026-09-18
-description: Importa PDFs, notas y URLs a la biblioteca local, espera el badge
-  Listo para IA y deja que Many cite las fuentes.
-cover: /dome-recursos-landing/dome-library-composition-light-es-primary-landscape.png
-tags:
-  - biblioteca
-  - many
-  - indexación
+title: "Biblioteca y búsqueda"
+date: 2026-09-30
+description: "Organiza recursos por proyecto y encuentra información con contexto."
 slug: library
+tags:
+  - Guías
 ---
 
-La biblioteca es el almacén local de notas, PDFs, vídeo, audio y URLs. Many no inventa fuentes: trabaja sobre lo que importaste e indexaste.
+Organiza recursos por proyecto y encuentra información con contexto.
 
-1. **Importar.** Arrastra un archivo, usa el botón + o el comando rápido para añadir un recurso.
-2. **Esperar el índice.** El badge Listo para IA aparece cuando Many puede trabajar sobre el texto.
-3. **Preguntar con el recurso abierto.** Many busca y cita a partir de lo que ya está en tu disco.
+## Requisitos
 
-### De archivo a Listo para IA
+- Un proyecto y archivos o notas.
+- Proveedor de embeddings configurado para búsqueda semántica.
 
-## Cómo entra un recurso
+## Pasos
 
-Puedes arrastrar un archivo, usar el botón **+** o el paleta de comandos. El material queda en el almacenamiento de la aplicación, no en un drive de Dome por defecto. Organiza por proyectos si te ayuda; el índice sigue siendo local.
+1. Selecciona el proyecto y la carpeta de destino en la barra lateral.
+2. Importa tus archivos o crea una nota. Abre el recurso para revisar su contenido.
+3. Organiza los recursos en carpetas y usa nombres que puedas reconocer.
+4. Busca por texto; para consultas semánticas configura la búsqueda documental en Ajustes → IA y comprueba la indexación en Ajustes.
 
-![Detalle de un recurso de la biblioteca con metadatos visibles.](/dome-recursos-landing/dome-library-detail-light-es-primary-landscape.png)
+## Resultado esperado
 
-*Un PDF en la biblioteca local, listo para búsqueda y para Many.*
+Los archivos conservan su formato y las notas se guardan como Markdown en la bóveda del proyecto.
 
-## Listo para IA
+## Si algo falla
 
-El badge **Listo para IA** indica que el recurso se indexó lo bastante para que Many lo recupere. El texto extraíble de un PDF o una nota suele indexarse en local. PDFs escaneados e imágenes pueden requerir un modelo de visión del proveedor que hayas configurado.
+Si un recurso no aparece en una respuesta de Many, comprueba el proyecto, la extracción de texto y el estado de indexación. Una imagen sin texto extraído no equivale a un documento indexado.
 
-> **No prometas indexación milagrosa.** Si el archivo no tiene texto, Many no podrá citarlo hasta que haya una transcripción o una pasada de visión. Eso no convierte Dome en local-only.
+## Relacionado
 
-## Preguntar con el recurso abierto
-
-Abre el archivo y pregunta. Many puede buscar en la biblioteca (`resource_search` y búsquedas híbridas en el producto) y devolver un brief con citas. El siguiente paso natural es relacionar ese recurso con una [persona](/manual/contacts) o pedir un [correo con aprobación](/manual/email-and-social).
-
-
-
-prueba de publicacion alder
-
-
+[Funciones de Dome](/funciones) · [Catálogo de complementos](/complementos)

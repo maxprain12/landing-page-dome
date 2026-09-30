@@ -1,4 +1,6 @@
 ---
+import ProductConnection from "./ProductConnection.astro";
+import { BookOpen, MessageCircle, CheckCheck, FileText, Globe, Quote, UserRound } from "@lucide/astro";
 import Nav from "./Nav.astro";
 import Footer from "./Footer.astro";
 import { downloadUrl } from "../data/landing";
@@ -11,16 +13,19 @@ interface Props {
   page: ProductPageCopy;
   stores: StoreLink[];
   shot?: string | null;
+  manualSlug?: string;
 }
 
 const { locale, page, stores, shot = null } = Astro.props;
 const live = liveStores(stores);
+const product = Astro.props.manualSlug === "companion" ? "companion" : "extension";
+const featureIcons = product === "companion" ? [MessageCircle, CheckCheck, FileText] : [Globe, Quote, UserRound];
 const contactHref = localizePath("/contact", locale);
 ---
 
 <Nav locale={locale} />
 <main class="pp" id="main-content">
-  <section class="wrap pp-hero">
+  <section class="wrap pp-hero-layout"><div class="pp-hero">
     <p class="eyebrow">{page.eyebrow}</p>
     <h1 class="h-display pp-h1">{page.h1}</h1>
     <p class="pp-lead">{page.lead}</p>
@@ -40,8 +45,9 @@ const contactHref = localizePath("/contact", locale);
         )
       }
       <a class="btn btn-text" href={downloadUrl(locale)}>{page.desktop}</a>
+      {Astro.props.manualSlug && <a class="btn btn-ghost" href={localizePath(`/manual/${Astro.props.manualSlug}`, locale)}>{locale === "es" ? "Leer el manual" : "Read the manual"}</a>}
     </div>
-  </section>
+  </div><ProductConnection locale={locale} product={product} /></section>
 
   {
     shot ? (
@@ -55,12 +61,14 @@ const contactHref = localizePath("/contact", locale);
     <h2 id="pp-features" class="pp-h2">{page.featuresTitle}</h2>
     <ul class="pp-grid" role="list">
       {
-        page.features.map((item) => (
-          <li class="pp-card">
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
+        page.features.map((item, index) => { const Icon = featureIcons[index] ?? BookOpen; return (
+          <li class="pp-feature">
+            <span class="pp-feature-num" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <Icon size={30} />
+            <div><h3>{item.title}</h3>
+            <p>{item.text}</p></div>
           </li>
-        ))
+        ); })
       }
     </ul>
   </section>
@@ -83,11 +91,11 @@ const contactHref = localizePath("/contact", locale);
   </section>
 
   <section class="wrap pp-section pp-split">
-    <div class="pp-panel">
+    <div class="pp-context">
       <h2 class="pp-h2">{page.privacyTitle}</h2>
       <p>{page.privacyText}</p>
     </div>
-    <div class="pp-panel">
+    <div class="pp-context">
       <h2 class="pp-h2">{page.requirementsTitle}</h2>
       <ul class="pp-reqs" role="list">
         {page.requirements.map((req) => <li>{req}</li>)}
@@ -176,28 +184,24 @@ const contactHref = localizePath("/contact", locale);
     letter-spacing: -0.03em;
     margin: 0 0 1.2rem;
   }
-  .pp-grid {
-    list-style: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem;
-  }
-  .pp-card,
-  .pp-panel {
-    padding: 1.4rem;
-    border: 1px solid var(--color-border);
-    border-radius: 20px;
-    background: var(--color-zinc-800);
-  }
-  .pp-card h3,
+  .pp-grid { list-style: none; border-top: 1px solid var(--color-border); }
+  .pp-feature { display: grid; grid-template-columns: 4rem 4rem minmax(0, 1fr); align-items: center; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--color-border); }
+  .pp-feature-num { font-family: var(--font-mono); font-size: .8rem; color: var(--color-text-secondary); }
+  .pp-feature > svg { color: var(--color-many-body); }
+  .pp-feature > div { display: grid; grid-template-columns: minmax(180px, .7fr) minmax(0, 1fr); gap: 2rem; }
+
+  .pp-context { padding: 1.7rem 0; border-top: 1px solid var(--color-border); }
+  .pp-hero-layout { max-width: 1120px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: clamp(2rem, 5vw, 5rem); margin-inline: auto; }
+  .pp-hero { margin: 0; max-width: none; }
+  .pp-feature h3,
   .pp-steps h3 {
-    font-size: 1.02rem;
+    font-size: 1.15rem;
     letter-spacing: -0.02em;
     margin: 0 0 0.45rem;
   }
-  .pp-card p,
+  .pp-feature p,
   .pp-steps p,
-  .pp-panel p,
+  .pp-context p,
   .pp-faq p {
     color: var(--color-text-secondary);
     line-height: 1.6;
@@ -207,9 +211,11 @@ const contactHref = localizePath("/contact", locale);
     list-style: none;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    gap: 1rem;
+    gap: 2rem;
   }
   .pp-steps li {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.4rem;
     display: flex;
     gap: 0.9rem;
     align-items: flex-start;
@@ -277,4 +283,6 @@ const contactHref = localizePath("/contact", locale);
     font-size: clamp(1.8rem, 3.6vw, 2.5rem);
     margin: 0 0 0.8rem;
   }
+  @media (max-width: 850px) { .pp-hero-layout { grid-template-columns: minmax(0, 1fr); } .pp-feature > div { grid-template-columns: minmax(0, 1fr); gap: .4rem; } .pp-feature { grid-template-columns: 2rem 2rem minmax(0, 1fr); gap: 1rem; } }
+  @media (max-width: 500px) { .pp-feature-num { display: none; } .pp-feature { grid-template-columns: 2rem minmax(0, 1fr); align-items: start; } .pp-steps { grid-template-columns: minmax(0, 1fr); } }
 </style>

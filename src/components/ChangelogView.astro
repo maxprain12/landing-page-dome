@@ -1,105 +1,27 @@
 ---
-import Nav from "./Nav.astro";
-import Footer from "./Footer.astro";
-import { changelogUrl } from "../data/landing";
-import { localizePath, t, type Locale } from "../i18n";
-import { getReleaseIndex } from "../lib/releases";
-import { releasesSignature } from "../lib/release-signature";
-import { renderSafeMarkdown } from "../lib/safe-markdown";
-
-interface Props {
-  locale: Locale;
-}
-
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import ReleaseStatus from './ReleaseStatus.astro';
+import { changelogUrl } from '../data/landing';
+import { localizePath, t, type Locale } from '../i18n';
+interface Props { locale: Locale; }
 const { locale } = Astro.props;
-const copy = t(locale);
-const page = copy.pages.changelog;
-const contactHref = localizePath("/contact", locale);
-const index = await getReleaseIndex();
-const releases = await Promise.all(
-  index.releases.map(async (entry) => ({
-    ...entry,
-    notesHtml: await renderSafeMarkdown(entry.notesMarkdown),
-    dateLabel: new Date(entry.date).toLocaleDateString(locale === "es" ? "es-ES" : "en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    }),
-  })),
-);
-const rssHref = localizePath("/changelog.xml", locale);
+const page = t(locale).pages.changelog;
 ---
-
-<Nav locale={locale} esHref={changelogUrl("es")} enHref={changelogUrl("en")} />
-<main id="main-content" class="cl">
-  <div class="wrap cl-hero">
-    <p class="eyebrow">{page.eyebrow}</p>
-    <h1 class="h-display cl-h1">{page.h1}</h1>
-    <p class="cl-lead">{page.lead}</p>
-    {
-      releases.length ? (
-        <p class="cl-rss">
-          <a href={rssHref}>{page.rssLabel}</a>
-        </p>
-      ) : null
-    }
-  </div>
-
-  {
-    releases.length ? (
-      <div
-        class="wrap cl-list"
-        data-live-changelog
-        data-signature={releasesSignature(index.releases)}
-        data-label-latest={page.channelLatest}
-        data-label-beta={page.channelBeta}
-      >
-        {releases.map((entry) => (
-          <article class="cl-item" id={`v${entry.version}`}>
-            <time class="cl-date" datetime={entry.date}>{entry.dateLabel}</time>
-            <div>
-            <header class="cl-head">
-              <h2>
-                <img src="/assets/many.png" alt="" width="32" height="32" />
-                {entry.version}
-              </h2>
-            </header>
-            <div class="cl-badges">
-              {entry.channels.map((channel) => (
-                <span class:list={["cl-badge", channel === "beta" && "is-beta"]}>
-                  {channel === "latest"
-                    ? page.channelLatest
-                    : channel === "beta"
-                      ? page.channelBeta
-                      : channel}
-                </span>
-              ))}
-            </div>
-            {entry.notesHtml ? (
-              <div class="cl-notes prose" set:html={entry.notesHtml} />
-            ) : null}
-            </div>
-          </article>
-        ))}
-      </div>
-    ) : (
-      <section class="wrap cl-empty" aria-live="polite">
-        <p>{page.empty}</p>
-        <a class="btn btn-primary" href={contactHref}>
-          {page.emptyContact}
-        </a>
-      </section>
-    )
-  }
+<Nav locale={locale} esHref={changelogUrl('es')} enHref={changelogUrl('en')} />
+<main id="main-content" class="cl" data-live-releases aria-busy="true">
+  <div class="wrap cl-hero"><p class="eyebrow">{page.eyebrow}</p><h1 class="h-display cl-h1">{page.h1}</h1><p class="cl-lead">{page.lead}</p><p class="cl-rss"><a href={localizePath('/changelog.xml', locale)}>{page.rssLabel}</a></p></div>
+  <ReleaseStatus locale={locale} kind="changelog" />
+  <div class="wrap cl-list" data-live-changelog data-label-latest={page.channelLatest} data-label-beta={page.channelBeta} data-release-ready hidden></div>
+  <p class="wrap cl-empty" data-changelog-empty hidden>{page.empty}</p>
 </main>
 <Footer locale={locale} />
-
 <script>
-  import { startLiveReleases } from "../scripts/live-releases";
-  startLiveReleases().catch(() => undefined);
+  import { startLiveReleases } from '../scripts/live-releases';
+  void startLiveReleases();
 </script>
-
 <style>
+  [hidden] { display: none !important; }
   .cl {
     padding: clamp(2.6rem, 6vw, 4.8rem) 0 4.4rem;
   }

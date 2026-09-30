@@ -1,0 +1,10 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ComplementsPage from "../../components/ComplementsPage.astro";
+import data from "../../data/complements-catalog.json";
+export function getStaticPaths() { return data.items.map((item) => ({ params: { slug: item.slug }, props: { item } })); }
+const { item } = Astro.props;
+const locale = "es" as const;
+const copy = item.locales[locale];
+---
+<Layout locale={locale} title={`${item.name} · Dome`} description={copy.description} canonicalPath={`/complementos/${item.slug}`}><ComplementsPage locale={locale} slug={item.slug} /></Layout>

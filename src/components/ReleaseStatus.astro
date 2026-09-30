@@ -1,0 +1,30 @@
+---
+import type { Locale } from '../i18n';
+interface Props { locale: Locale; kind: 'download' | 'changelog'; }
+const { locale, kind } = Astro.props;
+const es = locale === 'es';
+const loading = es ? 'Cargando información de dl.dowi.es…' : 'Loading information from dl.dowi.es…';
+const error = es ? 'No se pudo obtener la información de versiones. Vuelve a intentarlo.' : 'Release information could not be loaded. Please try again.';
+---
+<div class:list={['release-status', kind]} data-release-status>
+  <p role="status" data-release-message data-loading={loading} data-error={error}>{loading}</p>
+  <div class="release-skeleton" aria-hidden="true" data-release-skeleton><span></span><span></span><span></span><span></span></div>
+  <button type="button" class="btn btn-ghost" data-release-retry hidden>{es ? 'Reintentar' : 'Retry'}</button>
+  <noscript><p>{es ? 'Activa JavaScript para consultar las versiones actuales o visita' : 'Enable JavaScript to load current releases or visit'} <a href="https://dl.dowi.es/index.json">dl.dowi.es</a>.</p></noscript>
+</div>
+<style>
+  .release-status { max-width: 44rem; margin: 1.5rem auto; padding: 0 1.5rem; }
+  .release-status.download { max-width: 36rem; }
+  .release-status p { color: var(--color-text-secondary); font-size: .9rem; line-height: 1.6; }
+  .release-skeleton { display: grid; gap: 1rem; margin-top: 1.5rem; min-height: 240px; align-content: start; }
+  .release-skeleton span { display: block; height: 1rem; background: var(--color-surface); border-radius: 6px; animation: release-pulse 1.5s ease-in-out infinite alternate; }
+  .release-skeleton span:nth-child(1) { width: 35%; height: 2.1rem; }
+  .release-skeleton span:nth-child(2) { width: 80%; }
+  .release-skeleton span:nth-child(3) { width: 65%; }
+  .release-skeleton span:nth-child(4) { width: 50%; height: 3rem; margin-top: .7rem; }
+  [hidden] { display: none !important; }
+  .release-status button { margin-top: 1rem; cursor: pointer; }
+  .release-status a { text-decoration: underline; }
+  @keyframes release-pulse { to { opacity: .4; } }
+  @media (prefers-reduced-motion: reduce) { .release-skeleton span { animation: none; } }
+</style>

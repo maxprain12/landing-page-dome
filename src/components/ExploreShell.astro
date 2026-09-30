@@ -1,0 +1,44 @@
+---
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import { localizePath, type Locale } from '../i18n';
+interface Props { locale: Locale; title: string; description: string; }
+const { locale, title, description } = Astro.props;
+---
+<Nav locale={locale} />
+<main id="main-content" class="explore wrap">
+  <header class="explore-head">
+    <h1 class="h-display">{title}</h1>
+    <p>{description}</p>
+    <a class="btn btn-ghost" href={localizePath('/download', locale)}>{locale === 'es' ? 'Descargar Dome' : 'Download Dome'}</a>
+  </header>
+  <slot />
+</main>
+<Footer locale={locale} />
+<style is:global>
+  .explore { padding-block: clamp(2.5rem, 6vw, 5rem); max-width: 1120px; }
+  .explore-head { max-width: 780px; margin-bottom: 3rem; }
+  .explore-head h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.08; margin-bottom: 1rem; }
+  .explore-head p { color: var(--color-text-secondary); font-size: 1.15rem; line-height: 1.65; margin-bottom: 1.5rem; }
+  .explore .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .explore-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .explore-card { border: 1px solid var(--color-border); border-radius: 18px; padding: 1.5rem; background: var(--color-surface); min-width: 0; }
+  .explore-card[hidden] { display: none; }
+  .explore-card.is-featured { grid-column: 1 / -1; border-color: var(--color-accent); }
+  .explore-card h2 { font-size: 1.5rem; margin-block: .6rem; letter-spacing: -.03em; }
+  .explore-card p { color: var(--color-text-secondary); line-height: 1.65; margin-bottom: 1.2rem; }
+  .explore-meta { color: var(--color-text-secondary); font-size: .9rem; }
+  .explore-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-block: 1rem; }
+  .explore-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, .45fr); gap: 3rem; }
+  .explore-body section { margin-bottom: 2rem; }
+  .explore-body h2 { margin-bottom: .8rem; font-size: 1.5rem; }
+  .explore-body p, .explore-body li { line-height: 1.75; color: var(--color-text-secondary); }
+  .explore-body ul, .explore-body ol { padding-left: 1.4rem; }
+  .explore-body li { margin-bottom: .65rem; }
+  .explore-tools { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+  .explore-tools label { display: flex; flex-direction: column; gap: .4rem; flex: 1; min-width: min(240px, 100%); }
+  .explore-tools input, .explore-tools select { border: 1px solid var(--color-border); border-radius: 12px; padding: .8rem; font: inherit; background: var(--color-bg); color: var(--color-text); }
+  .explore-shot { display: block; width: 100%; height: auto; border-radius: 18px; margin-bottom: 2rem; }
+  .explore a:focus-visible, .explore input:focus-visible, .explore select:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+  @media (max-width: 700px) { .explore-grid, .explore-body { grid-template-columns: minmax(0, 1fr); } .explore-body { gap: 1rem; } }
+</style>

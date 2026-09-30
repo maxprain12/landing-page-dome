@@ -42,14 +42,6 @@ export interface ProofTab {
   caption: string;
 }
 
-export interface EditionCard {
-  name: string;
-  title: string;
-  text: string;
-  cta: string;
-  href: string;
-}
-
 export interface Dictionary {
   seo: {
     title: string;
@@ -57,7 +49,6 @@ export interface Dictionary {
   };
   nav: {
     how: string;
-    editions: string;
     trust: string;
     faq: string;
     download: string;
@@ -76,16 +67,11 @@ export interface Dictionary {
     blog: string;
     manuals: string;
     productCol: string;
-    editionsCol: string;
     learnCol: string;
     projectCol: string;
     howHint: string;
-    editionsHint: string;
     trustHint: string;
     localFirstHint: string;
-    proHint: string;
-    studyHint: string;
-    devHint: string;
     blogHint: string;
     manualsHint: string;
     faqHint: string;
@@ -183,21 +169,6 @@ export interface Dictionary {
     cta: string;
     features: HowFeature[];
   };
-  pro: {
-    eyebrow: string;
-    h2: string;
-    body: string;
-    examples: string[];
-    cta: string;
-  };
-  editions: {
-    h2: string;
-    intro: string;
-    note: string;
-    proCta: string;
-    study: EditionCard;
-    dev: EditionCard;
-  };
   capabilities: {
     h2: string;
     items: CapabilityItem[];
@@ -247,12 +218,10 @@ export interface Dictionary {
   footer: {
     tag: string;
     product: string;
-    editionsCol: string;
     resources: string;
     project: string;
     legal: string;
     how: string;
-    editions: string;
     trust: string;
     faq: string;
     download: string;
@@ -265,9 +234,6 @@ export interface Dictionary {
     terms: string;
     manual: string;
     localFirst: string;
-    pro: string;
-    study: string;
-    dev: string;
     blog: string;
     pricing: string;
     rss: string;
@@ -286,9 +252,6 @@ export interface Dictionary {
     termsDescription: string;
   };
   pages: {
-    pro: SubpageCopy;
-    study: SubpageCopy;
-    dev: SubpageCopy;
     localFirst: SubpageCopy;
     manual: SubpageCopy;
     blog: SubpageCopy;

@@ -1,0 +1,10 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import FeaturesPage from "../../../components/FeaturesPage.astro";
+import data from "../../../data/features.json";
+export function getStaticPaths() { return data.map((item) => ({ params: { slug: item.slug }, props: { item } })); }
+const { item } = Astro.props;
+const locale = "en" as const;
+const copy = item.locales[locale];
+---
+<Layout locale={locale} title={`${copy.title} · Dome`} description={copy.description} canonicalPath={`/funciones/${item.slug}`}><FeaturesPage locale={locale} slug={item.slug} /></Layout>

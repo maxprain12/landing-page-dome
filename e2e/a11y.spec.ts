@@ -26,7 +26,7 @@ test('legal pages have no critical axe violations', async ({ page }) => {
 });
 
 test('blog, manuals, contact and pricing have no critical axe violations', async ({ page }) => {
-  for (const route of ['/blog', '/manual', '/contact', '/pricing', '/blog/local-first', '/manual/first-workflow']) {
+  for (const route of ['/blog', '/manual', '/contact', '/pricing', '/manual/getting-started', '/complementos', '/complementos/dome-cms', '/funciones', '/funciones/many']) {
     await page.goto(route);
     await expectNoCriticalAxe(page);
   }

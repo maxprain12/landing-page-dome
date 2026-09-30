@@ -6,7 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-const EDITIONS = ["pro", "study", "dev"] as const;
+const FEATURES = ["library", "learning", "integrations"] as const;
 const MOBILE_MQ = "(max-width: 860px)";
 
 let disposeHero: (() => void) | null = null;
@@ -38,19 +38,19 @@ function initHeroStory(reduce: boolean): void {
     ScrollTrigger.getById("hero-story")?.kill();
   };
 
-  const tabs = Array.from(pin.querySelectorAll<HTMLButtonElement>("[data-edition-tab]"));
-  const items = Array.from(pin.querySelectorAll<HTMLElement>("[data-edition]"));
+  const tabs = Array.from(pin.querySelectorAll<HTMLButtonElement>("[data-feature-tab]"));
+  const items = Array.from(pin.querySelectorAll<HTMLElement>("[data-feature]"));
   const photos = Array.from(pin.querySelectorAll<HTMLElement>("[data-story-photo]"));
 
-  const applyEdition = (id: string) => {
-    root.dataset.edition = id;
+  const applyFeature = (id: string) => {
+    root.dataset.feature = id;
     items.forEach((item) => {
-      const open = item.dataset.edition === id;
+      const open = item.dataset.feature === id;
       item.toggleAttribute("data-active", open);
-      const tab = item.querySelector<HTMLButtonElement>("[data-edition-tab]");
+      const tab = item.querySelector<HTMLButtonElement>("[data-feature-tab]");
       if (tab) tab.setAttribute("aria-expanded", String(open));
     });
-    const tab = tabs.find((btn) => btn.dataset.editionTab === id);
+    const tab = tabs.find((btn) => btn.dataset.featureTab === id);
     if (shell && tab?.dataset.view) shell.dataset.view = tab.dataset.view;
     photos.forEach((photo) => {
       photo.toggleAttribute("data-on", photo.dataset.storyPhoto === id);
@@ -64,7 +64,7 @@ function initHeroStory(reduce: boolean): void {
     photos.forEach((photo) => photo.removeAttribute("data-on"));
   };
 
-  const applyPhase = (phase: "peek" | "full" | "editions") => {
+  const applyPhase = (phase: "peek" | "full" | "features") => {
     if (root.dataset.phase === phase) return;
     root.dataset.phase = phase;
   };
@@ -77,18 +77,18 @@ function initHeroStory(reduce: boolean): void {
     document.documentElement.classList.remove("hero-pin");
     root.style.setProperty("--reveal", "0");
     pin.style.removeProperty("padding-top");
-    applyPhase("editions");
-    applyEdition("pro");
+    applyPhase("features");
+    applyFeature("library");
     root.style.setProperty("--split", "1");
     root.style.setProperty("--rail-fill", "1");
     tabs.forEach((tab) => {
       tab.addEventListener(
         "click",
         () => {
-          const id = tab.dataset.editionTab;
+          const id = tab.dataset.featureTab;
           if (id) {
             root.style.setProperty("--rail-fill", "1");
-            applyEdition(id);
+            applyFeature(id);
           }
         },
         { signal: ac.signal },
@@ -117,7 +117,7 @@ function initHeroStory(reduce: boolean): void {
     },
     { signal: ac.signal },
   );
-  let lastEdition = "";
+  let lastFeature = "";
   let lastFill = -1;
 
   const storyTrigger = ScrollTrigger.create({
@@ -145,23 +145,23 @@ function initHeroStory(reduce: boolean): void {
 
       if (p < 0.3) applyPhase("peek");
       else if (p < 0.42) applyPhase("full");
-      else applyPhase("editions");
+      else applyPhase("features");
 
       if (p >= 0.48) {
         const scaled = clamp01((p - 0.48) / 0.52) * 3;
         const slice = Math.min(2, Math.floor(scaled));
-        const next = EDITIONS[slice] ?? "pro";
+        const next = FEATURES[slice] ?? "library";
         const fill = Math.max(0.12, scaled - slice);
         if (Math.abs(fill - lastFill) > 0.0008) {
           lastFill = fill;
           root.style.setProperty("--rail-fill", fill.toFixed(4));
         }
-        if (lastEdition !== next) {
-          lastEdition = next;
-          applyEdition(next);
+        if (lastFeature !== next) {
+          lastFeature = next;
+          applyFeature(next);
         }
-      } else if (lastEdition !== "") {
-        lastEdition = "";
+      } else if (lastFeature !== "") {
+        lastFeature = "";
         lastFill = 0;
         root.style.setProperty("--rail-fill", "0");
         applyPillarShell();
@@ -183,7 +183,7 @@ function initHeroStory(reduce: boolean): void {
     tab.addEventListener(
       "click",
       () => {
-        const id = tab.dataset.editionTab;
+        const id = tab.dataset.featureTab;
         if (!id) return;
         scrollToProgress(0.5 + ((index + 0.28) / 3) * 0.5);
       },
@@ -191,26 +191,26 @@ function initHeroStory(reduce: boolean): void {
     );
   });
 
-  const jumpToEditions = (event?: Event) => {
+  const jumpToFeatures = (event?: Event) => {
     event?.preventDefault();
     scrollToProgress(0.52);
   };
 
-  document.querySelectorAll<HTMLAnchorElement>('a[href*="#ediciones"]').forEach((link) => {
+  document.querySelectorAll<HTMLAnchorElement>('a[href*="#vista-producto"]').forEach((link) => {
     link.addEventListener(
       "click",
       (event) => {
         const url = new URL(link.href, window.location.href);
-        if (url.pathname === window.location.pathname || url.hash === "#ediciones") {
-          jumpToEditions(event);
+        if (url.pathname === window.location.pathname || url.hash === "#vista-producto") {
+          jumpToFeatures(event);
         }
       },
       { signal: ac.signal },
     );
   });
 
-  if (window.location.hash === "#ediciones") {
-    requestAnimationFrame(() => jumpToEditions());
+  if (window.location.hash === "#vista-producto") {
+    requestAnimationFrame(() => jumpToFeatures());
   }
 
   requestAnimationFrame(() => {
