@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from "astro:content";
+import { embeddedManuals } from "./embedded-manuals";
 import { localizePath, type Locale } from "../i18n";
 
 export type ContentKind = "blog" | "manual";
@@ -9,7 +10,7 @@ export function contentBase(kind: ContentKind): "/blog" | "/manual" {
 }
 
 export function contentPath(kind: ContentKind, slug: string, locale: Locale): string {
-  return localizePath(`${contentBase(kind)}/${slug}`, locale);
+  return localizePath(kind === "manual" && embeddedManuals[slug] ? embeddedManuals[slug] : `${contentBase(kind)}/${slug}`, locale);
 }
 
 export function localeFromEntry(entry: ContentEntry): Locale {
@@ -48,7 +49,7 @@ export function contentCoverAlt(entry: ContentEntry): string {
 }
 
 export async function publishedEntries(kind: ContentKind, locale: Locale): Promise<ContentEntry[]> {
-  const entries = await getCollection(kind, (entry) => localeFromEntry(entry) === locale);
+  const entries = await getCollection(kind, (entry) => localeFromEntry(entry) === locale && !(kind === "manual" && embeddedManuals[entry.data.slug]));
   if (kind === "manual") {
     const order = ['getting-started', 'library', 'editor', 'many', 'agents', 'workflows', 'studio', 'learning', 'integrations', 'sync', 'complements', 'cms', 'extension', 'companion'];
     return entries.sort((a, b) => {

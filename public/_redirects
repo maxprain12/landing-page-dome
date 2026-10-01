@@ -15,3 +15,13 @@
 /en/pro /en/funciones/library 301
 /en/study /en/funciones/learning 301
 /en/dev /en/funciones/integrations 301
+
+# Manuales integrados en las fichas de producto.
+/manual/cms /complementos/dome-cms#manual 301
+/manual/complements /complementos#manual 301
+/manual/extension /extension#manual 301
+/manual/companion /companion#manual 301
+/en/manual/cms /en/complementos/dome-cms#manual 301
+/en/manual/complements /en/complementos#manual 301
+/en/manual/extension /en/extension#manual 301
+/en/manual/companion /en/companion#manual 301

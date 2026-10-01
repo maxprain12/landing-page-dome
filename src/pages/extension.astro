@@ -9,6 +9,6 @@ const locale = "es" as const;
 const page = t(locale).pages.extension;
 ---
 
-<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/extension">
+<Layout locale={locale} title={page.title} description={page.description} ogImage="/product-captures/compositions/extension.png" canonicalPath="/extension">
   <ProductPage manualSlug="extension" locale={locale} page={page} stores={extensionStores} shot={productShot("extension")} />
 </Layout>

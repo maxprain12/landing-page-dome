@@ -15,6 +15,8 @@ Repositorio: `maxprain12/landing-page-dome`. URL pública: `https://dome.dowi.es
 
 El primer idioma es `es`, sin prefijo; `en` usa `/en`. Las URLs son `/blog/<slug>` y `/manual/<slug>`; los otros idiomas añaden el prefijo. Campos: `title`, `date`, `description`, `slug`; `cover` es opcional y `tags` admite una lista. El archivo se llama `<slug>.md`. Las imágenes nuevas se publican en `public/media/<slug>/`.
 
+Los Markdown `cms`, `complements`, `extension` y `companion` siguen en la colección `manual`, pero se renderizan dentro de la ficha de CMS, el catálogo, Extensión y Companion respectivamente. No aparecen como entradas independientes. Sus rutas antiguas redirigen a la sección integrada; editar esos archivos desde CMS actualiza el contenido de la ficha. El índice conserva diez guías de la aplicación por idioma. Cada complemento incluye también su manual relevante dentro de la ficha.
+
 ## Prueba editorial sin publicar
 
 Crea la rama de prueba desde la PR actual o desde main una vez fusionada. Configura esa rama en el sitio CMS. Sincroniza posts, abre un manual, modifica un borrador y guarda. Prepara la publicación, revisa las rutas, campos, imágenes y revisión base. Cancela antes de aprobar Publicar. No sincronices nuevamente sobre un borrador que quieras conservar sin revisar el comportamiento de actualización.

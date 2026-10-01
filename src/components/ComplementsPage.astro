@@ -1,4 +1,6 @@
 ---
+import EmbeddedManual from './EmbeddedManual.astro';
+import ProductVisual from './ProductVisual.astro';
 import Nav from './Nav.astro';
 import Footer from './Footer.astro';
 import { Blocks, Bot, Workflow, Sparkles, Plug, Search, ArrowUpRight, BookOpen, ShieldCheck, FileText, GitBranch, Globe } from '@lucide/astro';
@@ -28,7 +30,7 @@ const ui = es ? { official: 'Catálogo oficial', featured: 'Destacado', author: 
       <a href={href('/complementos')} data-category-link="" aria-current={!item ? 'page' : undefined}>{labels.all}<span>{catalog.items.length}</span></a>
       {Object.entries(categories).map(([key, name]) => { const Icon = icons[key as keyof typeof icons]; return <a href={`${href('/complementos')}?category=${key}`} data-category-link={key} aria-current={item?.category === key ? 'page' : undefined}><Icon size={17} />{name}<span>{catalog.items.filter(entry => entry.category === key).length}</span></a>; })}
     </nav>
-    <div class="market-nav-bottom"><a href={href('/manual/complements')}><BookOpen size={17} />{labels.manual}</a><a class="btn btn-primary" href={href('/download')}>{ui.download}</a></div>
+    <div class="market-nav-bottom"><a href="#manual"><BookOpen size={17} />{labels.manual}</a><a class="btn btn-primary" href={href('/download')}>{ui.download}</a></div>
   </aside>
   <div class="market-main">
   {item && copy ? <>
@@ -40,17 +42,20 @@ const ui = es ? { official: 'Catálogo oficial', featured: 'Destacado', author: 
           <div><span class="market-caption">{categories[item.category as keyof typeof categories]}</span><h1>{item.name}</h1><p class="market-meta">{item.author} · v{item.version}{item.featured && <span class="market-badge">{ui.featured}</span>}</p></div>
         </header>
         <p class="market-description">{copy.description}</p>
+        <nav class="market-detail-nav" aria-label={es ? 'En esta ficha' : 'On this page'}><a href="#descripcion">{ui.about}</a>{item.id === 'dome-cms' && <a href="#galeria">{es ? 'Imágenes' : 'Images'}</a>}<a href="#instalacion">{es ? 'Instalación' : 'Installation'}</a><a href="#manual">{labels.manual}</a><a href="#requisitos-complemento">{labels.requirements}</a></nav>
+        {item.id === 'dome-cms' && <div id="galeria"><ProductVisual product="cms" locale={locale} /></div>}
         {item.id === 'dome-cms' && <figure class="market-flow"><figcaption>{ui.result}</figcaption><ol>{[{Icon: FileText, name: 'Markdown'}, {Icon: Blocks, name: 'Dome CMS'}, {Icon: GitBranch, name: 'GitHub'}, {Icon: Globe, name: 'Astro'}].map(({Icon, name}) => <li><Icon size={28} /><span>{name}</span></li>)}</ol></figure>}
-        <section class="market-section"><h2>{ui.about}</h2><p>{copy.body}</p></section>
+        <section class="market-section" id="descripcion"><h2>{ui.about}</h2><p>{copy.body}</p></section>
         <section class="market-section"><h2>{labels.cases}</h2><ol class="market-cases">{copy.useCases.map((text, i) => <li><span>{String(i + 1).padStart(2, '0')}</span><p>{text}</p></li>)}</ol></section>
-        <section class="market-section"><h2>{ui.tools}</h2><a class="market-text-link" href={href(`/manual/${item.manual}`)}><BookOpen size={18} />{labels.manual}<ArrowUpRight size={16} /></a></section>
+        <section class="market-section" id="instalacion"><h2>{es ? 'Instalar en Dome' : 'Install in Dome'}</h2><ol class="market-install-steps"><li>{es ? 'Abre esta ficha en Dome y revisa los requisitos y permisos.' : 'Open this entry in Dome and review requirements and permissions.'}</li><li>{es ? 'Confirma Instalar o Actualizar desde Desktop.' : 'Confirm Install or Update in Desktop.'}</li><li>{es ? 'Configura el complemento según el manual de esta ficha.' : 'Configure the add-on using the manual on this page.'}</li></ol><p>{labels.review}</p></section>
+        <EmbeddedManual locale={locale} slug={item.manual} title={es ? `Manual de ${item.name}` : `${item.name} manual`} />
       </div>
       <aside class="market-install">
         <a class="btn btn-primary" href={`dome://complements/${item.category}/${item.id}`}>{labels.open}<ArrowUpRight size={17} /></a>
         <p>{ui.review}</p>
         <dl><dt>{ui.author}</dt><dd>{item.author}</dd><dt>{ui.version}</dt><dd>{item.version}</dd></dl>
-        <section><h2>{labels.requirements}</h2><ul>{copy.requirements.map(text => <li>{text}</li>)}</ul></section>
-        {item.permissions.length > 0 && <section><h2><ShieldCheck size={18} />{labels.permissions}</h2><ul>{copy.permissionDescriptions.map(text => <li>{text}</li>)}</ul></section>}
+        <section id="requisitos-complemento"><h2>{labels.requirements}</h2><ul>{copy.requirements.map(text => <li>{text}</li>)}</ul></section>
+        {item.permissions.length > 0 && <section id="permisos"><h2><ShieldCheck size={18} />{labels.permissions}</h2><ul>{copy.permissionDescriptions.map(text => <li>{text}</li>)}</ul></section>}
         <p>{labels.review}</p><a class="market-text-link" href={href('/download')}>{ui.download} ↗</a>
       </aside>
     </div>
@@ -62,8 +67,9 @@ const ui = es ? { official: 'Catálogo oficial', featured: 'Destacado', author: 
       <div class="market-results" data-catalog-results>{catalog.items.map((entry) => { const Icon = icons[entry.category as keyof typeof icons]; return <article class="market-row" data-catalog-card data-category={entry.category} data-featured={entry.featured ? '1' : '0'} data-name={entry.name} data-search={`${entry.name} ${entry.author} ${entry.locales[locale].description}`}>
         <a class="market-entry" href={href(`/complementos/${entry.slug}`)}><div class:list={['market-icon', entry.category]}><Icon size={28} /></div><div class="market-entry-copy"><h2>{entry.name}{entry.featured && <span class="market-badge">{ui.featured}</span>}</h2><p class="market-meta">{entry.author} · v{entry.version}</p><p class="market-summary">{entry.locales[locale].description}</p><span class="market-tag">{categories[entry.category as keyof typeof categories]}</span></div><ArrowUpRight size={16} class="market-arrow" /><span class="market-sr">{labels.details}: {entry.name}</span></a>
       </article>; })}<p data-catalog-empty hidden>{labels.empty}</p></div>
-      <aside class="market-editorial"><section><ShieldCheck size={22} /><h2>{ui.curated}</h2><p>{ui.curatedText}</p></section><section><span class="market-caption">Dome CMS</span><h2>{ui.cms}</h2><p>{ui.cmsText}</p><a class="market-text-link" href={href('/complementos/dome-cms')}>{labels.details} <ArrowUpRight size={16} /></a></section><section><h2>{ui.guide}</h2><p>{ui.guideText}</p><a class="market-text-link" href={href('/manual/complements')}>{labels.manual} ↗</a></section></aside>
+      <aside class="market-editorial"><section><ShieldCheck size={22} /><h2>{ui.curated}</h2><p>{ui.curatedText}</p></section><section><span class="market-caption">Dome CMS</span><h2>{ui.cms}</h2><p>{ui.cmsText}</p><a class="market-text-link" href={href('/complementos/dome-cms')}>{labels.details} <ArrowUpRight size={16} /></a></section><section><h2>{ui.guide}</h2><p>{ui.guideText}</p><p>{es ? "El manual está integrado en la ficha de cada complemento." : "The manual is included in each add-on’s detail page."}</p></section></aside>
     </div>
+    <EmbeddedManual locale={locale} slug="complements" title={es ? "Cómo usar Complementos" : "How to use Add-ons"} />
   </>}
   </div>
 </main>
@@ -98,6 +104,11 @@ const ui = es ? { official: 'Catálogo oficial', featured: 'Destacado', author: 
   }
 </script>
 <style>
+  .market-detail-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); font-size: .78rem; color: var(--color-text-secondary); }
+  .market-detail-nav a:hover { color: var(--color-many-body); }
+  #galeria, .market-section, .market-install section { scroll-margin-top: 6rem; }
+  .market-install-steps { padding-left: 1.3rem; color: var(--color-text-secondary); line-height: 1.8; } .market-install-steps li { margin-bottom: .6rem; }
+
   .market { display: grid; grid-template-columns: 190px minmax(0, 1fr); max-width: 1480px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; gap: 2rem; min-height: 75vh; }
   .market-nav { border-right: 1px solid var(--color-border); padding-right: 1.2rem; display: flex; flex-direction: column; gap: 1rem; }
   .market-brand { display: flex; gap: .65rem; align-items: center; font-weight: 700; margin-bottom: 1.5rem; }
@@ -158,6 +169,6 @@ const ui = es ? { official: 'Catálogo oficial', featured: 'Destacado', author: 
   .market-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .market a:focus-visible, .market select:focus-visible, .market input:focus-visible { outline: 2px solid var(--color-many-body); outline-offset: 4px; }
   @media (max-width: 1200px) { .market-content { grid-template-columns: minmax(0, 1fr); } .market-editorial { display: none; } }
-  @media (max-width: 900px) { .market { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem 1rem 3rem; } .market-nav { border: 0; padding: 0; } .market-brand, .market-nav > p, .market-nav-bottom { display: none; } .market-categories { display: flex; gap: .3rem; flex-wrap: wrap; } .market-categories a { padding: .6rem; font-size: .8rem; } .market-categories a span { display: none; } .market-head { align-items: start; } .market-detail-layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } .market-detail-layout > div { display: contents; } .market-install { grid-row: 3; position: static; border: 0; padding: 0; } .market-install > p:last-of-type { margin-top: .7rem; } }
+  @media (max-width: 900px) { .market { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem 1rem 3rem; } .market-nav { border: 0; padding: 0; } .market-brand, .market-nav > p, .market-nav-bottom { display: none; } .market-categories { display: flex; gap: .3rem; flex-wrap: wrap; } .market-categories a { padding: .6rem; font-size: .8rem; } .market-categories a span { display: none; } .market-head { align-items: start; } .market-detail-layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } .market-detail-layout > div { display: contents; } .market-install { grid-row: 4; position: static; border: 0; padding: 0; } .market-install > p:last-of-type { margin-top: .7rem; } }
   @media (max-width: 600px) { .market-results { grid-template-columns: minmax(0, 1fr); } .market-head { display: block; } .market-head > p { margin-top: .8rem; } .market-entry { padding: 1.2rem 0; } .market-toolbar { gap: .7rem; } .market-toolbar > span { flex: 1 1 100%; margin: 0; } .market-detail-head { gap: .8rem; } .market-detail-head h1 { font-size: 2rem; } .market-icon-large { width: 70px; height: 70px; } }
 </style>

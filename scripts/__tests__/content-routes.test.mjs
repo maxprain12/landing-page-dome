@@ -10,5 +10,8 @@ test('retired posts are gone in both locales; replaced manuals redirect to relev
     assert.deepEqual(contentRoute(`${locale}/manual/email-and-social`), { status: 301, location: `${locale}/manual/integrations` });
     assert.equal(contentRoute(`${locale}/manual/library`), null);
     assert.equal(contentRoute(`${locale}/blog/new-post`), null);
+    for (const [slug, destination] of [['cms', '/complementos/dome-cms#manual'], ['complements', '/complementos#manual'], ['extension', '/extension#manual'], ['companion', '/companion#manual']]) {
+      assert.deepEqual(contentRoute(`${locale}/manual/${slug}/`), { status: 301, location: `${locale}${destination}` });
+    }
   }
 });
