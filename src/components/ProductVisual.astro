@@ -1,38 +1,111 @@
 ---
+import { FileText, ArrowRight, GitBranch, Globe, Laptop, Smartphone, Bookmark, Check, Languages, BookOpen } from '@lucide/astro';
 import type { Locale } from '../i18n';
 interface Props { product: 'cms' | 'extension' | 'companion'; locale: Locale; }
 const { product, locale } = Astro.props;
 const es = locale === 'es';
 const media = {
-  cms: { title: es ? 'Del borrador a tu web.' : 'From draft to your website.', label: 'Dome CMS', caption: es ? 'Editor Markdown y borradores bilingües. Captura real de Dome con contenido de demostración.' : 'Markdown editor and bilingual drafts. Real Dome capture with demonstration content.', files: ['cms-editor-component', 'cms-library-component', 'cms-fields-component'], names: es ? ['Editor Markdown', 'Colecciones e idiomas', 'Propiedades de publicación'] : ['Markdown editor', 'Collections and languages', 'Publishing properties'], width: 1908, height: 1774 },
-  extension: { title: es ? 'Tu navegador. Tu biblioteca.' : 'Your browser. Your library.', label: es ? 'Conexión local' : 'Local connection', caption: es ? 'Extensión del navegador: conexión y emparejamiento en los ajustes de Desktop. Captura real de una instancia aislada.' : 'Browser extension: connection and pairing in Desktop settings. Real capture from an isolated instance.', files: ['extension-settings-component'], names: es ? ['Ajustes de Extensión en Desktop'] : ['Desktop extension settings'], width: 1408, height: 1124 },
-  companion: { title: es ? 'Many, al otro lado.' : 'Many, on the other side.', label: es ? 'Acceso remoto' : 'Remote access', caption: es ? 'Many remoto: configuración de Desktop para Companion. Captura real antes de activar y emparejar el iPhone.' : 'Remote Many: Desktop configuration for Companion. Real capture before enabling access and pairing an iPhone.', files: ['companion-settings-component'], names: es ? ['Ajustes de Many remoto en Desktop'] : ['Desktop remote Many settings'], width: 1408, height: 1514 },
+  cms: { title: es ? 'Del borrador a tu web.' : 'From draft to your website.', label: 'Dome CMS', caption: es ? 'Markdown, idiomas y publicación con revisión. Ilustración del flujo; las capturas originales están debajo.' : 'Markdown, languages and reviewed publishing. Flow illustration; original captures are below.', files: ['cms-editor-component', 'cms-library-component', 'cms-fields-component'], names: es ? ['Editor Markdown', 'Colecciones e idiomas', 'Propiedades de publicación'] : ['Markdown editor', 'Collections and languages', 'Publishing properties'], width: 1908, height: 1774 },
+  extension: { title: es ? 'Guarda una idea.' : 'Save an idea.', label: es ? 'Extensión de navegador' : 'Browser extension', caption: es ? 'Del navegador a la biblioteca de Dome. Ilustración del flujo; los ajustes reales están debajo.' : 'From your browser to the Dome library. Flow illustration; real settings are below.', files: ['extension-settings-component'], names: es ? ['Ajustes de Extensión en Desktop'] : ['Desktop extension settings'], width: 1408, height: 1124 },
+  companion: { title: es ? 'Tu contexto, contigo.' : 'Your context, with you.', label: 'Dome Companion', caption: es ? 'Preguntas desde el iPhone; contexto y herramientas en Desktop. Ilustración del flujo; los ajustes reales están debajo.' : 'Ask from iPhone; context and tools in Desktop. Flow illustration; real settings are below.', files: ['companion-settings-component'], names: es ? ['Ajustes de Many remoto en Desktop'] : ['Desktop remote Many settings'], width: 1408, height: 1514 },
 }[product];
+const c = es ? {
+  draft: 'Borrador', intro: 'Tu biblioteca, en marcha.', line1: 'Reúne tus fuentes.', line2: 'Organiza tus ideas.', line3: 'Prepara lo que quieres compartir.', languages: 'Dos idiomas. Un contenido.', publish: 'Publicación', review: 'Revisa el cambio antes de publicar.', web: 'En tu web', selection: 'Texto seleccionado', idea: 'Una idea que quieres recordar.', source: 'Conserva el enlace a la fuente.', library: 'Tu biblioteca', saved: 'Página y selección', desktop: 'En tu equipo', local: 'Conexión local', context: 'Contexto y herramientas', question: 'Resume mis notas de hoy.', answer: 'Many consulta tu biblioteca en Desktop.', references: 'Con las referencias de tus documentos', remote: 'Con Desktop disponible', plan: 'Requiere el plan correspondiente', illustration: 'Flujo ilustrado',
+} : {
+  draft: 'Draft', intro: 'Your library, ready.', line1: 'Gather your sources.', line2: 'Organize your ideas.', line3: 'Prepare what you want to share.', languages: 'Two languages. One piece.', publish: 'Publishing', review: 'Review the change before publishing.', web: 'On your website', selection: 'Selected text', idea: 'An idea you want to remember.', source: 'Keep the link to the source.', library: 'Your library', saved: 'Page and selection', desktop: 'On your computer', local: 'Local connection', context: 'Context and tools', question: 'Summarize today’s notes.', answer: 'Many consults your library in Desktop.', references: 'With references to your documents', remote: 'With Desktop available', plan: 'Requires the corresponding plan', illustration: 'Flow illustration',
+};
 ---
 <div class:list={['product-visual', product]} data-product-visual={product}>
   <figure>
-    <div class="visual-stage">
+    <div class="visual-stage" data-flow-illustration={product}>
       <img class="stage-background" src="/product-captures/editorial-stage.jpg" alt="" width="1586" height="992" decoding="async" />
-      <div class="stage-copy"><p>{media.label}</p><h3>{media.title}</h3><span>{es ? 'Dentro de Dome' : 'Inside Dome'}</span></div>
-      <img class="stage-screen" src={`/product-captures/${media.files[0]}.png`} alt={media.names[0]} width={media.width} height={media.height} decoding="async" />
+      <header class="stage-heading"><p>{media.label}</p><h3>{media.title}</h3></header>
+      <div class="visual-story">
+        {product === 'cms' && <>
+          <article class="story-card editor-card">
+            <div class="card-bar"><span><FileText size={16} />getting-started.md</span><span class="quiet-tag">{c.draft}</span></div>
+            <div class="editor-body"><span class="markdown-mark" aria-hidden="true">#</span><h4>{c.intro}</h4><ul>{[c.line1, c.line2, c.line3].map((line, index) => <li><span aria-hidden="true">{index + 1}.</span>{line}</li>)}</ul></div>
+            <div class="language-row"><Languages size={16} /><span>ES <span class="language-divider">/</span> EN</span><span class="language-note">Markdown</span></div>
+          </article>
+          <article class="story-card destination-card">
+            <p class="card-eyebrow">{c.publish}</p>
+            <div class="publish-route"><span><GitBranch size={24} />GitHub</span><ArrowRight size={18} /><span><Globe size={24} />Astro</span></div>
+            <h4>{c.web}</h4><p class="card-description">{c.review}</p>
+            <div class="card-foot"><Check size={15} />{c.languages}</div>
+          </article>
+        </>}
+        {product === 'extension' && <>
+          <article class="story-card capture-card">
+            <div class="card-bar"><span><Globe size={16} />{es ? 'Navegador' : 'Browser'}</span><span class="quiet-tag">{es ? "Página" : "Page"}</span></div>
+            <div class="capture-body"><p class="card-eyebrow">{c.selection}</p><h4>{c.idea}</h4><p class="card-description">{c.source}</p><div class="source-line"><span aria-hidden="true"></span><span aria-hidden="true"></span></div></div>
+            <div class="capture-bottom"><Bookmark size={17} /><span>Dome</span><ArrowRight size={17} /></div>
+          </article>
+          <article class="story-card destination-card library-card">
+            <div class="destination-icon"><BookOpen size={24} /></div><p class="card-eyebrow">{c.library}</p><h4>{c.saved}</h4><p class="card-description">{c.desktop}</p><div class="card-foot"><Laptop size={15} />{c.local}</div>
+          </article>
+        </>}
+        {product === 'companion' && <>
+          <article class="story-card context-card">
+            <div class="destination-icon"><Laptop size={26} /></div><p class="card-eyebrow">Dome Desktop</p><h4>{c.context}</h4><div class="context-sources"><FileText size={20} /><BookOpen size={20} /></div><div class="card-foot">{c.remote}</div>
+          </article>
+          <article class="story-card conversation-card">
+            <div class="card-bar"><span><Smartphone size={16} />Companion</span><span class="quiet-tag">Many</span></div>
+            <div class="conversation-body"><p class="question">{c.question}</p><div class="answer"><span class="many-mark" aria-hidden="true">M</span><div><p>{c.answer}</p><span class="reference"><FileText size={13} />{c.references}</span></div></div></div>
+          </article>
+        </>}
+      </div>
+      <p class="stage-note">{product === 'companion' ? c.plan : c.illustration}</p>
     </div>
     <figcaption>{media.caption}</figcaption>
   </figure>
   <details class="original-captures">
-    <summary>{es ? 'Ampliar capturas originales' : 'Enlarge original captures'} <span>{String(media.files.length).padStart(2, '0')}</span></summary>
+    <summary>{es ? 'Ver capturas reales de Dome' : 'View real Dome captures'} <span>{String(media.files.length).padStart(2, '0')}</span></summary>
     <div class="capture-gallery">{media.files.map((file, index) => <figure><a href={`/product-captures/${file}.png`} target="_blank" rel="noopener" aria-label={`${media.names[index]} · ${es ? 'abrir imagen en una pestaña nueva' : 'open image in a new tab'}`}><img src={`/product-captures/${file}.png`} alt={media.names[index]} width={media.width} height={media.height} loading="lazy" decoding="async" /></a><figcaption>{media.names[index]}</figcaption></figure>)}</div>
   </details>
 </div>
 <style>
-  .product-visual { margin-block: 1.5rem 2rem; min-width: 0; }
-  .visual-stage { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 10; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-bg); }
+  .product-visual { margin-block: 1.5rem 2rem; min-width: 0; container-type: inline-size; }
+  .visual-stage { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 10; min-height: 420px; padding: 5%; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-bg); display: flex; flex-direction: column; justify-content: space-between; gap: 1.6rem; }
   .stage-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
-  .stage-copy { position: absolute; left: 5%; top: 12%; width: 28%; color: var(--color-text); }
-  .stage-copy p { color: var(--color-many-body); font: .65rem var(--font-mono); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem; }
-  .stage-copy h3 { font-size: clamp(1.15rem, 2.8vw, 2.2rem); font-weight: 600; line-height: 1.15; letter-spacing: -.04em; }
-  .stage-copy span { display: block; margin-top: 2rem; font-size: .7rem; color: var(--color-text-secondary); }
-  .stage-screen { position: absolute; width: 61%; height: auto; max-height: 89%; object-fit: contain; right: 3%; top: 6%; border-radius: 8px; transform: rotate(-1.5deg); box-shadow: 0 18px 45px var(--color-bg); }
-  .companion .stage-screen { width: 53%; right: 6%; transform: rotate(1.5deg); }
+  .stage-heading p { color: var(--color-many-body); font: .68rem var(--font-mono); text-transform: uppercase; letter-spacing: .08em; margin-bottom: .65rem; }
+  .stage-heading h3 { color: var(--color-text); font-size: clamp(1.5rem, 3.7cqw, 2.5rem); font-weight: 500; line-height: 1.14; letter-spacing: -.045em; }
+  .visual-story { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 1rem; align-items: center; }
+  .story-card { min-width: 0; border: 1px solid var(--color-scene-border); border-radius: 12px; background: var(--color-zinc-50); color: var(--color-bg); box-shadow: 0 8px 24px color-mix(in srgb, var(--color-black) 12%, transparent); }
+  .card-bar { display: flex; align-items: center; justify-content: space-between; gap: .7rem; padding: 1rem 1.2rem; border-bottom: 1px solid var(--color-scene-border); color: var(--color-zinc-400); font-size: .72rem; }
+  .card-bar > span:first-child { display: flex; align-items: center; gap: .5rem; min-width: 0; }
+  .quiet-tag { color: var(--color-olive-ink); background: var(--color-olive-wash); border-radius: 4px; padding: .2rem .45rem; font-size: .65rem; white-space: nowrap; }
+  .editor-body { padding: 1.6rem 1.2rem; position: relative; }
+  .markdown-mark { color: var(--color-zinc-300); font: .8rem var(--font-mono); display: block; margin-bottom: .5rem; }
+  .story-card h4 { font-size: clamp(1rem, 2.2cqw, 1.5rem); line-height: 1.3; letter-spacing: -.035em; font-weight: 600; }
+  .editor-body ul { list-style: none; display: grid; gap: .65rem; margin-top: 1rem; font-size: clamp(.8rem, 1.5cqw, .95rem); color: var(--color-zinc-400); }
+  .editor-body li { display: flex; gap: .6rem; line-height: 1.5; }
+  .editor-body li > span { color: var(--color-zinc-300); font-family: var(--font-mono); }
+  .language-row { display: flex; align-items: center; gap: .65rem; padding: .85rem 1.2rem; border-top: 1px solid var(--color-scene-border); font-size: .7rem; color: var(--color-zinc-400); }
+  .language-divider { color: var(--color-zinc-300); padding-inline: .3rem; }
+  .language-note { margin-left: auto; font-size: .65rem; }
+  .destination-card, .context-card { padding: 1.4rem 1.2rem; }
+  .card-eyebrow { color: var(--color-zinc-400); font-size: .7rem; margin-bottom: .8rem; }
+  .publish-route { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding-block: .65rem 1.3rem; color: var(--color-olive-ink); }
+  .publish-route > span { display: grid; justify-items: center; gap: .65rem; color: var(--color-bg); font-size: .8rem; font-weight: 500; }
+  .card-description { color: var(--color-zinc-400); font-size: .8rem; line-height: 1.6; margin-top: .65rem; }
+  .card-foot { display: flex; gap: .45rem; align-items: center; font-size: .68rem; line-height: 1.5; color: var(--color-olive-ink); border-top: 1px solid var(--color-scene-border); margin-top: 1.2rem; padding-top: .85rem; }
+  .stage-note { color: var(--color-text); font-size: .68rem; opacity: .8; }
+  .destination-icon { color: var(--color-olive-ink); margin-bottom: 1.2rem; }
+  .capture-body { padding: 1.5rem 1.2rem; }
+  .capture-body h4 { padding: .7rem .8rem; background: var(--color-olive-wash); border-left: 2px solid var(--color-olive-fill); }
+  .source-line { display: grid; gap: .6rem; margin-top: 1.3rem; }
+  .source-line span { height: 3px; background: var(--color-zinc-100); border-radius: 2px; width: 85%; }
+  .source-line span:last-child { width: 65%; }
+  .capture-bottom { display: flex; align-items: center; gap: .6rem; padding: .85rem 1.2rem; border-top: 1px solid var(--color-scene-border); font-size: .75rem; color: var(--color-olive-ink); }
+  .capture-bottom > svg:last-child { margin-left: auto; }
+  .companion .visual-story { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+  .context-sources { display: flex; gap: .9rem; margin-top: 1.3rem; color: var(--color-zinc-300); }
+  .conversation-body { padding: 1.5rem 1.2rem; font-size: .85rem; line-height: 1.6; }
+  .question { padding: .8rem 1rem; border-radius: 8px; background: var(--color-olive-wash); margin-left: 1.2rem; }
+  .answer { display: flex; gap: .65rem; margin-top: 1.5rem; }
+  .many-mark { flex: none; display: grid; place-items: center; width: 24px; height: 24px; font-size: .7rem; font-weight: 600; border-radius: 6px; background: var(--color-olive-wash); color: var(--color-olive-ink); }
+  .reference { display: flex; align-items: start; gap: .35rem; margin-top: .8rem; color: var(--color-zinc-400); font-size: .68rem; line-height: 1.5; }
+  .reference > svg { flex: none; margin-top: 2px; }
   .product-visual figcaption { font-size: .75rem; color: var(--color-text-secondary); line-height: 1.6; padding-top: .8rem; }
   .original-captures { margin-top: 1rem; border-top: 1px solid var(--color-border); }
   .original-captures summary { cursor: pointer; padding: .8rem 0; font-size: .8rem; }
@@ -40,5 +113,25 @@ const media = {
   .capture-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; padding-block: .5rem 1rem; }
   .capture-gallery img { display: block; width: 100%; height: auto; border: 1px solid var(--color-border); border-radius: 8px; }
   .capture-gallery a { display: block; border-radius: 8px; }
-  @media (max-width: 600px) { .visual-stage { aspect-ratio: 1 / 1.12; } .stage-copy { top: 6%; width: 88%; } .stage-copy h3 { font-size: 1.5rem; max-width: 12rem; } .stage-copy p { margin-bottom: .5rem; } .stage-copy span { display: none; } .stage-screen, .companion .stage-screen { width: 74%; max-height: 66%; top: auto; bottom: 4%; right: 5%; } .capture-gallery { grid-template-columns: minmax(0, 1fr); } }
+  @container (max-width: 560px) {
+    .visual-stage { aspect-ratio: auto; min-height: 0; padding: 1.4rem; gap: 1.5rem; }
+    .visual-story, .companion .visual-story { grid-template-columns: minmax(0, 1fr); gap: .85rem; }
+    .stage-heading h3 { font-size: 1.65rem; max-width: 15ch; }
+    .story-card h4 { font-size: 1.1rem; }
+    .destination-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .4rem 1rem; }
+    .destination-card .card-eyebrow { grid-column: 1; margin: 0; }
+    .publish-route { grid-column: 2; grid-row: 1 / 4; padding: .25rem 0; }
+    .destination-card h4, .destination-card .card-description { grid-column: 1; margin: 0; }
+    .destination-card .card-foot { grid-column: 1 / -1; margin-top: .5rem; }
+    .library-card { grid-template-columns: auto minmax(0, 1fr); }
+    .library-card .destination-icon { grid-row: 1 / 4; margin: 0; align-self: center; }
+    .library-card .card-eyebrow, .library-card h4, .library-card .card-description { grid-column: 2; }
+    .context-card { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 1rem; }
+    .context-card .destination-icon { grid-column: 1; grid-row: 1 / 3; align-self: center; margin: 0; }
+    .context-card .card-eyebrow, .context-card h4 { grid-column: 2; }
+    .context-sources { display: none; }
+    .context-card .card-foot { grid-column: 1 / -1; margin-top: .8rem; }
+    .companion .conversation-card { grid-row: 1; }
+    .editor-body { padding-block: 1.2rem; }
+  }
 </style>

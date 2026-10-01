@@ -30,8 +30,9 @@ for (const locale of ['', '/en']) {
         expect((await page.request.get(new URL(socialImage!).pathname)).status()).toBe(200);
         const stage = page.locator('[data-product-visual]');
         await expect(stage).toBeVisible();
-        await expect(stage.locator('.stage-screen')).toHaveJSProperty('complete', true);
-        expect(await stage.locator('.stage-screen').evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(1000);
+        await expect(stage.locator('[data-flow-illustration]')).toBeVisible();
+        await expect(stage.locator('.stage-background')).toHaveJSProperty('complete', true);
+        expect(await stage.locator('.stage-background').evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(1000);
         await stage.locator('summary').click();
         await expect(stage.locator('.capture-gallery')).toBeVisible();
       }
