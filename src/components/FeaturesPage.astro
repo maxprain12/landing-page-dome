@@ -1,4 +1,5 @@
 ---
+import { contentPath } from '../lib/content';
 import ExploreShell from './ExploreShell.astro';
 import features from '../data/features.json';
 import { shotForScene, SHOT_SIZE, type ShotScene } from '../data/shots';
@@ -14,7 +15,7 @@ const shot = feature ? shotForScene(feature.scene as ShotScene) : null;
 <ExploreShell locale={locale} title={copy?.title ?? title} description={copy?.description ?? lead}>
   {feature && copy ? <>
     {shot && <img class="explore-shot" src={shot} width={SHOT_SIZE.width} height={SHOT_SIZE.height} alt={locale === 'es' ? 'Workspace de Dome con recursos y Many' : 'Dome workspace with resources and Many'} loading="lazy" />}
-    <div class="explore-body"><div><section><h2>{locale === 'es' ? 'Cómo usarlo' : 'How to use it'}</h2><ol>{copy.capabilities.map((text) => <li>{text}</li>)}</ol></section><section><h2>{locale === 'es' ? 'Qué obtienes' : 'What you get'}</h2><p>{copy.result}</p></section></div><aside><section><h2>{locale === 'es' ? 'Qué necesitas' : 'What you need'}</h2><ul>{copy.requirements.map((text) => <li>{text}</li>)}</ul></section><a class="btn btn-primary" href={localizePath(`/manual/${feature.manual}`, locale)}>{locale === 'es' ? 'Leer el manual' : 'Read the manual'}</a></aside></div>
+    <div class="explore-body"><div><section><h2>{locale === 'es' ? 'Cómo usarlo' : 'How to use it'}</h2><ol>{copy.capabilities.map((text) => <li>{text}</li>)}</ol></section><section><h2>{locale === 'es' ? 'Qué obtienes' : 'What you get'}</h2><p>{copy.result}</p></section></div><aside><section><h2>{locale === 'es' ? 'Qué necesitas' : 'What you need'}</h2><ul>{copy.requirements.map((text) => <li>{text}</li>)}</ul></section><a class="btn btn-primary" href={contentPath('manual', feature.manual, locale)}>{locale === 'es' ? 'Leer el manual' : 'Read the manual'}</a></aside></div>
     <a class="btn btn-ghost" href={localizePath('/funciones', locale)}>{locale === 'es' ? 'Todas las funciones' : 'All features'}</a>
   </> : <div class="explore-grid">{features.map((item) => <article class="explore-card"><h2>{item.locales[locale].title}</h2><p>{item.locales[locale].description}</p><a href={localizePath(`/funciones/${item.slug}`, locale)} class="btn btn-ghost">{locale === 'es' ? 'Explorar' : 'Explore'}<span class="sr-only">: {item.locales[locale].title}</span></a></article>)}<article class="explore-card"><h2>{locale === 'es' ? 'Dome fuera del escritorio' : 'Dome beyond the desktop'}</h2><p>{locale === 'es' ? 'Captura desde el navegador y usa Many remoto desde tu iPhone.' : 'Capture from your browser and use remote Many on your iPhone.'}</p><div class="explore-actions"><a class="btn btn-ghost" href={localizePath('/extension', locale)}>{locale === 'es' ? 'Extensión' : 'Extension'}</a><a class="btn btn-ghost" href={localizePath('/companion', locale)}>{locale === 'es' ? 'App móvil' : 'Mobile app'}</a></div></article></div>}
 </ExploreShell>

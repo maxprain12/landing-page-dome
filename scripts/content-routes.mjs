@@ -3,6 +3,12 @@ const manualReplacements = {
   "email-and-social": "integrations",
   contacts: "integrations",
 };
+const embeddedManuals = {
+  cms: "/complementos/dome-cms#manual",
+  complements: "/complementos#manual",
+  extension: "/extension#manual",
+  companion: "/companion#manual",
+};
 const retiredPosts = new Set([
   "pdf-to-follow-up",
   "local-first",
@@ -21,6 +27,7 @@ export function contentRoute(pathname) {
   if (!match) return null;
   const [, locale = "", kind, slug] = match;
   if (kind === "blog" && retiredPosts.has(slug)) return { status: 410 };
+  if (kind === "manual" && embeddedManuals[slug]) return { status: 301, location: `${locale}${embeddedManuals[slug]}` };
   if (kind === "manual" && manualReplacements[slug])
     return {
       status: 301,

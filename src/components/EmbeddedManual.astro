@@ -1,0 +1,37 @@
+---
+import { render } from 'astro:content';
+import { findTranslation } from '../lib/content';
+import type { Locale } from '../i18n';
+interface Props { locale: Locale; slug: string; id?: string; title?: string; }
+const { locale, slug, id = 'manual', title = locale === 'es' ? 'Manual' : 'Manual' } = Astro.props;
+const entry = await findTranslation('manual', slug, locale);
+if (!entry) throw new Error(`Missing embedded manual: ${locale}/${slug}`);
+const { Content, headings } = await render(entry);
+---
+<section class="embedded-manual" id={id} aria-labelledby={`${id}-title`} data-embedded-manual={slug}>
+  <header><p class="embedded-eyebrow">{locale === 'es' ? 'Guía de uso' : 'User guide'}</p><h2 id={`${id}-title`}>{title}</h2></header>
+  <div class="embedded-layout">
+    <nav aria-label={locale === 'es' ? 'Índice del manual' : 'Manual contents'}><ol>{headings.filter(heading => heading.depth === 2).map(heading => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>
+    <div class="prose embedded-copy"><Content /></div>
+  </div>
+</section>
+<style>
+  .embedded-manual { padding-block: 2rem; border-top: 1px solid var(--color-border); scroll-margin-top: 6rem; }
+  .embedded-manual header { margin-bottom: 1.5rem; }
+  .embedded-eyebrow { font: .7rem var(--font-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--color-text-secondary); margin-bottom: .5rem; }
+  .embedded-manual h2 { font-size: 1.6rem; letter-spacing: -.03em; }
+  .embedded-layout { display: grid; grid-template-columns: 155px minmax(0, 1fr); gap: 2rem; }
+  .embedded-layout nav ol { list-style: none; display: grid; gap: .8rem; }
+  .embedded-layout nav a { color: var(--color-text-secondary); font-size: .78rem; line-height: 1.5; display: block; }
+  .embedded-layout nav a:hover { color: var(--color-many-body); }
+  .embedded-copy :global(h2) { font-size: 1.2rem; margin: 1.7rem 0 .75rem; scroll-margin-top: 6rem; }
+  .embedded-copy :global(p), .embedded-copy :global(li) { color: var(--color-text-secondary); font-size: .95rem; line-height: 1.8; }
+  .embedded-copy :global(p) { margin-bottom: 1rem; }
+  .embedded-copy :global(ol), .embedded-copy :global(ul) { margin: 1rem 0; padding-left: 1.3rem; }
+  .embedded-copy :global(li) { margin-bottom: .7rem; }
+  .embedded-copy :global(a) { color: var(--color-many-body); text-decoration: underline; text-underline-offset: 3px; }
+  .embedded-copy :global(code) { overflow-wrap: anywhere; }
+  .embedded-copy :global(table) { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: .8rem; margin-block: 1rem; }
+  .embedded-copy :global(th), .embedded-copy :global(td) { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--color-border); }
+  @media (max-width: 700px) { .embedded-layout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; } .embedded-layout nav ol { display: flex; flex-wrap: wrap; gap: .7rem 1rem; } }
+</style>

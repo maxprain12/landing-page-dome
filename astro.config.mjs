@@ -10,16 +10,22 @@ import { dropLeadingH1 } from "./src/lib/mdast-drop-leading-h1.ts";
 export default defineConfig({
   site: "https://dome.dowi.es",
   redirects: Object.fromEntries(
-    ["", "/en"].flatMap((locale) =>
-      Object.entries({
-        pro: "library",
-        study: "learning",
-        dev: "integrations",
-      }).map(([from, to]) => [
-        `${locale}/${from}`,
-        { status: 301, destination: `${locale}/funciones/${to}` },
+    ["", "/en"].flatMap((locale) => [
+      ...Object.entries({
+        cms: "/complementos/dome-cms#manual",
+        complements: "/complementos#manual",
+        extension: "/extension#manual",
+        companion: "/companion#manual",
+      }).map(([slug, destination]) => [
+        `${locale}/manual/${slug}`,
+        { status: 301, destination: `${locale}${destination}` },
       ]),
-    ),
+      ...Object.entries({ pro: "library", study: "learning", dev: "integrations" })
+        .map(([from, to]) => [
+          `${locale}/${from}`,
+          { status: 301, destination: `${locale}/funciones/${to}` },
+        ]),
+    ]),
   ),
   i18n: {
     defaultLocale: "es",
@@ -35,6 +41,7 @@ export default defineConfig({
       changefreq: "weekly",
       priority: 0.7,
       filter: (page) =>
+        !/\/manual\/(cms|complements|extension|companion)\/?$/.test(new URL(page).pathname) &&
         !page.includes("/pricing") &&
         !/\/(pro|study|dev)\/?$/.test(new URL(page).pathname),
       serialize(item) {

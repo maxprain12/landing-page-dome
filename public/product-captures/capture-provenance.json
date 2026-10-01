@@ -1,0 +1,32 @@
+{
+  "capturedAt": "2026-10-01T11:49:09.426Z",
+  "desktopCommit": "530aad67fca5863418d0193ae30ed942977f28d0",
+  "renderer": "http://localhost:14573/",
+  "profiles": [
+    "web-media-cms-5215633f-b48b-4fb5-9eca-587520a5c4f5",
+    "web-media-settings-5215633f-b48b-4fb5-9eca-587520a5c4f5"
+  ],
+  "remoteWrites": false,
+  "captures": [
+    {
+      "file": "cms-library-component.png",
+      "sha256": "2d9aa7ac4ce5c370e6296be051b50f31f2de6a3a07c635c6847237b27a3f3b89"
+    },
+    {
+      "file": "cms-editor-component.png",
+      "sha256": "8a7ba8144681f7536b344c00e87a2235282ef15c671756066aec0f198bd9dead"
+    },
+    {
+      "file": "cms-fields-component.png",
+      "sha256": "9a62880b8a25f6428e75adb18ccdd8795950dd4e551c1c74e2e3bc22443e4a4f"
+    },
+    {
+      "file": "extension-settings-component.png",
+      "sha256": "4769b20cf3371aceeaf459af9df7dae1367a4220d56efffd6945c4b4bebc464e"
+    },
+    {
+      "file": "companion-settings-component.png",
+      "sha256": "1126c7b91c33bdf94770513e13f27eaaecd8dda2c07bd20500ce2cf11572a50d"
+    }
+  ]
+}

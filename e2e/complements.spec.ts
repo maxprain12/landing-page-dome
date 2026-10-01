@@ -17,7 +17,7 @@ for (const locale of ['', '/en']) {
     await expect(page.locator('h1')).toHaveText('Dome CMS');
     await expect(page.locator('a[href="dome://complements/plugins/dome-cms"]')).toBeVisible();
     await expect(page.locator('main a[href$="/download"]').first()).toBeVisible();
-    await expect(page.locator('main a[href$="/manual/cms"]')).toBeVisible();
+    await expect(page.locator('main a[href="#manual"]').first()).toBeVisible();
   });
 
   test(`features and manuals connect ${locale || 'es'}`, async ({ page }) => {

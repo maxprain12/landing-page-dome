@@ -24,7 +24,24 @@ Manage Markdown, languages and images and publish to your Astro repository.
 
 ## Expected result
 
-Publication writes <slug>.md in the configured folder. If hosting deploys on commit, that change starts its build.
+Publication writes `<slug>.md` in the configured folder. If hosting deploys on commit, that change starts its build.
+
+## Configure the Dome website
+
+Use the `maxprain12/landing-page-dome` repository and the public URL `https://dome.dowi.es`. To test editing and prepare a commit, select a test branch in the repository. Review the result before publishing to `main`.
+
+| Collection/language rule | Markdown folder |
+| --- | --- |
+| `blog/es` | `src/content/blog/es` |
+| `blog/en` | `src/content/blog/en` |
+| `manual/es` | `src/content/manual/es` |
+| `manual/en` | `src/content/manual/en` |
+
+Choose Spanish as the default language and **Prefix only other languages**: routes are `/blog/slug`, `/manual/slug`, `/en/blog/slug` and `/en/manual/slug`. CMS, Extension and Companion manuals appear within their detail pages: editing those Markdown files updates the embedded section, and their old URLs redirect to it.
+
+Keep `title`, `date`, `description`, optional `cover`, `tags` and `slug`. Inserted images are stored in the vault and published to `public/media/<slug>/`, accessible at `/media/<slug>/`. Feature pages and the catalog remain structured repository content.
+
+Use **Sync posts** to retrieve files from the selected branch, edit a draft and prepare publication to check its path and commit. Publishing requires your review; synchronization and translation do not publish automatically. The blog stays empty until you publish a new entry.
 
 ## If something fails
 

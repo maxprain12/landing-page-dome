@@ -1,0 +1,44 @@
+---
+import type { Locale } from '../i18n';
+interface Props { product: 'cms' | 'extension' | 'companion'; locale: Locale; }
+const { product, locale } = Astro.props;
+const es = locale === 'es';
+const media = {
+  cms: { title: es ? 'Del borrador a tu web.' : 'From draft to your website.', label: 'Dome CMS', caption: es ? 'Editor Markdown y borradores bilingües. Captura real de Dome con contenido de demostración.' : 'Markdown editor and bilingual drafts. Real Dome capture with demonstration content.', files: ['cms-editor-component', 'cms-library-component', 'cms-fields-component'], names: es ? ['Editor Markdown', 'Colecciones e idiomas', 'Propiedades de publicación'] : ['Markdown editor', 'Collections and languages', 'Publishing properties'], width: 1908, height: 1774 },
+  extension: { title: es ? 'Tu navegador. Tu biblioteca.' : 'Your browser. Your library.', label: es ? 'Conexión local' : 'Local connection', caption: es ? 'Extensión del navegador: conexión y emparejamiento en los ajustes de Desktop. Captura real de una instancia aislada.' : 'Browser extension: connection and pairing in Desktop settings. Real capture from an isolated instance.', files: ['extension-settings-component'], names: es ? ['Ajustes de Extensión en Desktop'] : ['Desktop extension settings'], width: 1408, height: 1124 },
+  companion: { title: es ? 'Many, al otro lado.' : 'Many, on the other side.', label: es ? 'Acceso remoto' : 'Remote access', caption: es ? 'Many remoto: configuración de Desktop para Companion. Captura real antes de activar y emparejar el iPhone.' : 'Remote Many: Desktop configuration for Companion. Real capture before enabling access and pairing an iPhone.', files: ['companion-settings-component'], names: es ? ['Ajustes de Many remoto en Desktop'] : ['Desktop remote Many settings'], width: 1408, height: 1514 },
+}[product];
+---
+<div class:list={['product-visual', product]} data-product-visual={product}>
+  <figure>
+    <div class="visual-stage">
+      <img class="stage-background" src="/product-captures/editorial-stage.jpg" alt="" width="1586" height="992" decoding="async" />
+      <div class="stage-copy"><p>{media.label}</p><h3>{media.title}</h3><span>{es ? 'Dentro de Dome' : 'Inside Dome'}</span></div>
+      <img class="stage-screen" src={`/product-captures/${media.files[0]}.png`} alt={media.names[0]} width={media.width} height={media.height} decoding="async" />
+    </div>
+    <figcaption>{media.caption}</figcaption>
+  </figure>
+  <details class="original-captures">
+    <summary>{es ? 'Ampliar capturas originales' : 'Enlarge original captures'} <span>{String(media.files.length).padStart(2, '0')}</span></summary>
+    <div class="capture-gallery">{media.files.map((file, index) => <figure><a href={`/product-captures/${file}.png`} target="_blank" rel="noopener" aria-label={`${media.names[index]} · ${es ? 'abrir imagen en una pestaña nueva' : 'open image in a new tab'}`}><img src={`/product-captures/${file}.png`} alt={media.names[index]} width={media.width} height={media.height} loading="lazy" decoding="async" /></a><figcaption>{media.names[index]}</figcaption></figure>)}</div>
+  </details>
+</div>
+<style>
+  .product-visual { margin-block: 1.5rem 2rem; min-width: 0; }
+  .visual-stage { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 16 / 10; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-bg); }
+  .stage-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+  .stage-copy { position: absolute; left: 5%; top: 12%; width: 28%; color: var(--color-text); }
+  .stage-copy p { color: var(--color-many-body); font: .65rem var(--font-mono); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem; }
+  .stage-copy h3 { font-size: clamp(1.15rem, 2.8vw, 2.2rem); font-weight: 600; line-height: 1.15; letter-spacing: -.04em; }
+  .stage-copy span { display: block; margin-top: 2rem; font-size: .7rem; color: var(--color-text-secondary); }
+  .stage-screen { position: absolute; width: 61%; height: auto; max-height: 89%; object-fit: contain; right: 3%; top: 6%; border-radius: 8px; transform: rotate(-1.5deg); box-shadow: 0 18px 45px var(--color-bg); }
+  .companion .stage-screen { width: 53%; right: 6%; transform: rotate(1.5deg); }
+  .product-visual figcaption { font-size: .75rem; color: var(--color-text-secondary); line-height: 1.6; padding-top: .8rem; }
+  .original-captures { margin-top: 1rem; border-top: 1px solid var(--color-border); }
+  .original-captures summary { cursor: pointer; padding: .8rem 0; font-size: .8rem; }
+  .original-captures summary span { font-family: var(--font-mono); color: var(--color-text-secondary); margin-left: .5rem; }
+  .capture-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; padding-block: .5rem 1rem; }
+  .capture-gallery img { display: block; width: 100%; height: auto; border: 1px solid var(--color-border); border-radius: 8px; }
+  .capture-gallery a { display: block; border-radius: 8px; }
+  @media (max-width: 600px) { .visual-stage { aspect-ratio: 1 / 1.12; } .stage-copy { top: 6%; width: 88%; } .stage-copy h3 { font-size: 1.5rem; max-width: 12rem; } .stage-copy p { margin-bottom: .5rem; } .stage-copy span { display: none; } .stage-screen, .companion .stage-screen { width: 74%; max-height: 66%; top: auto; bottom: 4%; right: 5%; } .capture-gallery { grid-template-columns: minmax(0, 1fr); } }
+</style>

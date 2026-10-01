@@ -9,6 +9,6 @@ const locale = "en" as const;
 const page = t(locale).pages.companion;
 ---
 
-<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/companion">
+<Layout locale={locale} title={page.title} description={page.description} ogImage="/product-captures/compositions/companion-en.png" canonicalPath="/companion">
   <ProductPage manualSlug="companion" locale={locale} page={page} stores={companionStores} shot={productShot("companion")} />
 </Layout>

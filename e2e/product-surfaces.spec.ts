@@ -11,7 +11,7 @@ for (const locale of ["", "/en"]) {
       await expect(page.locator(".pp-feature")).toHaveCount(3);
       await expect(page.locator(".pp-card")).toHaveCount(0);
       await expect(
-        page.locator(`main a[href="${locale}/manual/${product}"]`),
+        page.locator('main a[href="#manual"]'),
       ).toBeVisible();
       const results = await new AxeBuilder({ page }).analyze();
       expect(

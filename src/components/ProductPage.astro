@@ -1,4 +1,6 @@
 ---
+import EmbeddedManual from "./EmbeddedManual.astro";
+import ProductVisual from "./ProductVisual.astro";
 import ProductConnection from "./ProductConnection.astro";
 import { BookOpen, MessageCircle, CheckCheck, FileText, Globe, Quote, UserRound } from "@lucide/astro";
 import Nav from "./Nav.astro";
@@ -45,7 +47,7 @@ const contactHref = localizePath("/contact", locale);
         )
       }
       <a class="btn btn-text" href={downloadUrl(locale)}>{page.desktop}</a>
-      {Astro.props.manualSlug && <a class="btn btn-ghost" href={localizePath(`/manual/${Astro.props.manualSlug}`, locale)}>{locale === "es" ? "Leer el manual" : "Read the manual"}</a>}
+      {Astro.props.manualSlug && <a class="btn btn-ghost" href="#manual">{locale === "es" ? "Leer el manual" : "Read the manual"}</a>}
     </div>
   </div><ProductConnection locale={locale} product={product} /></section>
 
@@ -57,6 +59,7 @@ const contactHref = localizePath("/contact", locale);
     ) : null
   }
 
+  <div class="wrap pp-visual"><ProductVisual product={product} locale={locale} /></div>
   <section class="wrap pp-section" aria-labelledby="pp-features">
     <h2 id="pp-features" class="pp-h2">{page.featuresTitle}</h2>
     <ul class="pp-grid" role="list">
@@ -117,6 +120,8 @@ const contactHref = localizePath("/contact", locale);
     </div>
   </section>
 
+  {Astro.props.manualSlug && <div class="wrap pp-section"><EmbeddedManual locale={locale} slug={Astro.props.manualSlug} title={locale === "es" ? "Manual y resolución de problemas" : "Manual and troubleshooting"} /></div>}
+
   <section class="wrap pp-final">
     <h2 class="h-display pp-final-h2">{page.finalTitle}</h2>
     <p class="pp-lead">{page.finalLead}</p>
@@ -135,6 +140,7 @@ const contactHref = localizePath("/contact", locale);
 <Footer locale={locale} />
 
 <style>
+  .pp-visual { max-width: 1120px; margin: 3rem auto 0; }
   .pp {
     padding: clamp(3rem, 6vw, 5rem) 0 4rem;
   }

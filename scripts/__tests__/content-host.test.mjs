@@ -30,6 +30,13 @@ test('production host serves replacements, redirects old manuals and returns 410
     }
     assert.equal((await fetch(`${base}${locale}/manual/library`)).status, 200);
     assert.equal((await fetch(`${base}${locale}/complementos/dome-cms`)).status, 200);
+    for (const [slug, destination] of [['cms', '/complementos/dome-cms#manual'], ['complements', '/complementos#manual'], ['extension', '/extension#manual'], ['companion', '/companion#manual']]) {
+      const response = await fetch(`${base}${locale}/manual/${slug}/`, { redirect: 'manual' });
+      assert.equal(response.status, 301);
+      assert.equal(response.headers.get('location'), `${locale}${destination}`);
+      const detail = await (await fetch(`${base}${locale}${destination.split('#')[0]}`)).text();
+      assert.match(detail, new RegExp(`data-embedded-manual="${slug}"`));
+    }
     const rss = await (await fetch(`${base}${locale}/rss.xml`)).text();
     assert.match(rss, /<rss/);
     assert.doesNotMatch(rss, /<item>/);
@@ -37,6 +44,7 @@ test('production host serves replacements, redirects old manuals and returns 410
   const sitemap = fs.readFileSync(new URL('dist/sitemap-0.xml', root), 'utf8');
   assert.doesNotMatch(sitemap, /\/(pro|study|dev)(?:<|\/)/);
   assert.doesNotMatch(sitemap, /\/blog\/(pdf-to-follow-up|local-first|many-with-ollama)/);
+  assert.doesNotMatch(sitemap, /\/manual\/(cms|complements|extension|companion)(?:<|\/)/);
 });
 
 test('generated feature, add-on and manual links resolve in both locales', () => {

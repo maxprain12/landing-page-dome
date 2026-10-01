@@ -7,4 +7,4 @@ const { item } = Astro.props;
 const locale = "es" as const;
 const copy = item.locales[locale];
 ---
-<Layout locale={locale} title={`${item.name} · Dome`} description={copy.description} canonicalPath={`/complementos/${item.slug}`}><ComplementsPage locale={locale} slug={item.slug} /></Layout>
+<Layout locale={locale} title={`${item.name} · Dome`} description={copy.description} ogImage={item.id === "dome-cms" ? "/product-captures/compositions/cms.png" : undefined} canonicalPath={`/complementos/${item.slug}`}><ComplementsPage locale={locale} slug={item.slug} /></Layout>

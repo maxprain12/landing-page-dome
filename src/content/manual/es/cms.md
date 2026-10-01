@@ -24,7 +24,24 @@ Gestiona Markdown, idiomas e imágenes y publica en tu repositorio Astro.
 
 ## Resultado esperado
 
-La publicación escribe <slug>.md en la carpeta configurada. Si el hosting despliega al recibir un commit, ese cambio inicia su build.
+La publicación escribe `<slug>.md` en la carpeta configurada. Si el hosting despliega al recibir un commit, ese cambio inicia su build.
+
+## Configurar la web de Dome
+
+Usa el repositorio `maxprain12/landing-page-dome` y la URL pública `https://dome.dowi.es`. Para probar la edición y preparar un commit, selecciona una rama de prueba del repositorio. Revisa el resultado antes de publicar en `main`.
+
+| Regla colección/idioma | Carpeta Markdown |
+| --- | --- |
+| `blog/es` | `src/content/blog/es` |
+| `blog/en` | `src/content/blog/en` |
+| `manual/es` | `src/content/manual/es` |
+| `manual/en` | `src/content/manual/en` |
+
+Elige español como idioma por defecto y **Prefijo solo en los otros idiomas**: las rutas son `/blog/slug`, `/manual/slug`, `/en/blog/slug` y `/en/manual/slug`. Los manuales de CMS, Extensión y Companion se presentan dentro de sus fichas: editar esos Markdown actualiza la sección integrada y su URL antigua redirige a ella.
+
+Conserva los campos `title`, `date`, `description`, `cover` (opcional), `tags` y `slug`. Las imágenes insertadas se guardan en la bóveda y se publican en `public/media/<slug>/`, accesibles desde `/media/<slug>/`. Las páginas de funciones y el catálogo se mantienen como contenido estructurado del repositorio.
+
+Pulsa **Sincronizar posts** para traer los archivos de la rama elegida, edita un borrador y prepara la publicación para comprobar su ruta y commit. Publicar requiere tu revisión; sincronizar y traducir no publican automáticamente. El blog permanece vacío hasta que publiques una entrada nueva.
 
 ## Si algo falla
 
