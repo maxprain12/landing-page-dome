@@ -17,4 +17,4 @@ try {
     await stage.screenshot({ path: path.join(output, `${product}${locale ? '-en' : ''}.png`) });
   }
 } finally { await browser.close(); }
-console.log('Exported six bilingual compositions with the original captured UI.');
+console.log('Exported six bilingual compositions with the editorial flow illustrations.');
