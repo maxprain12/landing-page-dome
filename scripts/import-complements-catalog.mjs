@@ -5,7 +5,7 @@ import { pathToFileURL, fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const desktop = path.resolve(process.argv.slice(2).find((arg) => !arg.startsWith('--')) || path.join(root, '../dome'));
 const { validateCatalog } = await import(pathToFileURL(path.join(desktop, 'scripts/export-complements-catalog.mjs')).href);
-const source = validateCatalog(JSON.parse(fs.readFileSync(path.join(desktop, 'public/complements-catalog.json'), 'utf8')), desktop);
+const source = validateCatalog(JSON.parse(fs.readFileSync(path.join(desktop, 'app/lib/marketplace/complements-catalog.json'), 'utf8')), desktop);
 const target = path.join(root, 'src/data/complements-catalog.json');
 const json = `${JSON.stringify(source, null, 2)}\n`;
 if (process.argv.includes('--check')) {
