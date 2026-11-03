@@ -47,7 +47,7 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
           headingHref: catalog,
           items: [
             { href: path("/extension"), label: copy.nav.extension },
-            { href: path("/funciones/agents"), label: copy.nav.manyAgents },
+            { href: path("/many-agents"), label: copy.nav.manyAgents },
           ],
         },
         {
@@ -88,7 +88,7 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
           items: [
             { href: path("/funciones/integrations"), label: copy.nav.integrations },
             { href: path("/companion"), label: copy.nav.mobileApp },
-            { href: path("/funciones/agents"), label: copy.nav.manyAgents },
+            { href: path("/many-agents"), label: copy.nav.manyAgents },
           ],
         },
       ],

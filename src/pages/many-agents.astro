@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ManyAgentsPage from "../components/ManyAgentsPage.astro";
+import { manyAgentsPages } from "../data/many-agents";
+
+const locale = "es" as const;
+const page = manyAgentsPages[locale];
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/many-agents">
+  <ManyAgentsPage locale={locale} />
+</Layout>
