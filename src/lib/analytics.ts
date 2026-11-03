@@ -3,7 +3,7 @@
  * accepts it and only on the production host (src/scripts/consent.ts). The container holds a single Google tag
  * for the GA4 stream "Dome web".
  */
-export const GTM_ID = "GTM-KBF9GH2P";
+export const GTM_ID = "GTM-MLQXMMTT";
 export const GA_ID = "G-ZMJGZGWT5E";
 /** Local builds, previews and copies of the site never report to this property. */
 export const ANALYTICS_HOSTS = ["dome.dowi.es"];
