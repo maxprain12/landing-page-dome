@@ -36,6 +36,7 @@ test('mobile catalog and keyboard filters remain accessible', async ({ page }) =
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/complementos');
   await page.getByRole('button', { name: /abrir menú/i }).click();
+  await page.locator('.nav-panel summary', { hasText: 'Producto' }).click();
   await expect(page.locator('.nav-panel').getByRole('link', { name: 'App móvil', exact: true })).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.locator('.nav-panel')).toBeHidden();

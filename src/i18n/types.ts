@@ -82,6 +82,24 @@ export interface Dictionary {
     companionHint: string;
     extension: string;
     extensionHint: string;
+    exploreCol: string;
+    addOnsCol: string;
+    accessCol: string;
+    audienceCol: string;
+    servicesCol: string;
+    about: string;
+    updates: string;
+    students: string;
+    marketing: string;
+    teams: string;
+    notesDocs: string;
+    studyLearning: string;
+    teamManagement: string;
+    automations: string;
+    librarySearch: string;
+    integrations: string;
+    mobileApp: string;
+    manyAgents: string;
   };
   content: {
     read: string;

@@ -1,0 +1,17 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AudiencePage from "../../components/AudiencePage.astro";
+import { audiencePages, audienceSlugs, type AudienceSlug } from "../../data/audience-pages";
+
+export function getStaticPaths() {
+  return audienceSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const locale = "es" as const;
+const slug = Astro.params.slug as AudienceSlug;
+const page = audiencePages[slug][locale];
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath={`/para/${slug}`}>
+  <AudiencePage locale={locale} page={page} />
+</Layout>

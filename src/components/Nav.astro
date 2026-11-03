@@ -1,6 +1,6 @@
 ---
 import { brand, downloadUrl } from "../data/landing";
-import { accountUrl, navDirectLinks, navMenus } from "../data/nav";
+import { navMenus } from "../data/nav";
 import { alternatePath, localeFromPath, localeHome, t, type Locale } from "../i18n";
 import DomeIcon from "./icons/DomeIcon.astro";
 
@@ -15,9 +15,7 @@ const copy = t(locale);
 const home = localeHome(locale);
 const esHref = Astro.props.esHref ?? alternatePath(Astro.url.pathname, "es");
 const enHref = Astro.props.enHref ?? alternatePath(Astro.url.pathname, "en");
-const loginHref = accountUrl();
 const menus = navMenus(locale, copy);
-const directLinks = navDirectLinks(locale, copy);
 const downloadHref = downloadUrl(locale);
 ---
 
@@ -46,8 +44,8 @@ const downloadHref = downloadUrl(locale);
             <div class="nav-mega" id={`nav-menu-${menu.id}`} style={`--nav-cols: ${menu.columns.length}`} data-nav-panel hidden>
               {
                 menu.columns.map((column) => (
-                  <div class="nav-col">
-                    <p class="nav-colh">{column.heading}</p>
+                  <div class:list={["nav-col", column.variant === "audience" && "nav-col-audience"]}>
+                    {column.headingHref ? <a class="nav-colh nav-colh-link" href={column.headingHref}>{column.heading}</a> : <p class="nav-colh">{column.heading}</p>}
                     <ul class="nav-col-list" role="list">
                       {column.items.map((item) => (
                         <li>
@@ -57,7 +55,6 @@ const downloadHref = downloadUrl(locale);
                             rel={item.external ? "noopener" : undefined}
                           >
                             <span class="nav-item-label">{item.label}</span>
-                            {item.hint ? <span class="nav-item-hint">{item.hint}</span> : null}
                           </a>
                         </li>
                       ))}
@@ -67,11 +64,6 @@ const downloadHref = downloadUrl(locale);
               }
             </div>
           </div>
-        ))
-      }
-      {
-        directLinks.map((item) => (
-          <a href={item.href}>{item.label}</a>
         ))
       }
     </nav>
@@ -93,7 +85,6 @@ const downloadHref = downloadUrl(locale);
           aria-current={locale === "en" ? "true" : undefined}>{copy.nav.langEn}</a
         >
       </div>
-      <a class="nav-login" href={loginHref}>{copy.nav.login}</a>
       <a class="nav-cta" href={downloadHref}>
         {copy.nav.download}
       </a>
@@ -123,8 +114,8 @@ const downloadHref = downloadUrl(locale);
               </span>
             </summary>
             {menu.columns.map((column) => (
-              <div class="nav-acc-col">
-                <p class="nav-colh">{column.heading}</p>
+              <div class:list={["nav-acc-col", column.variant === "audience" && "nav-col-audience"]}>
+                {column.headingHref ? <a class="nav-colh nav-colh-link" href={column.headingHref}>{column.heading}</a> : <p class="nav-colh">{column.heading}</p>}
                 {column.items.map((item) => (
                   <a
                     href={item.href}
@@ -139,12 +130,6 @@ const downloadHref = downloadUrl(locale);
           </details>
         ))
       }
-      {
-        directLinks.map((item) => (
-          <a href={item.href}>{item.label}</a>
-        ))
-      }
-      <a href={loginHref}>{copy.nav.login}</a>
       <div class="nav-lang nav-panel-lang" role="group" aria-label={copy.nav.langLabel}>
         <a
           class:list={["nav-lang-btn", locale === "es" && "is-on"]}
@@ -345,9 +330,9 @@ const downloadHref = downloadUrl(locale);
     left: 50%;
     translate: -50% 0;
     display: grid;
-    grid-template-columns: repeat(var(--nav-cols, 2), minmax(12rem, 1fr));
-    gap: 1.4rem 2rem;
-    min-width: calc(var(--nav-cols, 2) * 15.5rem);
+    grid-template-columns: repeat(var(--nav-cols, 3), minmax(11rem, 1fr));
+    gap: 1.4rem 1.65rem;
+    width: min(720px, calc(100vw - 2.2rem));
     padding: 1.15rem 1.25rem 1.2rem;
     background: color-mix(in srgb, var(--color-zinc-850) 96%, transparent);
     border: 1px solid var(--color-border);
@@ -365,6 +350,12 @@ const downloadHref = downloadUrl(locale);
     text-transform: uppercase;
     color: var(--color-ink-3);
     margin: 0 0 0.7rem;
+  }
+  .nav-colh-link {
+    display: inline-block;
+  }
+  .nav-colh-link:hover {
+    color: var(--color-text);
   }
   .nav-col-list {
     list-style: none;
@@ -384,10 +375,10 @@ const downloadHref = downloadUrl(locale);
     font-weight: 600;
     font-size: 0.92rem;
   }
-  .nav-item-hint {
-    font-size: 0.78rem;
-    color: var(--color-text-secondary);
-    font-weight: 450;
+  .nav-col-audience .nav-item-label {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: -0.035em;
   }
   .nav-actions {
     display: flex;
@@ -425,16 +416,6 @@ const downloadHref = downloadUrl(locale);
   .nav-lang-btn.is-on {
     background: color-mix(in srgb, var(--color-white) 92%, transparent);
     color: var(--color-bg);
-  }
-  .nav-login {
-    padding: 0.4rem 0.65rem;
-    border-radius: 999px;
-    color: var(--color-text-secondary);
-    font-size: 0.86rem;
-    font-weight: 550;
-  }
-  .nav-login:hover {
-    color: var(--color-text);
   }
   .nav-cta {
     display: inline-flex;
@@ -476,11 +457,6 @@ const downloadHref = downloadUrl(locale);
   }
   .nav-panel {
     display: none;
-  }
-  @media (max-width: 1080px) {
-    .nav-login {
-      display: none;
-    }
   }
   @media (max-width: 1180px) {
     .nav-shell {
@@ -561,6 +537,16 @@ const downloadHref = downloadUrl(locale);
     }
     .nav-acc-col .nav-colh {
       margin: 0.45rem 0.6rem 0.15rem;
+    }
+    .nav-acc-col .nav-colh-link {
+      width: auto;
+      padding: 0;
+      border-radius: 0;
+      color: var(--color-ink-3);
+    }
+    .nav-col-audience > a:not(.nav-colh) {
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
     }
     .nav-panel-lang {
       display: flex;
