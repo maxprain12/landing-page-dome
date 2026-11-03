@@ -360,6 +360,14 @@ export const es: Dictionary = {
     rights: "Todos los derechos reservados.",
     companion: "Companion para iPhone",
     extension: "Extensión de navegador",
+    cookies: "Preferencias de cookies",
+  },
+  consent: {
+    title: "Cookies de analítica",
+    body: "Usamos Google Analytics, solo si lo aceptas, para saber qué páginas se leen y mejorar el sitio. No usamos cookies de publicidad.",
+    more: "Más información",
+    reject: "Rechazar",
+    accept: "Aceptar",
   },
   legal: {
     back: "Volver al inicio",

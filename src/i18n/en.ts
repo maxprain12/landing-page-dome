@@ -360,6 +360,14 @@ export const en: Dictionary = {
     rights: "All rights reserved.",
     companion: "Companion for iPhone",
     extension: "Browser extension",
+    cookies: "Cookie preferences",
+  },
+  consent: {
+    title: "Analytics cookies",
+    body: "We use Google Analytics, only if you accept, to see which pages are read and improve the site. We don't use advertising cookies.",
+    more: "Learn more",
+    reject: "Reject",
+    accept: "Accept",
   },
   legal: {
     back: "Back to home",
