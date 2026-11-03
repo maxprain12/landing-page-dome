@@ -12,4 +12,4 @@ Packs sociales: `public/social-drafts/` + `pnpm run check:social-drafts`. No pub
 
 Login/account URLs: `PUBLIC_DOME_ACCOUNT_URL` (no hardcodear el provider en componentes). Índice de releases: `PUBLIC_RELEASES_INDEX_URL` (fallback `https://dl.dowi.es/index.json`). Sister repos: [dome](https://github.com/maxprain12/dome), [dome-provider](https://github.com/maxprain12/dome-provider), [dome-companion](https://github.com/maxprain12/dome-companion).
 
-Analítica: GA4 (`G-ZMJGZGWT5E`) vía GTM (`GTM-KBF9GH2P`), constantes en `src/lib/analytics.ts`. Solo carga en `dome.dowi.es` tras «Aceptar» en el banner (`src/components/CookieConsent.astro`, `src/scripts/consent.ts`, Consent Mode v2). No añadir etiquetas que salten el consentimiento; las nuevas etiquetas se gestionan en el contenedor GTM.
+Analítica: GA4 (`G-ZMJGZGWT5E`) vía GTM (`GTM-MLQXMMTT`), constantes en `src/lib/analytics.ts`. Solo carga en `dome.dowi.es` tras «Aceptar» en el banner (`src/components/CookieConsent.astro`, `src/scripts/consent.ts`, Consent Mode v2). No añadir etiquetas que salten el consentimiento; las nuevas etiquetas se gestionan en el contenedor GTM.
