@@ -26,7 +26,6 @@ const productLinks: FooterLink[] = [
   { href: hash("#como-funciona"), label: copy.footer.how },
   { href: hash("#confianza"), label: copy.footer.trust },
   { href: hash("#faq"), label: copy.footer.faq },
-  { href: localizePath("/pricing", locale), label: copy.footer.pricing },
   { href: localizePath("/funciones", locale), label: locale === "es" ? "Funciones" : "Features" },
   { href: localizePath("/complementos", locale), label: locale === "es" ? "Complementos" : "Add-ons" },
   { href: downloadUrl(locale), label: copy.footer.download },
@@ -45,6 +44,7 @@ const featureLinks: FooterLink[] = [
 const resourceLinks: FooterLink[] = [
   { href: localizePath("/blog", locale), label: copy.footer.blog },
   { href: localizePath("/manual", locale), label: copy.footer.manual },
+  { href: localizePath("/sobre-nosotros", locale), label: copy.nav.about },
   { href: localizePath("/local-first", locale), label: copy.footer.localFirst },
   { href: localizePath("/rss.xml", locale), label: copy.footer.rss },
   { href: changelogUrl(locale), label: copy.footer.changelog },

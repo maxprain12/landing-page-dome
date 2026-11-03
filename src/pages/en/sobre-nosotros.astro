@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import MarketingShell from "../../components/MarketingShell.astro";
+import { aboutPages } from "../../data/audience-pages";
+import { localizePath } from "../../i18n";
+
+const locale = "en" as const;
+const page = aboutPages[locale];
+---
+
+<Layout locale={locale} title={page.title} description={page.description} canonicalPath="/sobre-nosotros">
+  <MarketingShell locale={locale} page={page} secondaryHref={localizePath("/funciones", locale)} />
+</Layout>

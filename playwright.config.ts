@@ -9,7 +9,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'pnpm run build && pnpm exec astro preview --host 127.0.0.1 --port 4322',
+    command: 'pnpm run build && PORT=4322 pnpm run start',
     url: 'http://127.0.0.1:4322',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,

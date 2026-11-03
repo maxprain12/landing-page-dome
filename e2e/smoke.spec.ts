@@ -84,26 +84,24 @@ test('desktop resources menu opens with the keyboard', async ({ page }) => {
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 });
 
-test('feature and catalog navigation resolves from inner pages', async ({ page }) => {
+test('product and catalog navigation resolves from inner pages', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/blog');
-  await expect(page.locator('.nav-links').getByRole('link', { name: 'Funciones', exact: true })).toHaveAttribute('href', '/funciones');
-  await expect(page.locator('.nav-links').getByRole('link', { name: 'Complementos', exact: true })).toHaveAttribute('href', '/complementos');
+  await page.getByRole('button', { name: 'Producto' }).click();
+  const menu = page.locator('#nav-menu-product');
+  await expect(menu.getByRole('link', { name: 'Estudiantes' })).toHaveAttribute('href', '/para/estudiantes');
+  await expect(menu.getByRole('link', { name: 'Complementos' })).toHaveAttribute('href', '/complementos');
 });
 
-test('mobile menu stacks product links and keeps the language toggle in its pill', async ({ page }) => {
+test('mobile menu exposes product groups and keeps the language toggle in its pill', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.getByRole('button', { name: /abrir menú|open menu/i }).click();
   const panel = page.locator('.nav-panel');
-  const how = panel.getByRole('link', { name: /^funciones$|^features$/i });
-  const editions = panel.getByRole('link', { name: /^(complementos|add-ons)$/i });
-  const howBox = await how.boundingBox();
-  const editionsBox = await editions.boundingBox();
-  expect(howBox).toBeTruthy();
-  expect(editionsBox).toBeTruthy();
-  expect(editionsBox!.y).toBeGreaterThan(howBox!.y + 12);
-  expect(howBox!.width).toBeGreaterThan(200);
+  await panel.locator('summary', { hasText: 'Producto' }).click();
+  await expect(panel.getByRole('link', { name: 'Estudiantes' })).toBeVisible();
+  await expect(panel.getByRole('link', { name: 'Gestión de equipos' })).toBeVisible();
+  await expect(panel.getByRole('link', { name: 'Complementos' })).toHaveAttribute('href', '/complementos');
   const lang = panel.locator('.nav-lang');
   await expect(lang).toBeVisible();
   const langBox = await lang.boundingBox();

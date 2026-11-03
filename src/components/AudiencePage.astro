@@ -1,0 +1,45 @@
+---
+import MarketingShell from "./MarketingShell.astro";
+import { localizePath, type Locale } from "../i18n";
+import type { AudienceCopy } from "../data/audience-pages";
+
+interface Props {
+  locale: Locale;
+  page: AudienceCopy;
+}
+
+const { locale, page } = Astro.props;
+---
+
+<MarketingShell locale={locale} page={page} secondaryHref={localizePath("/funciones", locale)}>
+  <section class="aud-related" aria-labelledby="aud-related-title">
+    <p class="eyebrow">{locale === "es" ? "Sigue explorando" : "Keep exploring"}</p>
+    <h2 id="aud-related-title">{page.relatedTitle}</h2>
+    <ul role="list">
+      {page.related.map((feature, index) => (
+        <li>
+          <a href={localizePath(`/funciones/${feature.slug}`, locale)}>
+            <span class="aud-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+            <span class="aud-text"><strong>{feature.label}</strong><span>{feature.description}</span></span>
+            <span class="aud-arrow" aria-hidden="true">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</MarketingShell>
+
+<style>
+  .aud-related { padding-top: 2.4rem; border-top: 1px solid var(--color-border); }
+  .aud-related h2 { font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.04em; margin: .35rem 0 1.4rem; }
+  .aud-related ul { list-style: none; display: grid; gap: .65rem; }
+  .aud-related li a { display: grid; grid-template-columns: 2.1rem minmax(0, 1fr) auto; align-items: start; gap: 1rem; padding: 1.05rem 1.15rem; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 16px; transition: border-color .18s ease, background .18s ease; }
+  .aud-related li a:hover { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-surface) 88%, var(--color-accent)); }
+  .aud-related li a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  .aud-index { color: var(--color-ink-3); font-size: .78rem; padding-top: .2rem; }
+  .aud-text { display: grid; gap: .2rem; }
+  .aud-text strong { color: var(--color-text); font-size: 1.05rem; font-weight: 600; }
+  .aud-text span { color: var(--color-text-secondary); line-height: 1.45; }
+  .aud-arrow { color: var(--color-accent); }
+  @media (prefers-reduced-motion: reduce) { .aud-related li a { transition: none; } }
+</style>
