@@ -1,0 +1,93 @@
+---
+import { localeFromPath, localizePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale: Locale = Astro.props.locale ?? localeFromPath(Astro.url.pathname);
+const copy = t(locale).consent;
+---
+
+<section class="cookie-banner" role="region" aria-label={copy.title} data-cookie-banner>
+  <p>
+    {copy.body}
+    <a href={localizePath("/privacy", locale)}>{copy.more}</a>
+  </p>
+  <div class="cookie-actions">
+    <button type="button" class="cookie-btn" data-consent-choice="reject">{copy.reject}</button>
+    <button type="button" class="cookie-btn cookie-btn-primary" data-consent-choice="accept">{copy.accept}</button>
+  </div>
+</section>
+
+<script>
+  import "../scripts/consent.ts";
+</script>
+
+<style is:global>
+  .cookie-banner {
+    display: none;
+    position: fixed;
+    inset-inline: 0.75rem;
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    z-index: 60;
+    max-width: 28rem;
+    margin-inline: auto;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  }
+  html.consent-pending .cookie-banner {
+    display: flex;
+  }
+  .cookie-banner p {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+  .cookie-banner a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cookie-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .cookie-btn {
+    font: inherit;
+    font-weight: 600;
+    padding: 0.5rem 1.1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+  .cookie-btn:hover {
+    border-color: var(--color-text-secondary);
+  }
+  .cookie-btn-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+  .cookie-btn-primary:hover {
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+  @media (min-width: 640px) {
+    .cookie-banner {
+      inset-inline: auto 1rem;
+      margin-inline: 0;
+    }
+  }
+</style>

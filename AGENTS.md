@@ -11,3 +11,5 @@ pnpm run verify
 Packs sociales: `public/social-drafts/` + `pnpm run check:social-drafts`. No publicar sin `VALIDATION.md` firmado (puerta 5: escenario PDF+persona concreto y UI Dome real, sin jerga SaaS; secuencia 1→2→3; formato cerrado; tokens Many lima/oliva + Inter).
 
 Login/account URLs: `PUBLIC_DOME_ACCOUNT_URL` (no hardcodear el provider en componentes). Índice de releases: `PUBLIC_RELEASES_INDEX_URL` (fallback `https://dl.dowi.es/index.json`). Sister repos: [dome](https://github.com/maxprain12/dome), [dome-provider](https://github.com/maxprain12/dome-provider), [dome-companion](https://github.com/maxprain12/dome-companion).
+
+Analítica: GA4 (`G-ZMJGZGWT5E`) vía GTM (`GTM-KBF9GH2P`), constantes en `src/lib/analytics.ts`. Solo carga en `dome.dowi.es` tras «Aceptar» en el banner (`src/components/CookieConsent.astro`, `src/scripts/consent.ts`, Consent Mode v2). No añadir etiquetas que salten el consentimiento; las nuevas etiquetas se gestionan en el contenedor GTM.

@@ -134,6 +134,7 @@ const legalLinks: FooterLink[] = [
           {legalLinks.map((item) => (
             <li><a href={item.href}>{item.label}</a></li>
           ))}
+          <li><button type="button" class="ft-link-btn" data-consent-reopen>{copy.footer.cookies}</button></li>
         </ul>
       </div>
     </div>
@@ -260,6 +261,18 @@ const legalLinks: FooterLink[] = [
   }
   .ft-list a:hover {
     color: #fafafa;
+  }
+  .ft-link-btn {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+  }
+  .ft-link-btn:hover {
+    color: var(--color-text);
   }
   .ft-ext {
     font-size: 0.72rem;

@@ -240,6 +240,14 @@ export interface Dictionary {
     rights: string;
     companion: string;
     extension: string;
+    cookies: string;
+  };
+  consent: {
+    title: string;
+    body: string;
+    more: string;
+    reject: string;
+    accept: string;
   };
   legal: {
     back: string;
