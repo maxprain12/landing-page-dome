@@ -1,0 +1,9 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import ComparisonsPage from "../../../components/ComparisonsPage.astro";
+import { comparisons } from "../../../data/comparisons";
+export function getStaticPaths() { return comparisons.map((comparison) => ({ params: { slug: comparison.slug }, props: { comparison } })); }
+const { comparison } = Astro.props;
+const copy = comparison.locales.en;
+---
+<Layout locale="en" title={`Dome vs ${comparison.name} · Comparison`} description={copy.answer} canonicalPath={`/conectores/${comparison.slug}`}><ComparisonsPage locale="en" comparison={comparison} /></Layout>
