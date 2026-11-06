@@ -59,6 +59,7 @@ export const es: Dictionary = {
     integrations: "Integraciones",
     mobileApp: "App móvil",
     manyAgents: "Many agents",
+    connectors: "Conectores",
   },
   content: {
     read: "Lectura",
