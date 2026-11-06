@@ -54,7 +54,8 @@ const downloadHref = downloadUrl(locale);
                             target={item.external ? "_blank" : undefined}
                             rel={item.external ? "noopener" : undefined}
                           >
-                            <span class="nav-item-label">{item.label}</span>
+                            {item.mark ? <span class:list={["nav-item-icon", item.tone]} aria-hidden="true">{item.icon ? <img src={item.icon} alt="" width="23" height="23" /> : item.mark}</span> : null}
+                            <span class="nav-item-text"><span class="nav-item-label">{item.label}</span>{item.description ? <span class="nav-item-desc">{item.description}</span> : null}</span>
                           </a>
                         </li>
                       ))}
@@ -62,6 +63,7 @@ const downloadHref = downloadUrl(locale);
                   </div>
                 ))
               }
+              {menu.id === "connectors" ? <a class="nav-mega-all" href={locale === "es" ? "/conectores" : "/en/conectores"}>{locale === "es" ? "Todas las comparaciones" : "All comparisons"} →</a> : null}
             </div>
           </div>
         ))
@@ -122,11 +124,13 @@ const downloadHref = downloadUrl(locale);
                     target={item.external ? "_blank" : undefined}
                     rel={item.external ? "noopener" : undefined}
                   >
-                    {item.label}
+                    {item.mark ? <span class:list={["nav-item-icon", item.tone]} aria-hidden="true">{item.icon ? <img src={item.icon} alt="" width="23" height="23" /> : item.mark}</span> : null}
+                    <span class="nav-item-text"><span class="nav-item-label">{item.label}</span>{item.description ? <span class="nav-item-desc">{item.description}</span> : null}</span>
                   </a>
                 ))}
               </div>
             ))}
+            {menu.id === "connectors" ? <a class="nav-acc-all" href={locale === "es" ? "/conectores" : "/en/conectores"}>{locale === "es" ? "Todas las comparaciones" : "All comparisons"} →</a> : null}
           </details>
         ))
       }
@@ -333,7 +337,7 @@ const downloadHref = downloadUrl(locale);
     display: grid;
     grid-template-columns: repeat(var(--nav-cols, 3), minmax(11rem, 1fr));
     gap: 1.4rem 1.65rem;
-    width: min(720px, calc(100vw - 2.2rem));
+    width: min(800px, calc(100vw - 2.2rem));
     padding: 1.15rem 1.25rem 1.2rem;
     background: color-mix(in srgb, var(--color-zinc-850) 96%, transparent);
     border: 1px solid var(--color-border);
@@ -344,6 +348,9 @@ const downloadHref = downloadUrl(locale);
   .nav-mega[hidden] {
     display: none;
   }
+  .nav-mega-all { grid-column: 1 / -1; display: block; padding: .85rem .65rem .1rem; border-top: 1px solid var(--color-border); color: var(--color-text); font-weight: 600; font-size: .88rem; text-align: right; }
+  .nav-mega-all:hover { color: var(--color-olive-wash); }
+  .nav-acc-all { display: block; margin: .15rem .4rem .6rem; color: var(--color-olive-wash); font-weight: 600; }
   .nav-colh {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -363,7 +370,7 @@ const downloadHref = downloadUrl(locale);
   }
   .nav-col-list a {
     display: flex;
-    flex-direction: column;
+    align-items: flex-start;
     gap: 0.12rem;
     padding: 0.55rem 0.65rem;
     border-radius: 12px;
@@ -376,6 +383,15 @@ const downloadHref = downloadUrl(locale);
     font-weight: 600;
     font-size: 0.92rem;
   }
+  .nav-item-text { display: flex; flex-direction: column; gap: 0.12rem; min-width: 0; }
+  .nav-item-desc { color: var(--color-text-secondary); font-size: .77rem; font-weight: 400; line-height: 1.35; }
+  .nav-item-icon { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 2.2rem; height: 2.2rem; border-radius: .65rem; background: var(--color-compare-icon-bg); color: var(--color-compare-icon-ink); font-size: 1.2rem; font-weight: 800; letter-spacing: -.08em; }
+  .nav-item-icon.google, .nav-item-icon.notebooklm { color: var(--color-compare-google); }
+  .nav-item-icon.microsoft { color: var(--color-compare-microsoft); }
+  .nav-item-icon.clickup { color: var(--color-compare-clickup); background: var(--color-compare-clickup-bg); }
+  .nav-item-icon.canva { color: var(--color-white); background: var(--color-compare-canva); font-family: Georgia, serif; font-style: italic; }
+  .nav-item-icon.obsidian { color: var(--color-compare-obsidian); background: var(--color-compare-obsidian-bg); }
+  .nav-item-icon img { display: block; width: 23px; height: 23px; }
   .nav-col-audience .nav-item-label {
     font-size: 1.3rem;
     font-weight: 500;
