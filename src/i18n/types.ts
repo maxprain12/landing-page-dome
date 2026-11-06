@@ -100,6 +100,7 @@ export interface Dictionary {
     integrations: string;
     mobileApp: string;
     manyAgents: string;
+    connectors: string;
   };
   content: {
     read: string;
