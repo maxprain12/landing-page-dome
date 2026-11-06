@@ -102,9 +102,8 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
       id: "connectors",
       label: copy.nav.connectors,
       columns: [
-        { heading: locale === "es" ? "Documentos y trabajo" : "Docs and work", headingHref: path("/conectores"), items: comparisons.slice(0, 4).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
-        { heading: locale === "es" ? "Investigar y crear" : "Research and create", items: comparisons.slice(4, 6).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
-        { heading: locale === "es" ? "Código y notas" : "Code and notes", items: comparisons.slice(6).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
+        { heading: locale === "es" ? "Documentos y proyectos" : "Docs and projects", items: [0, 2, 4, 6].map((index) => comparisons[index]).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
+        { heading: locale === "es" ? "Creación y notas" : "Creation and notes", items: [1, 3, 5, 7].map((index) => comparisons[index]).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
       ],
     },
   ];
