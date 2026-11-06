@@ -1,10 +1,15 @@
 import { changelogUrl, links } from "./landing";
 import { localizePath, type Dictionary, type Locale } from "../i18n";
+import { comparisons, comparisonPath } from "./comparisons";
 
 export type NavItem = {
   href: string;
   label: string;
   external?: boolean;
+  description?: string;
+  mark?: string;
+  icon?: string;
+  tone?: string;
 };
 
 export type NavColumn = {
@@ -15,7 +20,7 @@ export type NavColumn = {
 };
 
 export type NavMenu = {
-  id: "resources" | "product";
+  id: "resources" | "product" | "connectors";
   label: string;
   columns: NavColumn[];
 };
@@ -91,6 +96,15 @@ export function navMenus(locale: Locale, copy: Dictionary): NavMenu[] {
             { href: path("/many-agents"), label: copy.nav.manyAgents },
           ],
         },
+      ],
+    },
+    {
+      id: "connectors",
+      label: copy.nav.connectors,
+      columns: [
+        { heading: locale === "es" ? "Documentos y trabajo" : "Docs and work", headingHref: path("/conectores"), items: comparisons.slice(0, 4).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
+        { heading: locale === "es" ? "Investigar y crear" : "Research and create", items: comparisons.slice(4, 6).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
+        { heading: locale === "es" ? "Código y notas" : "Code and notes", items: comparisons.slice(6).map((item) => ({ href: comparisonPath(item.slug, locale), label: `vs ${item.name}`, description: item.locales[locale].teaser, mark: item.mark, icon: item.icon, tone: item.tone })) },
       ],
     },
   ];
